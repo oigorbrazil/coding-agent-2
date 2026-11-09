@@ -1,0 +1,19 @@
+---
+title: Cursor CLI in Coding Agent 2
+---
+
+Cursor CLI is Cursor's command-line agent. Coding Agent 2 runs it with first-class support — launch from the combobox, full OSC state detection, and restart chip on exit.
+
+## Setup
+
+1. Install Cursor CLI per [Cursor's docs](https://cursor.com/cli).
+1. Log in once.
+1. Coding Agent 2 auto-detects the CLI on `PATH`.
+
+## Launching
+
+Pick **Cursor** from the combobox. Coding Agent 2 launches the CLI scoped to the worktree. Cursor's TUI emits the state events Coding Agent 2 needs for agent state dots.
+
+## Model selection
+
+Model selection is driven by Cursor's own settings. Coding Agent 2 doesn't override it — configure inside the CLI.

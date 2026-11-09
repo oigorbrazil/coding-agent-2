@@ -1,0 +1,12 @@
+{
+  "name": "orca-agent-plugins",
+  "owner": { "name": "Coding Agent 2" },
+  "description": "Repository-local plugins for coding agents working in Coding Agent 2",
+  "plugins": [
+    {
+      "name": "orca-typescript",
+      "source": "./orca-typescript",
+      "description": "TypeScript 7 diagnostics and code navigation from the repo's own compiler"
+    }
+  ]
+}

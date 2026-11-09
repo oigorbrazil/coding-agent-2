@@ -1,0 +1,1 @@
+export const START_DICTATION_TIMEOUT_MS = 60_000

@@ -1,0 +1,5 @@
+{
+  "title": "Editing in Coding Agent 2",
+  "defaultOpen": true,
+  "pages": ["monaco", "markdown", "viewers", "file-explorer"]
+}
