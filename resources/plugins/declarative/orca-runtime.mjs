@@ -672,7 +672,7 @@ function evaluateOrcaTree(component, editsSeen = /* @__PURE__ */ new Map()) {
   function hostNode(type, props, key, parentPath, depth) {
     if (!/^[A-Z]/.test(type)) {
       throw new TypeError(
-        `<${type.slice(0, 64)}> is not an Coding Agent 2 component; panels never render DOM`
+        `<${type.slice(0, 64)}> is not a Coding Agent 2 component; panels never render DOM`
       );
     }
     const path = `${parentPath}/${key}`;

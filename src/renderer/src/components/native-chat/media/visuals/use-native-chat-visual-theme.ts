@@ -8,7 +8,7 @@ import {
 const SCOPED_SOURCES: Partial<Record<string, readonly string[]>> = {
   '--background': ['--chat-canvas', '--background'],
   '--foreground': ['--chat-foreground', '--foreground'],
-  '--font-mono': ['--chat-code-font-family', '--font-mono']
+  '--font-mono': ['--chat-code-font-family', '--code-font-family']
 }
 
 /** The resolved theme at `element`, read from computed styles in its own appearance scope. */

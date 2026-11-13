@@ -1,10 +1,13 @@
+import type { PluginDeclarativeNode } from '../../shared/plugins/declarative/plugin-declarative-catalog'
+import { appEnvPairs } from '../../shared/app-env'
+import { pluginManifestPath } from '../../shared/plugins/manifest/plugin-manifest-path'
 import { existsSync, realpathSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import { join, relative, sep } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { z } from 'zod'
-import type { PluginDeclarativeNode } from '../../shared/plugins/declarative/plugin-declarative-catalog'
+
 import { parsePluginDeclarativeTree } from '../../shared/plugins/declarative/plugin-declarative-tree'
 import { parsePluginManifest } from '../../shared/plugins/manifest/plugin-manifest'
 import { PLUGIN_PANEL_CHECK_SCRIPT } from './plugin-panel-check-script'
@@ -26,7 +29,7 @@ export type PluginPanelCheck = {
   elements: number
   /** What a person notices first, one line each (headings, callouts, empty states, table sizes). */
   summary: string[]
-  /** The drawn tree as plain data (handlers as `[handler]`); `orca plugin check --json` only. */
+  /** The drawn tree as plain data (handlers as `[handler]`); `coding plugin check --json` only. */
   tree?: unknown
   /** With `drawnTree`: the validated tree exactly as Coding Agent 2 draws it, handlers as `{ $callback }`. */
   drawnTree?: PluginDeclarativeNode | null
@@ -124,9 +127,7 @@ async function checkTargets(
   dir: string,
   panelId?: string
 ): Promise<{ panels: CheckTarget[]; main: { path: string; url: string } | null }> {
-  const parsed = parsePluginManifest(
-    JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
-  )
+  const parsed = parsePluginManifest(JSON.parse(await readFile(pluginManifestPath(dir), 'utf8')))
   if (!parsed.ok) {
     return { panels: [], main: null }
   }
@@ -175,8 +176,8 @@ async function runCheckChild(dir: string, input: CheckChildInput, appRoot?: stri
     env: {
       ...process.env,
       ...node.env,
-      ORCA_PLUGIN_TEST_ROOT: dir,
-      ORCA_PLUGIN_CHECK_PANELS: JSON.stringify(input)
+      ...appEnvPairs('PLUGIN_TEST_ROOT', dir),
+      ...appEnvPairs('PLUGIN_CHECK_PANELS', JSON.stringify(input))
     },
     timeoutMs: 60_000
   })

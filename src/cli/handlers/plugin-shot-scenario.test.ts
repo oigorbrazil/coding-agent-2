@@ -62,7 +62,7 @@ beforeEach(async () => {
   root = await realpath(await mkdtemp(join(tmpdir(), 'orca-shot-scenario-')))
   dir = join(root, 'counter')
   await createPluginFromTemplate({ dir, template: 'worker-panel' })
-  const manifest = JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
+  const manifest = JSON.parse(await readFile(join(dir, 'coding-plugin.json'), 'utf8'))
   pluginKey = `${manifest.publisher ?? 'local'}.${manifest.id}`
   panelId = manifest.contributes.panels[0].id
   check.readPluginCheckScenarioNames.mockResolvedValue(['fresh', 'counted'])

@@ -1,5 +1,5 @@
 {
-  "name": "@orca/process-host",
+  "name": "@coding-agent/process-host",
   "version": "0.0.0",
   "private": true,
   "description": "Coding Agent 2 host subprocess execution, cancellation, and termination",

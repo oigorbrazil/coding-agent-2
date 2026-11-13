@@ -35,7 +35,7 @@ afterEach(async () => {
 describe('Phase 1 launch plugin content', () => {
   it('lists and validates the launch plugin packs', async () => {
     const marketplace = pluginMarketplaceSchema.parse(
-      await readJson(join(launchRoot, 'orca-marketplace.json'))
+      await readJson(join(launchRoot, 'coding-marketplace.json'))
     )
     expect(marketplace.plugins.map((plugin) => plugin.id).sort()).toEqual([
       'stablyai.orca-multipass-recipes'

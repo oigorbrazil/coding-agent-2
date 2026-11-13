@@ -1,5 +1,5 @@
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { getAppEnvironment } from '../../shared/app-environment'
 import { getBundledLauncherPath } from '../cli/bundled-cli-launcher-path'
 

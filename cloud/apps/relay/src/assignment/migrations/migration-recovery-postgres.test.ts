@@ -1,4 +1,4 @@
-import { ASSIGNMENT_LIMITS } from '@orca-cloud/relay-contract/assignment-invariants'
+import { ASSIGNMENT_LIMITS } from '@coding-agent-cloud/relay-contract/assignment-invariants'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import {
   RelayAssignmentStore,

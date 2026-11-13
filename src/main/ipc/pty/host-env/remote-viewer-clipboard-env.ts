@@ -1,8 +1,7 @@
 import type { TuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent'
-import {
-  CODEX_REMOTE_VIEWER_SSH_CONNECTION,
-  REMOTE_VIEWER_CLIPBOARD_ENV
-} from '../../../../shared/remote-viewer-clipboard-env'
+import { setAppEnv, readAppEnvKey, setAppEnvKey } from '../../../../shared/app-env'
+
+import { CODEX_REMOTE_VIEWER_SSH_CONNECTION } from '../../../../shared/remote-viewer-clipboard-env'
 export { CODEX_REMOTE_VIEWER_SSH_CONNECTION }
 
 /** Pi's own opt-in to emit OSC 52 alongside its host clipboard write; inert for every other program. */
@@ -20,13 +19,14 @@ export function applyRemoteViewerClipboardEnv(
   if (!options.viewerIsRemote) {
     return
   }
-  env[REMOTE_VIEWER_CLIPBOARD_ENV] = '1'
+  setAppEnv(env, 'REMOTE_VIEWER_CLIPBOARD', '1')
   const inherited = options.inheritedEnv ?? process.env
   // Daemons merge their inherited environment after assembly; respect existing values there too.
-  const isSet = (key: string): boolean => env[key] !== undefined || inherited[key] !== undefined
+  const isSet = (key: string): boolean =>
+    readAppEnvKey(env, key) !== undefined || inherited[key] !== undefined
   // Why every shell: users start pi by hand, and the variable changes nothing else.
   if (!isSet(PI_CLIPBOARD_OSC52_ENV)) {
-    env[PI_CLIPBOARD_OSC52_ENV] = '1'
+    setAppEnvKey(env, PI_CLIPBOARD_OSC52_ENV, '1')
   }
   // Why Codex only: a fake SSH session would change bare-shell prompts and tooling.
   if (options.launchAgent === 'codex' && !isSet('SSH_CONNECTION') && !isSet('SSH_TTY')) {

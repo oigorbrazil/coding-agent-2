@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
-import { quoteWindowsArgument } from '@orca/process-host/windows-command-line'
+import { runProcess } from '@coding-agent/process-host'
+import { quoteWindowsArgument } from '@coding-agent/process-host/windows-command-line'
 
 describe.runIf(process.platform === 'win32')('native Windows administrator restart', () => {
   it('keeps the CLI console-based and the administrator handoff free of console windows', async () => {

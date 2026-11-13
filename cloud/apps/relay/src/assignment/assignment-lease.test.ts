@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
 import { EventEmitter } from 'node:events'
-import { RELAY_CLOSE_CODE } from '@orca-cloud/relay-contract/close-codes'
+import { RELAY_CLOSE_CODE } from '@coding-agent-cloud/relay-contract/close-codes'
 import { SignJWT } from 'jose'
 import nacl from 'tweetnacl'
 import { describe, expect, it, vi } from 'vitest'

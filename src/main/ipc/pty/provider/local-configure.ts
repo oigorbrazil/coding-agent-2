@@ -1,18 +1,23 @@
+import type { OrcaRuntimeService } from '../../../runtime/orca-runtime'
+import type { GlobalSettings } from '../../../../shared/global-settings-types'
+import type { LocalPtyProviderOptions } from '../../../providers/local-pty/local-pty-provider-types'
+import type { CodexAccountSelectionTarget } from '../../../codex-accounts/runtime-selection'
+import type { GetSelectedCodexHomePath } from '../host-env/types'
+import { readAppEnv, deleteAppEnv, setAppEnv } from '../../../../shared/app-env'
 import { getClaudeAgentViewService } from '../../../claude/agent-view/agent-view-service'
 import { inheritOmpLaunchEnvironment } from '../host-env/omp-launch-environment'
 import { getAppEnvironment } from '../../../../shared/app-environment'
-import type { OrcaRuntimeService } from '../../../runtime/orca-runtime'
-import type { GlobalSettings } from '../../../../shared/global-settings-types'
+
 import { isAgentStatusHooksEnabled } from '../../../../shared/agent-hook-listener/configuration/agent-status-hooks-setting'
 import { isPwshAvailableAsync } from '../../../pty/shell-startup/pwsh'
 import { LocalPtyProvider } from '../../../providers/local-pty/local-pty-provider'
-import type { LocalPtyProviderOptions } from '../../../providers/local-pty/local-pty-provider-types'
+
 import { runAsWslLaunchUserAct } from '../../../wsl/discovery/wsl-background-exec-gate'
 import {
   addOrcaWslInteropEnv,
   stampWslOrchestrationCompatibilityHost
 } from '../../../pty/shell-startup/wsl-orca-env'
-import type { CodexAccountSelectionTarget } from '../../../codex-accounts/runtime-selection'
+
 import { buildPtyHostEnv } from '../host-env/assembly'
 import { stampRuntimeSourceEnv } from '../../../../shared/runtime-source-env'
 import { getRuntimeSourceStamp } from '../../../runtime/hosts/platform-probe/host-descriptor'
@@ -20,7 +25,7 @@ import {
   getCompatibleSelectedCodexHomePath,
   shouldStripInheritedOrcaCodexHome
 } from '../host-env/codex-home'
-import type { GetSelectedCodexHomePath } from '../host-env/types'
+
 import { isCurrentPtyExit, ptyOwnership } from './ownership-state'
 import { localProvider } from './registry'
 import { clearProviderPtyState } from './state-cleanup'
@@ -110,16 +115,16 @@ export function configureLocalPtyProvider(args: {
       routeBrowserOpensToClient: runtime?.shouldRelayTerminalBrowserOpens?.()
     })
     // Supply terminal identity at process start so agents can address orchestration without another RPC.
-    const requestedHandle = baseEnv.ORCA_TERMINAL_HANDLE
+    const requestedHandle = readAppEnv(baseEnv, 'TERMINAL_HANDLE')
     const preAllocatedHandle =
       requestedHandle && trustedTerminalHandleEnv.has(requestedHandle)
         ? requestedHandle
         : runtime?.preAllocateHandleForPty(id)
     if (requestedHandle && requestedHandle !== preAllocatedHandle) {
-      delete env.ORCA_TERMINAL_HANDLE
+      deleteAppEnv(env, 'TERMINAL_HANDLE')
     }
     if (preAllocatedHandle) {
-      env.ORCA_TERMINAL_HANDLE = preAllocatedHandle
+      setAppEnv(env, 'TERMINAL_HANDLE', preAllocatedHandle)
     }
     stampWslOrchestrationCompatibilityHost(
       env,

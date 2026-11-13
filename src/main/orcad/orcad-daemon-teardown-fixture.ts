@@ -16,7 +16,7 @@ import { readDaemonPidRecord } from '../daemon/endpoint/identity/daemon-endpoint
 import { readLinuxStat } from '../daemon/endpoint/identity/daemon-process-inspection'
 import { cleanupDaemonForProtocol } from '../daemon/launch/daemon-protocol-cleanup'
 import type { WindowsProcessIdentityRow } from '../windows/windows-process-table'
-import type { spawnProcess } from '@orca/process-host'
+import type { spawnProcess } from '@coding-agent/process-host'
 
 const EXIT_WAIT_MS = 10_000
 const POLL_MS = 50

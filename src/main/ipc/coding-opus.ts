@@ -1,11 +1,18 @@
-import { ipcMain, shell } from 'electron'
+import { BrowserWindow, dialog, ipcMain, shell } from 'electron'
+import { translateMain } from '../i18n/main-i18n'
 import type {
   CodingOpusSkillTarget,
   SecondBrainRecordRequest,
   SkillCatalogScope
 } from '../../shared/coding-opus'
 import { codingOpusPlaybooksPath } from '../coding-opus/coding-opus-paths'
+import { readCodingOpusModelCatalog } from '../coding-opus/coding-opus-models'
 import {
+  orderCodingOpusAccounts,
+  readCodingOpusAccounts
+} from '../coding-opus/coding-opus-accounts'
+import {
+  codingOpusPlaybooksStamp,
   readCodingOpusPlaybooks,
   saveCodingOpusPlaybooks
 } from '../coding-opus/coding-opus-playbooks'
@@ -23,8 +30,10 @@ import {
 } from '../coding-opus/coding-opus-skill-install'
 
 import {
+  forgetLibrarySkill,
   getSkillCatalogStatus,
   installCatalogSkill,
+  loadSkillIntoLibrary,
   removeCatalogSkill
 } from '../coding-opus/coding-agent-skill-catalog'
 
@@ -72,7 +81,34 @@ export function registerCodingOpusHandlers(): void {
       removeCatalogSkill(String(name ?? ''), parseTargets(targets), parseScope(scope))
   )
 
+  ipcMain.handle('codingOpus:loadSkillFolder', async (event) => {
+    const owner = BrowserWindow.fromWebContents(event.sender)
+    const options = {
+      title: translateMain(
+        'codingOpus.dialog.pickSkillFolder',
+        'Choose a skill folder (with SKILL.md)'
+      ),
+      properties: ['openDirectory' as const]
+    }
+    const picked = owner
+      ? await dialog.showOpenDialog(owner, options)
+      : await dialog.showOpenDialog(options)
+    const dir = picked.filePaths[0]
+    if (picked.canceled || !dir) {
+      return { ok: true as const, value: null }
+    }
+    try {
+      return { ok: true as const, value: await loadSkillIntoLibrary(dir) }
+    } catch (error) {
+      return { ok: false as const, error: errorMessage(error) }
+    }
+  })
+  ipcMain.handle('codingOpus:forgetLibrarySkill', (_event, name: unknown) =>
+    forgetLibrarySkill(String(name ?? ''))
+  )
+
   ipcMain.handle('codingOpus:readPlaybooks', () => readCodingOpusPlaybooks())
+  ipcMain.handle('codingOpus:playbooksStamp', () => codingOpusPlaybooksStamp())
   ipcMain.handle('codingOpus:savePlaybooks', (_event, text: unknown) =>
     typeof text === 'string'
       ? saveCodingOpusPlaybooks(text)
@@ -81,6 +117,15 @@ export function registerCodingOpusHandlers(): void {
   ipcMain.handle('codingOpus:revealPlaybooks', () => {
     shell.showItemInFolder(codingOpusPlaybooksPath())
   })
+  ipcMain.handle('codingOpus:readAccounts', () => readCodingOpusAccounts())
+  ipcMain.handle('codingOpus:modelCatalog', () => readCodingOpusModelCatalog())
+  ipcMain.handle('codingOpus:orderAccounts', (_event, provider: unknown, names: unknown) =>
+    (provider === 'codex' || provider === 'claude') &&
+    Array.isArray(names) &&
+    names.every((name) => typeof name === 'string')
+      ? orderCodingOpusAccounts(provider, names)
+      : { ok: false, error: 'provider and account names are required' }
+  )
 
   ipcMain.handle('codingOpus:secondBrainOverview', () => getSecondBrainOverview())
   ipcMain.handle('codingOpus:secondBrainFind', (_event, query: unknown, route: unknown) =>

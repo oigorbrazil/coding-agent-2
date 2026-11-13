@@ -1,3 +1,28 @@
+import {
+  type OrcadProcessIdentityVerdict,
+  type OrcadProcessIncarnation,
+  compareOrcadProcessIdentity,
+  readOrcadProcessIncarnation,
+  readOrcadProcessName,
+  readOrcadProcessStartedAtMs
+} from './orcad-process-start-time'
+
+import type { OrcadReclaimHintRuntime } from '../../shared/orcad-stale-lock-reclaim'
+import type { OrcadUnexpectedExit } from '../../shared/orcad-unexpected-exit'
+import {
+  type OrcadLockRecoveryOwner,
+  MAX_ORCAD_LOCK_BYTES,
+  readBoundedLockFile,
+  reclaimAndPublish,
+  unlinkQuietly
+} from './orcad-instance-lock-reclaim'
+import {
+  type OrcadLockRecord,
+  describeLockHolder,
+  parseOrcadInstanceLockRecord
+} from './orcad-instance-lock-record'
+import { type OrcadInstanceLock, holdOrcadInstanceLock } from './orcad-instance-lock-hold'
+import { readAppEnv } from '../../shared/app-env'
 // Lock before profile load to prevent concurrent writers; terminal daemons own separate endpoints
 // and deliberately survive runtime lock release and restart.
 import { randomUUID } from 'node:crypto'
@@ -5,14 +30,7 @@ import { linkSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { hostname, userInfo } from 'node:os'
 import { join } from 'node:path'
 import process from 'node:process'
-import {
-  compareOrcadProcessIdentity,
-  readOrcadProcessIncarnation,
-  readOrcadProcessName,
-  readOrcadProcessStartedAtMs,
-  type OrcadProcessIdentityVerdict,
-  type OrcadProcessIncarnation
-} from './orcad-process-start-time'
+
 import {
   assertOrcadDataRootIsPrivate,
   OrcadInstanceLockError,
@@ -21,9 +39,9 @@ import {
 import { hasErrorCode, isProcessAlive } from '../daemon/endpoint/identity/daemon-process-inspection'
 import { profileStateAccessMachineIdentity } from '../persistence/profile-state/profile-state-access-identity'
 import { orcadDataRootIsOnLocalDisk } from './orcad-data-root-locality'
-import type { OrcadReclaimHintRuntime } from '../../shared/orcad-stale-lock-reclaim'
+
 import { reclaimedUnexpectedExit } from './orcad-unexpected-exit'
-import type { OrcadUnexpectedExit } from '../../shared/orcad-unexpected-exit'
+
 import {
   orcadLockHolderLocality,
   orcadLockHolderUnverifiableError
@@ -33,19 +51,6 @@ import {
   orcadLockSelf,
   orcadPeerIsLiveCloneMachine
 } from './orcad-lock-clone-machine'
-import {
-  MAX_ORCAD_LOCK_BYTES,
-  readBoundedLockFile,
-  reclaimAndPublish,
-  unlinkQuietly,
-  type OrcadLockRecoveryOwner
-} from './orcad-instance-lock-reclaim'
-import {
-  describeLockHolder,
-  parseOrcadInstanceLockRecord,
-  type OrcadLockRecord
-} from './orcad-instance-lock-record'
-import { holdOrcadInstanceLock, type OrcadInstanceLock } from './orcad-instance-lock-hold'
 
 export {
   parseOrcadInstanceLockRecord,
@@ -129,7 +134,7 @@ export function acquireOrcadInstanceLock(
     startedAtMs: readStartedAt(process.pid),
     ...readIncarnation(process.pid),
     identity,
-    version: (hooks.version ?? (() => process.env.ORCA_VERSION ?? 'unknown'))(),
+    version: (hooks.version ?? (() => readAppEnv(process.env, 'VERSION') ?? 'unknown'))(),
     acquiredAt: (hooks.now ?? (() => new Date()))().toISOString(),
     nonce: randomUUID(),
     role: hooks.role ?? 'orcad',
@@ -218,7 +223,7 @@ export function acquireOrcadInstanceLock(
       'orcad_instance_lock_foreign_identity',
       `The orcad data root ${dataRoot} is locked by identity ${existing.identity} (pid ` +
         `${existing.pid}); this process runs as ${identity}. Two identities sharing one data ` +
-        'root corrupts it. Give each its own ORCA_USER_DATA.'
+        'root corrupts it. Give each its own CODING_AGENT_USER_DATA.'
     )
   }
   const holder = orcadLockPeer(existing, lockPath)
@@ -251,7 +256,7 @@ export function acquireOrcadInstanceLock(
       'orcad_instance_lock_held',
       `${describeLockHolder(existing)} (pid ${existing.pid}, started ` +
         `${existing.acquiredAt || 'unknown'}) already owns the data root ${dataRoot}. Stop it ` +
-        'before starting another, or use a different ORCA_USER_DATA.'
+        'before starting another, or use a different CODING_AGENT_USER_DATA.'
     )
   }
   reclaimAndPublish(lockPath, dataRoot, existingContents, publish, recoveryOwner)
@@ -272,7 +277,7 @@ function possiblyReusedPidError(
       `${existing.acquiredAt}, does not record which boot it came from, so Coding Agent 2 cannot tell ` +
       `whether that process is still ${holder} or an unrelated program that reused the PID. ` +
       `If you are sure ${holder} is not running for this data root, delete ${lockPath} and ` +
-      'try again, or use a different ORCA_USER_DATA.'
+      'try again, or use a different CODING_AGENT_USER_DATA.'
   )
 }
 

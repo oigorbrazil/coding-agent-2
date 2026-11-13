@@ -1,3 +1,4 @@
+import { appEnvPairs, setAppEnv } from '../shared/app-env'
 // Define hook endpoint paths and PTY env coordinates without IO; Windows pipe paths require flattening.
 import { basename, dirname, join } from 'node:path'
 import { homedir } from 'node:os'
@@ -47,15 +48,15 @@ export function buildRelayHookPtyEnv(coordinates: {
     return {}
   }
   const env: Record<string, string> = {
-    ORCA_AGENT_HOOK_PORT: String(coordinates.port),
-    ORCA_AGENT_HOOK_TOKEN: coordinates.token,
-    ORCA_AGENT_HOOK_ENV: coordinates.env,
-    ORCA_AGENT_HOOK_VERSION: ORCA_HOOK_PROTOCOL_VERSION,
-    ORCA_AGENT_HOOK_OPENCODE_TUI: '1',
-    ORCA_AGENT_HOOK_TRANSPORT: ORCA_HOOK_RAW_JSON_TRANSPORT
+    ...appEnvPairs('AGENT_HOOK_PORT', String(coordinates.port)),
+    ...appEnvPairs('AGENT_HOOK_TOKEN', coordinates.token),
+    ...appEnvPairs('AGENT_HOOK_ENV', coordinates.env),
+    ...appEnvPairs('AGENT_HOOK_VERSION', ORCA_HOOK_PROTOCOL_VERSION),
+    ...appEnvPairs('AGENT_HOOK_OPENCODE_TUI', '1'),
+    ...appEnvPairs('AGENT_HOOK_TRANSPORT', ORCA_HOOK_RAW_JSON_TRANSPORT)
   }
   if (coordinates.endpointFileWritten) {
-    env.ORCA_AGENT_HOOK_ENDPOINT = coordinates.endpointFilePath
+    setAppEnv(env, 'AGENT_HOOK_ENDPOINT', coordinates.endpointFilePath)
   }
   return env
 }

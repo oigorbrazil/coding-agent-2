@@ -1,3 +1,4 @@
+import { appEnvPairs } from '../../shared/app-env'
 import type { SFTPWrapper } from 'ssh2'
 import type { AgentHookInstallStatus } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
 import {
@@ -60,7 +61,9 @@ export async function installCopilotHooksRemote(
       nextHooks[eventName] = [
         ...cleaned,
         getRemoteManagedHookDefinition(
-          wrapPosixHookCommand(remoteScriptPath, { ORCA_COPILOT_HOOK_EVENT: eventName })
+          wrapPosixHookCommand(remoteScriptPath, {
+            ...appEnvPairs('COPILOT_HOOK_EVENT', eventName)
+          })
         )
       ]
     }

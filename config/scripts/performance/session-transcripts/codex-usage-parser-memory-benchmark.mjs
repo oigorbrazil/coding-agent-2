@@ -134,7 +134,7 @@ function writeFixture(filePath, eventCount) {
 
 async function runComparison() {
   const { build, version: esbuildVersion } = await import('esbuild')
-  const { runProcessSync } = await import('@orca/process-host')
+  const { runProcessSync } = await import('@coding-agent/process-host')
   const { describeProcessFailure } =
     await import('../../tool-invocation/process-failure-message.mjs')
   const { buildCounterbalancedSchedule } =
@@ -278,7 +278,7 @@ async function runComparison() {
       instrumentationSha256: Object.fromEntries(
         [
           import.meta.filename,
-          fileURLToPath(import.meta.resolve('@orca/process-host')),
+          fileURLToPath(import.meta.resolve('@coding-agent/process-host')),
           join(import.meta.dirname, '../../tool-invocation/process-failure-message.mjs'),
           join(import.meta.dirname, '../measurement/counterbalanced-benchmark-schedule.mjs')
         ].map((path) => [relative(root, path).split(sep).join('/'), digest(readFileSync(path))])

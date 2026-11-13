@@ -172,7 +172,7 @@ export default function HiddenWorktreeRecoveryList({
                     )
                   : t(
                       'auto.components.sidebar.WorktreeVisibilityDialog.noneFound',
-                      'No non-Orca worktrees found'
+                      'No external worktrees found'
                     )}
             </div>
             <div className="text-xs text-muted-foreground">

@@ -1,6 +1,6 @@
 /** Read hourly-build keyring keys for one-time file migration without modifying the keyring. */
-import { runProcess } from '@orca/process-host'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import { runProcess } from '@coding-agent/process-host'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const SERVICE = 'orca-headless-secret-store'
 // Locked keychains must not hang startup.

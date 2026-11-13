@@ -1,4 +1,5 @@
 import type { PiAgentKind } from '../../shared/pi-agent-kind'
+import { appEnvReadExpression } from '../../shared/app-env-script'
 
 // OMP task sessions and Pi subagents load the same extension in-process with their own SessionManager.
 export function getOmpSessionOwnerHandlerSourceLines(kind: PiAgentKind): string[] {
@@ -28,7 +29,7 @@ export function getOmpSessionOwnerHandlerSourceLines(kind: PiAgentKind): string[
     '      owners = new Map()',
     '      Reflect.set(globalThis, key, owners)',
     '    }',
-    '    const pane = JSON.stringify([process.env.ORCA_PANE_KEY, process.env.ORCA_AGENT_LAUNCH_TOKEN])',
+    `    const pane = JSON.stringify([${appEnvReadExpression('process.env', 'PANE_KEY')}, ${appEnvReadExpression('process.env', 'AGENT_LAUNCH_TOKEN')}])`,
     '    const owner = owners.get(pane)',
     '    if (owner && owner.manager !== current.manager) {',
     '      if (omp) return false',

@@ -259,7 +259,7 @@ function BitbucketCardNote(props: {
       <p className="text-xs text-muted-foreground">
         {t(
           'auto.components.settings.bitbucket.integration.card.envManaged',
-          'Configured via environment variables. Unset the ORCA_BITBUCKET_* variables to manage this credential in Coding Agent 2.'
+          'Configured via environment variables. Unset the CODING_BITBUCKET_* variables to manage this credential in Coding Agent 2.'
         )}
       </p>
     )
@@ -284,7 +284,7 @@ function BitbucketCardNote(props: {
       <p className="text-xs text-muted-foreground">
         {t(
           'auto.components.settings.bitbucket.integration.card.storedCredential',
-          'Saved in Coding Agent 2 on this machine. ORCA_BITBUCKET_* environment variables take precedence when set.'
+          'Saved in Coding Agent 2 on this machine. CODING_BITBUCKET_* environment variables take precedence when set.'
         )}
       </p>
     )
@@ -293,7 +293,7 @@ function BitbucketCardNote(props: {
     <p className="text-xs text-muted-foreground">
       {t(
         'auto.components.settings.bitbucket.integration.card.notConfigured',
-        'Connect a Bitbucket Cloud account with an Atlassian API token or an access token. ORCA_BITBUCKET_* environment variables work too and take precedence.'
+        'Connect a Bitbucket Cloud account with an Atlassian API token or an access token. CODING_BITBUCKET_* environment variables work too and take precedence.'
       )}
     </p>
   )

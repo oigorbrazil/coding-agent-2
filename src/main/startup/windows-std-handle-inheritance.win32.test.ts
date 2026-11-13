@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 
 const describeOnWindows = process.platform === 'win32' ? describe : describe.skip
 const ADDON = resolve(__dirname, '..', '..', '..', 'native', 'windows-security', 'index.js')

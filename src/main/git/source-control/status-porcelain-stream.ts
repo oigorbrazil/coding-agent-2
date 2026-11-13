@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { BoundedMap } from '../../../shared/bounded-map'
 import { StatusPorcelainParser } from '../../../shared/git/status/git-status-porcelain-parser'
 import { gitOptionalLocksDisabledEnv, gitStreamStdout } from '../runner'
@@ -22,7 +23,7 @@ const EXPANSION_FALLBACK_RETRY_MS = 60_000
 
 /** Rollback switch: `ORCA_GIT_STATUS_UNTRACKED_EXPANSION=0` restores the plain `-uall` scan. */
 function isUntrackedExpansionEnabled(): boolean {
-  return process.env.ORCA_GIT_STATUS_UNTRACKED_EXPANSION !== '0'
+  return readAppEnv(process.env, 'GIT_STATUS_UNTRACKED_EXPANSION') !== '0'
 }
 
 /** Stream porcelain v2 status listing every untracked file as `-uall` does; never rejects. */

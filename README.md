@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://onOrca.dev"><img src="resources/build/icon.png" alt="Coding Agent 2" width="64" valign="middle" /></a> Coding Agent 2
+  <a href="https://github.com/oigorbrazil/coding-agent-2"><img src="resources/build/icon.png" alt="Coding Agent 2" width="64" valign="middle" /></a> Coding Agent 2
 </h1>
 
 <p align="center">
@@ -20,7 +20,7 @@
   Run Claude Code, Codex, and any other coding agent in parallel, each in its own worktree. Chat or terminal, on your laptop or in the cloud, with diffs, a browser, and a CLI in one app.
 </p>
 
-<h3 align="center"><a href="https://onorca.dev/download"><ins>Download Coding Agent 2</ins></a></h3>
+<h3 align="center"><a href="https://github.com/oigorbrazil/coding-agent-2/releases"><ins>Download Coding Agent 2</ins></a></h3>
 
 <p align="center">
   <img src="docs/assets/readme-hero.jpg" alt="Coding Agent 2 desktop app with a coordinator agent running worker agents in parallel workspaces, and the Coding Agent 2 mobile app in the corner" width="960" />
@@ -166,7 +166,7 @@ Anything you can do in Coding Agent 2, your agents can do too: create worktrees,
 
 </td>
 <td width="50%">
-  <a href="https://www.onorca.dev/docs/cli/overview"><picture><source srcset="docs/assets/readme-features/orca-cli.webp" type="image/webp"><img src="docs/assets/readme-features/orca-cli.poster.jpg" alt="An agent running orca worktree create to start a worker in a new worktree" width="100%" /></picture></a>
+  <a href="https://www.onorca.dev/docs/cli/overview"><picture><source srcset="docs/assets/readme-features/orca-cli.webp" type="image/webp"><img src="docs/assets/readme-features/orca-cli.poster.jpg" alt="An agent running coding worktree create to start a worker in a new worktree" width="100%" /></picture></a>
 </td>
 </tr>
 <tr>
@@ -261,8 +261,7 @@ Works with **any CLI agent** — if it runs in a terminal, it runs in Coding Age
 
 ### Desktop — macOS, Windows, Linux
 
-- **[Download from onOrca.dev](https://onorca.dev/download)**
-- Or grab a build directly: [macOS Apple Silicon](https://github.com/stablyai/orca/releases/latest/download/orca-macos-arm64.dmg) · [macOS Intel](https://github.com/stablyai/orca/releases/latest/download/orca-macos-x64.dmg) · [Windows (.exe)](https://github.com/stablyai/orca/releases/latest/download/orca-windows-setup.exe) · [Linux AppImage](https://github.com/stablyai/orca/releases/latest/download/orca-linux.AppImage) · [All builds](https://github.com/stablyai/orca/releases/latest)
+- **[Coding Agent 2 releases](https://github.com/oigorbrazil/coding-agent-2/releases)**
 
 _Or via a package manager:_
 

@@ -16,7 +16,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join, relative, resolve, sep } from 'node:path'
 import { performance } from 'node:perf_hooks'
 import { pathToFileURL } from 'node:url'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { buildCounterbalancedSchedule } from '../../performance/measurement/counterbalanced-benchmark-schedule.mjs'
 import { summarizeBenchmarkSamples } from '../../performance/measurement/benchmark-sample-summary.mjs'
 import { resolvePnpmCliInvocation } from '../../tool-invocation/pnpm-cli-invocation.mjs'
@@ -29,8 +29,8 @@ import {
 
 const addonNames = [
   'node-pty',
-  '@orca/windows-registry',
-  '@orca/windows-security',
+  '@coding-agent/windows-registry',
+  '@coding-agent/windows-security',
   '@vscode/windows-process-tree'
 ]
 const candidate = 'initialize-windows-native-toolchain.mjs'

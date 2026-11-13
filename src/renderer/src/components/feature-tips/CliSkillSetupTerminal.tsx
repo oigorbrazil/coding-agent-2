@@ -8,7 +8,7 @@ import {
   buildSkillCommandForRuntime,
   buildSkillSetupTerminalCommand
 } from '@/lib/skill-runtime-command'
-import { ORCA_CLI_ORCHESTRATION_SKILL_INSTALL_COMMAND } from '@/lib/agent-feature-install-commands'
+import { ORCA_CLI_SKILL_INSTALL_COMMAND } from '@/lib/agent-feature-install-commands'
 import { useActiveProjectSkillRuntime } from '@/hooks/useActiveProjectSkillRuntime'
 import { useTranslate } from '@/i18n/use-translate'
 
@@ -17,7 +17,7 @@ export function CliSkillSetupTerminal(): React.JSX.Element {
   const activeSkillRuntime = useActiveProjectSkillRuntime()
   // Missing WSL distros fall back to the Windows host; this ungated auto-paste still needs npx preflight.
   const skillCommand = buildSkillCommandForRuntime(
-    ORCA_CLI_ORCHESTRATION_SKILL_INSTALL_COMMAND,
+    ORCA_CLI_SKILL_INSTALL_COMMAND,
     activeSkillRuntime.installDisabledReason ? undefined : activeSkillRuntime.agentRuntime
   )
   const terminalRuntime = activeSkillRuntime.installDisabledReason
@@ -49,7 +49,7 @@ export function CliSkillSetupTerminal(): React.JSX.Element {
   return (
     <div className="min-w-0">
       <div className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-muted/35 px-3 py-2">
-        <code className="scrollbar-sleek min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-xs text-muted-foreground">
+        <code className="scrollbar-sleek min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-code text-xs text-muted-foreground">
           {skillCommand}
         </code>
         <Tooltip>

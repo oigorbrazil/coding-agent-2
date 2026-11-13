@@ -39,7 +39,7 @@ export function validatePluginFile(
   raw: unknown,
   readCatalogFile?: PluginCatalogFileReader
 ): string[] {
-  if (fileName === PLUGIN_MANIFEST_FILENAME) {
+  if (fileName === PLUGIN_MANIFEST_FILENAME || fileName === 'orca-plugin.json') {
     const parsed = parsePluginManifest(raw)
     if (!parsed.ok) {
       return [parsed.error]
@@ -50,7 +50,7 @@ export function validatePluginFile(
         : reservedPublisherError(parsed.manifest.publisher)
     return reserved ? [`publisher: ${reserved}`] : []
   }
-  if (fileName === PLUGIN_CATALOG_FILENAME) {
+  if (fileName === PLUGIN_CATALOG_FILENAME || fileName === 'orca-catalog.json') {
     return validatePluginCatalog(raw, readCatalogFile)
   }
   return [

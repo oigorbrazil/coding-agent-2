@@ -144,7 +144,7 @@ describe('current-version daemon-host staging cleanup', () => {
         unobserved,
         'resources',
         'node_modules',
-        '@orca',
+        '@coding-agent',
         'process-host',
         'dist',
         'run-process.js'

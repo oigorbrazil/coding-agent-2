@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { startSpan } from '../../observability/tracer'
 
 // Opt-in phase timing attributes spawn latency without tracing; mark actual spans to avoid blaming env assembly for auth/hook prep.
@@ -13,7 +14,7 @@ const noopTiming: PtySpawnTiming = {
 }
 
 export function createPtySpawnTiming(): PtySpawnTiming {
-  const flag = process.env.ORCA_PTY_SPAWN_TIMING
+  const flag = readAppEnv(process.env, 'PTY_SPAWN_TIMING')
   if (!flag || flag === '0' || flag.toLowerCase() === 'false') {
     return noopTiming
   }

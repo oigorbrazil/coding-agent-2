@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../../shared/app-env'
 import type { TerminalMultiplexStream } from './terminal-stream-types'
 
 const ESTIMATE_WINDOW_MS = 10_000
@@ -42,7 +43,7 @@ type StreamSendLedger = {
 
 // Opt-in until soaked on real high-latency links.
 export function isAdaptiveAckWindowEnabled(): boolean {
-  return process.env.ORCA_TERMINAL_ADAPTIVE_ACK_WINDOW === '1'
+  return readAppEnv(process.env, 'TERMINAL_ADAPTIVE_ACK_WINDOW') === '1'
 }
 
 /** Best sample over the last one-to-two windows of activity; idle time does not expire it. */

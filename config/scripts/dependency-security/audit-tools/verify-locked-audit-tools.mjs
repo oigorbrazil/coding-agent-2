@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { parse } from 'yaml'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { auditToolEntry, installAuditTools } from './run-audit-tool.mjs'
 
 const root = resolve(import.meta.dirname, '../../../..')

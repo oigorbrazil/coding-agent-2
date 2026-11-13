@@ -1,5 +1,7 @@
-import { getPiTitlebarLifetimeSourceLines } from './titlebar-extension-lifetime-source'
 import type { PiAgentKind } from '../../shared/pi-agent-kind'
+import { appEnvReadExpression } from '../../shared/app-env-script'
+import { getPiTitlebarLifetimeSourceLines } from './titlebar-extension-lifetime-source'
+
 import { getPiOmpRuntimeDetectionSourceLines } from './agent-status-runtime-detection-source'
 
 export const ORCA_PI_EXTENSION_FILE = 'orca-titlebar-spinner.ts'
@@ -87,13 +89,13 @@ export function getPiTitlebarExtensionSource(kind: PiAgentKind = 'pi'): string {
     '}',
     '',
     'export default function (pi) {',
-    '  if (!process.env.ORCA_PANE_KEY) return',
+    `  if (!${appEnvReadExpression('process.env', 'PANE_KEY')}) return`,
     ...(kind === 'pi'
       ? [
           "  // Child processes inherit pane identity; only the owner may report the pane's needs-input marker.",
-          '  const markerOwnerPid = process.env.ORCA_PI_TITLE_MARKER_OWNED',
+          `  const markerOwnerPid = ${appEnvReadExpression('process.env', 'PI_TITLE_MARKER_OWNED')}`,
           '  const ownsMarker = !markerOwnerPid || markerOwnerPid === String(process.pid)',
-          '  if (ownsMarker) process.env.ORCA_PI_TITLE_MARKER_OWNED = String(process.pid)'
+          '  if (ownsMarker) process.env.CODING_AGENT_PI_TITLE_MARKER_OWNED = process.env.ORCA_PI_TITLE_MARKER_OWNED = String(process.pid)'
         ]
       : []),
 

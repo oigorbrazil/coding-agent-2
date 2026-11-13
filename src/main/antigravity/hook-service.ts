@@ -1,3 +1,4 @@
+import { appEnvPairs } from '../../shared/app-env'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import type { SFTPWrapper } from 'ssh2'
@@ -61,7 +62,7 @@ function getWindowsWrapperScriptPath(event: AntigravityEvent): string {
 function getPosixManagedCommand(scriptPath: string, event: AntigravityEvent): string {
   const command = wrapPosixHookCommand(
     scriptPath,
-    { ORCA_ANTIGRAVITY_EVENT: event.eventName },
+    { ...appEnvPairs('ANTIGRAVITY_EVENT', event.eventName) },
     // Keep tools usable if the managed script disappears: silence denies PreToolUse.
     event.eventName === 'PreToolUse' ? { fallbackStdout: ANTIGRAVITY_PRE_TOOL_USE_DECISION } : {}
   )

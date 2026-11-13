@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import type { ProcessTerminationBarrier } from '@orca/process-host/process-spec'
+import type { ProcessTerminationBarrier } from '@coding-agent/process-host/process-spec'
 import { quotePosixShell } from '../../shared/shell/launch/shell-argument-quoting'
 import { runWslProcess } from '../wsl/execution/wsl-runner'
 import { WSL_UNC_RUNNING_LEASE_MS, wslDistroForPath } from '../wsl/filesystem/wsl-unc-access-gate'

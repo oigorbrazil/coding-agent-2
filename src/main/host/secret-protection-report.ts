@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { dirname, join } from 'node:path'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { getSecretStore } from '../../shared/secret-store'
@@ -15,7 +16,7 @@ type ReportOptions = {
 type ReportState = { lastReportedGap: string | null }
 
 function stateFile(dataFile: string): string {
-  return join(dirname(dataFile), 'orca-secret-protection.json')
+  return renamedUserDataFile(join(dirname(dataFile), 'orca-secret-protection.json'))
 }
 
 function readState(path: string): ReportState | null {

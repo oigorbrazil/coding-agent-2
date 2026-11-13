@@ -61,12 +61,12 @@ __orca_omp_cwd_is_usable() {
 __orca_omp_invoke() {
   local __orca_use_extension="$1"
   shift
-  if [[ $__orca_use_extension -eq 1 && -n "\${ORCA_OMP_STATUS_EXTENSION:-}" && -f "\${ORCA_OMP_STATUS_EXTENSION}" ]]; then
+  if [[ $__orca_use_extension -eq 1 && -n "\${CODING_AGENT_OMP_STATUS_EXTENSION-\${ORCA_OMP_STATUS_EXTENSION:-}}" && -f "\${CODING_AGENT_OMP_STATUS_EXTENSION-\${ORCA_OMP_STATUS_EXTENSION}}" ]]; then
     if [[ "\${1:-}" == "launch" ]]; then
       shift
-      command omp launch --extension "\${ORCA_OMP_STATUS_EXTENSION}" "$@"
+      command omp launch --extension "\${CODING_AGENT_OMP_STATUS_EXTENSION-\${ORCA_OMP_STATUS_EXTENSION}}" "$@"
     else
-      command omp --extension "\${ORCA_OMP_STATUS_EXTENSION}" "$@"
+      command omp --extension "\${CODING_AGENT_OMP_STATUS_EXTENSION-\${ORCA_OMP_STATUS_EXTENSION}}" "$@"
     fi
   else
     command omp "$@"
@@ -93,7 +93,7 @@ __orca_omp() {
     __orca_omp_invoke "$__orca_use_extension" "$@"
   fi
 }
-if [[ -n "\${ORCA_OMP_STATUS_EXTENSION:-}" ]]; then
+if [[ -n "\${CODING_AGENT_OMP_STATUS_EXTENSION-\${ORCA_OMP_STATUS_EXTENSION:-}}" ]]; then
   # Why the function reserved word: it suppresses alias expansion of the name, which
   # an \`alias omp\` otherwise rewrites at parse time, aborting the rest of the file.
   function omp { __orca_omp "$@"; }
@@ -111,7 +111,7 @@ function Global:__OrcaOmpShouldSkipExtension {
     $skip = @("help", "--help", "-h", "--version", "-v") + @(${subcommands})
     return $skip -contains $Name
 }
-if ($env:ORCA_OMP_STATUS_EXTENSION) {
+if ($(if (Test-Path Env:CODING_AGENT_OMP_STATUS_EXTENSION) { $env:CODING_AGENT_OMP_STATUS_EXTENSION } else { $env:ORCA_OMP_STATUS_EXTENSION })) {
     function Global:omp {
         $orcaUseExtension = -not (__OrcaOmpShouldSkipExtension -Name ([string]($args[0])))
         $orcaStatus = 0
@@ -119,13 +119,13 @@ if ($env:ORCA_OMP_STATUS_EXTENSION) {
         if (-not $orcaCommand) {
             Write-Error "omp executable not found"
             $orcaStatus = 127
-        } elseif ($orcaUseExtension -and $env:ORCA_OMP_STATUS_EXTENSION -and
-            (Test-Path -LiteralPath $env:ORCA_OMP_STATUS_EXTENSION)) {
+        } elseif ($orcaUseExtension -and $(if (Test-Path Env:CODING_AGENT_OMP_STATUS_EXTENSION) { $env:CODING_AGENT_OMP_STATUS_EXTENSION } else { $env:ORCA_OMP_STATUS_EXTENSION }) -and
+            (Test-Path -LiteralPath $(if (Test-Path Env:CODING_AGENT_OMP_STATUS_EXTENSION) { $env:CODING_AGENT_OMP_STATUS_EXTENSION } else { $env:ORCA_OMP_STATUS_EXTENSION }))) {
             if ($args.Count -gt 0 -and $args[0] -eq "launch") {
                 $orcaLaunchArgs = @($args | Select-Object -Skip 1)
-                & $orcaCommand.Source launch --extension $env:ORCA_OMP_STATUS_EXTENSION @orcaLaunchArgs
+                & $orcaCommand.Source launch --extension $(if (Test-Path Env:CODING_AGENT_OMP_STATUS_EXTENSION) { $env:CODING_AGENT_OMP_STATUS_EXTENSION } else { $env:ORCA_OMP_STATUS_EXTENSION }) @orcaLaunchArgs
             } else {
-                & $orcaCommand.Source --extension $env:ORCA_OMP_STATUS_EXTENSION @args
+                & $orcaCommand.Source --extension $(if (Test-Path Env:CODING_AGENT_OMP_STATUS_EXTENSION) { $env:CODING_AGENT_OMP_STATUS_EXTENSION } else { $env:ORCA_OMP_STATUS_EXTENSION }) @args
             }
             $orcaStatus = $LASTEXITCODE
         } else {

@@ -1,4 +1,4 @@
-import { BookOpenCheck, Brain, LayoutGrid, Puzzle } from 'lucide-react'
+import { BookOpenCheck, Brain, CircleUser, Languages, Puzzle } from 'lucide-react'
 import { translate } from '@/i18n/i18n'
 import type { Translate } from '@/i18n/use-translate'
 import type { SettingsNavSection } from '@/lib/settings-navigation-types'
@@ -6,14 +6,29 @@ import type { SettingsNavSection } from '@/lib/settings-navigation-types'
 export function buildCodingOpusSettingsSections(t: Translate = translate): SettingsNavSection[] {
   return [
     {
-      id: 'features',
-      title: t('codingOpus.features.navTitle', 'Features'),
+      id: 'account',
+      title: t('codingOpus.account.navTitle', 'Account'),
       description: t(
-        'codingOpus.features.navDescription',
-        'Everything Coding Agent 2 does, with a shortcut to each setting.'
+        'codingOpus.account.navDescription',
+        'Your profile, linked email and sign-in.'
       ),
-      icon: LayoutGrid,
-      searchEntries: [{ title: 'Features', keywords: ['recursos', 'functions', 'overview'] }],
+      icon: CircleUser,
+      searchEntries: [
+        { title: 'Account', keywords: ['conta', 'perfil', 'profile', 'email', 'login', 'foto'] }
+      ],
+      group: 'coding-opus'
+    },
+    {
+      id: 'language',
+      title: t('codingOpus.language.navTitle', 'Language'),
+      description: t('codingOpus.language.navDescription', 'The language of the whole app.'),
+      icon: Languages,
+      searchEntries: [
+        {
+          title: 'Language',
+          keywords: ['linguagem', 'idioma', 'português', 'portuguese', 'locale']
+        }
+      ],
       group: 'coding-opus'
     },
     {

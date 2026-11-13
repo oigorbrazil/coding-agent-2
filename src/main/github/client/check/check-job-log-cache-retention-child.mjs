@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env.ts'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { realpathSync } from 'node:fs'
@@ -201,5 +202,5 @@ for (const descriptor of cpuDescriptors) {
 }
 const finalMemory = memory()
 process.stdout.write(
-  `${JSON.stringify({ trial: Number(trial), identityHash, runtime: { node: process.version, v8: process.versions.v8, uv: process.versions.uv, executableHash: hash(realpathSync(process.execPath)), platform: process.platform, arch: process.arch, gc: true, background: process.env.ORCA_BACKGROUND_LAUNCH === '1' }, pinnedControl, eight, nearCap, maximum, fullPayload, mixedPayload, cpu, finalMemory, activeTimeouts: process.getActiveResourcesInfo().filter((name) => name === 'Timeout').length })}\n`
+  `${JSON.stringify({ trial: Number(trial), identityHash, runtime: { node: process.version, v8: process.versions.v8, uv: process.versions.uv, executableHash: hash(realpathSync(process.execPath)), platform: process.platform, arch: process.arch, gc: true, background: readAppEnv(process.env, 'BACKGROUND_LAUNCH') === '1' }, pinnedControl, eight, nearCap, maximum, fullPayload, mixedPayload, cpu, finalMemory, activeTimeouts: process.getActiveResourcesInfo().filter((name) => name === 'Timeout').length })}\n`
 )

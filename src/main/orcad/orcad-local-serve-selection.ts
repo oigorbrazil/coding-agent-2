@@ -1,8 +1,9 @@
+import { readAppEnv } from '../../shared/app-env'
 // Run app-side to keep materializers out of the CLI bundle. Prefer a userData orcad slot;
 // unsupported packaging/runtime/native conditions fall back to Electron with a diagnostic.
 import { chmodSync, copyFileSync, existsSync, linkSync, mkdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { NODE_RUNTIME_ASSETS, type ServerTarget } from '../../shared/node-runtime-pin'
 import {
   ORCAD_SERVER_ENTRY_FILENAME,
@@ -56,7 +57,7 @@ function electron(reason: string): ServeRuntimeSelection {
 export async function selectServeRuntime(
   input: ServeRuntimeSelectionInput
 ): Promise<ServeRuntimeSelection> {
-  const requested = input.env[SERVE_RUNTIME_ENV]
+  const requested = readAppEnv(input.env, 'SERVE_RUNTIME')
   if (requested === SERVE_RUNTIME_ELECTRON) {
     return { kind: 'electron', reason: null }
   }

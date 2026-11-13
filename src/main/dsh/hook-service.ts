@@ -1,11 +1,13 @@
-import { mkdirSync, readFileSync, rmSync } from 'node:fs'
-import { dirname } from 'node:path'
 import type { SFTPWrapper } from 'ssh2'
-
 import type {
   AgentHookInstallState,
   AgentHookInstallStatus
 } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
+
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
+import { mkdirSync, readFileSync, rmSync } from 'node:fs'
+import { dirname } from 'node:path'
+
 import { isDefinitiveAbsence } from '../../shared/definitive-filesystem-absence'
 import {
   buildWindowsAgentHookCurlPostCommand,
@@ -19,6 +21,8 @@ import {
   writeTextFileRemoteAtomic
 } from '../agent-hooks/installer-utils-remote'
 import {
+  buildPosixHookEndpointReloadLines,
+  buildWindowsHookEndpointReloadLines,
   buildPosixHookPayloadCapture,
   buildPosixHookSpoolLines,
   buildWindowsHookEnvironmentGuardLines
@@ -55,9 +59,15 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     return [
       '@echo off',
       'setlocal',
+      ...windowsAppEnvRestore([
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN',
+        'PANE_KEY'
+      ]),
       // Restore DSH-scrubbed KEY/TOKEN variables before any guard or spool code reads them.
       ...buildWindowsScrubSafeEnvRestoreLines(),
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       ...buildWindowsHookEnvironmentGuardLines(),
       buildWindowsAgentHookCurlPostCommand('dsh'),
       'exit /b 0',
@@ -72,10 +82,8 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     ...buildPosixHookPayloadCapture(),
     ...buildPosixHookSpoolLines('dsh'),
     // Refresh endpoint credentials for PTYs that outlive a Coding Agent 2 restart.
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  . "$ORCA_AGENT_HOOK_ENDPOINT" 2>/dev/null || :',
-    'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    ...buildPosixHookEndpointReloadLines(),
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  spool_hook_event',
     '  exit 0',
     'fi',

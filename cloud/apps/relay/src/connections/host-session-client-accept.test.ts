@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:events'
-import { RELAY_CLOSE_CODE } from '@orca-cloud/relay-contract/close-codes'
+import { RELAY_CLOSE_CODE } from '@coding-agent-cloud/relay-contract/close-codes'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type WebSocket from 'ws'
 import type { RelayAssignmentStore } from '../assignment/assignment-store.js'

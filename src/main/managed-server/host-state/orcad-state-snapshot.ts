@@ -103,8 +103,8 @@ export function serializedStateMutationCommand(
     // Superseded holders must refuse before acquiring the mutation lock.
     ...(owned ? [posixOrcadFenceGuard(owned)] : []),
     // Own the workload process group so teardown can account for every spawned mutation process.
-    'orca_state_group() { if command -v setsid >/dev/null 2>&1; then ORCA_STATE_MUTATION_GROUP=1 setsid "$@";',
-    `elif command -v perl >/dev/null 2>&1; then ORCA_STATE_MUTATION_GROUP=1 perl -e ${quotePosixShell('setpgrp(0, 0); exec { $ARGV[0] } @ARGV or exit 127')} "$@";`,
+    'orca_state_group() { if command -v setsid >/dev/null 2>&1; then CODING_AGENT_STATE_MUTATION_GROUP=1 ORCA_STATE_MUTATION_GROUP=1 setsid "$@";',
+    `elif command -v perl >/dev/null 2>&1; then CODING_AGENT_STATE_MUTATION_GROUP=1 ORCA_STATE_MUTATION_GROUP=1 perl -e ${quotePosixShell('setpgrp(0, 0); exec { $ARGV[0] } @ARGV or exit 127')} "$@";`,
     'else "$@"; fi; };',
     // Run timeout inside the group so KILL reaches tar/rm; use word lists once and retain old BusyBox -t support.
     `orca_deadline=; if timeout 1 true 2>/dev/null; then orca_deadline="timeout -s KILL ${ORCAD_STATE_MUTATION_DEADLINE_SECONDS}";`,

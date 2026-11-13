@@ -15,8 +15,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { lock } from 'proper-lockfile'
 import { afterEach, describe, expect, it } from 'vitest'
-import { forceTerminateProcessTree } from '@orca/process-host/process-tree-termination'
-import { spawnProcess } from '@orca/process-host'
+import { forceTerminateProcessTree } from '@coding-agent/process-host/process-tree-termination'
+import { spawnProcess } from '@coding-agent/process-host'
 import {
   importReleaseCheckoutModule,
   materializeReleaseCheckout,

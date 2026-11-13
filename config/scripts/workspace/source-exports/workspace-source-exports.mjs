@@ -95,7 +95,7 @@ export function createWorkspaceSourceResolver(root = process.cwd()) {
       if (sources.has(specifier)) {
         return sources.get(specifier)
       }
-      if (workspace?.native || (!workspace && !specifier.startsWith('@orca/'))) {
+      if (workspace?.native || (!workspace && !specifier.startsWith('@coding-agent/'))) {
         return null
       }
       throw new Error(`No public orca-source export for ${specifier}`)

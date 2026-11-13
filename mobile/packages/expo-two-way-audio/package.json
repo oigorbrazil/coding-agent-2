@@ -1,5 +1,5 @@
 {
-  "name": "@orca/expo-two-way-audio",
+  "name": "@coding-agent/expo-two-way-audio",
   "version": "0.0.1",
   "private": true,
   "description": "Native module for two way audio streaming",

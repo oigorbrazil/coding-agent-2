@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { isCodexAppServerUnsupportedError } from '../../app-server/codex-app-server-session'
 import {
   runCodexHookTrustGrantSession,
@@ -42,7 +43,6 @@ import {
 } from './codex-trust-grant-cooldown'
 
 // Operational escape hatch, separate from settings, to force computed-trust fallback.
-const DISABLE_ENV_FLAG = 'ORCA_DISABLE_CODEX_TRUST_RPC'
 
 export type CodexManagedTrustGrantOutcome =
   | { lane: 'rpc'; entries: CodexTrustEntry[] }
@@ -229,7 +229,7 @@ export async function grantManagedCodexHookTrust(
   beforeSession?: () => void
 ): Promise<CodexManagedTrustGrantOutcome> {
   try {
-    if (process.env[DISABLE_ENV_FLAG] === '1') {
+    if (readAppEnv(process.env, 'DISABLE_CODEX_TRUST_RPC') === '1') {
       return fallback(plan, 'disabled')
     }
     if (plan.managedEntries.length === 0) {

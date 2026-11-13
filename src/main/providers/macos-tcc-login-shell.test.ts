@@ -11,7 +11,7 @@ const { existsSyncMock, userInfoMock, runProcessMock, ptyProbeMock } = vi.hoiste
 vi.mock('node:fs', () => ({ existsSync: existsSyncMock }))
 vi.mock('node:os', () => ({ userInfo: userInfoMock }))
 // Process-host owns encoding/signals/caps; this suite checks PAM argv and verdicts.
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: (...args: unknown[]) => Promise.resolve(runProcessMock(...args))
 }))
 vi.mock('./macos-login-session-pty-probe', async (importOriginal) => ({

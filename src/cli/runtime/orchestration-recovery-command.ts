@@ -1,12 +1,14 @@
+import { readAppEnv } from '../../shared/app-env'
 export function resolveOrchestrationCliExecutable(
   env: NodeJS.ProcessEnv = process.env,
   platform: NodeJS.Platform = process.platform
 ): string {
-  const configured = env.ORCA_CLI_COMMAND?.trim()
+  const configured = readAppEnv(env, 'CLI_COMMAND')?.trim()
   if (configured) {
     return configured
   }
-  if (env.ORCA_DEV_REPO_ROOT) {
+  const configuredEnv = readAppEnv(env, 'DEV_REPO_ROOT')
+  if (configuredEnv) {
     return 'orca-dev'
   }
   return platform === 'linux' ? 'orca-ide' : 'orca'

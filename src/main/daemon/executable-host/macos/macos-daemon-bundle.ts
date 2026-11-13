@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { mkdir, mkdtemp, realpath, rename } from 'node:fs/promises'
 import { dirname, isAbsolute, join, resolve } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { cloneMacTree } from '../../../filesystem/macos-tree-clone'
 import { rm } from '../../../filesystem/asar-transparent-fs'
 import { ensurePrivateDir } from '../../endpoint/publication/daemon-private-file-modes'

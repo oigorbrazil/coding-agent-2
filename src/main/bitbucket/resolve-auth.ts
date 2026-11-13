@@ -1,6 +1,6 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import {
   DEFAULT_API_BASE_URL,
-  envValue,
   getEnvAuthConfig,
   hasAuth,
   type BitbucketAuthConfig
@@ -22,7 +22,8 @@ export function storedAuthConfig(
   const baseUrl = secret.authMode ? (secret.baseUrl ?? null) : (metadata?.baseUrl ?? null)
   return {
     // The environment base URL overrides stored credentials independently.
-    baseUrl: envValue('ORCA_BITBUCKET_API_BASE_URL') ?? baseUrl ?? DEFAULT_API_BASE_URL,
+    baseUrl:
+      readProviderEnvironment('CODING_BITBUCKET_API_BASE_URL') ?? baseUrl ?? DEFAULT_API_BASE_URL,
     accessToken: authMode === 'token' ? secret.accessToken : null,
     email: authMode === 'basic' ? email : null,
     apiToken: authMode === 'basic' ? secret.apiToken : null

@@ -39,7 +39,7 @@ vi.mock('electron', () => ({
   app: { getPath: appGetPathMock },
   session: { fromPartition: sessionFromPartitionMock }
 }))
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock
 }))
 vi.mock('../sessions/browser-session-registry', () => ({

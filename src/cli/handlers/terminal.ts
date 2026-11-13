@@ -243,7 +243,7 @@ export const TERMINAL_HANDLERS: Record<string, CommandHandler> = {
       ) {
         throw new RuntimeClientError(
           'incompatible_runtime',
-          'This Coding Agent 2 host does not support --retry-split and would split again. Nothing was split; check `orca terminal list --json` for the pane instead.'
+          'This Coding Agent 2 host does not support --retry-split and would split again. Nothing was split; check `coding terminal list --json` for the pane instead.'
         )
       }
     }

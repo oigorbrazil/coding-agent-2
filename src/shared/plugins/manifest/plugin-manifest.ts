@@ -252,7 +252,8 @@ export {
   pluginCommandIdSchema
 } from './plugin-manifest-fields'
 
-export const PLUGIN_MANIFEST_FILENAME = 'orca-plugin.json'
+export const PLUGIN_MANIFEST_FILENAME = 'coding-plugin.json'
+export const LEGACY_PLUGIN_MANIFEST_FILENAME = 'orca-plugin.json'
 
 /** Canonical install identity: `<publisher>.<id>` (also the install dir name). The publisher
  *  must be the derived one, never the file's own. */

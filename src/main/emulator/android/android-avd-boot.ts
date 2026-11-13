@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process'
-import { createOutputSink } from '@orca/process-host/bounded-output-sink'
+import { createOutputSink } from '@coding-agent/process-host/bounded-output-sink'
 import { EmulatorError } from '../emulator-errors'
 import { emulatorFailureText } from '../../../shared/emulator-failure-copy'
 import type { AndroidCommandRunner } from './android-command-runner'

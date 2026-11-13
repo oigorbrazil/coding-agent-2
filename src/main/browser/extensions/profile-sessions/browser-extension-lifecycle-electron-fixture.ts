@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BaseWindow, protocol, session } from 'electron'
 import { renameSync, writeFileSync } from 'node:fs'
 import { ORCA_BROWSER_PARTITION } from '../../../../shared/constants'
@@ -18,7 +19,7 @@ if (
   !statusPath ||
   !extensionDirectory ||
   (phase !== 'install' && phase !== 'restart' && phase !== 'update') ||
-  process.env.ORCA_BACKGROUND_LAUNCH !== '1'
+  readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1'
 ) {
   throw new Error(
     'Lifecycle fixture requires a status path, an extension, a phase and background launch'

@@ -1,4 +1,4 @@
-import { RELAY_DEFAULT_REGION } from '@orca-cloud/relay-contract/relay-regions'
+import { RELAY_DEFAULT_REGION } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { RelayDatabase, SqlRow } from '../database/database.js'
 import { REGIONAL_REHOME_ABORT_REPORT_WINDOW_MS } from './regional-rehome/regional-rehome-abort-reason.js'
 

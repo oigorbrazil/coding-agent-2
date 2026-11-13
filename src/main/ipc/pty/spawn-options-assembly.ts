@@ -1,8 +1,12 @@
+import type { GlobalSettings } from '../../../shared/global-settings-types'
+import type { PtySpawnOptions } from '../../providers/pty-provider-contract'
+import type { CodexAccountSelectionTarget } from '../../codex-accounts/runtime-selection'
+import { readAppEnv } from '../../../shared/app-env'
 import { withClaudeAgentViewPlugin } from '../../../shared/claude-agent-view-launch'
 import { resolveStartupShell } from '../../../shared/agent-launch/startup/tui-agent-startup-shell'
 import { resolveLocalWindowsAgentStartupShell } from '../../../shared/windows-terminal-shell'
 import { getAppEnvironment } from '../../../shared/app-environment'
-import type { GlobalSettings } from '../../../shared/global-settings-types'
+
 import { isTuiAgent } from '../../../shared/agent-launch/catalog/tui-agent-config'
 import { withCodexTerminalServerIsolationEnv } from '../../../shared/codex-terminal-server-isolation'
 import { getLegacyOpenCodeEnvKeysToDelete } from '../../opencode/legacy-shared-config-dir'
@@ -11,8 +15,7 @@ import { LEGACY_TERMINAL_SHIM_REMOTE_ENV_KEYS } from '../../pty/shell-startup/le
 import { PI_PROCESS_OWNER_ENV_KEYS } from '../../pty/shell-startup/pi-process-owner-env'
 import { planCodexNoDaemonLaunch } from '../../pty/shell-startup/codex-no-daemon-launch-command'
 import { applyAgentWorkspaceTrustToSpawn } from '../../agent-launch/trust/agent-workspace-trust-spawn'
-import type { PtySpawnOptions } from '../../providers/pty-provider-contract'
-import type { CodexAccountSelectionTarget } from '../../codex-accounts/runtime-selection'
+
 import { getStartupTerminalIngressIntent } from '../terminal-startup-color-query-replies'
 import { CODEX_HOME_ENV_KEYS } from './host-env/codex-home'
 import {
@@ -141,7 +144,9 @@ export async function assemblePtySpawnLaunchOptions(input: PtySpawnLaunchOptions
       : {})
   })
   const env = openCodeLaunch.env
-  const pluginDir = !connectionId ? env?.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR : undefined
+  const pluginDir = !connectionId
+    ? readAppEnv(env ?? {}, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR')
+    : undefined
   const launchCommand =
     pluginDir && openCodeLaunch.command
       ? withClaudeAgentViewPlugin(openCodeLaunch.command, pluginDir, shell)

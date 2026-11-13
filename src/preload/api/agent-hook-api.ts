@@ -8,6 +8,7 @@ export type HooksApi = {
     status?: 'ok' | 'error'
     hasHooks: boolean
     hooks: OrcaHooks | null
+    warning?: string
     mayNeedUpdate: boolean
     /** A background check refused because the repo's WSL distro is stopped or didn't answer. */
     unavailable?: 'wsl-distro-stopped' | 'wsl-distro-unverifiable'

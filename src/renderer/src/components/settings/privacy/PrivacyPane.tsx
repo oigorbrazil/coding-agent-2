@@ -37,7 +37,7 @@ export function envVarNameForReason(reason: EnvBlockedReason): string {
     return 'DO_NOT_TRACK'
   }
   if (reason === 'orca_disabled') {
-    return 'ORCA_TELEMETRY_DISABLED'
+    return 'CODING_AGENT_TELEMETRY_DISABLED'
   }
   return 'CI'
 }

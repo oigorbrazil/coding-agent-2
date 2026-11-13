@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../../../../shared/legacy-renamed-file'
 // QR public keys let paired clients derive application-layer ECDH encryption over plain WebSockets.
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -38,7 +39,7 @@ function keypairFromSecret(secretKey: Uint8Array, storedPublicKey: Uint8Array): 
 }
 
 export function loadOrCreateE2EEKeypair(userDataPath: string): E2EEKeypair {
-  const filePath = join(userDataPath, KEYPAIR_FILENAME)
+  const filePath = renamedUserDataFile(join(userDataPath, KEYPAIR_FILENAME))
 
   if (existsSync(filePath)) {
     try {

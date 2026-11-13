@@ -19,7 +19,7 @@ const permissionStatusDelayMock = vi.hoisted(() =>
 const permissionStatusTempDir = '/tmp/orca-computer-use-permissions-test'
 const permissionStatusPath = join(permissionStatusTempDir, 'status.json')
 
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 
 // The status poll's promise delay must use the fake clock this suite controls.
 vi.mock('node:timers/promises', async (importOriginal) => ({

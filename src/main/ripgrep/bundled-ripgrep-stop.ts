@@ -1,6 +1,6 @@
-import { signalProcessTree } from '@orca/process-host/process-tree-termination'
+import { signalProcessTree } from '@coding-agent/process-host/process-tree-termination'
 import { killSpawnedRipgrepProcess } from '../../shared/ripgrep/ripgrep-process-availability'
-import type { ChildProcessHandle } from '@orca/process-host/process-spec'
+import type { ChildProcessHandle } from '@coding-agent/process-host/process-spec'
 
 const stoppingChildren = new WeakSet<ChildProcessHandle>()
 

@@ -22,7 +22,7 @@ const fileId = (path: string): string =>
     .replace(/\.json$/, '')
 const pluginKey = (path: string): string => path.match(/launch\/([^/]+)\//)![1]
 const manifests = import.meta.glob<{ contributes: { themes: { id: string; title: string }[] } }>(
-  '../../../../../resources/plugins/launch/stablyai.orca-{github-vscode-theme,vscode-default-themes}/orca-plugin.json',
+  '../../../../../resources/plugins/launch/stablyai.orca-{github-vscode-theme,vscode-default-themes}/coding-plugin.json',
   { eager: true, import: 'default' }
 )
 const titles = new Map(

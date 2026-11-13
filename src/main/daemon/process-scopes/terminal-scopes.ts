@@ -1,7 +1,8 @@
+import { readAppEnv } from '../../../shared/app-env'
 /** Keep terminal cgroups beside the daemon to isolate resource-limit failures; bind their slice to its lifetime. */
 import { accessSync, constants, existsSync } from 'node:fs'
 import { basename, delimiter, dirname, isAbsolute, join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { userManagerEnv } from './daemon-cgroup-scope'
 import {
   enforcedTerminalMemoryLimits,
@@ -95,7 +96,7 @@ type ResolveInput = {
 
 /** Enable scopes only after a successful property probe; report limits only when kernel files confirm them. */
 export function resolveTerminalScopes(input: ResolveInput): TerminalScopeResolution {
-  const parsed = parsePtyProcessCeiling(input.env[PTY_PROCESS_CEILING_ENV])
+  const parsed = parsePtyProcessCeiling(readAppEnv(input.env, 'TERMINAL_PROCESS_CEILING'))
   const limit = parsed.kind === 'limit' ? parsed.limit : null
   const memoryRequest = requestedTerminalMemoryLimits(input.env)
   const memoryRequested = memoryRequest.properties.length + memoryRequest.invalid.length > 0

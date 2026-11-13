@@ -1,14 +1,13 @@
+import type { IPtyProvider, PtySpawnResult } from '../providers/pty-provider-contract'
+import { readAppEnv } from '../../shared/app-env'
 import type { PtySpawnOutcome } from '../ipc/pty/spawn-outcome'
 import { agentHookServer } from '../agent-hooks/server'
 import type { OrcaRuntimeService } from '../runtime/orca-runtime'
-import type { IPtyProvider, PtySpawnResult } from '../providers/pty-provider-contract'
+
 import { ptyIncarnationById, ptyOwnership } from '../ipc/pty/provider/ownership-state'
 import { LOCAL_EXECUTION_HOST_ID } from '../../shared/execution-host'
 import { isPtyIncarnationId } from '../../shared/terminal/pty/lifecycle/pty-incarnation'
-import {
-  OPENCODE_STARTUP_PROMPT_NONCE_ENV,
-  OPENCODE_STARTUP_PROMPT_SHA256_ENV
-} from '../../shared/agent-launch/startup/opencode-startup-prompt'
+
 import { OpenCodeStartupPromptClaims } from './opencode-startup-prompt-claims'
 
 type OpenCodePromptRuntime = Pick<
@@ -56,14 +55,14 @@ export async function commitPtyWithOpenCodePromptIntent<
     if (accepted) {
       bindOpenCodeStartupPromptOwner({ ...options, result: accepted })
     } else {
-      const nonce = options.env?.[OPENCODE_STARTUP_PROMPT_NONCE_ENV]
+      const nonce = readAppEnv(options.env ?? {}, 'OPENCODE_STARTUP_PROMPT_NONCE')
       if (nonce) {
         claims.cancel(nonce)
       }
     }
     return result
   } catch (error) {
-    const nonce = options.env?.[OPENCODE_STARTUP_PROMPT_NONCE_ENV]
+    const nonce = readAppEnv(options.env ?? {}, 'OPENCODE_STARTUP_PROMPT_NONCE')
     if (nonce) {
       claims.cancel(nonce)
     }
@@ -87,9 +86,9 @@ export function bindOpenCodeStartupPromptOwner(options: {
   connectionId?: string | null
 }): void {
   const { env, result, runtime, provider } = options
-  const nonce = env?.[OPENCODE_STARTUP_PROMPT_NONCE_ENV]
-  const digest = env?.[OPENCODE_STARTUP_PROMPT_SHA256_ENV]
-  const launchToken = env?.ORCA_AGENT_LAUNCH_TOKEN
+  const nonce = readAppEnv(env ?? {}, 'OPENCODE_STARTUP_PROMPT_NONCE')
+  const digest = readAppEnv(env ?? {}, 'OPENCODE_STARTUP_PROMPT_SHA256')
+  const launchToken = readAppEnv(env ?? {}, 'AGENT_LAUNCH_TOKEN')
   const incarnation = result.incarnationId
   if (
     options.connectionId ||

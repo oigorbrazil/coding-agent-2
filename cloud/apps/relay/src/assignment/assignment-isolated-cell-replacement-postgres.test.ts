@@ -1,4 +1,4 @@
-import { ASSIGNMENT_LIMITS } from '@orca-cloud/relay-contract/assignment-invariants'
+import { ASSIGNMENT_LIMITS } from '@coding-agent-cloud/relay-contract/assignment-invariants'
 import { createHash } from 'node:crypto'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { RelayAssignmentRowBusyError, RelayAssignmentStore } from './assignment-store.js'

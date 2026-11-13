@@ -1,5 +1,5 @@
 /** Recover fixed ports only from parentless processes with the exact same Coding Agent 2 forward/host argv; user SSH and live Coding Agent 2 tunnels are excluded. */
-import { parseWindowsCommandLine } from '@orca/process-host/windows-command-line'
+import { parseWindowsCommandLine } from '@coding-agent/process-host/windows-command-line'
 import { getFreshShellForegroundSnapshot } from '../../../shared/process-table-snapshot-reader'
 import { readWindowsProcessTableFresh } from '../../windows/windows-process-table'
 import {

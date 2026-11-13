@@ -1,6 +1,7 @@
+import { appEnvPairs } from '../../shared/app-env'
 // WSL exec skips shell setup; hydrate login-shell credentials/proxies before git and daemon startup.
 import { isWslHostOrcadProcess } from '../ipc/wsl-guest-windows-drive-path'
-import { PROBE_MARKER_ENV_VAR } from '../startup/hydrate-shell-path'
+
 import { resolveLoginShellEnvironment } from '../startup/login-shell-environment'
 
 // Allowlist excludes GUI askpass (which could block) and PATH (which has separate drive filtering).
@@ -64,7 +65,7 @@ export async function adoptWslHostLoginEnvironment(
   // Reuse PATH probe markers to suppress interactive rc behavior within its startup budget.
   resolveShellEnv: () => Promise<NodeJS.ProcessEnv> = () =>
     resolveLoginShellEnvironment({
-      env: { ...env, [PROBE_MARKER_ENV_VAR]: '1' },
+      env: { ...env, ...appEnvPairs('SHELL_PATH_PROBE', '1') },
       timeoutMs: 10_000
     }),
   isWslHost: () => boolean = () => isWslHostOrcadProcess(env)

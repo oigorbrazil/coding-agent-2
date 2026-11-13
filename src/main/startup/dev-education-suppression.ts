@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { ONBOARDING_FINAL_STEP, ONBOARDING_FLOW_VERSION } from '../../shared/onboarding-defaults'
 import { CONTEXTUAL_TOUR_IDS } from '../../shared/contextual-tours'
 import {
@@ -19,8 +20,8 @@ export function shouldSuppressDevEducation(args: {
   const env = args.env ?? process.env
   return (
     args.isDev &&
-    env.ORCA_E2E_USER_DATA_DIR === undefined &&
-    env[DEV_SHOW_FIRST_RUN_EDUCATION_ENV] !== '1'
+    readAppEnv(env, 'E2E_USER_DATA_DIR') === undefined &&
+    readAppEnv(env, 'DEV_SHOW_FIRST_RUN_EDUCATION') !== '1'
   )
 }
 

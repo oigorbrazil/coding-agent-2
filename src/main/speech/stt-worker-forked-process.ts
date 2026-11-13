@@ -1,4 +1,4 @@
-import { forkProcess } from '@orca/process-host/fork-process'
+import { forkProcess } from '@coding-agent/process-host/fork-process'
 import { getSttWorkerPath } from './stt-worker-paths'
 import {
   logSttWorkerStderr,

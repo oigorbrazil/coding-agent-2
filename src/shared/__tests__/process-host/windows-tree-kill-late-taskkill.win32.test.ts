@@ -4,9 +4,9 @@ import { join } from 'node:path'
 import type { ChildProcess } from 'node:child_process'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { removeTreeSync } from '../../windows-transient-lock-removal'
-import { runProcess, spawnProcess } from '@orca/process-host'
-import { _setWindowsTaskkillLauncherForTests } from '@orca/process-host/windows-tree-kill'
-import { windowsSystem32Binary } from '@orca/process-host/windows-system-binary'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
+import { _setWindowsTaskkillLauncherForTests } from '@coding-agent/process-host/windows-tree-kill'
+import { windowsSystem32Binary } from '@coding-agent/process-host/windows-system-binary'
 
 /** Loaded taskkill can outlast its caller; killing root first orphans grandchildren before tree enumeration. ORCA_WINDOWS_TREE_KILL_LOAD adds CPU burners only in isolated CI steps. */
 const describeOnWindows = process.platform === 'win32' ? describe : describe.skip

@@ -1,7 +1,7 @@
 import { mkdtemp, rename, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getStatus } from './status-read'
 import { invalidateGitReadCaches } from './git-read-cache-invalidation'

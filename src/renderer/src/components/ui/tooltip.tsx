@@ -32,7 +32,7 @@ function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimiti
 const TAB_PREVIEW_CLASSES =
   'w-64 max-w-[calc(100vw-1rem)] border border-border bg-popover p-3 text-popover-foreground shadow-floating motion-safe:animate-in motion-safe:fade-in-0 data-[state=closed]:animate-none'
 
-const tooltipContentVariants = cva('z-[90] rounded-md text-xs', {
+const tooltipContentVariants = cva('z-[90] rounded-lg text-xs', {
   variants: {
     variant: {
       default:

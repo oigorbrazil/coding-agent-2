@@ -1,6 +1,8 @@
+import type { CommandHandler } from '../dispatch'
+import { readAppEnv, deleteAppEnvKey } from '../../shared/app-env'
 import { spawn } from 'node:child_process'
 import { resolve } from 'node:path'
-import type { CommandHandler } from '../dispatch'
+
 import { formatCliStatus, formatStatus, printResult } from '../format'
 import { RuntimeClientError, serveOrcaApp } from '../runtime-client'
 import { getOptionalServeBind } from '../runtime/serve-bind-flag'
@@ -54,11 +56,11 @@ export const CORE_HANDLERS: Record<string, CommandHandler> = {
         'Claude Agent Teams native panes are not supported on Windows.'
       )
     }
-    const paneKey = process.env.ORCA_PANE_KEY
+    const paneKey = readAppEnv(process.env, 'PANE_KEY')
     if (!paneKey) {
       throw new RuntimeClientError(
         'invalid_environment',
-        'orca claude-teams must be run inside a Coding Agent 2 terminal.'
+        'coding claude-teams must be run inside a Coding Agent 2 terminal.'
       )
     }
     const inheritedEnv = envRecord()
@@ -70,7 +72,7 @@ export const CORE_HANDLERS: Record<string, CommandHandler> = {
       prepareAuth: true
     })
     for (const key of response.result.launch.envToDelete ?? []) {
-      delete inheritedEnv[key]
+      deleteAppEnvKey(inheritedEnv, key)
     }
     process.exitCode = await runClaudeAgentTeams(
       {
@@ -91,7 +93,7 @@ export const CORE_HANDLERS: Record<string, CommandHandler> = {
       if (flags.has('data-root') && (typeof dataRoot !== 'string' || !dataRoot.trim())) {
         throw new RuntimeClientError(
           'invalid_argument',
-          '--data-root expects a directory. Usage: orca serve --reclaim-stale-lock [--data-root <dir>] [--yes] [--json]'
+          '--data-root expects a directory. Usage: coding serve --reclaim-stale-lock [--data-root <dir>] [--yes] [--json]'
         )
       }
       // Why lazy: only this mode needs orcad's lock code, and every other command skips loading it.
@@ -99,7 +101,7 @@ export const CORE_HANDLERS: Record<string, CommandHandler> = {
         await import('../../main/orcad/orcad-stale-lock-reclaim.js')
       const result = await reclaimStaleOrcadInstanceLock(
         typeof dataRoot === 'string' ? resolve(dataRoot) : resolveLaunchUserDataPath(),
-        // This CLI's own binary is no command to give a user; `orca serve` is.
+        // This CLI's own binary is no command to give a user; `coding serve` is.
         { yes: flags.get('yes') === true, hintRuntime: null }
       )
       printOrcadStaleLockReclaimResult(result, json)

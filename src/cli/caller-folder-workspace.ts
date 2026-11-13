@@ -1,10 +1,14 @@
 import type { FolderWorkspace } from '../shared/folder-workspaces/folder-workspace-types'
-import { getFolderSourceRepos } from '../shared/folder-workspaces/folder-workspace-source-repos'
 import type { ProjectGroup } from '../shared/project-group-types'
 import type { Repo } from '../shared/repo-types'
-import { folderWorkspaceKey, parseWorkspaceKey, type WorkspaceKey } from '../shared/workspace-scope'
+import { type WorkspaceKey, folderWorkspaceKey, parseWorkspaceKey } from '../shared/workspace-scope'
+import { type RuntimeClient, RuntimeClientError } from './runtime-client'
+import { readAppEnv } from '../shared/app-env'
+
+import { getFolderSourceRepos } from '../shared/folder-workspaces/folder-workspace-source-repos'
+
 import { getOptionalStringFlag } from './flags'
-import { RuntimeClientError, type RuntimeClient } from './runtime-client'
+
 import { getOptionalWorktreeSelector } from './selectors'
 
 export type FolderWorkspaceRepoChoice = {
@@ -15,7 +19,7 @@ export type FolderWorkspaceRepoChoice = {
 
 /** The folder workspace whose terminal runs this command, from the env Coding Agent 2 sets on its terminals. */
 export function getCallerFolderWorkspaceKey(): WorkspaceKey | undefined {
-  return [process.env.ORCA_WORKSPACE_ID, process.env.ORCA_WORKTREE_ID]
+  return [readAppEnv(process.env, 'WORKSPACE_ID'), readAppEnv(process.env, 'WORKTREE_ID')]
     .map((id) => id?.trim())
     .find((id): id is WorkspaceKey => !!id && parseWorkspaceKey(id)?.type === 'folder')
 }
@@ -34,7 +38,7 @@ export async function getOptionalParentSelector(
     return await getOptionalWorktreeSelector(flags, 'parent-worktree', cwd, client)
   } catch (error) {
     // A worktree terminal's own workspace is a worktree; only folder terminals fall back to a folder.
-    const callerWorktree = process.env.ORCA_WORKTREE_ID?.trim()
+    const callerWorktree = readAppEnv(process.env, 'WORKTREE_ID')?.trim()
     const callerFolder =
       callerWorktree && !callerWorktree.startsWith('folder:')
         ? undefined
@@ -114,7 +118,7 @@ export async function getFolderWorkspaceMissingRepoError(
   if (choices.length === 0) {
     return new RuntimeClientError(
       'invalid_argument',
-      `This folder workspace is not a Git repository, and Coding Agent 2 has no Git repositories registered under ${read.folderWorkspace.folderPath}. Add one with orca repo add --path <repository path>, then pass --repo.`,
+      `This folder workspace is not a Git repository, and Coding Agent 2 has no Git repositories registered under ${read.folderWorkspace.folderPath}. Add one with coding repo add --path <repository path>, then pass --repo.`,
       data
     )
   }

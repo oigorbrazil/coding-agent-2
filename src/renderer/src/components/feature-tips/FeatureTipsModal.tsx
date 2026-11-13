@@ -216,7 +216,7 @@ export default function FeatureTipsModal(): JSX.Element | null {
             toast.success(
               t(
                 'auto.components.feature.tips.FeatureTipsModal.ce13a742d0',
-                'Registered `orca` in PATH.'
+                'Registered `coding-agent` in PATH.'
               )
             )
             setSkillTerminalOpen(true)

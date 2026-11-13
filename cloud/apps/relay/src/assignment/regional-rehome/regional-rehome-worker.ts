@@ -1,4 +1,4 @@
-import { IdleRegionalRehomeResponseSchema, isGlobalIdleRegionalRehomeDeferral } from '@orca-cloud/relay-contract/idle-regional-rehome'
+import { IdleRegionalRehomeResponseSchema, isGlobalIdleRegionalRehomeDeferral } from '@coding-agent-cloud/relay-contract/idle-regional-rehome'
 import type { RelayAssignmentStore } from '../assignment-store.js'
 import type { RelayConfig } from '../../config.js'
 import { googleMetadataIdentityToken } from '../../authentication/google-metadata-identity-token.js'

@@ -1,4 +1,4 @@
-import { assertWslDistroAllowed } from '@orca/process-host/wsl-distro-allowlist'
+import { assertWslDistroAllowed } from '@coding-agent/process-host/wsl-distro-allowlist'
 import { getDefaultWslDistro } from '../../wsl/discovery/distro-catalog'
 import { parseWslPath } from '../../wsl/filesystem/unc-path-access'
 import type { WslUncPathInfo as WslPathInfo } from '../../../shared/wsl-paths'

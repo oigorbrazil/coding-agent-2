@@ -47,7 +47,7 @@ export function TerminalLaunchDemo(): React.JSX.Element {
       </div>
       <div
         data-demo="terminal"
-        className="absolute inset-x-0 bottom-0 top-7 bg-editor-surface p-2.5 font-mono leading-relaxed text-foreground"
+        className="absolute inset-x-0 bottom-0 top-7 bg-editor-surface p-2.5 font-code leading-relaxed text-foreground"
       >
         <div>
           <span className="text-status-success">{DEMO_PROMPT}</span> {DEMO_COMMAND}

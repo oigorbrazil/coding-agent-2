@@ -46,6 +46,8 @@ import { repairDuplicatePtyPanesOnStart } from '../runtime/terminal/identity/mov
 import { WslUsageReporter } from '../telemetry/wsl-usage-reporter'
 import { ALL_RPC_METHODS } from '../runtime/rpc/methods/rpc-method-registry'
 import { startClaudeCodeThemeSync } from '../claude/theme-sync/claude-code-theme-sync-schedule'
+import { startCodingOpusAccountsExport } from '../coding-opus/coding-opus-accounts-export'
+import { codingOpusStateDir } from '../coding-opus/coding-opus-paths'
 
 // Headless serve has no first window; timer fallback must still sweep trash.
 const WORKTREE_TRASH_SWEEP_FALLBACK_MS = 15_000
@@ -134,6 +136,13 @@ export async function initializeReadyRuntimeServices(): Promise<void> {
       onSystemThemeChanged: (listener) => nativeTheme.on('updated', listener),
       onAppFocused: (listener) => app.on('browser-window-focus', listener),
       userDataPath: app.getPath('userData')
+    })
+    startCodingOpusAccountsExport({
+      getSettings: () => store.getSettings(),
+      onSettingsChanged: (listener) => store.onSettingsChanged(listener),
+      userDataPath: app.getPath('userData'),
+      stateDir: codingOpusStateDir(),
+      log: (message) => console.warn(message)
     })
   }, WORKTREE_TRASH_SWEEP_FALLBACK_MS)
   nativeTheme.themeSource = store.getSettings().theme ?? 'system'

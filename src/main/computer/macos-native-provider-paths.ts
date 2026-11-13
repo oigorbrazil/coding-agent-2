@@ -1,8 +1,9 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
 export function resolveMacOSComputerUseAppPath(): string | null {
-  const override = process.env.ORCA_COMPUTER_MACOS_HELPER_APP_PATH
+  const override = readAppEnv(process.env, 'COMPUTER_MACOS_HELPER_APP_PATH')
   if (override && existsSync(override)) {
     return override
   }

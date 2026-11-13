@@ -1,4 +1,4 @@
-import type { PipedProcessSpawner } from '@orca/process-host/process-spec'
+import type { PipedProcessSpawner } from '@coding-agent/process-host/process-spec'
 import { afterEach, expect, it, vi } from 'vitest'
 import { createFakePipedChild } from '../../shared/__fixtures__/fake-spawned-child'
 import type * as AcpConnection from '../acp/acp-agent-connection'

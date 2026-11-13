@@ -89,11 +89,11 @@ function showSetupSkippedToast(
     reason === 'changed-again'
       ? translate(
           'worktree.setupTrust.changedAgain',
-          "Setup didn't run: this workspace's orca.yaml changed again since you reviewed it."
+          "Setup didn't run: this workspace's coding.yaml changed again since you reviewed it."
         )
       : translate(
           'worktree.setupTrust.createdBranchSkipped',
-          "Setup didn't run: this workspace's branch has different orca.yaml setup commands than the ones you approved."
+          "Setup didn't run: this workspace's branch has different coding.yaml setup commands than the ones you approved."
         ),
     {
       duration: SETUP_SKIPPED_TOAST_MS,

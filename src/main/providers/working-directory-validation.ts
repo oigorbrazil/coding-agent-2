@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync, statSync } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import { release } from 'node:os'
@@ -63,7 +64,7 @@ export function formatLocalPtyEnvironmentDiag(extra: Record<string, string> = {}
     ...extra,
     arch: process.arch,
     platform: `${process.platform} ${systemVersion}`,
-    orca: process.env.ORCA_APP_VERSION?.trim() || '0.0.0-dev'
+    orca: readAppEnv(process.env, 'APP_VERSION')?.trim() || '0.0.0-dev'
   }
   return Object.entries(parts)
     .map(([key, value]) => `${key}: ${value}`)

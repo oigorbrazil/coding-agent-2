@@ -55,7 +55,7 @@ export async function createPluginFromTemplate(input: {
   const templateInput = { publisher: input.publisher, id, name }
   const pluginKey = pluginTemplateKey(templateInput)
   const template = renderPluginTemplate(input.template, templateInput)
-  const manifest = parsePluginManifest(JSON.parse(template.files['orca-plugin.json']))
+  const manifest = parsePluginManifest(JSON.parse(template.files['coding-plugin.json']))
   if (!manifest.ok) {
     throw new PluginCreateError(
       `cannot create ${pluginKey}: ${manifest.error}. Pass --id (and --publisher, if set) using lowercase letters, numbers and dashes.`

@@ -1,3 +1,4 @@
+import { appEnvAliases } from '../../shared/app-env'
 import { quotePowerShellLiteral } from '../../shared/powershell-native-argument'
 import { WINDOWS_POWERSHELL_HOOK_ENVIRONMENT_GUARD } from './hook-stdin-contract'
 import {
@@ -23,7 +24,7 @@ export function buildWindowsHookPowerShellCommand(
   options: { fallbackStdout?: string } = {}
 ): string {
   const quoted = quotePowerShellLiteral(scriptPath)
-  const envPrefix = Object.entries(env)
+  const envPrefix = Object.entries(appEnvAliases(env))
     .map(([key, value]) => `$env:${key} = ${quotePowerShellLiteral(value)}; `)
     .join('')
   const fallback =

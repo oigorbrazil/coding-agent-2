@@ -1,7 +1,7 @@
 import { realpathSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { basename, isAbsolute, join, relative, toNamespacedPath } from 'node:path'
-import type * as WindowsSecurityModule from '@orca/windows-security'
+import type * as WindowsSecurityModule from '@coding-agent/windows-security'
 import { ORCAD_WINDOWS_SECURITY_FILENAME } from './orcad-artifacts'
 
 export type {
@@ -9,7 +9,7 @@ export type {
   StdHandleInheritanceFailure,
   WindowsAce,
   WindowsDacl
-} from '@orca/windows-security'
+} from '@coding-agent/windows-security'
 export type WindowsSecurityAddon = typeof WindowsSecurityModule
 
 /** The addon (every path namespaced, async writes ordered per path) and the token's user SID. */
@@ -42,7 +42,7 @@ function loadOnce(): WindowsSecurity | { error: string } {
   const candidates = [
     () => join(__dirname, ORCAD_WINDOWS_SECURITY_FILENAME),
     () => join(__dirname, '..', '..', ORCAD_WINDOWS_SECURITY_FILENAME),
-    () => trustedPackagePath(requireFromHere.resolve('@orca/windows-security'), appRoots())
+    () => trustedPackagePath(requireFromHere.resolve('@coding-agent/windows-security'), appRoots())
   ]
   for (const candidate of candidates) {
     try {
@@ -75,7 +75,7 @@ export function trustedPackagePath(resolved: string, roots: readonly string[]): 
     return fromRoot !== '' && !fromRoot.startsWith('..') && !isAbsolute(fromRoot)
   })
   if (!inside) {
-    throw new Error(`refusing @orca/windows-security outside the app: ${real}`)
+    throw new Error(`refusing @coding-agent/windows-security outside the app: ${real}`)
   }
   return real
 }

@@ -15,7 +15,7 @@ describe('reportSecretProtectionGap', () => {
 
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'orca-secret-report-'))
-    dataFile = join(dir, 'orca-data.json')
+    dataFile = join(dir, 'coding-data.json')
     logged = []
   })
 

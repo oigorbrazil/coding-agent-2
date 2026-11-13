@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { app } from 'electron'
 import {
   cleanCloudServiceUrl as cleanUrl,
@@ -43,18 +44,27 @@ export function getOrcaCloudAuthConfig(
   env: NodeJS.ProcessEnv = process.env,
   packaged: boolean = isPackagedOrcaBuild()
 ): { configured: true; config: OrcaCloudAuthConfig } | { configured: false; setupMessage: string } {
+  // Orca's cloud (onorca.dev) belongs to Orca's makers; Coding Agent 2 signs in through its own
+  // account service (Settings → Account), so the inherited sign-in never opens their login page.
+  if (env.CODING_AGENT_2_ORCA_CLOUD !== '1') {
+    return {
+      configured: false,
+      setupMessage: 'Orca cloud sign-in is not part of Coding Agent 2. Use Settings → Account.'
+    }
+  }
   // Plain HTTP token endpoints are development-only.
   const allowLoopbackHttp = !packaged
   const cleanEndpointUrl = (value: string | undefined): string | null =>
     cleanUrl(value, allowLoopbackHttp)
-  const configuredApiBaseUrl = env.ORCA_CLOUD_API_URL?.trim()
+  const configuredApiBaseUrl = readAppEnv(env, 'CLOUD_API_URL')?.trim()
   // Packaged builds need defaults; first-party endpoints and public client IDs are not secrets.
   const apiBaseUrl = configuredApiBaseUrl
     ? cleanEndpointUrl(configuredApiBaseUrl)
     : packaged
       ? PRODUCTION_API_BASE_URL
       : null
-  const clientId = env.ORCA_CLOUD_CLIENT_ID?.trim() || (packaged ? PRODUCTION_CLIENT_ID : undefined)
+  const clientId =
+    readAppEnv(env, 'CLOUD_CLIENT_ID')?.trim() || (packaged ? PRODUCTION_CLIENT_ID : undefined)
   if (!apiBaseUrl || !clientId) {
     return {
       configured: false,
@@ -62,41 +72,43 @@ export function getOrcaCloudAuthConfig(
     }
   }
 
-  const authBaseUrl = cleanEndpointUrl(env.ORCA_CLOUD_AUTH_URL) ?? apiBaseUrl
+  const authBaseUrl = cleanEndpointUrl(readAppEnv(env, 'CLOUD_AUTH_URL')) ?? apiBaseUrl
   return {
     configured: true,
     config: {
       apiBaseUrl,
       authorizeEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_AUTHORIZE_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_AUTHORIZE_URL')) ??
         endpoint(authBaseUrl, '/v1/desktop/auth/authorize'),
       sessionEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_SESSION_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_SESSION_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/session'),
       refreshEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_REFRESH_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_REFRESH_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/refresh'),
       capabilitiesEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_CAPABILITIES_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_CAPABILITIES_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/capabilities'),
       profileEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_PROFILE_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_PROFILE_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/profile'),
       orgEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_ORG_URL) ?? endpoint(apiBaseUrl, '/v1/desktop/auth/org'),
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_ORG_URL')) ??
+        endpoint(apiBaseUrl, '/v1/desktop/auth/org'),
       logoutEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_LOGOUT_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_LOGOUT_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/logout'),
       relayTokenEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_RELAY_TOKEN_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_RELAY_TOKEN_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/relay-token'),
       connectorTokenEndpoint:
-        cleanEndpointUrl(env.ORCA_CLOUD_CONNECTOR_TOKEN_URL) ??
+        cleanEndpointUrl(readAppEnv(env, 'CLOUD_CONNECTOR_TOKEN_URL')) ??
         endpoint(apiBaseUrl, '/v1/desktop/auth/connector-token'),
       relayDirectorUrl:
-        cleanOrigin(env.ORCA_RELAY_URL, allowLoopbackHttp) ?? PRODUCTION_RELAY_DIRECTOR_URL,
+        cleanOrigin(readAppEnv(env, 'RELAY_URL'), allowLoopbackHttp) ??
+        PRODUCTION_RELAY_DIRECTOR_URL,
       clientId,
-      scope: env.ORCA_CLOUD_AUTH_SCOPE?.trim() || DEFAULT_SCOPE
+      scope: readAppEnv(env, 'CLOUD_AUTH_SCOPE')?.trim() || DEFAULT_SCOPE
     }
   }
 }
@@ -114,7 +126,9 @@ export function allowsPlaintextOrcaCloudSession(
   packaged: boolean = isPackagedOrcaBuild()
 ): boolean {
   return (
-    env.ORCA_CLOUD_ALLOW_PLAINTEXT_SESSION === '1' && env.NODE_ENV !== 'production' && !packaged
+    readAppEnv(env, 'CLOUD_ALLOW_PLAINTEXT_SESSION') === '1' &&
+    env.NODE_ENV !== 'production' &&
+    !packaged
   )
 }
 
@@ -122,5 +136,5 @@ export function isOrcaCloudDevAuthEnabled(
   env: NodeJS.ProcessEnv = process.env,
   packaged: boolean = isPackagedOrcaBuild()
 ): boolean {
-  return env.ORCA_CLOUD_DEV_AUTH === '1' && env.NODE_ENV !== 'production' && !packaged
+  return readAppEnv(env, 'CLOUD_DEV_AUTH') === '1' && env.NODE_ENV !== 'production' && !packaged
 }

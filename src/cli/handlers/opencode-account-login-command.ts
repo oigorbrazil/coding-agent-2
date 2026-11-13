@@ -1,11 +1,11 @@
-import type { ChildProcessHandle } from '@orca/process-host/process-spec'
-import { spawnProcess } from '@orca/process-host'
+import type { ChildProcessHandle } from '@coding-agent/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
 import {
   forceTerminateProcessTree,
   signalProcessTree
-} from '@orca/process-host/process-tree-termination'
-import { inFlightWindowsTreeKill } from '@orca/process-host/windows-tree-kill'
-import { createOutputSink } from '@orca/process-host/bounded-output-sink'
+} from '@coding-agent/process-host/process-tree-termination'
+import { inFlightWindowsTreeKill } from '@coding-agent/process-host/windows-tree-kill'
+import { createOutputSink } from '@coding-agent/process-host/bounded-output-sink'
 import { resolveCliCommand, withCliRuntimeOnPath } from '../../shared/node-cli-command-resolution'
 import { RuntimeClientError } from '../runtime-client'
 import {

@@ -16,7 +16,7 @@ import { unusedOrcadHostTransport } from './unused-host-transport.test-fixture'
 
 // Run generated host-side checks in a real local shell.
 vi.mock('./remote-exec/remote-exec-command', async (importOriginal) => {
-  const { runProcess } = await import('@orca/process-host')
+  const { runProcess } = await import('@coding-agent/process-host')
   const { sshCommandExitError } = await import('./remote-exec/remote-exec-command')
   return {
     ...(await importOriginal<typeof ExecCommandModule>()),

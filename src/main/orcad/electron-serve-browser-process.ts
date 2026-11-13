@@ -1,3 +1,11 @@
+import type { RuntimeBrowserCommandHost } from '../runtime/browser/commands/browser-command-contracts'
+import type { RuntimeMetadata } from '../../shared/runtime-bootstrap'
+import {
+  type ElectronSidecarPage,
+  ElectronSidecarTabRegistry,
+  ElectronSidecarTabSchema
+} from './electron-sidecar-tab-registry'
+import { appEnvPairs } from '../../shared/app-env'
 import {
   BROWSER_EXPECT_URL_RUNTIME_CAPABILITY,
   BROWSER_GOOGLE_COOKIE_CLEAR_CAPABILITY
@@ -10,15 +18,15 @@ import { browserExpectedUrlMismatchError } from '../browser/cdp/input/browser-ex
 import { setTimeout as delay } from 'node:timers/promises'
 import { z } from 'zod'
 import { BrowserError } from '../browser/browser-error'
-import type { RuntimeBrowserCommandHost } from '../runtime/browser/commands/browser-command-contracts'
+
 import type { RuntimeBrowserCommands } from '../runtime/browser/commands/browser-commands'
-import type { RuntimeMetadata } from '../../shared/runtime-bootstrap'
+
 import { BROWSER_UNAVAILABLE_ERROR_CODE } from '../../shared/runtime-types'
 import { readRuntimeMetadata } from '../runtime/rpc/server/runtime-metadata'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { isProcessAlive } from '../../shared/serve-bundle-coordination'
 import { removeTree } from '../../shared/windows-transient-lock-removal'
-import { BROWSER_SIDECAR_OWNER_ENV } from '../../shared/browser-sidecar-lifetime'
+
 import { electronIsolatedProfileSwitches } from '../../shared/electron-isolated-profile-switches'
 import { headlessServeOzonePlatformSwitches } from '../../shared/headless-serve-ozone-platform'
 import { sendOrcadSidecarRequest } from './orcad-sidecar-runtime-client'
@@ -30,11 +38,7 @@ import {
   removeLeftoverElectronSidecarProfile,
   stopElectronSidecar
 } from './electron-sidecar-profile'
-import {
-  ElectronSidecarTabRegistry,
-  ElectronSidecarTabSchema,
-  type ElectronSidecarPage
-} from './electron-sidecar-tab-registry'
+
 import {
   electronSidecarRuntimeMethodName,
   TARGETLESS_BROWSER_METHODS
@@ -78,7 +82,10 @@ export class ElectronServeBrowserProcess {
         ...headlessServeOzonePlatformSwitches(process.platform),
         `--user-data-dir=${userDataPath}`
       ],
-      env: { ...electronServeEnvironment(userDataPath), [BROWSER_SIDECAR_OWNER_ENV]: '1' },
+      env: {
+        ...electronServeEnvironment(userDataPath),
+        ...appEnvPairs('BROWSER_SIDECAR_OWNER', '1')
+      },
       stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
       serialization: 'json'
     })

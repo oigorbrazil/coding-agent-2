@@ -1,13 +1,19 @@
-import { terminalStartError } from '../../../shared/terminal/pty/lifecycle/terminal-start-failure'
-import type { PtyCreationDisposition } from '../../../shared/terminal/pty/lifecycle/pty-creation-disposition'
 import type { SubprocessHandle } from '../sessions/session-subprocess-handle'
 import type { WslGuestRoot } from '../../../shared/wsl-guest-root-marker'
-import { buildStartupCommandSubmission } from '../../../shared/startup-command-submission'
 import {
+  type StartupCommandStaging,
   stageStartupCommand,
-  startupStagingFailureNotice,
-  type StartupCommandStaging
+  startupStagingFailureNotice
 } from '../../../shared/startup-command-staging'
+import type { InternalCreateOrAttachOptions } from './terminal-host-agent-session-claim'
+import type { CreateOrAttachResult } from './terminal-host-create-contract'
+import type { TerminalHostSessionCreateDependencies } from './terminal-host-session-create'
+import { readAppEnv } from '../../../shared/app-env'
+import { terminalStartError } from '../../../shared/terminal/pty/lifecycle/terminal-start-failure'
+import type { PtyCreationDisposition } from '../../../shared/terminal/pty/lifecycle/pty-creation-disposition'
+
+import { buildStartupCommandSubmission } from '../../../shared/startup-command-submission'
+
 import { resolvePtyOwnerBackend } from '../../../shared/terminal/pty/lifecycle/pty-owner-backend'
 import { getDaemonSessionResultMetadata } from '../protocol/daemon-create-or-attach-result'
 import { Session } from '../sessions/session'
@@ -17,8 +23,7 @@ import {
   terminalSessionExitCode
 } from './terminal-host-returned-process'
 import { shellPathSupportsPtyStartupBarrier } from '../shell-readiness/shell-ready'
-import type { InternalCreateOrAttachOptions } from './terminal-host-agent-session-claim'
-import type { CreateOrAttachResult } from './terminal-host-create-contract'
+
 import { resolveDaemonSessionScrollbackRows } from '../sessions/daemon-session-scrollback-window'
 import { TerminalAttachCanceledError } from '../protocol/daemon-errors'
 import {
@@ -34,7 +39,7 @@ import {
   createSessionExitHandler,
   isCwdReadableByThisProcess
 } from './terminal-host-session-process'
-import type { TerminalHostSessionCreateDependencies } from './terminal-host-session-create'
+
 export async function spawnAndPublishSession(
   opts: InternalCreateOrAttachOptions,
   deps: TerminalHostSessionCreateDependencies,
@@ -111,7 +116,7 @@ export async function spawnAndPublishSession(
     sessionId: opts.sessionId,
     cols: size.cols,
     rows: size.rows,
-    terminalHandle: opts.env?.ORCA_TERMINAL_HANDLE,
+    terminalHandle: readAppEnv(opts.env ?? {}, 'TERMINAL_HANDLE'),
     launchAgent: opts.launchAgent,
     subprocess,
     ownerBackend: resolvePtyOwnerBackend({
@@ -153,7 +158,7 @@ export async function spawnAndPublishSession(
     session.dispose()
     throw error
   }
-  recordSessionSpawnPaneKey(session, opts.env?.ORCA_PANE_KEY)
+  recordSessionSpawnPaneKey(session, readAppEnv(opts.env ?? {}, 'PANE_KEY'))
 
   try {
     trackSessionInput(session, subprocess, deps.reportReadinessEvent)

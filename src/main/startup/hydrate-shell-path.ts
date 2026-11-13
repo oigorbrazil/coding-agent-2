@@ -1,8 +1,11 @@
-import type { SpawnedProcess } from '@orca/process-host/process-spec'
-import { delimiter, win32 as pathWin32 } from 'node:path'
-import { spawnProcess } from '@orca/process-host'
-import { stripAnsiEscapeSequences } from '../../shared/ansi-escape-sequences'
+import type { SpawnedProcess } from '@coding-agent/process-host/process-spec'
 import type { ShellHydrationFailureReason } from '../../shared/shell/launch/shell-path-hydration-types'
+import { appEnvPairs, readAppEnvKey, deleteAppEnvKey, setAppEnvKey } from '../../shared/app-env'
+
+import { delimiter, win32 as pathWin32 } from 'node:path'
+import { spawnProcess } from '@coding-agent/process-host'
+import { stripAnsiEscapeSequences } from '../../shared/ansi-escape-sequences'
+
 import { resolveWindowsShellStartupFamily } from '../../shared/windows-terminal-shell'
 import { SHELL_PATH_DELIMITER as DELIMITER, shellPathProbe } from './shell-path-probe'
 import { WindowsShellPathOwnership, createWindowsPathKey } from './windows-shell-path-ownership'
@@ -27,7 +30,7 @@ let probeQueue = Promise.resolve()
 // Snapshot before main-body seeding: nvm may prefer seeded node over its default alias. Capture Windows Path casing too, including Git Bash nvm layouts.
 const LAUNCH_PATH_KEY =
   process.platform === 'win32' && process.env.Path !== undefined ? 'Path' : 'PATH'
-const LAUNCH_PATH = process.env[LAUNCH_PATH_KEY] ?? null
+const LAUNCH_PATH = readAppEnvKey(process.env, LAUNCH_PATH_KEY) ?? null
 // Allow heavy rc files to recognize the probe and skip multiplexers/prompts.
 export const PROBE_MARKER_ENV_VAR = 'ORCA_SHELL_PATH_PROBE'
 let launchPathOverride: { key: string; value: string } | null = null
@@ -110,14 +113,14 @@ function applyLaunchPath(env: NodeJS.ProcessEnv, key: string, value: string | nu
   // Windows env names ignore case; remove alternate spellings from this plain object.
   for (const name of Object.keys(env)) {
     if (name !== key && isLaunchPathKey(name, key)) {
-      delete env[name]
+      deleteAppEnvKey(env, name)
     }
   }
-  env[key] = value
+  setAppEnvKey(env, key, value)
 }
 
 function shellProbeEnv(): NodeJS.ProcessEnv {
-  const env: NodeJS.ProcessEnv = { ...process.env, [PROBE_MARKER_ENV_VAR]: '1' }
+  const env: NodeJS.ProcessEnv = { ...process.env, ...appEnvPairs('SHELL_PATH_PROBE', '1') }
   const key = launchPathOverride?.key ?? LAUNCH_PATH_KEY
   const value = launchPathOverride?.value ?? LAUNCH_PATH
   applyLaunchPath(env, key, value)
@@ -138,11 +141,11 @@ export function runWithLaunchPath<T>(action: () => T): T {
   } finally {
     for (const name of Object.keys(process.env)) {
       if (isLaunchPathKey(name, key)) {
-        delete process.env[name]
+        deleteAppEnvKey(process.env, name)
       }
     }
     for (const [name, previousValue] of previous) {
-      process.env[name] = previousValue
+      setAppEnvKey(process.env, name, previousValue)
     }
   }
 }

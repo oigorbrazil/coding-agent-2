@@ -4,7 +4,7 @@ import { join } from 'node:path'
 import type * as TimerPromises from 'node:timers/promises'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import type { DaemonEndpointIdentity } from '../../../protocol/daemon-hello-protocol'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const { state, runProcessMock, materializeMock, ensureWithinMock, disconnectMock, recoverMock } =
   vi.hoisted(() => {
@@ -42,7 +42,7 @@ vi.mock('node:timers/promises', async (importOriginal) => {
     }
   }
 })
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 vi.mock('../../../../../shared/app-environment', () => ({
   hasAppEnvironment: () => true,
   getAppEnvironment: () => ({

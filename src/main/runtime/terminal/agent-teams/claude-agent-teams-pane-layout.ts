@@ -1,12 +1,14 @@
 import type { AgentTeam, TeamPane } from './claude-agent-teams-types'
 
+import { appEnvPairs } from '../../../../shared/app-env'
+
 export type SplitTarget = { pane: TeamPane; direction: 'horizontal' | 'vertical' }
 
 export function paneEnv(team: AgentTeam, fakePaneId: string): Record<string, string> {
   return {
     ...team.baseEnv,
     TMUX_PANE: fakePaneId,
-    ORCA_AGENT_TEAMS_LEADER_PANE: team.leaderPane
+    ...appEnvPairs('AGENT_TEAMS_LEADER_PANE', team.leaderPane)
   }
 }
 

@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { IPty } from 'node-pty'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { killConptyNow } from './windows-pty-job'
 import { watchConptyStartup } from '../daemon/pty-subprocess/conpty-startup-input-reader'
 

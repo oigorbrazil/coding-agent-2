@@ -4,7 +4,7 @@ const { runProcess, environment } = vi.hoisted(() => ({
   runProcess: vi.fn(),
   environment: { isPackaged: () => false, getAppPath: () => '/orca' }
 }))
-vi.mock('@orca/process-host', () => ({ runProcess }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess }))
 vi.mock('../../shared/app-environment', () => ({ getAppEnvironment: () => environment }))
 
 describe('Windows desktop administrator status', () => {

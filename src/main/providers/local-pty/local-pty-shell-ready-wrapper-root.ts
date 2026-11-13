@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { statSync } from 'node:fs'
@@ -9,7 +10,7 @@ import {
 
 function getShellReadyWrapperBaseDir(): string {
   // Plain-node daemon forks share ORCA_USER_DATA_PATH with main; empty values must fall back, never form relative roots.
-  const userDataPath = process.env.ORCA_USER_DATA_PATH
+  const userDataPath = readAppEnv(process.env, 'USER_DATA_PATH')
   // Avoid legacy shell-ready/ trees still overwritten by old daemons.
   // The temp fallback trusts nonempty preplanted files; production must seed ORCA_USER_DATA_PATH before spawning.
   return userDataPath ? join(userDataPath, 'shell-wrappers') : join(tmpdir(), 'orca-shell-wrappers')

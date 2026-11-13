@@ -1,7 +1,10 @@
-import { realpath } from 'node:fs/promises'
 import type { AgentHookInstallStatus } from '../../../../shared/agent-hook-listener/configuration/agent-hook-types'
-import { withTimeout } from '../../../../shared/promise-timeout-fallback'
 import type { CodexWslRuntimeHookTarget } from './codex-wsl-hook-install-plan'
+import { readAppEnv } from '../../../../shared/app-env'
+import { realpath } from 'node:fs/promises'
+
+import { withTimeout } from '../../../../shared/promise-timeout-fallback'
+
 import { codexHookService } from './hook-service'
 import { runAsWslUserAct } from '../../../wsl/filesystem/wsl-unc-access-gate'
 import {
@@ -27,7 +30,7 @@ export function resolveManagedWslCodexShellPreflightTarget(
   env: WslShellPreflightEnvironment
 ): ManagedWslCodexShellPreflightTarget | null {
   const codexHome = env.CODEX_HOME?.trim()
-  const orcaCodexHome = env.ORCA_CODEX_HOME?.trim()
+  const orcaCodexHome = readAppEnv(env, 'CODEX_HOME')?.trim()
   const wslDistro = env.WSL_DISTRO_NAME?.trim()
   if (
     !codexHome ||

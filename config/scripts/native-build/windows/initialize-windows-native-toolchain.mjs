@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 
 const ENVIRONMENT_MARKER = 'ORCA_WINDOWS_NATIVE_ENVIRONMENT'
 const compilerEnvironmentKey =

@@ -132,8 +132,8 @@ export function WslLinearAgentSkillInstallCta({
                   'Agent skill installed. To update it, run:'
                 )
               : t(
-                  'auto.components.settings.linear.agent.skill.install.cta.description',
-                  'Let agents read and edit Linear tasks. Full guided setup (connect + skill + visibility) is under Settings → Task Sources.'
+                  'integrations.linearSkillDescription',
+                  'Let agents read and edit Linear tasks. Connect your Linear account in Integrations.'
                 )}
           </p>
           <div className={commandRowClass}>

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { RELAY_DEFAULT_REGION } from '@orca-cloud/relay-contract/relay-regions'
+import { RELAY_DEFAULT_REGION } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { RelayConfig } from '../config.js'
 import { googleMetadataIdentityToken } from '../authentication/google-metadata-identity-token.js'
 import type { RegionalRehomeSafetySnapshot } from '../observability/relay-observability.js'

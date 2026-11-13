@@ -17,6 +17,10 @@ describe('native OpenCode startup submission intent', () => {
       platform: 'linux'
     })
     expect(plan?.env).toEqual({
+      CODING_AGENT_OPENCODE_STARTUP_PROMPT_BODY: 'task\nwith unicode \u00e9',
+      CODING_AGENT_OPENCODE_STARTUP_PROMPT_SHA256:
+        'b9abc892794bd870c5d21d5de4e43e9060d5090b0348c92439cb57777e0721d1',
+      CODING_AGENT_OPENCODE_STARTUP_PROMPT_SHELL: 'posix',
       [OPENCODE_STARTUP_PROMPT_SHA256_ENV]: createHash('sha256')
         .update('task\nwith unicode é')
         .digest('hex'),

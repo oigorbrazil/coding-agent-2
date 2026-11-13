@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { expect, it } from 'vitest'
 import { parse } from 'yaml'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { writeOrcadTemplateTestFixture } from '../../orcad-distribution/template/orcad-template-test-fixture.mjs'
 
 const workflow = parse(readFileSync('.github/workflows/qualified-orcad-template.yml', 'utf8'))

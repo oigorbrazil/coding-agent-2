@@ -7,7 +7,7 @@ description:
 user-invocable: false
 ---
 
-# Inline visuals in an Coding Agent 2 chat
+# Inline visuals in a Coding Agent 2 chat
 
 Coding Agent 2 can show an HTML page inside your reply. Use one whenever a visual would make the answer
 clearer.

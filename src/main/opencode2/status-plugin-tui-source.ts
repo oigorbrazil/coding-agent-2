@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import { getTuiStatusDeliverySource } from '../opencode/status-plugin-delivery-source'
 
 // Report from each TUI’s own PTY and current session data so ownership and reconnects self-correct.
@@ -31,8 +32,8 @@ function paneStatusMemory(ctx) {
 async function setupOpenCode2Tui(ctx) {
   const noop = async () => {};
   // Outside a Coding Agent 2 pane, post has no pane identity to report.
-  if (!process.env.ORCA_PANE_KEY) return noop;
-  if (process.env.ORCA_OPENCODE_AGENT && process.env.ORCA_OPENCODE_AGENT !== ORCA_STATUS_AGENT) return noop;
+  if (!${appEnvReadExpression('process.env', 'PANE_KEY')}) return noop;
+  if (${appEnvReadExpression('process.env', 'OPENCODE_AGENT')} && ${appEnvReadExpression('process.env', 'OPENCODE_AGENT')} !== ORCA_STATUS_AGENT) return noop;
   if (/^1\./.test(String(ctx.app?.version || "")) && !ctx.legacyOpenCodeTui) return noop;
   const data = ctx.data.session;
   if (typeof data?.status !== "function" || typeof data.root !== "function") return noop;

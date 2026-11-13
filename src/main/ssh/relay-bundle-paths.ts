@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { join } from 'node:path'
 import { getAppEnvironment } from '../../shared/app-environment'
 import type { RelayPlatform } from './remote-exec/remote-frame-protocol'
@@ -16,9 +17,10 @@ export function relayBundleCandidates(
   platform: RelayPlatform | 'wsl',
   appPath = currentAppPath()
 ): string[] {
+  const relayPath = readAppEnv(process.env, 'RELAY_PATH')
   return [
     ...new Set([
-      ...(process.env.ORCA_RELAY_PATH ? [join(process.env.ORCA_RELAY_PATH, platform)] : []),
+      ...(relayPath ? [join(relayPath, platform)] : []),
       ...(process.resourcesPath
         ? [
             join(process.resourcesPath, 'relay', platform),

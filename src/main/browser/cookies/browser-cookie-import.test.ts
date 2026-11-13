@@ -30,7 +30,7 @@ vi.mock('../sessions/browser-session-registry', () => ({
 }))
 
 // Mock credential output at the process wrapper; it owns timeouts and console hiding.
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock
 }))
 vi.mock('node:fs', async (importOriginal) => {

@@ -2,7 +2,7 @@ import { chmodSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } 
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { ORCAD_LOG_FILENAME, ORCAD_READINESS_FILENAME } from './orcad-remote-host-support'
 import { orcadLaunchCommand } from './orcad-remote-launch'
 import { getRemoteHostPlatform } from '../../ssh/ssh-remote-platform'

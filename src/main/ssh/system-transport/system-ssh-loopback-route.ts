@@ -1,9 +1,9 @@
 /** On Windows, hold a proxied ssh -N -L once; route later execs through loopback to avoid repeated proxy handshakes without ControlMaster. */
-import type { ChildProcessHandle as ChildProcess } from '@orca/process-host/process-spec'
+import type { ChildProcessHandle as ChildProcess } from '@coding-agent/process-host/process-spec'
 import {
   childProcessHasExited,
   signalProcessTree
-} from '@orca/process-host/process-tree-termination'
+} from '@coding-agent/process-host/process-tree-termination'
 import { createSshOperationAbortError } from '../connection/ssh-exec-options'
 import type { SshTarget } from '../../../shared/ssh-types'
 import type { SshResolvedConfig } from '../config/ssh-g-config-resolution'

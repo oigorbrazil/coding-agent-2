@@ -191,6 +191,7 @@ function RightSidebarInner(): React.JSX.Element {
   return (
     <div
       ref={containerRef}
+      data-glass-panel={rightSidebarOpen ? 'aside' : undefined}
       className={cn(
         'relative flex-shrink-0 flex flex-row',
         // Allow the open resize handle to overflow; at width zero, clip mounted content and icons.

@@ -165,7 +165,7 @@ async function extractToTemporaryCatalog(root, tempDir) {
   // Treat extraction as check evidence, not another committed catalog feature authors must synchronize.
   const [{ runProcessSync }, { describeProcessFailure }, { resolvePinnedBunExecutable }] =
     await Promise.all([
-      import('@orca/process-host'),
+      import('@coding-agent/process-host'),
       import('../../tool-invocation/process-failure-message.mjs'),
       import('../../tool-invocation/pinned-bun-executable.mjs')
     ])

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 export function resolveDiagnosticBuildTokenEndpoint(): string | null {
   const endpoint =
     typeof ORCA_DIAGNOSTICS_TOKEN_URL !== 'undefined'
@@ -22,7 +23,7 @@ export function resolveDiagnosticTokenEndpoint(): string | null {
   if (resolveDiagnosticBuildIdentity()) {
     return buildEndpoint
   }
-  const fromEnv = process.env.ORCA_DIAGNOSTICS_TOKEN_URL
+  const fromEnv = readAppEnv(process.env, 'DIAGNOSTICS_TOKEN_URL')
   if (fromEnv && fromEnv.length > 0) {
     return fromEnv
   }

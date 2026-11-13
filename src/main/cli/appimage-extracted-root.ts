@@ -2,7 +2,7 @@ import { lstatSync, readlinkSync } from 'node:fs'
 import { mkdir, mkdtemp, rename, rm, rmdir, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { dirname, isAbsolute, join, resolve } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveCachedAppImagePayloadRoot } from './appimage-cache-layout'
 export {
   readAppImageSourceOfNamespace,

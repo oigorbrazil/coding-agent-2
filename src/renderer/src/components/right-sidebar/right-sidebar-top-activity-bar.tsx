@@ -38,62 +38,67 @@ export function RightSidebarTopActivityBar({
 }): React.JSX.Element {
   return (
     <ContextMenu>
-      <div className="flex h-[36px] min-h-[36px] items-center border-b border-border right-sidebar-header-inset right-sidebar-header-drag overflow-hidden">
-        {!hasDesktopWindowChrome && (
-          <TooltipProvider delayDuration={400}>
-            <ContextMenuTrigger asChild>
-              <div
-                ref={topActivityStripRef}
-                className={RIGHT_SIDEBAR_TOP_ACTIVITY_STRIP_CLASS_NAME}
-              >
-                <div className={cn('flex min-w-0 shrink', RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME)}>
-                  {/* Use More for overflow because this narrow titlebar also holds close/window controls. */}
-                  <div className="flex min-w-0 shrink">
-                    {topActivityLayout.visibleItems.map((item) => (
-                      <ActivityBarButton
-                        key={item.id}
-                        item={item}
-                        active={effectiveTab === item.id}
-                        onClick={() => onSelectTab(item.id)}
-                        layout="top"
-                        statusIndicator={item.id === 'checks' ? checksStatus : null}
+      {/* Coding Agent 2: the collapse toggle lives in the top bar, so desktop chrome drops this header row. */}
+      {hasDesktopWindowChrome ? null : (
+        <div className="flex h-[36px] min-h-[36px] items-center border-b border-border right-sidebar-header-inset right-sidebar-header-drag overflow-hidden">
+          {!hasDesktopWindowChrome && (
+            <TooltipProvider delayDuration={400}>
+              <ContextMenuTrigger asChild>
+                <div
+                  ref={topActivityStripRef}
+                  className={RIGHT_SIDEBAR_TOP_ACTIVITY_STRIP_CLASS_NAME}
+                >
+                  <div
+                    className={cn('flex min-w-0 shrink', RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME)}
+                  >
+                    {/* Use More for overflow because this narrow titlebar also holds close/window controls. */}
+                    <div className="flex min-w-0 shrink">
+                      {topActivityLayout.visibleItems.map((item) => (
+                        <ActivityBarButton
+                          key={item.id}
+                          item={item}
+                          active={effectiveTab === item.id}
+                          onClick={() => onSelectTab(item.id)}
+                          layout="top"
+                          statusIndicator={item.id === 'checks' ? checksStatus : null}
+                        />
+                      ))}
+                    </div>
+                    {topActivityLayout.overflowItems.length > 0 && (
+                      <TopActivityOverflowMenu
+                        items={topActivityLayout.overflowItems}
+                        activeTab={effectiveTab}
+                        onSelect={onSelectTab}
+                        checksStatus={checksStatus}
                       />
-                    ))}
+                    )}
                   </div>
-                  {topActivityLayout.overflowItems.length > 0 && (
-                    <TopActivityOverflowMenu
-                      items={topActivityLayout.overflowItems}
-                      activeTab={effectiveTab}
-                      onSelect={onSelectTab}
-                      checksStatus={checksStatus}
-                    />
-                  )}
                 </div>
+              </ContextMenuTrigger>
+              <div
+                className={cn(
+                  'flex shrink-0 items-center pr-1',
+                  RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME
+                )}
+              >
+                {closeButton}
               </div>
-            </ContextMenuTrigger>
-            <div
-              className={cn(
-                'flex shrink-0 items-center pr-1',
-                RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME
-              )}
-            >
-              {closeButton}
-            </div>
-          </TooltipProvider>
-        )}
-        {hasDesktopWindowChrome && (
-          <TooltipProvider delayDuration={400}>
-            <div
-              className={cn(
-                'ml-auto flex shrink-0 items-center pr-1',
-                RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME
-              )}
-            >
-              {closeButton}
-            </div>
-          </TooltipProvider>
-        )}
-      </div>
+            </TooltipProvider>
+          )}
+          {hasDesktopWindowChrome && (
+            <TooltipProvider delayDuration={400}>
+              <div
+                className={cn(
+                  'ml-auto flex shrink-0 items-center pr-1',
+                  RIGHT_SIDEBAR_HEADER_NO_DRAG_CLASS_NAME
+                )}
+              >
+                {closeButton}
+              </div>
+            </TooltipProvider>
+          )}
+        </div>
+      )}
       {hasDesktopWindowChrome && (
         <TooltipProvider delayDuration={400}>
           <ContextMenuTrigger asChild>

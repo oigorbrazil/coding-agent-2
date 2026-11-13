@@ -8,7 +8,7 @@ import type { SettingsNavSection, SettingsNavTarget } from '@/lib/settings-navig
 import type { SettingsDeepLinkTargetWatch } from './settings-deep-link-target-watcher'
 
 export const SETTINGS_NAV_GROUPS = [
-  { id: 'coding-opus', titleKey: 'codingOpus.group', titleDefault: 'Coding Opus' },
+  { id: 'coding-opus', titleKey: 'codingOpus.groupMain', titleDefault: 'Main' },
   {
     id: 'capabilities',
     titleKey: 'auto.components.settings.Settings.23c6874fdf',
@@ -27,8 +27,8 @@ export const SETTINGS_NAV_GROUPS = [
   },
   {
     id: 'remote',
-    titleKey: 'auto.components.settings.Settings.23931df7e8',
-    titleDefault: 'Remote Hosts'
+    titleKey: 'codingOpus.groupDevices',
+    titleDefault: 'Other devices'
   },
   {
     id: 'security',

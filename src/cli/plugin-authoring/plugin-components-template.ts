@@ -34,7 +34,7 @@ export default function Panel() {
 }
 `
 
-const PANEL_TEST_TSX = `// \`orca plugin test .\` runs this in Node with the same runtime and checks Coding Agent 2 uses.
+const PANEL_TEST_TSX = `// \`coding plugin test .\` runs this in Node with the same runtime and checks Coding Agent 2 uses.
 import { assert, mount, test } from 'orca/testing'
 import * as panel from './panel'
 
@@ -59,27 +59,31 @@ export function components(input: PluginTemplateInput): PluginTemplate {
     description:
       'Right-sidebar panel written in TSX with Coding Agent 2 components, no build step (needs --approve to load)',
     files: {
-      'orca-plugin.json': manifest(input, 'A sidebar panel built from Coding Agent 2 components.', {
-        execution: 'sandboxed-ui',
-        pluginApi: 1,
-        contributes: {
-          panels: [
-            {
-              id: input.id,
-              title: input.name,
-              icon: 'blocks',
-              entry: 'src/panel.tsx',
-              ui: 'components'
-            }
-          ]
+      'coding-plugin.json': manifest(
+        input,
+        'A sidebar panel built from Coding Agent 2 components.',
+        {
+          execution: 'sandboxed-ui',
+          pluginApi: 1,
+          contributes: {
+            panels: [
+              {
+                id: input.id,
+                title: input.name,
+                icon: 'blocks',
+                entry: 'src/panel.tsx',
+                ui: 'components'
+              }
+            ]
+          }
         }
-      }),
+      ),
       'src/panel.tsx': PANEL_TSX,
       'src/panel.test.tsx': PANEL_TEST_TSX,
       'tsconfig.json': json({ extends: `./${PLUGIN_TYPES_DIR}/tsconfig.json`, include: ['src'] }),
       'README.md': readme(
         input,
-        `A right-sidebar panel written in TSX. Coding Agent 2 transpiles \`src/panel.tsx\` when the panel loads, so there is no build step and no build folder: edit, save, and the panel reloads. \`orca plugin types .\` (also run by \`orca plugin dev watch\`) writes the editor typings to \`${PLUGIN_TYPES_DIR}/\`, which \`tsconfig.json\` extends; run \`npx tsc -p .\` to type-check. \`orca plugin test .\` runs \`src/panel.test.tsx\` in Node with \`orca/testing\`, and \`orca plugin check .\` renders the panel once and reports errors with file:line. Import only \`orca\` and relative files.`
+        `A right-sidebar panel written in TSX. Coding Agent 2 transpiles \`src/panel.tsx\` when the panel loads, so there is no build step and no build folder: edit, save, and the panel reloads. \`coding plugin types .\` (also run by \`coding plugin dev watch\`) writes the editor typings to \`${PLUGIN_TYPES_DIR}/\`, which \`tsconfig.json\` extends; run \`npx tsc -p .\` to type-check. \`coding plugin test .\` runs \`src/panel.test.tsx\` in Node with \`orca/testing\`, and \`coding plugin check .\` renders the panel once and reports errors with file:line. Import only \`orca\` and relative files.`
       ),
       ...COMMON_FILES
     }

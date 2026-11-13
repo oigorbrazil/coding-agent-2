@@ -1,10 +1,11 @@
+import {
+  type PiAgentKind,
+  PRIMARY_AGENT_DIR_ENV_BY_KIND,
+  SOURCE_AGENT_DIR_ENV_BY_KIND
+} from '../shared/pi-agent-kind'
+import { readAppEnv, readAppEnvKey } from '../shared/app-env'
 import { resolveLoginShellEnvironment } from '../main/startup/login-shell-environment'
 import { readSessionShellStartupEnvVar } from '../main/pty/shell-startup/shell-startup-env'
-import {
-  PRIMARY_AGENT_DIR_ENV_BY_KIND,
-  SOURCE_AGENT_DIR_ENV_BY_KIND,
-  type PiAgentKind
-} from '../shared/pi-agent-kind'
 
 function firstNonEmpty(...values: (string | undefined)[]): string | undefined {
   return values.find((value) => typeof value === 'string' && value.length > 0)
@@ -25,7 +26,7 @@ export function resolveOpenCodeSourceConfigDir(
   shell: string | undefined
 ): string | undefined {
   return firstNonEmpty(
-    env.ORCA_OPENCODE_SOURCE_CONFIG_DIR,
+    readAppEnv(env, 'OPENCODE_SOURCE_CONFIG_DIR'),
     readStartupEnv('OPENCODE_CONFIG_DIR', env, shell),
     env.OPENCODE_CONFIG_DIR
   )
@@ -39,7 +40,7 @@ export function resolvePiSourceAgentDir(
   const sourceKey = SOURCE_AGENT_DIR_ENV_BY_KIND[kind]
   const primaryKey = PRIMARY_AGENT_DIR_ENV_BY_KIND[kind]
 
-  const sourceDir = firstNonEmpty(env[sourceKey])
+  const sourceDir = firstNonEmpty(readAppEnvKey(env, sourceKey))
   if (sourceDir) {
     return sourceDir
   }
@@ -50,7 +51,7 @@ export function resolvePiSourceAgentDir(
   }
 
   if (kind === 'prime-agent') {
-    return firstNonEmpty(env[primaryKey])
+    return firstNonEmpty(readAppEnvKey(env, primaryKey))
   }
 
   const overlayKey = kind === 'omp' ? 'ORCA_OMP_CODING_AGENT_DIR' : 'ORCA_PI_CODING_AGENT_DIR'
@@ -58,11 +59,11 @@ export function resolvePiSourceAgentDir(
 
   // Reject another Pi-compatible agent’s inherited overlay so the chosen agent resolves its own home.
   if (
-    env[primaryKey] &&
-    env[primaryKey] !== env[overlayKey] &&
-    env[primaryKey] !== env[otherOverlayKey]
+    readAppEnvKey(env, primaryKey) &&
+    readAppEnvKey(env, primaryKey) !== readAppEnvKey(env, overlayKey) &&
+    readAppEnvKey(env, primaryKey) !== readAppEnvKey(env, otherOverlayKey)
   ) {
-    return env[primaryKey]
+    return readAppEnvKey(env, primaryKey)
   }
   return undefined
 }

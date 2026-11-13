@@ -1,7 +1,8 @@
+import { type AgentStartupShell, tokenizeStartupCommand } from './tui-agent-startup-shell'
+import type { TuiAgent } from '../catalog/tui-agent'
+import { appEnvPairs } from '../../app-env'
 import { isOpenCodeRunCommand } from '../../agent-status/process/opencode-headless-command'
 import { sha256 } from '../../sha256'
-import { tokenizeStartupCommand, type AgentStartupShell } from './tui-agent-startup-shell'
-import type { TuiAgent } from '../catalog/tui-agent'
 
 export const OPENCODE_STARTUP_PROMPT_SHA256_ENV = 'ORCA_OPENCODE_STARTUP_PROMPT_SHA256'
 export const OPENCODE_STARTUP_PROMPT_NONCE_ENV = 'ORCA_OPENCODE_STARTUP_PROMPT_NONCE'
@@ -31,9 +32,9 @@ export function openCodeStartupPromptEnv(
   return {
     env: {
       ...env,
-      [OPENCODE_STARTUP_PROMPT_SHA256_ENV]: digest,
-      [OPENCODE_STARTUP_PROMPT_BODY_ENV]: prompt,
-      [OPENCODE_STARTUP_PROMPT_SHELL_ENV]: shell
+      ...appEnvPairs('OPENCODE_STARTUP_PROMPT_SHA256', digest),
+      ...appEnvPairs('OPENCODE_STARTUP_PROMPT_BODY', prompt),
+      ...appEnvPairs('OPENCODE_STARTUP_PROMPT_SHELL', shell)
     }
   }
 }

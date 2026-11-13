@@ -1,29 +1,31 @@
+import { type OrcadRuntimeCleanup, OrcadRuntimeLifetime } from './orcad-runtime-lifetime'
+import type { OrcadManagedStopInstance } from '../../shared/orcad-stop-request'
+import {
+  type ProfileStateRuntimeAdmission,
+  acquireProfileStateRuntimeAdmission
+} from '../persistence/profile-state/profile-state-access'
+import { readAppEnv, deleteAppEnv } from '../../shared/app-env'
 import { setRuntimeBrowserCommandsFactory } from '../runtime/browser/installation/runtime-browser-commands-factory'
 import { markHostShuttingDown } from '../startup/quit/host-shutdown-state'
 import { setDesktopBrowserBridgeHostEnabled } from '../runtime/desktop-browser-bridge/desktop-browser-bridge-registry'
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../shared/orcad-managed-launch-env'
+
 import { startOrcadBrowserProvider } from './orcad-browser-startup'
-import { OrcadRuntimeLifetime, type OrcadRuntimeCleanup } from './orcad-runtime-lifetime'
-import type { OrcadManagedStopInstance } from '../../shared/orcad-stop-request'
+
 import { acquireOrcadInstanceLock } from './orcad-instance-lock'
 import {
   markOrcadRunFailed,
   orcadRunFailed,
   recordOrcadPreviousUnexpectedExit
 } from './orcad-unexpected-exit'
-import { ORCAD_BUNDLED_LAUNCHER_ENV } from './orcad-bundled-runtime'
+
 import { resolveOrcadExitCode } from './orcad-exit-code'
 import { SINGLE_INSTANCE_ALREADY_RUNNING_EXIT_CODE } from '../../shared/single-instance-exit-code'
 import { recordAgentSessionRuntimeEnd } from '../runtime/agent-session/records/agent-session-runtime-end-record'
 import { ORCAD_SHUTDOWN_DEADLINE_MS } from './orcad-stop-deadlines'
 import { holdOrcadTerminalAdmissionUntilExit } from './orcad-stop-terminal-admission'
-import {
-  acquireProfileStateRuntimeAdmission,
-  type ProfileStateRuntimeAdmission
-} from '../persistence/profile-state/profile-state-access'
 
-const bundledLauncherChannel = process.env[ORCAD_BUNDLED_LAUNCHER_ENV] === '1'
-delete process.env[ORCAD_BUNDLED_LAUNCHER_ENV]
+const bundledLauncherChannel = readAppEnv(process.env, 'BUNDLED_LAUNCHER_CHANNEL') === '1'
+deleteAppEnv(process.env, 'BUNDLED_LAUNCHER_CHANNEL')
 
 function createIdempotentOrcadCleanup(cleanup: () => Promise<void>): () => Promise<void> {
   let completion: Promise<void> | null = null
@@ -178,7 +180,9 @@ export async function startOrcadWithHost<T extends object>(
       // Browser authorization UI must not block RPC readiness.
       browserProvider = startOrcadBrowserProvider({ userDataPath })
       // Only managed hosts have opted-in desktop bridges; user-started hosts route to paired page hosts.
-      setDesktopBrowserBridgeHostEnabled(Boolean(process.env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV]))
+      setDesktopBrowserBridgeHostEnabled(
+        Boolean(readAppEnv(process.env, 'ORCAD_MANAGED_ACTIVATION_ROOT'))
+      )
       return { ...(await start(registerCleanup)), instance }
     },
     async (runtimeCleanupSucceeded) => {

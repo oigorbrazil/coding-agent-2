@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // Centralize runtime consent precedence. Environment/CI overrides never mutate persisted preference, so removing them restores user intent.
 
 import type { GlobalSettings } from '../../shared/global-settings-types'
@@ -33,7 +34,7 @@ function warnOnceMisconfigured(name: string, raw: string): void {
 }
 
 function isEnvVarTruthy(name: string): boolean {
-  const v = process.env[name]
+  const v = name.startsWith('ORCA_') ? readAppEnv(process.env, name.slice(5)) : process.env[name]
   if (!v) {
     return false
   }

@@ -7,7 +7,7 @@ import {
   PushHostSessionRequestSchema,
   PushSendRequestSchema,
   type PushSendResult
-} from '@orca-cloud/push-contract'
+} from '@coding-agent-cloud/push-contract'
 import { Hono, type MiddlewareHandler } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 import { ApnsClient } from './apns-client.js'

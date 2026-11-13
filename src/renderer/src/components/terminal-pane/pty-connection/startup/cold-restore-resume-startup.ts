@@ -1,3 +1,7 @@
+import type { HeldPaneReopenOutcome } from '../../session-restore/newer-daemon/newer-daemon-hold-state'
+import type { ColdRestoreAgentResumeStartup } from './fresh-spawn-types'
+import type { ConnectPanePtySession } from '../connect-pane-pty-session'
+import { appEnvPairs } from '../../../../../../shared/app-env'
 import {
   getConnectionIdForWorktreeCopy,
   getConnectionIdFromState
@@ -23,11 +27,6 @@ import {
   isResumableTuiAgent,
   normalizeAgentProviderSession
 } from '../../../../../../shared/agent-session/lifecycle/agent-session-resume'
-
-import type { HeldPaneReopenOutcome } from '../../session-restore/newer-daemon/newer-daemon-hold-state'
-import type { ColdRestoreAgentResumeStartup } from './fresh-spawn-types'
-
-import type { ConnectPanePtySession } from '../connect-pane-pty-session'
 
 export const NOT_REOPENED: HeldPaneReopenOutcome = { reopened: false, agentResumed: false }
 
@@ -128,7 +127,7 @@ export function bindBuildColdRestoreAgentResumeStartup(session: ConnectPanePtySe
       command: startupPlan.launchCommand,
       env: {
         ...startupPlan.env,
-        ORCA_AGENT_LAUNCH_TOKEN: coldRestoreLaunchToken
+        ...appEnvPairs('AGENT_LAUNCH_TOKEN', coldRestoreLaunchToken)
       },
       launchConfig: startupPlan.launchConfig,
       resumeProviderSession: providerSession,

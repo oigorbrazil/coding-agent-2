@@ -8,7 +8,7 @@ import {
 } from './comment-markdown-mermaid-policy'
 
 const diagramClassName =
-  'my-3 min-w-0 max-w-full overflow-x-auto rounded-md border border-border/60 p-3 [&_.mermaid-block]:min-w-0 [&_.mermaid-block_pre]:my-0 [&_.mermaid-block_pre]:max-h-80 [&_.mermaid-block_pre]:max-w-full [&_.mermaid-block_pre]:overflow-x-auto [&_.mermaid-block_pre]:rounded-md [&_.mermaid-block_pre]:bg-accent [&_.mermaid-block_pre]:p-3 [&_.mermaid-block_pre]:font-mono [&_.mermaid-block_pre]:text-[12px]'
+  'my-3 min-w-0 max-w-full overflow-x-auto rounded-md border border-border/60 p-3 [&_.mermaid-block]:min-w-0 [&_.mermaid-block_pre]:my-0 [&_.mermaid-block_pre]:max-h-80 [&_.mermaid-block_pre]:max-w-full [&_.mermaid-block_pre]:overflow-x-auto [&_.mermaid-block_pre]:rounded-md [&_.mermaid-block_pre]:bg-accent [&_.mermaid-block_pre]:p-3 [&_.mermaid-block_pre]:font-code [&_.mermaid-block_pre]:text-[12px]'
 
 /** Top-level block nodes use local lines; retain their whole-document start offset. */
 export const CommentMarkdownBlockLineContext = createContext(1)
@@ -26,7 +26,7 @@ export function CommentMarkdownDocumentCode({
     return renderMermaidFence(children, diagramClassName)
   }
   return (
-    <code className="rounded bg-accent px-1.5 py-0.5 font-mono text-[0.92em] [overflow-wrap:anywhere]">
+    <code className="rounded bg-accent px-1.5 py-0.5 font-code text-[0.92em] [overflow-wrap:anywhere]">
       {children}
     </code>
   )
@@ -62,7 +62,7 @@ export function CommentMarkdownDocumentPre({
       {children}
     </CodeBlock>
   ) : (
-    <pre className="my-3 max-h-80 max-w-full overflow-x-auto rounded-md bg-accent p-3 font-mono text-[12px]">
+    <pre className="my-3 max-h-80 max-w-full overflow-x-auto rounded-md bg-accent p-3 font-code text-[12px]">
       {children}
     </pre>
   )

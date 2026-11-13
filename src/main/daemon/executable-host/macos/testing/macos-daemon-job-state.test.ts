@@ -1,11 +1,11 @@
 import { beforeEach, expect, it, vi } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const { run, clock } = vi.hoisted(() => ({
   run: vi.fn<(spec: ProcessSpec) => Promise<ProcessResult>>(),
   clock: { now: 0 }
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: run }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: run }))
 // Advance the virtual deadline with each poll instead of waiting in real time.
 vi.mock('node:timers/promises', () => ({
   setTimeout: async (ms: number) => {

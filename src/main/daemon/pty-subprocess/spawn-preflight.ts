@@ -1,4 +1,6 @@
 import type * as pty from 'node-pty'
+import { readAppEnv, setAppEnvKey } from '../../../shared/app-env'
+
 import { statSync } from 'node:fs'
 import { release } from 'node:os'
 import { getCmdExePath } from '../../../shared/windows-batch-spawn'
@@ -22,7 +24,7 @@ async function loadNodePty(): Promise<typeof pty> {
 }
 
 function daemonEnvironmentDiagSuffix(): string {
-  const orca = process.env.ORCA_APP_VERSION?.trim() || '0.0.0-dev'
+  const orca = readAppEnv(process.env, 'APP_VERSION')?.trim() || '0.0.0-dev'
   const systemVersion =
     (process as NodeJS.Process & { getSystemVersion?: () => string }).getSystemVersion?.() ||
     release()
@@ -50,7 +52,7 @@ function isExistingDirectory(path: string | undefined): path is string {
 }
 
 function repairDaemonCwd(): string | null {
-  const candidates = [process.env.ORCA_USER_DATA_PATH]
+  const candidates = [readAppEnv(process.env, 'USER_DATA_PATH')]
   try {
     candidates.push(resolveSafePtyDefaultCwd())
   } catch {
@@ -173,9 +175,8 @@ export async function runPtySpawnHealthProbe(
       'Terminal daemon asynchronous I/O is stalled; restart the terminal daemon.'
     )
   }
-  const cwd = isExistingDirectory(process.env.ORCA_USER_DATA_PATH)
-    ? process.env.ORCA_USER_DATA_PATH
-    : resolveSafePtyDefaultCwd()
+  const userDataPath = readAppEnv(process.env, 'USER_DATA_PATH')
+  const cwd = isExistingDirectory(userDataPath) ? userDataPath : resolveSafePtyDefaultCwd()
   const command =
     process.platform === 'win32'
       ? { file: getCmdExePath(), args: ['/d', '/c', 'exit', '0'] }
@@ -185,7 +186,7 @@ export async function runPtySpawnHealthProbe(
     const env: Record<string, string> = { TERM: 'xterm-256color' }
     for (const [key, value] of Object.entries(process.env)) {
       if (value !== undefined) {
-        env[key] = value
+        setAppEnvKey(env, key, value)
       }
     }
     proc = (await loadNodePty()).spawn(command.file, command.args, {

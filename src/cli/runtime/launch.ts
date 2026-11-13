@@ -1,10 +1,16 @@
-import { spawn, type SpawnOptions } from 'node:child_process'
-import { spawnProcess } from '@orca/process-host'
-import type { ProcessSpec } from '@orca/process-host/process-spec'
+import { type SpawnOptions, spawn } from 'node:child_process'
+import type { ProcessSpec } from '@coding-agent/process-host/process-spec'
+import { type ServeOrcaAppArgs, serveOptionArgs } from '../../shared/orcad-serve-argv'
 import {
-  SERVE_UPDATE_HANDOFF_PATH_ENV,
-  getServeUpdateHandoffPath
-} from '../../shared/serve-update-handoff'
+  type ServeSpawnChild,
+  redactingSpawn,
+  shouldRedactSupervisedStdout
+} from './serve-pairing-redaction'
+import { readAppEnv, setAppEnv } from '../../shared/app-env'
+
+import { spawnProcess } from '@coding-agent/process-host'
+
+import { getServeUpdateHandoffPath } from '../../shared/serve-update-handoff'
 import {
   pinLaunchUserDataPath,
   pinServeUserDataPath,
@@ -27,11 +33,11 @@ import {
   resolveForegroundOrcaExecutable,
   stripElectronRunAsNode
 } from './orca-app-executable'
-import { SERVE_RUNTIME_ELECTRON, SERVE_RUNTIME_ENV } from '../../shared/orcad-local-serve-selection'
+import { SERVE_RUNTIME_ELECTRON } from '../../shared/orcad-local-serve-selection'
 import { findBundledWebClientRoot } from '../../shared/bundled-web-client-root'
 import { resolveLocalServeRuntime, serveWithOrcad } from './serve-orcad-launch'
 import { findAppSpeechRecognizerDir } from './serve-speech-recognizer'
-import { serveOptionArgs, type ServeOrcaAppArgs } from '../../shared/orcad-serve-argv'
+
 import { waitForRecipeJson } from './serve-recipe-json'
 import {
   preflightElectronServe,
@@ -49,16 +55,11 @@ import {
 } from './serve-replaced-app-restart'
 import { isSupervisedSpawnHeld } from './serve-supervised-stop'
 import { openServeBundlePark } from '../../shared/serve-bundle-park'
-import {
-  redactingSpawn,
-  shouldRedactSupervisedStdout,
-  type ServeSpawnChild
-} from './serve-pairing-redaction'
 
 const STARTUP_ABORT_MS = 30_000
 
 export function launchOrcaApp(): void {
-  const overrideCommand = process.env.ORCA_OPEN_COMMAND
+  const overrideCommand = readAppEnv(process.env, 'OPEN_COMMAND')
   if (typeof overrideCommand === 'string' && overrideCommand.trim().length > 0) {
     spawnDetached(overrideCommand, [], { shell: true })
     return
@@ -66,7 +67,7 @@ export function launchOrcaApp(): void {
 
   // Launch on the same profile whose metadata openOrca awaits.
   const userDataPath = resolveLaunchUserDataPath()
-  const overrideExecutable = process.env.ORCA_APP_EXECUTABLE
+  const overrideExecutable = readAppEnv(process.env, 'APP_EXECUTABLE')
   if (typeof overrideExecutable === 'string' && overrideExecutable.trim().length > 0) {
     const pinned = pinLaunchUserDataPath(
       getExecutableAppArgs(overrideExecutable),
@@ -162,7 +163,7 @@ function serveOnce(
   args: ServeOrcaAppArgs,
   userDataPath: string
 ): Promise<number> {
-  if (process.env[SERVE_RUNTIME_ENV] === SERVE_RUNTIME_ELECTRON) {
+  if (readAppEnv(process.env, 'SERVE_RUNTIME') === SERVE_RUNTIME_ELECTRON) {
     return serveWithElectron(executable, args, userDataPath)
   }
   return serveWithSelectedRuntime(executable, args, userDataPath)
@@ -236,7 +237,7 @@ function spawnElectronServe(
       : null
   const childEnv = pinned.env
   if (handoffPath) {
-    childEnv[SERVE_UPDATE_HANDOFF_PATH_ENV] = handoffPath
+    setAppEnv(childEnv, 'SERVE_UPDATE_HANDOFF_PATH', handoffPath)
   }
   const spec: ProcessSpec = {
     program: executable,

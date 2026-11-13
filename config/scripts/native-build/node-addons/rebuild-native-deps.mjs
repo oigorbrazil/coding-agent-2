@@ -71,7 +71,11 @@ const NATIVE_MODULES = [
   'node-pty',
   'cpu-features',
   ...(rebuildPlatform === 'win32'
-    ? ['@orca/windows-registry', '@orca/windows-security', '@vscode/windows-process-tree']
+    ? [
+        '@coding-agent/windows-registry',
+        '@coding-agent/windows-security',
+        '@vscode/windows-process-tree'
+      ]
     : [])
 ]
 const onlyModules = NATIVE_MODULES.filter((m) => !ignoreModules.includes(m))
@@ -570,13 +574,13 @@ if (failures.length > 0) {
 }
 
 function loadNativeModule(moduleName) {
-  if (moduleName === '@orca/windows-registry') {
+  if (moduleName === '@coding-agent/windows-registry') {
     const registry = projectRequire(moduleName)
     // Why: the package defers loading its .node addon until the first registry call.
     registry.getRegistryKey(registry.HK.CU, 'Environment')
     return
   }
-  if (moduleName === '@orca/windows-security') {
+  if (moduleName === '@coding-agent/windows-security') {
     const security = projectRequire(moduleName)
     if (!security.currentUserSid() || !security.hasNativeExport('isolatedSpawnBreaksAwayFromJob')) throw new Error('stale build without the newest export; rebuild it')
     return

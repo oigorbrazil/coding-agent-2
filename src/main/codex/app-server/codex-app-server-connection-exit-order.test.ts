@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events'
 import { PassThrough } from 'node:stream'
 import { describe, expect, it, vi } from 'vitest'
-import type { spawnProcess } from '@orca/process-host'
+import type { spawnProcess } from '@coding-agent/process-host'
 import { openCodexAppServerConnection } from './codex-app-server-connection'
 import { CodexAppServerRequestError } from './codex-app-server-request-error'
 import { codexStartFailure } from './codex-startup-outcome'

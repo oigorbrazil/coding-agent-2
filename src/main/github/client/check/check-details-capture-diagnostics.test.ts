@@ -1,6 +1,6 @@
 import type { ChildProcess } from 'node:child_process'
 import { getEventListeners } from 'node:events'
-import type * as ProcessHostModule from '@orca/process-host'
+import type * as ProcessHostModule from '@coding-agent/process-host'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   completeFakeSpawn,
@@ -23,11 +23,11 @@ const { spawnMock, resolverMock, signalMock, forceMock, captureCap } = vi.hoiste
 }))
 vi.mock('node:child_process', async (original) => ({ ...(await original()), spawn: spawnMock }))
 vi.mock('../../github-api-repository', () => ({ resolveGitHubRepoExecution: resolverMock }))
-vi.mock('@orca/process-host/process-tree-termination', () => ({
+vi.mock('@coding-agent/process-host/process-tree-termination', () => ({
   signalProcessTree: signalMock,
   forceTerminateProcessTree: forceMock
 }))
-vi.mock('@orca/process-host', async (original) => {
+vi.mock('@coding-agent/process-host', async (original) => {
   const actual = await original<typeof ProcessHostModule>()
   return {
     ...actual,

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import {
   pairedRuntimeConnectionFromOffer,
   type PairedRuntimeConnection
@@ -6,6 +7,14 @@ import { parsePairingCode } from '../../shared/remote-runtime/pairing/pairing'
 import { resolveEnvironmentPairingOffer } from './environments'
 import { RuntimeClientError } from './types'
 import { configureRemoteRuntimeE2EEV2HostLatch } from '../../shared/remote-runtime/e2ee/node/remote-runtime-e2ee-v2-host-latch'
+
+export function readRemoteEnvironment(env: NodeJS.ProcessEnv = process.env): string | null {
+  return readAppEnv(env, 'ENVIRONMENT') ?? null
+}
+
+export function readRemotePairingCode(env: NodeJS.ProcessEnv = process.env): string | null {
+  return readAppEnv(env, 'PAIRING_CODE') ?? readAppEnv(env, 'REMOTE_PAIRING') ?? null
+}
 
 export function resolveRemoteConnection(
   userDataPath: string,

@@ -1,22 +1,36 @@
-import { getClaudeAgentViewService } from '../../claude/agent-view/agent-view-service'
 import type { AgentProviderSessionMetadata } from '../../../shared/agent-session/lifecycle/agent-session-resume'
-import { getAppEnvironment } from '../../../shared/app-environment'
 import type { GlobalSettings } from '../../../shared/global-settings-types'
+import type { TuiAgent } from '../../../shared/agent-launch/catalog/tui-agent'
+import type { CodexSessionResumePreparation } from '../../codex/history/resume/codex-session-resume-home'
+import type { CodexAccountSelectionTarget } from '../../codex-accounts/runtime-selection'
+import type { IPtyProvider } from '../../providers/pty-provider-contract'
+import type { OrcaRuntimeService } from '../../runtime/orca-runtime'
+import type {
+  CodexResumeLaunch,
+  PrepareCodexResumeHomeArgs,
+  PreparedCodexResumeHome
+} from './host-env/codex-resume'
+
+import type { GetSelectedCodexHomePath } from './host-env/types'
+import { readAppEnv } from '../../../shared/app-env'
+import { getClaudeAgentViewService } from '../../claude/agent-view/agent-view-service'
+
+import { getAppEnvironment } from '../../../shared/app-environment'
+
 import { stampRuntimeSourceEnv } from '../../../shared/runtime-source-env'
 import { SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV } from '../../../shared/setup-agent-sequencing'
-import type { TuiAgent } from '../../../shared/agent-launch/catalog/tui-agent'
+
 import { isTuiAgent } from '../../../shared/agent-launch/catalog/tui-agent-config'
 import { addWslEnvKeys } from '../../../shared/wsl-env'
 import { isAgentStatusHooksEnabled } from '../../../shared/agent-hook-listener/configuration/agent-status-hooks-setting'
 import { awaitExplicitAgentPluginGuestReadiness } from '../../agent-hooks/wsl-agent-plugin-readiness'
 import { ensureCodexStateDbBackfillRecoveryStarted } from '../../codex/history/index/codex-state-db-backfill-recovery'
-import type { CodexSessionResumePreparation } from '../../codex/history/resume/codex-session-resume-home'
-import type { CodexAccountSelectionTarget } from '../../codex-accounts/runtime-selection'
+
 import { isSafePtySessionId } from '../../daemon/sessions/pty-session-id'
-import type { IPtyProvider } from '../../providers/pty-provider-contract'
+
 import { stampWslOrchestrationCompatibilityHost } from '../../pty/shell-startup/wsl-orca-env'
 import { getRuntimeSourceStamp } from '../../runtime/hosts/platform-probe/host-descriptor'
-import type { OrcaRuntimeService } from '../../runtime/orca-runtime'
+
 import { buildPtyHostEnv } from './host-env/assembly'
 import { blockedWslDistroForPath } from '../../wsl/filesystem/wsl-unc-access-gate'
 import { runAsWslLaunchUserAct } from '../../wsl/discovery/wsl-background-exec-gate'
@@ -27,14 +41,10 @@ import {
   shouldSkipCodexHomeEnvForWindowsShell,
   shouldStripInheritedOrcaCodexHome
 } from './host-env/codex-home'
-import type {
-  CodexResumeLaunch,
-  PrepareCodexResumeHomeArgs,
-  PreparedCodexResumeHome
-} from './host-env/codex-resume'
+
 import { inheritOmpLaunchEnvironment } from './host-env/omp-launch-environment'
 import { promoteAgentTeamsShimPath } from './host-env/path'
-import type { GetSelectedCodexHomePath } from './host-env/types'
+
 import { clearProviderPtyState } from './provider/state-cleanup'
 
 export type PtySpawnCodexResumeDeps = {
@@ -272,7 +282,7 @@ async function resolvePtySpawnHostEnvForAct(args: PtySpawnHostEnvArgs): Promise<
       getRuntimeSourceStamp(deps.runtime, getAppEnvironment().getPath('userData'))
     )
     promoteAgentTeamsShimPath(env, args.requestedAgentTeamsPath)
-    if (process.platform === 'win32' && env[SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV]) {
+    if (process.platform === 'win32' && readAppEnv(env, 'SEQUENCED_SETUP_SCRIPT')) {
       // Why: same-protocol daemons from older builds don't add this WSLENV entry themselves.
       addWslEnvKeys(env, [SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV])
     }

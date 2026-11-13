@@ -1,13 +1,15 @@
 import {
+  setAppEnv,
+  readAppEnv,
+  deleteAppEnv,
+  appEnvKeys,
+  readAppEnvKey
+} from '../../../shared/app-env'
+import {
   ORCA_SCRUB_SAFE_PANE_ENV,
   ORCA_SCRUB_SAFE_LAUNCH_ENV
 } from '../../../shared/agent-hook-listener/transport/agent-hook-scrub-safe-env'
-import {
-  ORCHESTRATION_COMPATIBILITY_ATTACHMENT_ENV,
-  ORCHESTRATION_COMPATIBILITY_HOST_ID_ENV,
-  ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV,
-  ORCHESTRATION_COMPATIBILITY_HOST_KIND_ENV
-} from '../../../shared/orchestration-compatibility-evidence'
+
 import {
   SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV,
   SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV,
@@ -47,9 +49,12 @@ function applyWslenvPassthrough(
   passthroughEntries: string[]
 ): void {
   const entries = parseWslenvEntries(env.WSLENV)
-  for (const entry of passthroughEntries) {
+  for (const entry of passthroughEntries.flatMap((value) => {
+    const [key, flags] = value.split('/')
+    return appEnvKeys([key]).map((name) => (flags ? `${name}/${flags}` : name))
+  })) {
     const variableName = entry.split('/')[0]
-    if (env[variableName]) {
+    if (readAppEnvKey(env, variableName)) {
       upsertWslenvEntry(entries, entry)
     }
   }
@@ -59,10 +64,16 @@ function applyWslenvPassthrough(
 function worktreeSetupWslenvEntries(env: Record<string, string | undefined>): string[] {
   return [
     // Hooks need raw host paths translated (/p) and already-Linux paths unchanged (/u) (#9206).
-    ...['ORCA_ROOT_PATH', 'ORCA_WORKTREE_PATH', 'CONDUCTOR_ROOT_PATH', 'GHOSTX_ROOT_PATH'].map(
-      (name) => `${name}/${env[name]?.startsWith('/') ? 'u' : 'p'}`
-    ),
+    ...[
+      'CODING_AGENT_ROOT_PATH',
+      'CODING_AGENT_WORKTREE_PATH',
+      'ORCA_ROOT_PATH',
+      'ORCA_WORKTREE_PATH',
+      'CONDUCTOR_ROOT_PATH',
+      'GHOSTX_ROOT_PATH'
+    ].map((name) => `${name}/${readAppEnvKey(env, name)?.startsWith('/') ? 'u' : 'p'}`),
     // A display name, never a path.
+    'CODING_AGENT_WORKSPACE_NAME/u',
     'ORCA_WORKSPACE_NAME/u'
   ]
 }
@@ -70,12 +81,12 @@ function worktreeSetupWslenvEntries(env: Record<string, string | undefined>): st
 /** Adds the host environment values required by a WSL PTY and its guest relay. */
 export function addOrcaWslInteropEnv(env: Record<string, string>): void {
   // Local and daemon WSL spawns resolve the same content-addressed host wrapper tree.
-  env.ORCA_SHELL_READY_ROOT = getShellReadyWrapperRoot()
+  setAppEnv(env, 'SHELL_READY_ROOT', getShellReadyWrapperRoot())
   // The hook endpoint starts as a host path; guest relay discovery can replace it with an already-Linux path.
-  const endpointFlag = env.ORCA_AGENT_HOOK_ENDPOINT?.startsWith('/') ? 'u' : 'p'
+  const endpointFlag = readAppEnv(env, 'AGENT_HOOK_ENDPOINT')?.startsWith('/') ? 'u' : 'p'
   // Only guest overlays may cross; translating inherited Windows overlays would make OpenCode adopt host config.
   const opencodeOverlayEntries = (['OPENCODE_CONFIG_DIR', 'ORCA_OPENCODE_CONFIG_DIR'] as const)
-    .filter((name) => env[name]?.startsWith('/'))
+    .filter((name) => readAppEnvKey(env, name)?.startsWith('/'))
     .map((name) => `${name}/u`)
   // wsl.exe imports only selected variables; publish pane identity and hook/wrapper coordinates.
   const passthroughEntries = [
@@ -118,11 +129,13 @@ export function addOrcaWslInteropEnv(env: Record<string, string>): void {
     'ORCA_WSL_HOOK_RELAY_VERSION/u',
     'ORCA_WSL_HOOK_INSTANCE/u',
     'ORCA_OMP_SOURCE_AGENT_DIR/p',
-    `ORCA_OMP_STATUS_EXTENSION/${env.ORCA_OMP_STATUS_EXTENSION?.startsWith('/') ? 'u' : 'p'}`,
-    ...(env.ORCA_PI_SOURCE_AGENT_DIR?.startsWith('/') ? ['ORCA_PI_SOURCE_AGENT_DIR/u'] : []),
+    `ORCA_OMP_STATUS_EXTENSION/${readAppEnv(env, 'OMP_STATUS_EXTENSION')?.startsWith('/') ? 'u' : 'p'}`,
+    ...(readAppEnv(env, 'PI_SOURCE_AGENT_DIR')?.startsWith('/')
+      ? ['ORCA_PI_SOURCE_AGENT_DIR/u']
+      : []),
     `${ORCA_IMAGE_PROTOCOL_ENV}/u`,
     'CLAUDE_CODE_FORCE_TERMINAL_IMAGES/u',
-    ...(env.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR?.startsWith('/')
+    ...(readAppEnv(env, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR')?.startsWith('/')
       ? ['ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR/u', 'ORCA_CLAUDE_CONFIG_DIR/u']
       : []),
     // Forward only Coding Agent 2's clipboard marker; a host SSH session must not leak into bare guest shells.
@@ -140,16 +153,16 @@ export function stampWslOrchestrationCompatibilityHost(
   hostId: string | null | undefined,
   distro: string | null | undefined
 ): void {
-  delete env[ORCHESTRATION_COMPATIBILITY_HOST_KIND_ENV]
-  delete env[ORCHESTRATION_COMPATIBILITY_HOST_ID_ENV]
-  delete env[ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV]
-  delete env[ORCHESTRATION_COMPATIBILITY_ATTACHMENT_ENV]
+  deleteAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_KIND')
+  deleteAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_ID')
+  deleteAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION')
+  deleteAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_ATTACHMENT')
   const normalizedHostId = hostId?.trim()
   const normalizedDistro = distro?.trim()
   if (!normalizedHostId || !normalizedDistro) {
     return
   }
-  env[ORCHESTRATION_COMPATIBILITY_HOST_KIND_ENV] = 'wsl'
-  env[ORCHESTRATION_COMPATIBILITY_HOST_ID_ENV] = normalizedHostId
-  env[ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV] = normalizedDistro
+  setAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_KIND', 'wsl')
+  setAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_ID', normalizedHostId)
+  setAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION', normalizedDistro)
 }

@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:
 import { tmpdir } from 'node:os'
 import { delimiter, join } from 'node:path'
 import { createServer } from 'node:http'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { removeTree } from '../../../../shared/windows-transient-lock-removal'
 import { CODEX_EVENTS } from '../definitions/codex-hook-definition'
 import { buildCodexHookCommand as getManagedCommand } from '../definitions/codex-hook-command-form'

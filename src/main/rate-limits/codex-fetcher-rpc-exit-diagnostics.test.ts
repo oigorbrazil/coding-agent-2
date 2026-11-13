@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as RunProcess from '@orca/process-host'
+import type * as RunProcess from '@coding-agent/process-host'
 import { isCodexAuthError } from '../../shared/codex-auth-errors'
 
 const { ptySpawnMock, resolveCodexCommandMock, stubScript } = vi.hoisted(() => ({
@@ -17,7 +17,7 @@ vi.mock(
   () =>
     import('../worker-thread-child-process/worker-thread-child-process-in-process.test-fixtures')
 )
-vi.mock('@orca/process-host', async (importOriginal) => {
+vi.mock('@coding-agent/process-host', async (importOriginal) => {
   const actual = await importOriginal<typeof RunProcess>()
   return {
     ...actual,

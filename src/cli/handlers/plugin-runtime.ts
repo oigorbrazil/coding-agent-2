@@ -1,6 +1,9 @@
+import type { CommandHandler, HandlerContext } from '../dispatch'
+
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { isAbsolute, resolve } from 'node:path'
-import type { CommandHandler, HandlerContext } from '../dispatch'
+
 import { printPluginResult, requirePluginPathArg } from '../plugin-authoring/plugin-cli-output'
 import { RuntimeClientError, RuntimeRpcFailureError } from '../runtime/types'
 import {
@@ -87,7 +90,7 @@ export async function callPlugins<T>(
 
 /** Development folders are paths on the Coding Agent 2 host, which may not be this machine. */
 export function resolveHostPluginPath(ctx: HandlerContext, value: string): string {
-  if (process.env.ORCA_CLI_CWD) {
+  if (readAppEnv(process.env, 'CLI_CWD')) {
     throw new RuntimeClientError(
       'invalid_environment',
       'This shell forwards orca to a Coding Agent 2 host on another machine, which cannot read this folder. Run the command on the machine that runs Coding Agent 2, or pass --environment for a Coding Agent 2 server that has the folder.'
@@ -131,7 +134,7 @@ function formatDevLoad(result: DevLoadResult): string {
   return [
     `${result.added ? 'Loaded' : 'Reloaded'} ${result.pluginKey} from ${result.path} (${how}).`,
     result.plugin ? formatPluginRow(result.plugin) : '',
-    'Coding Agent 2 reloads it (and restarts its worker) when its files change; `orca plugin logs` shows what it printed.'
+    'Coding Agent 2 reloads it (and restarts its worker) when its files change; `coding plugin logs` shows what it printed.'
   ]
     .filter(Boolean)
     .join('\n')
@@ -171,7 +174,7 @@ export function requirePluginKey(ctx: HandlerContext): string {
   if (!key || !isQualifiedPluginKey(key)) {
     throw new RuntimeClientError(
       'invalid_argument',
-      'Pass a plugin key such as acme.dusk; `orca plugin list` shows them.'
+      'Pass a plugin key such as acme.dusk; `coding plugin list` shows them.'
     )
   }
   return key

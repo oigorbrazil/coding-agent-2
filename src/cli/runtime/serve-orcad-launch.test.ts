@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { formatServeRuntimeSelection } from '../../shared/orcad-local-serve-selection'
-import type { runProcess } from '@orca/process-host'
+import type { runProcess } from '@coding-agent/process-host'
 import { resolveLocalServeRuntime } from './serve-orcad-launch'
 
 type RunProcess = typeof runProcess

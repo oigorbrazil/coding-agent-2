@@ -1,4 +1,5 @@
 import type { HandlerContext } from '../dispatch'
+import { readAppEnv } from '../../shared/app-env'
 
 // Guides wrap feature-specific text in these blocks so agents only learn features the host has on.
 export const GUIDE_HOST_CAPABILITIES = ['artifact-publishing', 'skill-publishing'] as const
@@ -37,7 +38,7 @@ export async function readEnabledHostCapabilities(
     // `skills share` refuses forwarded and remote invocations, so their hosts cannot publish skills.
     if (
       settings?.agentSkillSharingEnabled === true &&
-      !process.env.ORCA_CLI_CWD &&
+      !readAppEnv(process.env, 'CLI_CWD') &&
       !ctx.client.isRemote
     ) {
       enabled.add('skill-publishing')

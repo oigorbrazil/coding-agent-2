@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'node:crypto'
 import { SignJWT } from 'jose'
-import type { RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import type { RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 
 // Director → relay edge admin calls. With the edge's data in its objects, the director pushes a
 // host's assignment and devices before answering it with the edge, and exports them back before

@@ -21,14 +21,14 @@ const END = 'ORCA_PANE_PROCESSES_END'
 /** Fenced tab-separated pid/ppid/comm/pane-key/cwd rows, using POSIX sh/BusyBox. One grep avoids per-process forks; stat fields follow the last `)` because comm may contain spaces/parens. */
 export const WSL_GUEST_PANE_PROCESS_SCRIPT = [
   `echo ${BEGIN}`,
-  "for e in $(grep -l -s 'ORCA_PANE_KEY=' /proc/[0-9]*/environ); do",
+  "for e in $(grep -l -s -e 'ORCA_PANE_KEY=' -e 'CODING_AGENT_PANE_KEY=' /proc/[0-9]*/environ); do",
   '  d=${e%/environ}',
   '  p=${d#/proc/}',
   '  s=$(cat "$d/stat" 2>/dev/null) || continue',
   '  r=${s##*) }',
   '  set -- $r',
   '  c=$(cat "$d/comm" 2>/dev/null)',
-  `  k=$(tr '\\0' '\\n' < "$e" 2>/dev/null | sed -n 's/^ORCA_PANE_KEY=//p' | head -n 1)`,
+  `  k=$(tr '\\0' '\\n' < "$e" 2>/dev/null | awk '/^CODING_AGENT_PANE_KEY=/ { sub(/^[^=]*=/, ""); modern=$0; found=1 } /^ORCA_PANE_KEY=/ { sub(/^[^=]*=/, ""); legacy=$0 } END { print found ? modern : legacy }')`,
   '  w=$(readlink "$d/cwd" 2>/dev/null)',
   `  printf '%s\\t%s\\t%s\\t%s\\t%s\\n' "$p" "$2" "$c" "$k" "$w"`,
   'done',

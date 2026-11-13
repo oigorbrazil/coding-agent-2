@@ -50,7 +50,7 @@ export async function prepareRecipeVmEnvironmentCall(
     }
     throw new RuntimeClientError(
       RUNTIME_ENVIRONMENT_ASLEEP_ERROR_CODE,
-      `The VM behind environment "${environment.name}" is asleep. Run \`orca worktree activate --worktree <selector>\` for its workspace, or open it in Coding Agent 2, to wake it.`
+      `The VM behind environment "${environment.name}" is asleep. Run \`coding worktree activate --worktree <selector>\` for its workspace, or open it in Coding Agent 2, to wake it.`
     )
   }
   const answer = await askDesktopToWake(environment.id)

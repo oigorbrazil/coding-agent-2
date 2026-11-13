@@ -88,7 +88,7 @@ database, for example:
 docker run --rm -d --name orca-relay-pg -e POSTGRES_HOST_AUTH_METHOD=trust \
   -e POSTGRES_DB=orca_relay_test -p 55440:5432 postgres:16-alpine
 ORCA_RELAY_TEST_POSTGRES_URL=postgres://postgres@127.0.0.1:55440/orca_relay_test \
-  pnpm --filter @orca-cloud/relay test
+  pnpm --filter @coding-agent-cloud/relay test
 docker rm -f orca-relay-pg
 ```
 

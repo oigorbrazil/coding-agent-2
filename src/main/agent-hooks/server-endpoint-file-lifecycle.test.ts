@@ -49,6 +49,21 @@ describe('Endpoint file lifecycle', () => {
     rmSync(userDataPath, { recursive: true, force: true })
   })
 
+  it('publishes both environment spellings to children', async () => {
+    const server = new AgentHookServer()
+    await server.start({ env: 'production', userDataPath })
+    try {
+      expect(server.buildPtyEnv()).toMatchObject({
+        CODING_AGENT_AGENT_HOOK_ENV: 'production',
+        ORCA_AGENT_HOOK_ENV: 'production',
+        CODING_AGENT_AGENT_HOOK_TRANSPORT: 'raw-json-v1',
+        ORCA_AGENT_HOOK_TRANSPORT: 'raw-json-v1'
+      })
+    } finally {
+      server.stop()
+    }
+  })
+
   it('writes the endpoint file with owner-only permissions on POSIX', async () => {
     if (process.platform === 'win32') {
       return

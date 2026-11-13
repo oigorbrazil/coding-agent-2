@@ -2,7 +2,9 @@ import type {
   RemoteServerUpdateInstallResult,
   RemoteServerUpdaterSnapshot
 } from '../../../../shared/remote-server-update'
+
 import type { UpdateCheckOptions } from '../../../../shared/update-status-types'
+import { readAppEnv } from '../../../../shared/app-env'
 
 type RemoteServerUpdaterAdapter = {
   getSnapshot: (runtimeId: string) => RemoteServerUpdaterSnapshot
@@ -12,7 +14,7 @@ type RemoteServerUpdaterAdapter = {
 }
 
 const unavailableSnapshot = (runtimeId: string): RemoteServerUpdaterSnapshot => ({
-  appVersion: process.env.ORCA_APP_VERSION ?? '0.0.0-dev',
+  appVersion: readAppEnv(process.env, 'APP_VERSION') ?? '0.0.0-dev',
   runtimeId,
   support: {
     installMode: 'unsupported-headless-serve',

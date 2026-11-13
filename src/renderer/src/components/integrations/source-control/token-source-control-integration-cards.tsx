@@ -70,7 +70,7 @@ export function AzureDevOpsIntegrationCard(): React.JSX.Element {
                 <span className="font-mono text-[11px]">
                   {t(
                     'auto.components.settings.token.source.control.integration.cards.48842720d2',
-                    'ORCA_AZURE_DEVOPS_TOKEN'
+                    'CODING_AZURE_DEVOPS_TOKEN'
                   )}
                 </span>
                 {t(
@@ -80,7 +80,7 @@ export function AzureDevOpsIntegrationCard(): React.JSX.Element {
                 <span className="font-mono text-[11px]">
                   {t(
                     'auto.components.settings.token.source.control.integration.cards.fbfd237f5e',
-                    'ORCA_AZURE_DEVOPS_ACCESS_TOKEN'
+                    'CODING_AZURE_DEVOPS_ACCESS_TOKEN'
                   )}
                 </span>
                 {t(
@@ -90,7 +90,7 @@ export function AzureDevOpsIntegrationCard(): React.JSX.Element {
                 <span className="font-mono text-[11px]">
                   {t(
                     'auto.components.settings.token.source.control.integration.cards.186a6689df',
-                    'ORCA_AZURE_DEVOPS_API_BASE_URL'
+                    'CODING_AZURE_DEVOPS_API_BASE_URL'
                   )}
                 </span>{' '}
                 {t(
@@ -199,7 +199,7 @@ export function GiteaIntegrationCard(): React.JSX.Element {
                 <span className="font-mono text-[11px]">
                   {t(
                     'auto.components.settings.token.source.control.integration.cards.6d5c2a3005',
-                    'ORCA_GITEA_TOKEN'
+                    'CODING_GITEA_TOKEN'
                   )}
                 </span>{' '}
                 {t(
@@ -209,7 +209,7 @@ export function GiteaIntegrationCard(): React.JSX.Element {
                 <span className="font-mono text-[11px]">
                   {t(
                     'auto.components.settings.token.source.control.integration.cards.709057ad91',
-                    'ORCA_GITEA_API_BASE_URL'
+                    'CODING_GITEA_API_BASE_URL'
                   )}
                 </span>{' '}
                 {t(

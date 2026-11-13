@@ -1,12 +1,10 @@
+import { pluginManifestPath } from '../../main/plugins/plugin-manifest-file'
 import { existsSync } from 'node:fs'
-import { isAbsolute, join, resolve } from 'node:path'
+import { isAbsolute, resolve } from 'node:path'
 import type { CommandHandler, HandlerContext } from '../dispatch'
 import { printPluginResult, requirePluginPathArg } from '../plugin-authoring/plugin-cli-output'
 import { RuntimeClientError } from '../runtime/types'
-import {
-  isQualifiedPluginKey,
-  PLUGIN_MANIFEST_FILENAME
-} from '../../shared/plugins/manifest/plugin-manifest'
+import { isQualifiedPluginKey } from '../../shared/plugins/manifest/plugin-manifest'
 import type { PluginHostListEntry } from '../../shared/plugins/plugin-list-entry'
 import {
   pluginInstallSourceLines,
@@ -67,7 +65,7 @@ export function classifyPluginInstallSource(ctx: HandlerContext, value: string):
   const ref = stringFlag(ctx, 'ref')
   const catalog = stringFlag(ctx, 'catalog')
   const localFolder =
-    !ctx.client.isRemote && existsSync(join(resolve(ctx.cwd, value), PLUGIN_MANIFEST_FILENAME))
+    !ctx.client.isRemote && existsSync(pluginManifestPath(resolve(ctx.cwd, value)))
   if (looksLikePath(value) || localFolder) {
     return { kind: 'local-path', path: resolveHostPluginPath(ctx, value) }
   }

@@ -3,7 +3,7 @@ import type * as FsPromises from 'node:fs/promises'
 import { mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { renameSkillPathWithWindowsRetry } from './skill-filesystem-retry'
 

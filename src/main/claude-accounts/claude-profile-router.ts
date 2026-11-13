@@ -1,3 +1,26 @@
+import type { ClaudeManagedAccount } from '../../shared/managed-account-types'
+import {
+  type ClaudeProfileDescriptor,
+  describeClaudeProfile,
+  readUserClaudeConfigDir,
+  readUserClaudeConfigDirAsSet,
+  resolveClaudeDefaultHome
+} from './claude-profile-paths'
+import type { ClaudeEnvPatch } from './environment'
+import type { ClaudeRuntimeAuthPreparation } from './runtime-auth/runtime-auth-types'
+import {
+  type ClaudeAccountSelectionTarget,
+  findClaudeAccount,
+  getSelectedClaudeAccountIdForTarget
+} from './runtime-selection'
+import {
+  type ClaudeFolderLogin,
+  claudeStateFile,
+  readClaudeFolderLogin,
+  removeClaudeAccountFolder,
+  isSameClaudeLogin
+} from './claude-account-folder'
+import { appEnvPairs } from '../../shared/app-env'
 import { claudeAccountUsagePreparation } from './claude-account-usage-preparation'
 import { claudeProfileSelectionHomes } from './claude-profile-selection-homes'
 import { prepareClaudeProfileForLaunch } from './claude-profile-launch-preparation'
@@ -6,43 +29,20 @@ import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { isAgentStatusHooksEnabledForAgent } from '../../shared/agent-hook-listener/configuration/agent-status-hooks-setting'
-import {
-  CLAUDE_INJECTED_CONFIG_DIR_ENV,
-  CLAUDE_PROFILE_POINTER_ENV,
-  CLAUDE_PROFILE_SETUP_FAILED_MESSAGE,
-  CLAUDE_USER_CONFIG_DIR_ENV
-} from '../../shared/claude-profile-routing'
+import { CLAUDE_PROFILE_SETUP_FAILED_MESSAGE } from '../../shared/claude-profile-routing'
 import { claudeProfileMissing } from './claude-profile-launch-errors'
 import type { GlobalSettings } from '../../shared/global-settings-types'
-import type { ClaudeManagedAccount } from '../../shared/managed-account-types'
+
 import { probeRecentClaudeCliVersion } from '../claude/claude-hook-event-versions'
 import { writeFileAtomically } from '../codex-accounts/fs-utils'
 import { resolveClaudeCommand } from '../codex-cli/command'
-import {
-  describeClaudeProfile,
-  type ClaudeProfileDescriptor,
-  readUserClaudeConfigDir,
-  readUserClaudeConfigDirAsSet,
-  resolveClaudeDefaultHome
-} from './claude-profile-paths'
+
 import type { ClaudeProfileSetupReport } from './claude-profile-setup'
 import { runClaudeProfileSetupInWorker } from './claude-profile-setup-worker'
-import type { ClaudeEnvPatch } from './environment'
-import type { ClaudeRuntimeAuthPreparation } from './runtime-auth/runtime-auth-types'
-import {
-  findClaudeAccount,
-  getSelectedClaudeAccountIdForTarget,
-  type ClaudeAccountSelectionTarget
-} from './runtime-selection'
+
 import { wslClaudeProfilePointer } from './claude-profile-wsl-paths'
 import { isDirectory, listClaudeProfileHomes } from './claude-profile-homes'
-import {
-  claudeStateFile,
-  readClaudeFolderLogin,
-  removeClaudeAccountFolder,
-  isSameClaudeLogin,
-  type ClaudeFolderLogin
-} from './claude-account-folder'
+
 import { resolveLoginShellEnvironment } from '../startup/login-shell-environment'
 
 export type ClaudeProfileRouterSettings = Pick<
@@ -262,9 +262,11 @@ export class ClaudeProfileRouter {
   launchEnv(): ClaudeEnvPatch {
     const home = this.routedHome()
     return {
-      [CLAUDE_PROFILE_POINTER_ENV]: this.pointerPath,
+      ...appEnvPairs('CLAUDE_PROFILE_POINTER', this.pointerPath),
       // Preserve the user's inherited CLAUDE_CONFIG_DIR for System default.
-      ...(home ? { CLAUDE_CONFIG_DIR: home, [CLAUDE_INJECTED_CONFIG_DIR_ENV]: home } : {})
+      ...(home
+        ? { CLAUDE_CONFIG_DIR: home, ...appEnvPairs('CLAUDE_INJECTED_CONFIG_DIR', home) }
+        : {})
     }
   }
 
@@ -272,13 +274,15 @@ export class ClaudeProfileRouter {
   terminalEnv(target?: ClaudeAccountSelectionTarget): ClaudeEnvPatch {
     // Pass the pointer without waiting on the guest.
     if (target?.runtime === 'wsl') {
-      return { [CLAUDE_PROFILE_POINTER_ENV]: `~/${wslClaudeProfilePointer(this.args.dataRoot)}` }
+      return {
+        ...appEnvPairs('CLAUDE_PROFILE_POINTER', `~/${wslClaudeProfilePointer(this.args.dataRoot)}`)
+      }
     }
     // Save the user's value so the shell function can restore it on System default.
     const userConfigDir = readUserClaudeConfigDirAsSet(this.env)
     const base: ClaudeEnvPatch = {
-      [CLAUDE_PROFILE_POINTER_ENV]: this.pointerPath,
-      ...(userConfigDir ? { [CLAUDE_USER_CONFIG_DIR_ENV]: userConfigDir } : {})
+      ...appEnvPairs('CLAUDE_PROFILE_POINTER', this.pointerPath),
+      ...(userConfigDir ? { ...appEnvPairs('CLAUDE_USER_CONFIG_DIR', userConfigDir) } : {})
     }
     // Defer routing until the shell env resolves; the shell function will read the updated pointer.
     if (!this.envResolved) {

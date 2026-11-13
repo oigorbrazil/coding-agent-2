@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readAppEnv } from '../shared/app-env'
 // Forward guest loopback hooks over framed stdio and expose home-scoped installer operations (STA-1515).
 // Exit with stdin: a lingering listener can let WSL forwarding capture the freed Windows port and blackhole hooks.
 import { AGENT_HOOK_INFER_INTERRUPT_METHOD } from '../shared/agent-hook-listener/transport/agent-hook-interrupt-reconciliation'
@@ -22,13 +23,12 @@ import { createLocalHookRootEvidenceReader } from '../shared/agent-hook-listener
 import { createRelayPaneRootResolver } from './relay-pane-root'
 import {
   sanitizeWslHookInstanceKey,
-  WSL_HOOK_RELAY_INSTANCE_ENV,
   wslHookRelayEndpointDir
 } from '../shared/wsl-hook-relay-contract'
 
 async function main(): Promise<void> {
-  const windowsPort = Number(process.env.ORCA_AGENT_HOOK_PORT ?? '')
-  const token = process.env.ORCA_AGENT_HOOK_TOKEN ?? ''
+  const windowsPort = Number(readAppEnv(process.env, 'AGENT_HOOK_PORT') ?? '')
+  const token = readAppEnv(process.env, 'AGENT_HOOK_TOKEN') ?? ''
   if (!Number.isInteger(windowsPort) || windowsPort <= 0 || token.length === 0) {
     process.stderr.write('[wsl-hook-relay] missing ORCA_AGENT_HOOK_PORT/TOKEN in env\n')
     process.exit(1)
@@ -58,7 +58,7 @@ async function main(): Promise<void> {
 
   // Keep endpoint-file identity across restarts so surviving agents can re-coordinate from its rewrite.
   const instanceKey =
-    sanitizeWslHookInstanceKey(process.env[WSL_HOOK_RELAY_INSTANCE_ENV]) ?? `port${windowsPort}`
+    sanitizeWslHookInstanceKey(readAppEnv(process.env, 'WSL_HOOK_INSTANCE')) ?? `port${windowsPort}`
   const hookServer = new RelayAgentHookServer({
     endpointDir: wslHookRelayEndpointDir(homedir(), instanceKey),
     token,

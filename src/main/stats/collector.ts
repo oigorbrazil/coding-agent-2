@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { join } from 'node:path'
 import { getAppEnvironment } from '../../shared/app-environment'
 import type { StatsSummary } from '../../shared/process-stats-types'
@@ -15,7 +16,7 @@ let _statsFile: string | null = null
 
 /** Use the app environment because plain-Node orcad records stats too (#31112). */
 export function initStatsPath(userDataPath = getAppEnvironment().getPath('userData')): string {
-  _statsFile = join(userDataPath, 'orca-stats.json')
+  _statsFile = renamedUserDataFile(join(userDataPath, 'orca-stats.json'))
   return _statsFile
 }
 

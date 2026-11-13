@@ -10,8 +10,8 @@ function buildFloatingWorkspaceSearchEntries(includeBrowser: boolean) {
         'Floating Workspace'
       ),
       description: translate(
-        'auto.components.settings.floating.workspace.search.b96b5ee6cf',
-        'Enable the floating workspace, choose where new tabs start, and choose where the toggle button appears.'
+        'auto.components.settings.FloatingWorkspacePane.37df688d6f',
+        'Enable the floating workspace and choose where new tabs start.'
       ),
       keywords: [
         translate(

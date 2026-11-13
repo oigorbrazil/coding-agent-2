@@ -1,13 +1,16 @@
+import {
+  type ClaudeAgentTeamsMode,
+  addClaudeTeammateModeAuto,
+  addClaudeTeammateModeInProcess,
+  isDirectClaudeCommand
+} from '../../../../shared/claude-agent-teams-tmux-compat'
+import { windowsAppEnvRestore } from '../../../../shared/app-env-script'
+import { readAppEnv, readAppEnvKey } from '../../../../shared/app-env'
 import { chmod, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { accessSync, constants, existsSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { delimiter, dirname, isAbsolute, join } from 'node:path'
-import {
-  addClaudeTeammateModeAuto,
-  addClaudeTeammateModeInProcess,
-  isDirectClaudeCommand,
-  type ClaudeAgentTeamsMode
-} from '../../../../shared/claude-agent-teams-tmux-compat'
+
 import { getAppEnvironment, hasAppEnvironment } from '../../../../shared/app-environment'
 import { getOrcaCliCommandNameForPlatform } from '../../../../shared/orca-cli-command-name'
 import { getBundledLauncherPath } from '../../../cli/bundled-cli-launcher-path'
@@ -65,8 +68,8 @@ export function resolveClaudeAgentTeamsShimBin(
   env: Record<string, string | undefined> = process.env
 ): string | null {
   // Windows environments may spell this key Path.
-  const pathValue = env[resolvePathEnvKey(env, process.platform)]
-  const rawOverride = env.ORCA_AGENT_TEAMS_SHIM_BIN
+  const pathValue = readAppEnvKey(env, resolvePathEnvKey(env, process.platform))
+  const rawOverride = readAppEnv(env, 'AGENT_TEAMS_SHIM_BIN')
   // Qualify bare overrides before the shim shell can resolve them against its cwd.
   const override = rawOverride
     ? isAbsolute(rawOverride)
@@ -74,7 +77,7 @@ export function resolveClaudeAgentTeamsShimBin(
       : findExecutableOnPath(rawOverride, pathValue)
     : null
   // Inherited team overrides may point at an older leader’s stale GUI binary.
-  const inheritedFromTeam = Boolean(env.ORCA_AGENT_TEAMS_TEAM_ID)
+  const inheritedFromTeam = Boolean(readAppEnv(env, 'AGENT_TEAMS_TEAM_ID'))
   if (override && !inheritedFromTeam) {
     return override
   }
@@ -133,7 +136,7 @@ function unixShimScript(): string {
   return [
     '#!/usr/bin/env sh',
     'set -eu',
-    'orca_bin=${ORCA_AGENT_TEAMS_SHIM_BIN:-}',
+    'orca_bin=${CODING_AGENT_AGENT_TEAMS_SHIM_BIN-${ORCA_AGENT_TEAMS_SHIM_BIN:-}}',
     'case $orca_bin in',
     '  /*|[A-Za-z]:[\\\\/]*) ;;',
     '  *)',
@@ -150,6 +153,7 @@ export function windowsClaudeAgentTeamsShimScript(): string {
   return [
     '@echo off',
     'setlocal',
+    ...windowsAppEnvRestore(['AGENT_TEAMS_SHIM_BIN']),
     'set "ORCA_SHIM_BIN=%ORCA_AGENT_TEAMS_SHIM_BIN%"',
     'if not defined ORCA_SHIM_BIN goto :unqualified',
     'if "%ORCA_SHIM_BIN:~1,1%"==":" goto :run',

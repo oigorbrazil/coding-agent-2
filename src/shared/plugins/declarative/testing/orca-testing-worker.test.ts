@@ -88,7 +88,7 @@ describe('mountWorker', () => {
     expect(await mounted.command('board.count')).toBe(2)
 
     await expect(mounted.emit('agent.status.changed', { paneKey: 1 })).rejects.toThrow(
-      /not one Orca sends/
+      /not one Coding Agent 2 sends/
     )
     await expect(mounted.emit('workspace.created', {})).rejects.toThrow(/not in contributes.events/)
     await expect(mounted.command('board.missing')).rejects.toThrow(/registered no/)
@@ -168,7 +168,7 @@ describe('mountWorker', () => {
     })
     expect(mounted.logs.at(-1)).toMatch(/hook terminal\.send skipped after \d+ms: hook failed/)
     await expect(mounted.hooks.fire('terminal.send', { text: 1 })).rejects.toThrow(
-      /not one Orca sends/
+      /not one Coding Agent 2 sends/
     )
     await expect(mounted.hooks.fire('workspace.create.after', {})).rejects.toThrow(
       /not in contributes.hooks/

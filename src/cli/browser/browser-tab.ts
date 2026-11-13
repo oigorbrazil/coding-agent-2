@@ -1,10 +1,12 @@
+import type { CommandHandler } from '../dispatch'
+import { readAppEnv } from '../../shared/app-env'
 import type {
   BrowserTabCurrentResult,
   BrowserTabListResult,
   BrowserTabShowResult,
   BrowserTabSwitchResult
 } from '../../shared/runtime-browser-contracts'
-import type { CommandHandler } from '../dispatch'
+
 import { formatTabList, formatTabListWithProfiles, formatTabShow } from './browser-format'
 import { printResult } from '../format'
 import {
@@ -74,7 +76,7 @@ export const BROWSER_TAB_HANDLERS: Record<string, CommandHandler> = {
     const worktree = await getBrowserWorktreeSelector(flags, cwd, client)
     // Why the caller's tab: the split should sit beside the terminal that ran the command, not
     // wherever the user last clicked. Spread conditionally so a plain create keeps its old payload.
-    const callerTabId = process.env.ORCA_TAB_ID
+    const callerTabId = readAppEnv(process.env, 'TAB_ID')
     const result = await client.call<{ browserPageId: string }>(
       'browser.tabCreate',
       {

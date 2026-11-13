@@ -4,6 +4,13 @@ export const TASK_PROVIDERS: readonly TaskProvider[] = ['github', 'gitlab', 'lin
 
 const TASK_PROVIDER_SET = new Set<TaskProvider>(TASK_PROVIDERS)
 
+/** Sources Tasks offers. Coding Agent 2 dropped Linear here; Linear-linked workspaces still resolve. */
+export const SELECTABLE_TASK_PROVIDERS: readonly TaskProvider[] = TASK_PROVIDERS.filter(
+  (provider) => provider !== 'linear'
+)
+
+const SELECTABLE_TASK_PROVIDER_SET = new Set<TaskProvider>(SELECTABLE_TASK_PROVIDERS)
+
 export function isTaskProvider(value: unknown): value is TaskProvider {
   return TASK_PROVIDER_SET.has(value as TaskProvider)
 }
@@ -13,8 +20,10 @@ export function normalizeTaskProviderSettings(value: {
   defaultTaskSource: unknown
 }): { visibleTaskProviders: TaskProvider[]; defaultTaskSource: TaskProvider } {
   const visibleTaskProviders = normalizeVisibleTaskProviders(value.visibleTaskProviders)
-  const defaultTaskSource = isTaskProvider(value.defaultTaskSource)
-    ? value.defaultTaskSource
+  const defaultTaskSource = SELECTABLE_TASK_PROVIDER_SET.has(
+    value.defaultTaskSource as TaskProvider
+  )
+    ? (value.defaultTaskSource as TaskProvider)
     : resolveVisibleTaskProvider('github', visibleTaskProviders)
 
   if (visibleTaskProviders.includes(defaultTaskSource)) {
@@ -24,7 +33,7 @@ export function normalizeTaskProviderSettings(value: {
   // Repair older/drifted profiles whose saved default disappeared from the visible list.
   return {
     defaultTaskSource,
-    visibleTaskProviders: TASK_PROVIDERS.filter(
+    visibleTaskProviders: SELECTABLE_TASK_PROVIDERS.filter(
       (provider) => provider === defaultTaskSource || visibleTaskProviders.includes(provider)
     )
   }
@@ -32,12 +41,12 @@ export function normalizeTaskProviderSettings(value: {
 
 export function normalizeVisibleTaskProviders(value: unknown): TaskProvider[] {
   if (!Array.isArray(value)) {
-    return [...TASK_PROVIDERS]
+    return [...SELECTABLE_TASK_PROVIDERS]
   }
 
   const normalized: TaskProvider[] = []
   for (const provider of value) {
-    if (!TASK_PROVIDER_SET.has(provider as TaskProvider)) {
+    if (!SELECTABLE_TASK_PROVIDER_SET.has(provider as TaskProvider)) {
       continue
     }
     if (!normalized.includes(provider as TaskProvider)) {
@@ -46,7 +55,7 @@ export function normalizeVisibleTaskProviders(value: unknown): TaskProvider[] {
   }
 
   // Keep a selectable source after hydration or manual settings edits.
-  return normalized.length > 0 ? normalized : [...TASK_PROVIDERS]
+  return normalized.length > 0 ? normalized : [...SELECTABLE_TASK_PROVIDERS]
 }
 
 export type TaskProviderAvailability = {
@@ -58,8 +67,9 @@ export function filterAvailableTaskProviders(
   visibleProviders: readonly TaskProvider[],
   availability: TaskProviderAvailability
 ): TaskProvider[] {
-  const available = visibleProviders.filter((provider) =>
-    isTaskProviderAvailable(provider, availability)
+  const available = visibleProviders.filter(
+    (provider) =>
+      SELECTABLE_TASK_PROVIDER_SET.has(provider) && isTaskProviderAvailable(provider, availability)
   )
 
   return available.length > 0 ? available : ['github']
@@ -74,11 +84,11 @@ export function restoreAvailableDefaultTaskProvider(
 
   // Retain access to a saved default even when other providers become available.
   if (
-    isTaskProvider(preferredProvider) &&
-    isTaskProviderAvailable(preferredProvider, availability) &&
-    !available.includes(preferredProvider)
+    SELECTABLE_TASK_PROVIDER_SET.has(preferredProvider as TaskProvider) &&
+    isTaskProviderAvailable(preferredProvider as TaskProvider, availability) &&
+    !available.includes(preferredProvider as TaskProvider)
   ) {
-    return TASK_PROVIDERS.filter(
+    return SELECTABLE_TASK_PROVIDERS.filter(
       (provider) => provider === preferredProvider || available.includes(provider)
     )
   }

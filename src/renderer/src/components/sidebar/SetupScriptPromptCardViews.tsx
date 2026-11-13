@@ -222,7 +222,7 @@ export function SetupScriptPromptBody({
         i18n={i18n}
         defaults={t(
           'auto.components.sidebar.SetupScriptPromptCardViews.ignoresSharedSetup',
-          'This repo ignores shared <yaml>orca.yaml</yaml> setup scripts. Add a local command, or change the source in Settings.'
+          'This repo ignores shared <yaml>coding.yaml</yaml> setup scripts. Add a local command, or change the source in Settings.'
         )}
         components={{ yaml: <code /> }}
       />

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 /**
  * The move orchestrator's production ports and IPC (D3a). Dark: with the internal WSL hosts gate
  * closed, or without a WSL host service, nothing is constructed and the IPC answers empty.
@@ -134,7 +135,7 @@ function createOrchestrator(
     appVersion: app.getVersion(),
     // A block learned this run, or the setting turned off, stops automatic moves at once.
     autoMoveEnabled: () =>
-      process.env[WSL_MOVE_ORCHESTRATOR_AUTO_ENV] !== '0' && wslHostsOptedIn(store.getSettings()),
+      readAppEnv(process.env, 'WSL_MOVE_AUTO') !== '0' && wslHostsOptedIn(store.getSettings()),
     autoMovesBridgeProjects: wslMoveAutoMovesBridgeProjects,
     prepareHost: (distro, stillWanted) => prepareHost(userDataPath, distro, stillWanted),
     isDistroInUse: (distro) => isDistroInUse(store, userDataPath, distro),

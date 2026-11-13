@@ -1,4 +1,4 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { posix as pathPosix, win32 as pathWin32 } from 'node:path'
 import { parseWslUncPath } from '../../../../shared/wsl-paths'
 import { wslExeProcessSpec, wslExeStdout } from '../../../wsl/execution/wsl-exe-process'

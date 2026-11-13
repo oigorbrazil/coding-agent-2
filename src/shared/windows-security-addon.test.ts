@@ -18,11 +18,15 @@ describe('trustedPackagePath', () => {
     }
     return {
       app: join(root, 'app'),
-      inside: file(join(root, 'app', 'node_modules', '@orca', 'windows-security', 'index.js')),
+      inside: file(
+        join(root, 'app', 'node_modules', '@coding-agent', 'windows-security', 'index.js')
+      ),
       // A sibling whose name merely starts with the app's must not count as inside it.
-      beside: file(join(root, 'app-evil', 'node_modules', '@orca', 'windows-security', 'index.js')),
+      beside: file(
+        join(root, 'app-evil', 'node_modules', '@coding-agent', 'windows-security', 'index.js')
+      ),
       // What a bare specifier finds by walking past the app, e.g. C:\node_modules on a shared host.
-      above: file(join(root, 'node_modules', '@orca', 'windows-security', 'index.js'))
+      above: file(join(root, 'node_modules', '@coding-agent', 'windows-security', 'index.js'))
     }
   }
 

@@ -14,7 +14,7 @@ export function theme(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'App color theme (data only, no approval needed)',
     files: {
-      'orca-plugin.json': manifest(input, description, {
+      'coding-plugin.json': manifest(input, description, {
         execution: 'data',
         contributes: {
           themes: [{ id: `${input.id}-dark`, title: input.name, path: 'themes/dark.json' }]
@@ -48,7 +48,7 @@ export function terminalTheme(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'Terminal ANSI palette (data only, no approval needed)',
     files: {
-      'orca-plugin.json': manifest(input, 'A dark terminal palette.', {
+      'coding-plugin.json': manifest(input, 'A dark terminal palette.', {
         execution: 'data',
         contributes: {
           terminalThemes: [{ id: input.id, title: input.name, path: 'terminal/dark.json' }]
@@ -84,7 +84,7 @@ export function iconTheme(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'File and folder icon theme (data only, no approval needed)',
     files: {
-      'orca-plugin.json': manifest(input, 'File and folder icons.', {
+      'coding-plugin.json': manifest(input, 'File and folder icons.', {
         execution: 'data',
         contributes: {
           iconThemes: [{ id: input.id, title: input.name, path: 'icons/theme.json' }]
@@ -118,7 +118,7 @@ export function syntax(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'TextMate syntax highlighting for a file type (data only, no approval needed)',
     files: {
-      'orca-plugin.json': manifest(input, `Syntax highlighting for ${extension} files.`, {
+      'coding-plugin.json': manifest(input, `Syntax highlighting for ${extension} files.`, {
         execution: 'data',
         contributes: {
           syntaxes: [
@@ -169,18 +169,22 @@ export function languagePack(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'Interface translation (data only, no approval needed)',
     files: {
-      'orca-plugin.json': manifest(input, 'Translates Coding Agent 2 into Brazilian Portuguese.', {
-        execution: 'data',
-        contributes: {
-          languagePacks: [
-            { locale: 'pt-BR', path: 'locales/pt-BR.json', displayName: 'Português (Brasil)' }
-          ]
+      'coding-plugin.json': manifest(
+        input,
+        'Translates Coding Agent 2 into Brazilian Portuguese.',
+        {
+          execution: 'data',
+          contributes: {
+            languagePacks: [
+              { locale: 'pt-BR', path: 'locales/pt-BR.json', displayName: 'Português (Brasil)' }
+            ]
+          }
         }
-      }),
+      ),
       'locales/pt-BR.json': json({ common: { cancel: 'Cancelar', retry: 'Tentar novamente' } }),
       'README.md': readme(
         input,
-        'A Coding Agent 2 language pack. Keys mirror the English catalog of Coding Agent 2; add translated strings to `locales/pt-BR.json`, or change the locale in `orca-plugin.json`.'
+        'A Coding Agent 2 language pack. Keys mirror the English catalog of Coding Agent 2; add translated strings to `locales/pt-BR.json`, or change the locale in `coding-plugin.json`.'
       ),
       ...COMMON_FILES
     }

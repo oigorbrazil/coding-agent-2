@@ -1,3 +1,4 @@
+import { readAppEnv, appEnvPairs } from '../../shared/app-env'
 /** Copy supervisors outside the app so updates cannot mix lazily loaded modules from two releases. */
 import { createHash } from 'node:crypto'
 import { constants, readFileSync, rmSync, statSync } from 'node:fs'
@@ -151,11 +152,11 @@ function runsFromAppImage(appRoot: string, env: NodeJS.ProcessEnv): boolean {
 export async function relocateServeSupervisor(
   deps: SupervisorRelocationDeps
 ): Promise<'in-place' | 'already-relocated' | 'relocated'> {
-  if (deps.env[SERVE_SUPERVISOR_APP_ROOT_ENV]) {
+  if (readAppEnv(deps.env, 'SERVE_SUPERVISOR_APP_ROOT')) {
     return 'already-relocated'
   }
   // Dev and overridden executables are not swapped by app updates.
-  const override = deps.env.ORCA_APP_EXECUTABLE
+  const override = readAppEnv(deps.env, 'APP_EXECUTABLE')
   if (
     deps.env.ELECTRON_RUN_AS_NODE !== '1' ||
     (typeof override === 'string' && override.trim().length > 0) ||
@@ -180,7 +181,7 @@ export async function relocateServeSupervisor(
   try {
     deps.execve(deps.execPath, [deps.execPath, cliEntry, ...deps.argv.slice(2)], {
       ...deps.env,
-      [SERVE_SUPERVISOR_APP_ROOT_ENV]: deps.appRoot
+      ...appEnvPairs('SERVE_SUPERVISOR_APP_ROOT', deps.appRoot)
     })
   } catch (error) {
     deps.log(

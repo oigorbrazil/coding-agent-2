@@ -1,5 +1,5 @@
 import { execFileSync, spawn } from 'node:child_process'
-import { assertWslDistroAllowed } from '@orca/process-host/wsl-distro-allowlist'
+import { assertWslDistroAllowed } from '@coding-agent/process-host/wsl-distro-allowlist'
 import type { WindowsHostInteractiveLoginSpawn } from '../../shared/windows-interactive-login-spawn'
 import type {
   CodexManagedAccount,

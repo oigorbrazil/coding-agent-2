@@ -196,7 +196,7 @@ describe('orca claude-teams CLI handler', () => {
     await expect(CORE_HANDLERS.serve(ctx)).rejects.toMatchObject({
       code: 'invalid_argument',
       message:
-        '--data-root expects a directory. Usage: orca serve --reclaim-stale-lock [--data-root <dir>] [--yes] [--json]'
+        '--data-root expects a directory. Usage: coding serve --reclaim-stale-lock [--data-root <dir>] [--yes] [--json]'
     })
     expect(reclaimStaleLockMock).not.toHaveBeenCalled()
     expect(printReclaimResultMock).not.toHaveBeenCalled()

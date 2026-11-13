@@ -19,7 +19,7 @@ import {
   type AppEnvironment
 } from '../../../shared/app-environment'
 import { installMainProcessTreeKillGate } from './own-chromium-tree-kill-guard'
-import { setProcessTreeKillGate } from '@orca/process-host/process-tree-kill-gate'
+import { setProcessTreeKillGate } from '@coding-agent/process-host/process-tree-kill-gate'
 import { resetSelfInitiatedTreeKillLogForTest } from '../../crash-reporting/self-initiated-tree-kill-log'
 import {
   clearCrashBreadcrumbsForTest,
@@ -27,7 +27,7 @@ import {
 } from '../../crash-reporting/crash-breadcrumb-store'
 import { _resetTracerForTests, setActiveSink } from '../../observability/tracer'
 
-import { signalProcessTree } from '@orca/process-host/process-tree-termination'
+import { signalProcessTree } from '@coding-agent/process-host/process-tree-termination'
 
 const RENDERER_PID = 1001
 

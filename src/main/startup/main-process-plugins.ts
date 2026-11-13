@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { join } from 'node:path'
 import { PluginImageCache } from '../plugins/plugin-image-cache'
 import { installPluginImageProtocolHandler } from '../plugins/plugin-image-protocol'
@@ -67,7 +68,7 @@ export async function initializeMainProcessPlugins(runtime: OrcaRuntimeService):
     // Why packaged only (like the safety list): dev and e2e runs must not reach the network unasked.
     isFetchAllowed: () =>
       store.getSettings().pluginSystemEnabled === true &&
-      (app.isPackaged || process.env.ORCA_PLUGIN_INSTALL_STATS === '1')
+      (app.isPackaged || readAppEnv(process.env, 'PLUGIN_INSTALL_STATS') === '1')
   })
   state.pluginInstallStatsService.onChanged(() => {
     for (const window of BrowserWindow.getAllWindows()) {
@@ -165,7 +166,8 @@ export async function initializeMainProcessPlugins(runtime: OrcaRuntimeService):
     isKillListed: (pluginKey) => Boolean(state.pluginKillListService?.find(pluginKey))
   })
   // Why packaged only (like the safety list): dev and e2e runs must not update fixtures unasked.
-  const autoUpdateScheduled = app.isPackaged || process.env.ORCA_PLUGIN_AUTO_UPDATE === '1'
+  const autoUpdateScheduled =
+    app.isPackaged || readAppEnv(process.env, 'PLUGIN_AUTO_UPDATE') === '1'
   const syncPluginAutoUpdate = (runNow: boolean): void => {
     if (!autoUpdateScheduled) {
       return

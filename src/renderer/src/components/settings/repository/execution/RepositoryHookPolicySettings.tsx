@@ -75,7 +75,7 @@ function getCommandSourcePolicyOptions(
   return [
     {
       policy: 'shared-only',
-      label: t('auto.components.settings.RepositoryHooksSection.d88b6ff88f', 'orca.yaml only'),
+      label: t('auto.components.settings.RepositoryHooksSection.d88b6ff88f', 'coding.yaml only'),
       description: t(
         'auto.components.settings.RepositoryHooksSection.29397e8bbc',
         'Run only committed repo commands; ignore local commands.'
@@ -86,7 +86,7 @@ function getCommandSourcePolicyOptions(
       label: t('auto.components.settings.RepositoryHooksSection.83dc78202a', 'Local only'),
       description: t(
         'auto.components.settings.RepositoryHooksSection.0e8b2a520d',
-        'Ignore orca.yaml; run only your local commands.'
+        'Ignore coding.yaml; run only your local commands.'
       )
     },
     {
@@ -94,7 +94,7 @@ function getCommandSourcePolicyOptions(
       label: t('auto.components.settings.RepositoryHooksSection.8d6c56bff8', 'Run both'),
       description: t(
         'auto.components.settings.RepositoryHooksSection.8561b0665f',
-        'orca.yaml first, then your local commands.'
+        'coding.yaml first, then your local commands.'
       )
     }
   ]
@@ -161,7 +161,7 @@ export function RepositorySetupPolicySetting({
 
 function getCommandSourceLabel(policy: HookCommandSourcePolicy, t: Translate = translate): string {
   if (policy === 'shared-only') {
-    return t('auto.components.settings.RepositoryHooksSection.d88b6ff88f', 'orca.yaml only')
+    return t('auto.components.settings.RepositoryHooksSection.d88b6ff88f', 'coding.yaml only')
   }
   if (policy === 'local-only') {
     return t('auto.components.settings.RepositoryHooksSection.83dc78202a', 'Local only')
@@ -172,6 +172,7 @@ function getCommandSourceLabel(policy: HookCommandSourcePolicy, t: Translate = t
 export function RepositoryHookCommandSourceSetting({
   searchQuery,
   selectedPolicy,
+  warning,
   yamlState,
   yamlHooks,
   copiedTemplate,
@@ -182,6 +183,7 @@ export function RepositoryHookCommandSourceSetting({
 }: {
   searchQuery: string
   selectedPolicy: HookCommandSourcePolicy
+  warning?: string
   yamlState: string
   yamlHooks: OrcaHooks | null
   copiedTemplate: boolean
@@ -197,12 +199,12 @@ export function RepositoryHookCommandSourceSetting({
       title: t('auto.components.settings.RepositoryHooksSection.c9bc1bfd8f', 'Advanced'),
       description: t(
         'auto.components.settings.RepositoryHooksSection.610d90fdbd',
-        'Command source and orca.yaml details.'
+        'Command source and coding.yaml details.'
       ),
       keywords: [
         t('auto.components.settings.RepositoryHooksSection.c5a55a2d2e', 'advanced'),
         t('auto.components.settings.RepositoryHooksSection.4611b78617', 'command source'),
-        t('auto.components.settings.RepositoryHooksSection.39da2ae12f', 'orca.yaml'),
+        t('auto.components.settings.RepositoryHooksSection.39da2ae12f', 'coding.yaml'),
         t('auto.components.settings.RepositoryHooksSection.d2b3016c20', 'shared'),
         t('auto.components.settings.RepositoryHooksSection.2d03a514db', 'local'),
         t('auto.components.settings.RepositoryHooksSection.0518758f38', 'both'),
@@ -238,7 +240,7 @@ export function RepositoryHookCommandSourceSetting({
           <span className="text-xs text-muted-foreground">
             {t(
               'auto.components.settings.RepositoryHooksSection.bbbd6e0bc4',
-              'Command source & orca.yaml'
+              'Command source & coding.yaml'
             )}
           </span>
         </div>
@@ -257,7 +259,7 @@ export function RepositoryHookCommandSourceSetting({
                 i18n={i18n}
                 defaults={t(
                   'auto.components.settings.RepositoryHooksSection.commandSourceDescription',
-                  'When both <yaml>orca.yaml</yaml> and local commands exist, choose which run.'
+                  'When both <yaml>coding.yaml</yaml> and local commands exist, choose which run.'
                 )}
                 components={{ yaml: <code className="rounded bg-muted px-1 py-0.5" /> }}
               />
@@ -286,6 +288,7 @@ export function RepositoryHookCommandSourceSetting({
           </div>
         </div>
         <RepositoryHooksYamlStatus
+          warning={warning}
           yamlState={yamlState}
           yamlHooks={yamlHooks}
           copiedTemplate={copiedTemplate}

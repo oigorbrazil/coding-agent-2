@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { app, type BrowserWindow } from 'electron'
 import { ORCA_LAYOUT_OWNER_IS_MAIN } from '../../shared/layout-owner-switch'
 import { placeUnshownLiveTerminalsBestEffort } from '../runtime/terminal/adoption/unshown-live-terminal-placement'
@@ -76,8 +77,8 @@ function settleDesktopActivation(): void {
 function e2eHeadlessServeWithoutBrowser(): boolean {
   return (
     !app.isPackaged &&
-    process.env.ORCA_E2E_HEADLESS === '1' &&
-    process.env.ORCA_E2E_HEADLESS_SERVE_WITHOUT_BROWSER === '1'
+    readAppEnv(process.env, 'E2E_HEADLESS') === '1' &&
+    readAppEnv(process.env, 'E2E_HEADLESS_SERVE_WITHOUT_BROWSER') === '1'
   )
 }
 
@@ -89,8 +90,8 @@ function installRuntimeRpc(
   // Migrate pairing credentials from late-resolved userData before switching to the canonical path.
   migrateMobilePairingDataToCanonicalUserDataPath(app.getPath('userData'))
   // Use OS-assigned ports for concurrent E2E Electron instances to avoid EADDRINUSE.
-  const isE2E = Boolean(process.env.ORCA_E2E_USER_DATA_DIR)
-  const requestedE2EWsPort = process.env.ORCA_E2E_RUNTIME_WS_PORT
+  const isE2E = Boolean(readAppEnv(process.env, 'E2E_USER_DATA_DIR'))
+  const requestedE2EWsPort = readAppEnv(process.env, 'E2E_RUNTIME_WS_PORT')
   const e2eWsPort = requestedE2EWsPort === undefined ? 0 : Number(requestedE2EWsPort)
   if (isE2E && (!Number.isInteger(e2eWsPort) || e2eWsPort < 0 || e2eWsPort > 65_535)) {
     throw new Error(`Invalid ORCA_E2E_RUNTIME_WS_PORT value: ${requestedE2EWsPort}`)

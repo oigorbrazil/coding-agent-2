@@ -1,0 +1,256 @@
+#!/usr/bin/env python3
+"""Coding Opus — local server for the playbooks editor.
+
+`orchestrate.py editor` starts this in the background. It serves `assets/editor.html` (the same
+editor Coding Agent 2 ships) on 127.0.0.1 and lets that page read and save the playbooks file the
+skill plans with. Every API call needs the one-time token from the page URL. The server stops on
+its own a little after the page is closed. Standard library only.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import threading
+import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from typing import Any, Dict, Tuple
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import orchestrate  # noqa: E402  (same folder; imported for its playbook rules)
+
+PAGE = Path(__file__).resolve().parent.parent / "assets" / "editor.html"
+MAX_BODY = 1 << 20
+# Stop when the page has not pinged for this long (it pings every 20 s), or if it never connects.
+IDLE_AFTER_PING = 90
+IDLE_BEFORE_FIRST_PING = 600
+
+
+class EditorState:
+    def __init__(self, policy_path: Path, token: str) -> None:
+        self.policy_path = policy_path
+        self.token = token
+        self.last_ping = 0.0
+        self.started = time.monotonic()
+        self.lock = threading.Lock()
+
+    def playbooks(self) -> Dict[str, Any]:
+        user = orchestrate.user_playbooks_path(self.policy_path)
+        effective = orchestrate.effective_playbooks_path(self.policy_path)
+        try:
+            backup = user.with_name(user.name + ".bak").read_text(encoding="utf-8")
+        except (OSError, UnicodeError):
+            backup = None
+        return {
+            "backupText": backup,
+            "text": orchestrate.read_playbooks(effective),
+            "path": str(user),
+            "custom": user.is_file(),
+        }
+
+    def stamp(self) -> int:
+        path = orchestrate.effective_playbooks_path(self.policy_path)
+        try:
+            return int(path.stat().st_mtime * 1000)
+        except OSError:
+            return 0
+
+    def accounts(self) -> Dict[str, Any]:
+        try:
+            return {"ok": True, "accounts": orchestrate.accounts_summary(self.policy_path)}
+        except orchestrate.PlanError as error:
+            return {"ok": False, "error": str(error)}
+
+    def models(self) -> Dict[str, Any]:
+        try:
+            return {"ok": True, "catalog": orchestrate.model_catalog(self.policy_path)}
+        except (OSError, orchestrate.PlanError) as error:
+            return {"ok": False, "error": str(error)}
+
+    def order_accounts(self, provider: Any, names: Any) -> Dict[str, Any]:
+        if not isinstance(names, list) or not all(isinstance(name, str) for name in names):
+            return {"ok": False, "error": "names must be a list of account names"}
+        try:
+            with self.lock:
+                orchestrate.order_accounts(self.policy_path, provider, names)
+        except orchestrate.PlanError as error:
+            return {"ok": False, "error": str(error)}
+        return self.accounts()
+
+    def save(self, text: str) -> Dict[str, Any]:
+        if not text.strip() or len(text.encode("utf-8")) > MAX_BODY:
+            return {"ok": False, "error": "empty or too large"}
+        try:
+            data = orchestrate.parse_playbooks_yaml(text)
+            errors = orchestrate.playbook_structure_errors(data)
+        except orchestrate.PlanError as error:
+            return {"ok": False, "error": str(error)}
+        if errors:
+            return {"ok": False, "error": "; ".join(errors)}
+        path = orchestrate.user_playbooks_path(self.policy_path)
+        with self.lock:
+            if path.is_file():
+                current = path.read_text(encoding="utf-8")
+                if current != text:
+                    orchestrate.atomic_write_text(path.with_name(path.name + ".bak"), current)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            orchestrate.atomic_write_text(path, text)
+        return {"ok": True, "playbooks": self.playbooks()}
+
+
+def make_handler(state: EditorState, port: int):
+    allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
+
+    class Handler(BaseHTTPRequestHandler):
+        def log_message(self, *_args: Any) -> None:  # keep the background process silent
+            return
+
+        def _send(self, status: int, body: bytes, content_type: str) -> None:
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.end_headers()
+            self.wfile.write(body)
+
+        def _json(self, status: int, payload: Dict[str, Any]) -> None:
+            self._send(status, json.dumps(payload, ensure_ascii=False).encode("utf-8"), "application/json")
+
+        def _guard(self, api: bool) -> bool:
+            # Host check blocks DNS rebinding; the token keeps other local pages out of the API.
+            if self.headers.get("Host") not in allowed_hosts:
+                self._json(403, {"error": "forbidden host"})
+                return False
+            if api and self.headers.get("X-Coding-Opus-Token") != state.token:
+                self._json(401, {"error": "bad token"})
+                return False
+            return True
+
+        def do_GET(self) -> None:  # noqa: N802
+            path = self.path.split("?", 1)[0]
+            if path in ("/", "/index.html"):
+                if self._guard(api=False):
+                    self._send(200, PAGE.read_bytes(), "text/html; charset=utf-8")
+                return
+            if not self._guard(api=True):
+                return
+            try:
+                if path == "/api/playbooks":
+                    self._json(200, state.playbooks())
+                elif path == "/api/models":
+                    self._json(200, state.models())
+                elif path == "/api/accounts":
+                    self._json(200, state.accounts())
+                elif path == "/api/stamp":
+                    self._json(200, {"stamp": state.stamp()})
+                elif path == "/api/ping":
+                    state.last_ping = time.monotonic()
+                    self._json(200, {"ok": True})
+                else:
+                    self._json(404, {"error": "not found"})
+            except orchestrate.PlanError as error:
+                self._json(500, {"error": str(error)})
+
+        def do_POST(self) -> None:  # noqa: N802
+            if not self._guard(api=True):
+                return
+            path = self.path.split("?", 1)[0]
+            if path not in ("/api/playbooks", "/api/accounts/order"):
+                self._json(404, {"error": "not found"})
+                return
+            length = int(self.headers.get("Content-Length") or 0)
+            if length <= 0 or length > MAX_BODY * 2:
+                self._json(413, {"ok": False, "error": "body size"})
+                return
+            try:
+                body = json.loads(self.rfile.read(length).decode("utf-8"))
+            except ValueError:
+                body = None
+            body = body if isinstance(body, dict) else {}
+            if path == "/api/accounts/order":
+                self._json(200, state.order_accounts(body.get("provider"), body.get("names")))
+                return
+            text = body.get("text")
+            if not isinstance(text, str):
+                self._json(400, {"ok": False, "error": "text required"})
+                return
+            self._json(200, state.save(text))
+
+    return Handler
+
+
+def serve(policy_path: Path, port: int, token: str) -> None:
+    state = EditorState(policy_path, token)
+    server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(state, port))
+
+    def watchdog() -> None:
+        while True:
+            time.sleep(5)
+            now = time.monotonic()
+            idle = now - state.last_ping if state.last_ping else now - state.started
+            limit = IDLE_AFTER_PING if state.last_ping else IDLE_BEFORE_FIRST_PING
+            if idle > limit:
+                server.shutdown()
+                return
+
+    threading.Thread(target=watchdog, daemon=True).start()
+    server.serve_forever()
+
+
+def launch(policy_path: Path, open_browser: bool) -> Dict[str, Any]:
+    """Start the server as a detached process, wait until it answers, and open the page."""
+    import os
+    import secrets
+    import socket
+    import subprocess
+    import webbrowser
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+        probe.bind(("127.0.0.1", 0))
+        port = probe.getsockname()[1]
+    token = secrets.token_urlsafe(24)
+    command = [sys.executable, str(Path(__file__).resolve()), "--policy", str(policy_path),
+               "--port", str(port), "--token", token]
+    options: Dict[str, Any] = {"stdin": subprocess.DEVNULL, "stdout": subprocess.DEVNULL,
+                               "stderr": subprocess.DEVNULL}
+    if os.name == "nt":
+        options["creationflags"] = 0x00000008 | 0x00000200 | 0x08000000  # detached, new group, no window
+    else:
+        options["start_new_session"] = True
+    process = subprocess.Popen(command, **options)
+    deadline = time.monotonic() + 10
+    while True:
+        try:
+            with socket.create_connection(("127.0.0.1", port), timeout=0.5):
+                break
+        except OSError:
+            if process.poll() is not None or time.monotonic() > deadline:
+                raise SystemExit("the editor server did not start")
+            time.sleep(0.2)
+    url = f"http://127.0.0.1:{port}/#token={token}"
+    return {"url": url, "pid": process.pid, "opened": bool(open_browser and webbrowser.open(url))}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Serve the Coding Opus playbooks editor on 127.0.0.1")
+    parser.add_argument("--policy", type=Path, required=True)
+    parser.add_argument("--launch", action="store_true", help="start a detached server and print its URL")
+    parser.add_argument("--no-open", action="store_true", help="with --launch, do not open a browser")
+    parser.add_argument("--port", type=int)
+    parser.add_argument("--token")
+    args = parser.parse_args()
+    policy_path = args.policy.expanduser().resolve()
+    if args.launch:
+        print(json.dumps(launch(policy_path, not args.no_open)))
+        return 0
+    if args.port is None or not args.token:
+        parser.error("--port and --token are required without --launch")
+    serve(policy_path, args.port, args.token)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

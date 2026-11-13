@@ -13,7 +13,7 @@ import {
 } from './artifact-create-intent-store'
 import type { ArtifactShareScope } from './artifact-share-record-store'
 
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: vi.fn(),
   runProcessSync: vi.fn()
 }))

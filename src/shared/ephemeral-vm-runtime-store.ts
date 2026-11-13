@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from './legacy-renamed-file'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { JsonStringifyByteLimitError } from './json-stream/node-bounded-json-stringify'
@@ -29,7 +30,6 @@ import {
   type EphemeralVmRuntimeStore
 } from './ephemeral-vm-runtimes'
 
-const EPHEMERAL_VM_RUNTIMES_FILE = 'orca-ephemeral-vm-runtimes.json'
 export const MAX_EPHEMERAL_VM_RUNTIME_STORE_FILE_BYTES = 1024 * 1024
 
 export type EphemeralVmRuntimeStoreErrorCode = 'invalid_argument' | 'runtime_error'
@@ -45,7 +45,7 @@ export class EphemeralVmRuntimeStoreError extends Error {
 }
 
 export function getEphemeralVmRuntimeStorePath(userDataPath: string): string {
-  return join(userDataPath, EPHEMERAL_VM_RUNTIMES_FILE)
+  return renamedUserDataFile(join(userDataPath, 'orca-ephemeral-vm-runtimes.json'))
 }
 
 export function listEphemeralVmRuntimes(userDataPath: string): EphemeralVmRuntimeRecord[] {

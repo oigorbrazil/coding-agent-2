@@ -14,7 +14,7 @@ import { homedir, tmpdir } from 'node:os'
 import type * as Os from 'node:os'
 import { join } from 'node:path'
 import { expect, it, vi } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { makePaneKey } from '../../shared/workspace-layout/stable-pane-id'
 import { parseQoderSessionFile } from '../ai-vault/scanners/qoder/session-scanner-qoder-parser'
 

@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os'
 import { basename, join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as ProcessHostModule from '@orca/process-host'
+import type * as ProcessHostModule from '@coding-agent/process-host'
 import * as durableFileWrite from '../../main/filesystem/durable-file-write'
 import * as http1Marker from '../../main/startup/http1-compatibility-marker'
 import { readPersistedHttp1CompatibilityMode } from '../../main/startup/http1-compatibility-profile-state'
@@ -37,7 +37,7 @@ const {
 }))
 
 // Only the bundled-recovery case stubs the child; other cases keep the real process host.
-vi.mock('@orca/process-host', async (importOriginal) => {
+vi.mock('@coding-agent/process-host', async (importOriginal) => {
   const actual = await importOriginal<typeof ProcessHostModule>()
   runProcessMock.mockImplementation(actual.runProcess)
   return { ...actual, runProcess: runProcessMock }

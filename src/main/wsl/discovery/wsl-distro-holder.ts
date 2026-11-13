@@ -1,5 +1,5 @@
 import { runKeyedSerializedOperation } from '../../cli/keyed-promise-queue'
-import { spawnDetachedWithoutInheritance } from '@orca/process-host/isolated-detached-spawn'
+import { spawnDetachedWithoutInheritance } from '@coding-agent/process-host/isolated-detached-spawn'
 import { queryWindowsProcess } from '../../daemon/endpoint/identity/daemon-process-inspection'
 import {
   listConfirmedRunningWslDistros,

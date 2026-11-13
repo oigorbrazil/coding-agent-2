@@ -1,13 +1,16 @@
+import type {
+  ManagedDataAccountProvider,
+  ManagedDataAccountsState
+} from '../../shared/managed-account-types'
+
+import { readAppEnv } from '../../shared/app-env'
 import { randomUUID } from 'node:crypto'
 import { existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, rmSync } from 'node:fs'
 import { join, resolve, sep } from 'node:path'
 import { z } from 'zod'
 import { getAppEnvironment } from '../../shared/app-environment'
 import { writeSecureFile } from '../../shared/secure-storage/secure-file'
-import type {
-  ManagedDataAccountProvider,
-  ManagedDataAccountsState
-} from '../../shared/managed-account-types'
+
 import { captureDataAccountCredentials } from './credential-capture'
 import { ManagedDataAccountProfileRemoval } from './profile-removal'
 import {
@@ -199,16 +202,14 @@ export class ManagedDataAccountService {
 
   restoreOriginalEnvironment(environment: Record<string, string | undefined>): void {
     // Restoring copied references requires the original overlay captured by this service.
-    const selection = JSON.stringify([
-      environment.ORCA_DATA_ACCOUNT_DATA_HOME,
-      environment.ORCA_DATA_ACCOUNT_STATE_HOME
-    ])
+    const account = (key: string) => readAppEnv(environment, `DATA_ACCOUNT_${key}`)
+    const selection = JSON.stringify([account('DATA_HOME'), account('STATE_HOME')])
     const ownsSelection =
-      environment.ORCA_DATA_ACCOUNT_PROVIDER === 'opencode' &&
+      account('PROVIDER') === 'opencode' &&
       environment.OPENCODE_AUTH_CONTENT === '' &&
       environment.OPENCODE_DB === 'opencode.db' &&
-      environment.XDG_DATA_HOME === environment.ORCA_DATA_ACCOUNT_DATA_HOME &&
-      environment.XDG_STATE_HOME === environment.ORCA_DATA_ACCOUNT_STATE_HOME
+      environment.XDG_DATA_HOME === account('DATA_HOME') &&
+      environment.XDG_STATE_HOME === account('STATE_HOME')
     restoreManagedDataAccountEnvironment(environment, true, (reference) => {
       const baseline = this.inlineAuthBaselines.get(reference)
       return ownsSelection && baseline?.selections.has(selection) ? baseline.value : undefined

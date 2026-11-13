@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { accessSync, constants, existsSync, statSync } from 'node:fs'
 import { posix, win32 } from 'node:path'
 
@@ -38,8 +39,9 @@ function findSshOnPath(platform: NodeJS.Platform): string | null {
 }
 
 export function findSystemSsh(): string | null {
-  if (process.env.ORCA_SYSTEM_SSH_PATH) {
-    return process.env.ORCA_SYSTEM_SSH_PATH
+  const configuredEnv = readAppEnv(process.env, 'SYSTEM_SSH_PATH')
+  if (configuredEnv) {
+    return configuredEnv
   }
   for (const candidate of systemSshPaths(process.platform)) {
     if (existsSync(candidate)) {

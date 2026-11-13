@@ -23,7 +23,7 @@ export function legacyPluginCatalog(catalog) {
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === resolve(import.meta.filename)) {
-  const input = process.argv[2] ?? 'orca-catalog.json'
+  const input = process.argv[2] ?? 'coding-catalog.json'
   const output = process.argv[3] ?? 'orca-marketplace.json'
   const catalog = JSON.parse(readFileSync(input, 'utf8'))
   writeFileSync(output, `${JSON.stringify(legacyPluginCatalog(catalog), null, 2)}\n`)

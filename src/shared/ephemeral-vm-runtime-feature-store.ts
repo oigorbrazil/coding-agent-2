@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from './legacy-renamed-file'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { z } from 'zod'
@@ -48,7 +49,7 @@ export type EphemeralVmRuntimeFeatureStoreSnapshot =
     }
 
 export function getEphemeralVmRuntimeFeatureStorePath(userDataPath: string): string {
-  return join(userDataPath, EPHEMERAL_VM_RUNTIME_FEATURES_FILE)
+  return renamedUserDataFile(join(userDataPath, EPHEMERAL_VM_RUNTIME_FEATURES_FILE))
 }
 
 export function assertEphemeralVmRuntimeCheckoutModeCanPersist(

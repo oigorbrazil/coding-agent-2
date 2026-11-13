@@ -1,3 +1,4 @@
+import { readAppEnv, deleteAppEnv, setAppEnv } from './app-env'
 // Which Coding Agent 2 runtime launched a process. Kept separate from the orchestration compatibility stamp,
 // whose WSL/SSH union carries caller attestation and must stay untouched.
 export const RUNTIME_SOURCE_ID_ENV = 'ORCA_RUNTIME_SOURCE_ID'
@@ -23,9 +24,9 @@ function boundedValue(value: string | undefined): string | undefined {
 export function readRuntimeSourceStamp(
   env: Readonly<Record<string, string | undefined>>
 ): RuntimeSourceStamp | null {
-  const sourceId = boundedValue(env[RUNTIME_SOURCE_ID_ENV])
-  const incarnation = boundedValue(env[RUNTIME_SOURCE_INCARNATION_ENV])
-  const profilePath = boundedValue(env[RUNTIME_SOURCE_PROFILE_PATH_ENV])
+  const sourceId = boundedValue(readAppEnv(env, 'RUNTIME_SOURCE_ID'))
+  const incarnation = boundedValue(readAppEnv(env, 'RUNTIME_SOURCE_INCARNATION'))
+  const profilePath = boundedValue(readAppEnv(env, 'RUNTIME_SOURCE_PROFILE_PATH'))
   if (!sourceId || !incarnation) {
     return null
   }
@@ -37,14 +38,14 @@ export function stampRuntimeSourceEnv(
   env: Record<string, string | undefined>,
   stamp: RuntimeSourceStamp | null
 ): void {
-  delete env[RUNTIME_SOURCE_ID_ENV]
-  delete env[RUNTIME_SOURCE_INCARNATION_ENV]
-  delete env[RUNTIME_SOURCE_PROFILE_PATH_ENV]
+  deleteAppEnv(env, 'RUNTIME_SOURCE_ID')
+  deleteAppEnv(env, 'RUNTIME_SOURCE_INCARNATION')
+  deleteAppEnv(env, 'RUNTIME_SOURCE_PROFILE_PATH')
   if (stamp) {
-    env[RUNTIME_SOURCE_ID_ENV] = stamp.sourceId
-    env[RUNTIME_SOURCE_INCARNATION_ENV] = stamp.incarnation
+    setAppEnv(env, 'RUNTIME_SOURCE_ID', stamp.sourceId)
+    setAppEnv(env, 'RUNTIME_SOURCE_INCARNATION', stamp.incarnation)
     if (stamp.profilePath) {
-      env[RUNTIME_SOURCE_PROFILE_PATH_ENV] = stamp.profilePath
+      setAppEnv(env, 'RUNTIME_SOURCE_PROFILE_PATH', stamp.profilePath)
     }
   }
 }

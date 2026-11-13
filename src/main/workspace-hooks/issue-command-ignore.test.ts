@@ -70,13 +70,13 @@ describe('issue command ignore rules', () => {
     expect((await gitExecFileAsync(['status', '--porcelain'], { cwd: worktree })).stdout).toBe('')
   })
 
-  it('adds the rule once when .orca is not ignored', async () => {
+  it('adds the rule once when .coding-agent-2 is not ignored', async () => {
     writeFileSync(join(repo, '.gitignore'), 'node_modules/')
 
     await writeIssueCommand(repo, 'first command')
     await writeIssueCommand(repo, 'second command')
 
-    expect(readFileSync(join(repo, '.gitignore'), 'utf8')).toBe('node_modules/\n.orca\n')
+    expect(readFileSync(join(repo, '.gitignore'), 'utf8')).toBe('node_modules/\n.coding-agent-2\n')
     expect(readFileSync(join(repo, '.coding-agent-2', 'issue-command'), 'utf8')).toBe(
       'second command\n'
     )
@@ -84,11 +84,13 @@ describe('issue command ignore rules', () => {
 
   it('honors a repository rule that negates a global ignore', async () => {
     writeFileSync(join(root, 'ignore'), '.coding-agent-2/\n')
-    writeFileSync(join(repo, '.gitignore'), '!.orca/\n')
+    writeFileSync(join(repo, '.gitignore'), '!.coding-agent-2/\n')
 
     await writeIssueCommand(repo, 'local command')
 
-    expect(readFileSync(join(repo, '.gitignore'), 'utf8')).toBe('!.orca/\n.orca\n')
+    expect(readFileSync(join(repo, '.gitignore'), 'utf8')).toBe(
+      '!.coding-agent-2/\n.coding-agent-2\n'
+    )
   })
 
   it('marks only an uncommitted local command as user-owned on launch', async () => {

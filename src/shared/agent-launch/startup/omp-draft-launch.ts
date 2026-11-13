@@ -1,8 +1,8 @@
 import {
+  type AgentStartupShell,
   clearEnvCommand,
   commandSeparator,
-  quoteStartupArg,
-  type AgentStartupShell
+  quoteStartupArg
 } from './tui-agent-startup-shell'
 
 const FUNCTION_NAME = '__orca_omp_draft'
@@ -16,7 +16,7 @@ export function withOmpDraftCleanup(command: string, shell: AgentStartupShell): 
     return `${launch}${commandSeparator(shell)}${clearEnvCommand('ORCA_OMP_PREFILL', shell)}`
   }
   const fish = `function ${FUNCTION_NAME}; ${command}; set -l __orca_status $status; set -e -g ORCA_OMP_PREFILL; return $__orca_status; end`
-  const posix = `${FUNCTION_NAME}() { ${command}; set -- "$?"; unset ORCA_OMP_PREFILL; return "$1"; }`
+  const posix = `${FUNCTION_NAME}() { ${command}; set -- "$?"; unset ORCA_OMP_PREFILL CODING_AGENT_OMP_PREFILL; return "$1"; }`
   // Fish supports builtin --query; other shells reject it without parsing the wrong definition.
   return `eval 'builtin --query set' 2>/dev/null && eval ${quoteStartupArg(fish, 'posix')} || eval ${quoteStartupArg(posix, 'posix')}; ${FUNCTION_NAME}`
 }

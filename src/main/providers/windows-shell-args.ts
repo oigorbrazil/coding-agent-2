@@ -24,7 +24,11 @@ const STARTUP_COMMAND_TEXT_MAX_CHARS = 6000
 const POWERSHELL_ENCODED_COMMAND_ARG_MAX_CHARS = 28_400
 const CMD_UTF8_SETUP_COMMAND = 'chcp 65001 > nul'
 export const ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV = 'ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE'
-const CMD_CODEX_LAUNCH_PREFLIGHT = `if defined ORCA_CODEX_LAUNCH_PREFLIGHT call %${ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV}%%ORCA_CODEX_LAUNCH_PREFLIGHT%%${ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV}% agent hooks prepare-codex > nul 2>&1`
+const codexPreflightCall = (key: string, quote: string): string =>
+  `call %${quote}%%${key}%%${quote}% agent hooks prepare-codex > nul 2>&1`
+const codexPreflightWithQuote = (quote: string): string =>
+  `if defined CODING_AGENT_CODEX_LAUNCH_PREFLIGHT (${codexPreflightCall('CODING_AGENT_CODEX_LAUNCH_PREFLIGHT', quote)}) else if defined ORCA_CODEX_LAUNCH_PREFLIGHT ${codexPreflightCall('ORCA_CODEX_LAUNCH_PREFLIGHT', quote)}`
+const CMD_CODEX_LAUNCH_PREFLIGHT = `if defined CODING_AGENT_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE (${codexPreflightWithQuote('CODING_AGENT_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE')}) else (${codexPreflightWithQuote(ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV)})`
 // Git Bash inherits OEM codepage; select UTF-8 before TUIs write bytes, but keep startup working if chcp.com is missing.
 const GIT_BASH_UTF8_LOGIN_COMMAND = 'chcp.com 65001 >/dev/null 2>&1; exec "$BASH" --login -i'
 

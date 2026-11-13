@@ -5,7 +5,7 @@ export const PORTS_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['ports'],
     summary: 'List the listening ports Coding Agent 2 detected for a workspace',
-    usage: 'orca ports [--worktree <selector>] [--all] [--json]',
+    usage: 'coding ports [--worktree <selector>] [--all] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'worktree', 'all'],
     notes: [
       'Defaults to the Coding Agent 2 workspace that contains the current directory.',
@@ -14,10 +14,10 @@ export const PORTS_COMMAND_SPECS: CommandSpec[] = [
       'url is the address the dev server printed in a Coding Agent 2 terminal; it is missing when Coding Agent 2 did not see one.'
     ],
     examples: [
-      'orca ports',
-      'orca ports --worktree branch:feature/login --json',
-      'orca ports --all',
-      "orca ports --json | jq -r '.result.ports[0].advertisedUrl'"
+      'coding ports',
+      'coding ports --worktree branch:feature/login --json',
+      'coding ports --all',
+      "coding ports --json | jq -r '.result.ports[0].advertisedUrl'"
     ]
   }
 ]

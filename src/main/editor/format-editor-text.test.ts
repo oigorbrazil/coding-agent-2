@@ -2,13 +2,13 @@ import { mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { runProcess } from '@orca/process-host'
-import type * as ProcessHost from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
+import type * as ProcessHost from '@coding-agent/process-host'
 import type { Repo } from '../../shared/repo-types'
 import { DEFAULT_FORMATTER_INCLUDE } from '../../shared/editor-formatter'
 import { formatEditorText } from './format-editor-text'
 
-vi.mock('@orca/process-host', async (importOriginal) => {
+vi.mock('@coding-agent/process-host', async (importOriginal) => {
   const actual = await importOriginal<typeof ProcessHost>()
   return { ...actual, runProcess: vi.fn(actual.runProcess) }
 })

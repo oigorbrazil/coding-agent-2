@@ -13,7 +13,7 @@ import type { ClaudeStructuredLaunch } from './launch/claude-structured-launch-r
 import type { StructuredLaunchRequest } from '../../runtime/agent-session/launch/structured-agent-launch-composition'
 import type { ClaudeJournalTranslator } from '../claude-journal-translator-contract'
 import type { ClaudePromptRegistry } from '../claude-prompt-registry'
-import { cancelProcessAcquisition } from '@orca/process-host/cancel-process-acquisition'
+import { cancelProcessAcquisition } from '@coding-agent/process-host/cancel-process-acquisition'
 import type { AgentSessionFastModeState } from '../../../shared/agent-session/agent-session-wire'
 import type { AgentChildWorkEvidence } from '../../../shared/agent-status/child-work/agent-status-child-work-evidence'
 import type { ClaudeBackgroundTaskTracker } from '../claude-background-task-tracker'

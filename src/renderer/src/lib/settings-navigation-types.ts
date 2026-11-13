@@ -14,7 +14,8 @@ export type SettingsNavInstallStatus =
   | 'checking'
 
 const SETTINGS_NAV_TARGETS = [
-  'features',
+  'language',
+  'account',
   'skills',
   'coding-opus-playbooks',
   'second-brain',

@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
 import { build } from 'vite'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { electronViteConfig } from '../../../../electron.vite.config'
 
 it('keeps main code and asset paths working after a CLI build replaces its public entry', async () => {

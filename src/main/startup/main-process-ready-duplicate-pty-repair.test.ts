@@ -175,7 +175,7 @@ it('finishes the duplicate-terminal repair before ready services resolve, even b
   inner.writeSerializedState(Buffer.from(duplicatePtyProfile()))
   const authority = new DelayedAuthority(inner)
   const store = new Store({
-    dataFile: join(directory, 'orca-data.json'),
+    dataFile: join(directory, 'coding-data.json'),
     profileStateAuthority: authority
   })
   stores.push(store)

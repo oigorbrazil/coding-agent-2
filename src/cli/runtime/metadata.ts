@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { readFileSync } from 'node:fs'
@@ -43,8 +44,9 @@ export function getDefaultUserDataPath(
   platform: NodeJS.Platform = process.platform,
   homeDir = homedir()
 ): string {
-  if (process.env.ORCA_USER_DATA_PATH) {
-    return process.env.ORCA_USER_DATA_PATH
+  const configuredEnv = readAppEnv(process.env, 'USER_DATA_PATH')
+  if (configuredEnv) {
+    return configuredEnv
   }
   return getPlatformUserDataPath(platform, homeDir)
 }

@@ -1,3 +1,13 @@
+import type {
+  AgentTeamsLaunchEnv,
+  AgentTeamsTerminalApi,
+  AgentTeamsTmuxCompatRequest,
+  AgentTeamsTmuxCompatResponse,
+  TeamPane,
+  AgentTeam
+} from './claude-agent-teams-types'
+
+import { readAppEnv, appEnvPairs, setAppEnv } from '../../../../shared/app-env'
 import { randomBytes, randomUUID } from 'node:crypto'
 import {
   CLAUDE_AGENT_TEAMS_TMUX_DIR,
@@ -5,14 +15,6 @@ import {
 } from '../../../../shared/claude-agent-teams-tmux-compat'
 import { ClaudeAgentTeamsTmuxDispatcher } from './claude-agent-teams-tmux-dispatcher'
 import { resolvePathEnvKey } from '../../../pty/environment/windows-path-segment-merge'
-import type {
-  AgentTeam,
-  AgentTeamsLaunchEnv,
-  AgentTeamsTerminalApi,
-  AgentTeamsTmuxCompatRequest,
-  AgentTeamsTmuxCompatResponse,
-  TeamPane
-} from './claude-agent-teams-types'
 
 export class ClaudeAgentTeamsService {
   private readonly teams = new Map<string, AgentTeam>()
@@ -41,19 +43,21 @@ export class ClaudeAgentTeamsService {
       TMUX_PANE: leaderPane,
       TERM: 'screen-256color',
       COLORTERM: args.baseEnv.COLORTERM || 'truecolor',
-      ORCA_AGENT_TEAMS_TEAM_ID: teamId,
-      ORCA_AGENT_TEAMS_TOKEN: token,
-      ORCA_AGENT_TEAMS_LEADER_PANE: leaderPane,
-      ORCA_AGENT_TEAMS_SHIM_DIR: args.shimDir
+      ...appEnvPairs('AGENT_TEAMS_TEAM_ID', teamId),
+      ...appEnvPairs('AGENT_TEAMS_TOKEN', token),
+      ...appEnvPairs('AGENT_TEAMS_LEADER_PANE', leaderPane),
+      ...appEnvPairs('AGENT_TEAMS_SHIM_DIR', args.shimDir)
     }
     if (args.shimBin) {
-      env.ORCA_AGENT_TEAMS_SHIM_BIN = args.shimBin
+      setAppEnv(env, 'AGENT_TEAMS_SHIM_BIN', args.shimBin)
     }
-    if (args.baseEnv.ORCA_PAIRING_CODE) {
-      env.ORCA_PAIRING_CODE = args.baseEnv.ORCA_PAIRING_CODE
+    const pairingCode = readAppEnv(args.baseEnv, 'PAIRING_CODE')
+    if (pairingCode) {
+      setAppEnv(env, 'PAIRING_CODE', pairingCode)
     }
-    if (args.baseEnv.ORCA_ENVIRONMENT) {
-      env.ORCA_ENVIRONMENT = args.baseEnv.ORCA_ENVIRONMENT
+    const environment = readAppEnv(args.baseEnv, 'ENVIRONMENT')
+    if (environment) {
+      setAppEnv(env, 'ENVIRONMENT', environment)
     }
 
     const leader: TeamPane = { fakePaneId: leaderPane, handle: args.leaderHandle, index: 0 }

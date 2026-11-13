@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { writeSync } from 'node:fs'
 
 export const STARTUP_DIAGNOSTICS_ENV = 'ORCA_STARTUP_DIAGNOSTICS'
@@ -16,7 +17,7 @@ export function writeStartupDiagnosticLine(
 }
 
 export function isStartupDiagnosticsEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env[STARTUP_DIAGNOSTICS_ENV] === '1'
+  return readAppEnv(env, 'STARTUP_DIAGNOSTICS') === '1'
 }
 
 export function logStartupDiagnostic(

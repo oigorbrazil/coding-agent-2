@@ -87,7 +87,7 @@ export function reviewCopy(provider: HostedReviewProvider): {
       shortLabel: 'PR',
       reviewLabel: 'pull request',
       providerName: 'Azure DevOps',
-      authInstruction: 'Set ORCA_AZURE_DEVOPS_TOKEN'
+      authInstruction: 'Set CODING_AGENT_AZURE_DEVOPS_TOKEN (legacy ORCA_* names still work)'
     }
   }
   if (provider === 'gitea') {
@@ -95,7 +95,7 @@ export function reviewCopy(provider: HostedReviewProvider): {
       shortLabel: 'PR',
       reviewLabel: 'pull request',
       providerName: 'Gitea',
-      authInstruction: 'Set ORCA_GITEA_TOKEN'
+      authInstruction: 'Set CODING_AGENT_GITEA_TOKEN (legacy ORCA_* names still work)'
     }
   }
   if (provider === 'bitbucket') {

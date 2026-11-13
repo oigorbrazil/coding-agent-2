@@ -1,8 +1,10 @@
 import {
+  type ExecFileOptions,
   execFile as execFileChildProcess,
-  type ChildProcess,
-  type ExecFileOptions
+  type ChildProcess
 } from 'node:child_process'
+import { appEnvPairs } from '../../../shared/app-env'
+
 import { dirname, resolve } from 'node:path'
 import { app, BrowserWindow, nativeImage } from 'electron'
 import classicIcon from '../../../../resources/icon.png?asset'
@@ -48,8 +50,10 @@ type PersistMacDockIconOptions = {
 const MAC_DOCK_ICON_SCRIPT = [
   'use framework "AppKit"',
   'use scripting additions',
-  'set appPath to system attribute "ORCA_APP_BUNDLE_PATH"',
-  'set iconPath to system attribute "ORCA_APP_ICON_PATH"',
+  'set appPath to system attribute "CODING_AGENT_APP_BUNDLE_PATH"',
+  'if appPath is "" then set appPath to system attribute "ORCA_APP_BUNDLE_PATH"',
+  'set iconPath to system attribute "CODING_AGENT_APP_ICON_PATH"',
+  'if iconPath is "" then set iconPath to system attribute "ORCA_APP_ICON_PATH"',
   "set image to current application's NSImage's alloc()'s initWithContentsOfFile:iconPath",
   'if image is missing value then error "Coding Agent 2 app icon image could not be loaded"',
   "set ok to current application's NSWorkspace's sharedWorkspace()'s setIcon:image forFile:appPath options:0",
@@ -59,7 +63,8 @@ const MAC_DOCK_ICON_SCRIPT = [
 const MAC_DOCK_ICON_CLEAR_SCRIPT = [
   'use framework "AppKit"',
   'use scripting additions',
-  'set appPath to system attribute "ORCA_APP_BUNDLE_PATH"',
+  'set appPath to system attribute "CODING_AGENT_APP_BUNDLE_PATH"',
+  'if appPath is "" then set appPath to system attribute "ORCA_APP_BUNDLE_PATH"',
   "set ok to current application's NSWorkspace's sharedWorkspace()'s setIcon:(missing value) forFile:appPath options:0",
   'if ok is false then error "Coding Agent 2 app icon could not be cleared"'
 ]
@@ -110,8 +115,8 @@ function runMacCustomIconCommand(
     options: {
       env: {
         ...process.env,
-        ORCA_APP_BUNDLE_PATH: appBundlePath,
-        ORCA_APP_ICON_PATH: iconPath
+        ...appEnvPairs('APP_BUNDLE_PATH', appBundlePath),
+        ...appEnvPairs('APP_ICON_PATH', iconPath)
       }
     },
     timeoutWarning: '[app-icon] timed out persisting macOS dock icon'
@@ -239,7 +244,7 @@ function clearMacCustomIconMetadata(execFile: ExecFile, appBundlePath: string): 
       options: {
         env: {
           ...process.env,
-          ORCA_APP_BUNDLE_PATH: appBundlePath
+          ...appEnvPairs('APP_BUNDLE_PATH', appBundlePath)
         }
       },
       timeoutWarning: '[app-icon] timed out clearing macOS dock icon'

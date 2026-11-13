@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 import { selectPluginTestNode } from './plugin-test-node'
 
 const ORCA = { execPath: '/Applications/Orca.app/Contents/MacOS/Orca', version: 'v22.9.0' }

@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { assertWslDistroAllowed } from '@orca/process-host/wsl-distro-allowlist'
+import { assertWslDistroAllowed } from '@coding-agent/process-host/wsl-distro-allowlist'
 import {
   buildWslCapturedLoginShellCommand,
   buildWslExecArgs

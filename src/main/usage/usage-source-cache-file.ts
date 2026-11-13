@@ -26,7 +26,9 @@ export type UsageCacheSplitResult = {
 
 export function usageSourceCachePath(cacheFile: string): string {
   const { dir, name } = parse(cacheFile)
-  return join(dir, `${name}-sources.json`)
+  // Per-source sidecars are outside the persisted report rename.
+  const sourceName = name.replace(/^coding-(claude|codex|opencode|muse)-usage$/, 'orca-$1-usage')
+  return join(dir, `${sourceName}-sources.json`)
 }
 
 /** The last scan's records; none when unreadable or from another schema, so the scan starts cold. */

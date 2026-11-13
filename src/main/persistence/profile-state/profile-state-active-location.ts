@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../../shared/legacy-renamed-file'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import {
@@ -11,7 +12,7 @@ export function getActiveProfileStateLocation(
   userDataPath: string,
   selectedProfileId?: string
 ): ProfileStateOfflineLocation | undefined {
-  const indexPath = join(userDataPath, 'orca-profile-index.json')
+  const indexPath = renamedUserDataFile(join(userDataPath, 'orca-profile-index.json'))
   const candidates = [indexPath, `${indexPath}.bak`].filter(existsSync)
   if (candidates.length === 0) {
     return undefined

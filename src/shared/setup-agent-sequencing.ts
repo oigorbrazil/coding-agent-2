@@ -1,13 +1,16 @@
+import {
+  type SetupRunnerCommandPlatform,
+  type SetupRunnerShell,
+  nativeWindowsPathToPosixShellPath,
+  resolveSetupRunnerCommand
+} from './setup-runner-command'
+
+import { readAppEnv, appEnvPairs } from './app-env'
 import { quotePosixShellUnlessPlainNoAt } from './shell/launch/shell-argument-quoting'
 import { encodePowerShellCommand } from './powershell-command-encoding'
 import { getPosixCodexShellLaunchPreflight } from './codex-shell-function'
 import { getPosixClaudeShellFunction } from './claude-shell-function'
-import {
-  nativeWindowsPathToPosixShellPath,
-  resolveSetupRunnerCommand,
-  type SetupRunnerCommandPlatform,
-  type SetupRunnerShell
-} from './setup-runner-command'
+
 import { createNonSecureContextUuid } from './non-secure-context-uuid'
 import { quotePowerShellLiteral } from './powershell-native-argument'
 
@@ -28,7 +31,7 @@ export function resolveSetupAgentSequenceLaunchCommand(
   env: Record<string, string | undefined>,
   fallbackCommand: string | undefined
 ): string | undefined {
-  const sequencedStartup = env[SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]?.trim()
+  const sequencedStartup = readAppEnv(env, 'SEQUENCED_STARTUP_COMMAND')?.trim()
   return sequencedStartup || fallbackCommand
 }
 
@@ -65,7 +68,7 @@ export function createSequencedSetupAgentCommands(args: {
       ),
       startupCommand: buildWindowsStartupCommand(markerPath, nonce, waitTimeoutSeconds),
       startupEnv: {
-        [SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]: args.startupCommand
+        ...appEnvPairs('SEQUENCED_STARTUP_COMMAND', args.startupCommand)
       }
     }
   }
@@ -78,18 +81,17 @@ export function createSequencedSetupAgentCommands(args: {
   )
   return {
     // Why: long worktree paths can push typed wrappers past a PTY's canonical input cap and drop their submit byte.
-    setupCommand: `bash -lc 'eval "\${${SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV}:?missing}"'`,
+    setupCommand: `bash -lc 'eval "\${CODING_AGENT_SEQUENCED_SETUP_SCRIPT-\${ORCA_SEQUENCED_SETUP_SCRIPT:?missing}}"'`,
     setupEnv: {
-      [SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV]: buildPosixSetupScript(
-        resolution.command,
-        markerPath,
-        nonce
+      ...appEnvPairs(
+        'SEQUENCED_SETUP_SCRIPT',
+        buildPosixSetupScript(resolution.command, markerPath, nonce)
       )
     },
-    startupCommand: `bash -lc 'eval "$${SETUP_AGENT_SEQUENCE_STARTUP_SCRIPT_ENV}"'`,
+    startupCommand: `bash -lc 'eval "\${CODING_AGENT_SEQUENCED_STARTUP_SCRIPT-$ORCA_SEQUENCED_STARTUP_SCRIPT}"'`,
     startupEnv: {
-      [SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]: args.startupCommand,
-      [SETUP_AGENT_SEQUENCE_STARTUP_SCRIPT_ENV]: startupScript
+      ...appEnvPairs('SEQUENCED_STARTUP_COMMAND', args.startupCommand),
+      ...appEnvPairs('SEQUENCED_STARTUP_SCRIPT', startupScript)
     }
   }
 }
@@ -131,7 +133,7 @@ function buildPosixStartupScript(
     `rm -f ${marker} ${tmp} 2>/dev/null;`,
     // Announce success so “Waiting for setup...” does not linger. Install launch functions only after setup
     // may have supplied codex; fresh bash -lc does not read Coding Agent 2’s wrapper.
-    `if [ "$status" = "0" ]; then echo ${quotePosixShellUnlessPlainNoAt(SETUP_COMPLETE_MESSAGE)} >&2;\n${getPosixCodexShellLaunchPreflight() + getPosixClaudeShellFunction()}if [ -n "\${${SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV}:-}" ]; then eval "\$${SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV}"; exit "$?"; else ${startupSuccessCommand}; fi; fi;`,
+    `if [ "$status" = "0" ]; then echo ${quotePosixShellUnlessPlainNoAt(SETUP_COMPLETE_MESSAGE)} >&2;\n${getPosixCodexShellLaunchPreflight() + getPosixClaudeShellFunction()}if [ -n "\${CODING_AGENT_SEQUENCED_STARTUP_COMMAND-\${ORCA_SEQUENCED_STARTUP_COMMAND:-}}" ]; then eval "\${CODING_AGENT_SEQUENCED_STARTUP_COMMAND-$ORCA_SEQUENCED_STARTUP_COMMAND}"; exit "$?"; else ${startupSuccessCommand}; fi; fi;`,
     'echo "Setup failed; skipping agent startup." >&2;',
     'exit "${status:-1}";',
     'fi;',
@@ -207,6 +209,7 @@ function buildWindowsSetupCommand(
     '$processInfo.Arguments = \'/d /s /v:on /c ""!ORCA_SETUP_RUNNER!""\'',
     '$processInfo.UseShellExecute = $false',
     '$processInfo.EnvironmentVariables["ORCA_SETUP_RUNNER"] = $runner',
+    '$processInfo.EnvironmentVariables["CODING_AGENT_SETUP_RUNNER"] = $runner',
     '$process = [System.Diagnostics.Process]::Start($processInfo)',
     '$process.WaitForExit()',
     '$setupStatus = $process.ExitCode',
@@ -255,7 +258,7 @@ function buildWindowsStartupCommand(
     '        [Console]::Error.WriteLine("Setup failed; skipping agent startup.")',
     '        exit $setupStatus',
     '      }',
-    `      $startup = $env:${SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV}`,
+    `      $startup = $(if (Test-Path Env:CODING_AGENT_SEQUENCED_STARTUP_COMMAND) { $env:CODING_AGENT_SEQUENCED_STARTUP_COMMAND } else { $env:ORCA_SEQUENCED_STARTUP_COMMAND })`,
     '      if ([string]::IsNullOrWhiteSpace($startup)) {',
     '        [Console]::Error.WriteLine("Missing sequenced startup command.")',
     '        exit 1',

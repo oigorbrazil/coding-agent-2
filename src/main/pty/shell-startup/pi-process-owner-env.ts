@@ -1,3 +1,4 @@
+import { deleteAppEnvKey } from '../../../shared/app-env'
 export const PI_PROCESS_OWNER_ENV_KEYS = [
   'ORCA_PI_STATUS_OWNED',
   'ORCA_PRIME_AGENT_STATUS_OWNED',
@@ -7,6 +8,6 @@ export const PI_PROCESS_OWNER_ENV_KEYS = [
 /** A new terminal is not a child agent in the pane that launched its host. */
 export function stripPiProcessOwnerEnv(env: Record<string, string | undefined>): void {
   for (const key of PI_PROCESS_OWNER_ENV_KEYS) {
-    delete env[key]
+    deleteAppEnvKey(env, key)
   }
 }

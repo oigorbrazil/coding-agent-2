@@ -1,4 +1,4 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { resolveCommand } from './wsl-command-resolution'
 

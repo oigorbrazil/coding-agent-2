@@ -1,7 +1,7 @@
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
 import { execFileSync } from 'node:child_process'
 import { describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { proveClaudeChildExit } from './claude-agent-sdk-exit-proof'
 import { managedChild } from './claude-child-exit-proof-fixture'
 

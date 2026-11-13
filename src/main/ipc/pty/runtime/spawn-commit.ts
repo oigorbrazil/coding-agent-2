@@ -1,11 +1,14 @@
+import type { RuntimePtySpawnState } from './spawn-state'
+import type { PtySpawnPaneBinding } from '../spawn-commit-binding'
+import { readAppEnv } from '../../../../shared/app-env'
 import '../spawn-outcome'
 import { provenSpawnResponse } from '../../../../shared/terminal/pty/lifecycle/terminal-spawn-response'
 import { isNativeWindowsLocalPtySpawn } from '../../../runtime/terminal/output/terminal-model-query-authority'
 import { normalizeValidPaneKey } from '../pane/key-state'
-import type { RuntimePtySpawnState } from './spawn-state'
+
 import { startupCwdFallbackOutcome } from '../spawn-startup-target'
 import { commitPtySpawn } from '../spawn-commit-assembly'
-import type { PtySpawnPaneBinding } from '../spawn-commit-binding'
+
 import { spawnCommitBindingOrigin } from '../../../persistence/loading-store/pty-binding-span'
 import { commitPtyWithOpenCodePromptIntent } from '../../../opencode/opencode-startup-prompt-owner'
 
@@ -36,7 +39,7 @@ export async function commitRuntimePtySpawn(ctx: RuntimePtySpawnState) {
       },
       preAllocatedHandle: args.preAllocatedHandle,
       // Runtime spawns bypass renderer IPC; publish reverse pane lookup for hooks and cleanup.
-      paneKey: normalizeValidPaneKey(ctx.env?.ORCA_PANE_KEY),
+      paneKey: normalizeValidPaneKey(readAppEnv(ctx.env ?? {}, 'PANE_KEY')),
       resumeArgvDropped: ctx.codexResumeArgvDropped,
       codexLaunchEnv: ctx.env,
       initiallyHidden: args.initiallyHidden === true,

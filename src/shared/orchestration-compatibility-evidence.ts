@@ -1,3 +1,4 @@
+import { readAppEnv, appEnvKeys } from './app-env'
 const MAX_EVIDENCE_FIELD_LENGTH = 4_096
 
 export const ORCHESTRATION_COMPATIBILITY_HOST_KIND_ENV =
@@ -30,16 +31,18 @@ export type OrchestrationCompatibilityEvidence = {
   agentSessionId?: string
 }
 
-const SECRET_KEYS = new Set([
-  'launchToken',
-  'connectionIncarnation',
-  'attachmentId',
-  'compatibilityEvidence',
-  'orchestrationCompatibilityEvidence',
-  'ORCA_AGENT_LAUNCH_TOKEN',
-  ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV,
-  ORCHESTRATION_COMPATIBILITY_ATTACHMENT_ENV
-])
+const SECRET_KEYS = new Set(
+  appEnvKeys([
+    'launchToken',
+    'connectionIncarnation',
+    'attachmentId',
+    'compatibilityEvidence',
+    'orchestrationCompatibilityEvidence',
+    'ORCA_AGENT_LAUNCH_TOKEN',
+    ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV,
+    ORCHESTRATION_COMPATIBILITY_ATTACHMENT_ENV
+  ])
+)
 
 function boundedValue(value: string | undefined): string | undefined {
   const trimmed = value?.trim()
@@ -49,9 +52,9 @@ function boundedValue(value: string | undefined): string | undefined {
 export function readOrchestrationCompatibilityEvidence(
   env: Readonly<Record<string, string | undefined>>
 ): OrchestrationCompatibilityEvidence | undefined {
-  const terminalHandle = boundedValue(env.ORCA_TERMINAL_HANDLE)
-  const paneKey = boundedValue(env.ORCA_PANE_KEY)
-  const launchToken = boundedValue(env.ORCA_AGENT_LAUNCH_TOKEN)
+  const terminalHandle = boundedValue(readAppEnv(env, 'TERMINAL_HANDLE'))
+  const paneKey = boundedValue(readAppEnv(env, 'PANE_KEY'))
+  const launchToken = boundedValue(readAppEnv(env, 'AGENT_LAUNCH_TOKEN'))
   const host = readHostStamp(env)
   if (!terminalHandle && !paneKey && !launchToken && !host) {
     return undefined
@@ -67,10 +70,10 @@ export function readOrchestrationCompatibilityEvidence(
 function readHostStamp(
   env: Readonly<Record<string, string | undefined>>
 ): OrchestrationCompatibilityHostStamp | undefined {
-  const kind = boundedValue(env[ORCHESTRATION_COMPATIBILITY_HOST_KIND_ENV])
-  const hostId = boundedValue(env[ORCHESTRATION_COMPATIBILITY_HOST_ID_ENV])
-  const incarnation = boundedValue(env[ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION_ENV])
-  const attachment = boundedValue(env[ORCHESTRATION_COMPATIBILITY_ATTACHMENT_ENV])
+  const kind = boundedValue(readAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_KIND'))
+  const hostId = boundedValue(readAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_ID'))
+  const incarnation = boundedValue(readAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_HOST_INCARNATION'))
+  const attachment = boundedValue(readAppEnv(env, 'ORCHESTRATION_COMPATIBILITY_ATTACHMENT'))
   if (kind === 'wsl' && hostId && incarnation) {
     return { kind, hostId, distro: incarnation }
   }

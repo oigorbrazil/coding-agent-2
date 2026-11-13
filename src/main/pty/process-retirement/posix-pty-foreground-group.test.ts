@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 import {
   getPosixPtyForegroundGroup,
   resetPosixPtyForegroundGroupOwnRowCache,
@@ -9,7 +9,7 @@ import {
 const { runProcessMock } = vi.hoisted(() => ({
   runProcessMock: vi.fn<(spec: ProcessSpec) => Promise<ProcessResult>>()
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 
 const psResult = (stdout: string): ProcessResult => ({
   code: 0,

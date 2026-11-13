@@ -1,7 +1,7 @@
-import { vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { type Mock, vi } from 'vitest'
 import type * as Wsl from '../../wsl/filesystem/unc-path-access'
 import type * as FsPromises from 'node:fs/promises'
+import { appEnvPairs } from '../../../shared/app-env'
 
 // vi.mock hoists per file; shared factories keep every split suite on the same spy instances.
 export const handleMock: Mock = vi.fn()
@@ -154,7 +154,7 @@ export const agentHookServerModuleMock = () => ({
 export const piTitlebarExtensionModuleMock = () => ({
   piTitlebarExtensionService: {
     buildPtyEnv: piBuildPtyEnvMock,
-    buildFreshOmpEnv: () => ({ ORCA_OMP_FRESH_CONFIG: '/tmp/orca-fresh-session.yml' }),
+    buildFreshOmpEnv: () => ({ ...appEnvPairs('OMP_FRESH_CONFIG', '/tmp/orca-fresh-session.yml') }),
     clearPty: piClearPtyMock
   }
 })

@@ -46,14 +46,14 @@ are not discovered. Without Python, inspect the same conditions before removing 
 
 Run these yourself, in one batch, and keep only the answers:
 
-| What        | How                                                                                                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Python      | `python --version`, `python3 --version`, `py --version`; any 3.9+ means the runner is an option                                                                   |
-| Worker CLIs | `<cli> --version` for `claude`, `codex`, `agy`, `kimi`, plus any other agent CLI on PATH                                                                          |
-| Logged in   | a one-word prompt on the cheap tier, only for a CLI you plan to use; an auth error means "log in first"                                                           |
-| Git         | `git rev-parse --show-toplevel` and `git status --porcelain`; worktrees need a repository                                                                         |
-| Saved setup | the playbooks copy, `coding-opus-playbooks.yaml` in `%APPDATA%\CodingOpus\` on Windows or `~/.config/coding/` elsewhere; otherwise `playbooks.yaml` in this skill |
-| Routes      | for 9router or another gateway, read its config or environment; never start or change it                                                                          |
+| What        | How                                                                                                                                                                     |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Python      | `python --version`, `python3 --version`, `py --version`; any 3.9+ means the runner is an option                                                                         |
+| Worker CLIs | `<cli> --version` for `claude`, `codex`, `agy`, `kimi`, plus any other agent CLI on PATH                                                                                |
+| Logged in   | a one-word prompt on the cheap tier, only for a CLI you plan to use; an auth error means "log in first"                                                                 |
+| Git         | `git rev-parse --show-toplevel` and `git status --porcelain`; worktrees need a repository                                                                               |
+| Saved setup | the playbooks copy, `coding-opus-playbooks.yaml` in `%USERPROFILE%\.coding-opus\` on Windows or `~/.config/coding/` elsewhere; otherwise `playbooks.yaml` in this skill |
+| Routes      | for 9router or another gateway, read its config or environment; never start or change it                                                                                |
 
 Read only the playbooks file's active `profile`, provider order, `pickOrder` and playbook summaries
 first, then the chosen playbook, resolved `tiers` plus profile overrides, and quota/budget rules.
@@ -231,15 +231,10 @@ needs only what you know; use `null` for anything its CLI did not report:
 - No automatic `dry-run`: estimate prompt tokens as task characters divided by four. A dollar
   estimate may use verified prices only; label it a list-price estimate, never actual spend.
 - No `diagram.py`: draw the plan as a Mermaid flowchart when the user wants to see it.
-- No `editor`: copy `assets/editor.html` and replace its line `__PLAYBOOKS_YAML__` with the full
-  text of the effective playbooks file (the user's `coding-opus-playbooks.yaml` next to the policy, else
-  the bundled `playbooks.yaml`), writing any `</script` in it as `<\/script`. Use the shell rather
-  than reading the 180 KB page: `sed -e '/__PLAYBOOKS_YAML__/{r <yaml>' -e 'd}' <template> > <page>`,
-  or in PowerShell `(Get-Content -Raw <template>).Replace('__PLAYBOOKS_YAML__', (Get-Content -Raw
-  <yaml>)) | Set-Content <page>`. Optionally put the quota you read in the `live-usage` block, as
-  `{"claude": {"short": 26, "week": 69, "opus": 0, "reset": 49}}` (percent used; `reset` is hours
-  until the weekly window resets). To simulate `price-above`, optionally put the price table in the
-  `model-prices` block, as `{"claude/sonnet": {"input": 2, "output": 10}}` (USD per 1M tokens).
+- No `editor`: the editor needs `scripts/editor_server.py` (Python). Without it, edit the user's
+  `coding-opus-playbooks.yaml` next to the policy directly (copy the bundled `playbooks.yaml` there
+  first if it does not exist) and keep its structure; Coding Agent 2's Settings → Playbooks edits
+  the same file.
   Open the page; a red line at the top names a YAML error.
 - No Windows `.cmd` shim handling: run the commands through your own shell, which handles the shim,
   and keep newlines and quotes inside `task.md` rather than in arguments.

@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../legacy-renamed-file'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { z } from 'zod'
@@ -78,7 +79,7 @@ export class RuntimeEnvironmentSidecarInvalidError extends Error {
 }
 
 export function getRuntimeEnvironmentSidecarPath(userDataPath: string): string {
-  return join(userDataPath, SIDECAR_FILE)
+  return renamedUserDataFile(join(userDataPath, SIDECAR_FILE))
 }
 
 /** The persisted state a sidecar entry was written against; any change makes the entry stale. */

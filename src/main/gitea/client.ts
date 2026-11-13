@@ -1,3 +1,4 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import {
   deriveGiteaCommitStatus,
   mapGiteaPullRequest,
@@ -41,21 +42,16 @@ type RequestOptions = {
   allowNotFound?: boolean
 }
 
-function envValue(name: string): string | null {
-  const value = process.env[name]?.trim() ?? ''
-  return value.length > 0 ? value : null
-}
-
 export function normalizeGiteaApiBaseUrl(value: string): string {
   const trimmed = value.trim().replace(/\/+$/, '')
   return /\/api\/v1$/i.test(trimmed) ? trimmed : `${trimmed}/api/v1`
 }
 
 function getAuthConfig(): GiteaAuthConfig {
-  const apiBaseUrl = envValue('ORCA_GITEA_API_BASE_URL')
+  const apiBaseUrl = readProviderEnvironment('CODING_GITEA_API_BASE_URL')
   return {
     apiBaseUrl: apiBaseUrl ? normalizeGiteaApiBaseUrl(apiBaseUrl) : null,
-    token: envValue('ORCA_GITEA_TOKEN')
+    token: readProviderEnvironment('CODING_GITEA_TOKEN')
   }
 }
 

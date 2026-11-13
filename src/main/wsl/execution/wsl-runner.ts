@@ -3,7 +3,7 @@ import {
   commandLineLength,
   MAX_COMMAND_LINE_CHARS
 } from '../../../shared/windows-command-line-budget'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveWslInteropSpawnCwd } from './wsl-interop-spawn-directory'
 import { buildWslExecArgs } from '../../../shared/wsl-login-shell-command'
 import { getWslGuestEnvironment, type WslGuestEnvironment } from './wsl-guest-environment'

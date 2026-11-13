@@ -93,7 +93,7 @@ function fitsCommandLine(files) {
   return files.reduce((total, file) => total + file.length + 1, 0) <= MAX_PATH_ARGUMENT_CHARS
 }
 
-// Why before importing @orca/process-host: its dist is what this builds, and a cache hit skips both.
+// Why before importing @coding-agent/process-host: its dist is what this builds, and a cache hit skips both.
 function buildWorkspacePackages(root, env) {
   const pnpm = resolvePnpmCliInvocation()
   const result = spawnSync(pnpm.command, [...pnpm.prefixArgs, 'run', 'build:packages'], {
@@ -311,7 +311,7 @@ export async function main(root, argv) {
   ) {
     buildWorkspacePackages(root, env)
   }
-  const { runProcess, runProcessSync } = await import('@orca/process-host')
+  const { runProcess, runProcessSync } = await import('@coding-agent/process-host')
   const { resolvePinnedBunExecutable } =
     await import('../../tool-invocation/pinned-bun-executable.mjs')
   const bun = () => resolvePinnedBunExecutable(root, runProcessSync) ?? 'bun'

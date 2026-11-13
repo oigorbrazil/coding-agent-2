@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../app-env'
 import type { AgentProcessPresence } from '../../agent-status/process/agent-process-presence'
 import type { ClaudeSettledRequest } from '../claude-settled-permission-requests'
 // Relay normalizes; main revalidates at the SSH trust boundary and routes. Wire connectionId stays null until ingestRemote stamps mux identity. CLI version/env survive forwarding; remote marks location, not build type. Keep wire envelopes separate from renderer IPC/install contracts without Electron dependencies.
@@ -216,6 +217,6 @@ export const AGENT_HOOK_INSTALL_PLUGINS_METHOD = 'agent_hook.installPlugins' as 
 export const ORCA_FEATURE_REMOTE_AGENT_HOOKS_ENV = 'ORCA_FEATURE_REMOTE_AGENT_HOOKS' as const
 
 export function isWslAgentHookRelayEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  const raw = env[ORCA_FEATURE_REMOTE_AGENT_HOOKS_ENV]
+  const raw = readAppEnv(env, 'FEATURE_REMOTE_AGENT_HOOKS')
   return raw === undefined || !['', '0'].includes(raw.trim())
 }

@@ -1,11 +1,13 @@
 import { tmpdir } from 'node:os'
 import {
   PLUGIN_MARKETPLACE_FILENAME,
+  LEGACY_PLUGIN_MARKETPLACE_FILENAME,
   pluginMarketplaceSchema,
   type PluginMarketplace
 } from '../../../shared/plugins/catalog/plugin-marketplace'
 import {
   PLUGIN_CATALOG_FILENAME,
+  LEGACY_PLUGIN_CATALOG_FILENAME,
   pluginCatalogSchema,
   pluginCatalogVersionError
 } from '../../../shared/plugins/catalog/plugin-catalog'
@@ -16,6 +18,17 @@ import { fillMonorepoReleaseImages } from './plugin-catalog-monorepo-images'
 import { readPluginGitCommit } from '../installation/plugin-git-repository'
 import { readPluginGitBatchBlobs, type PluginGitTreeEntry } from '../installation/plugin-git-tree'
 import type { PluginMarketplaceRegisteredSource } from './plugin-marketplace-store'
+
+export const PLUGIN_INDEX_FILENAMES = [
+  PLUGIN_CATALOG_FILENAME,
+  LEGACY_PLUGIN_CATALOG_FILENAME,
+  PLUGIN_MARKETPLACE_FILENAME,
+  LEGACY_PLUGIN_MARKETPLACE_FILENAME
+]
+
+export function selectPluginIndexFilename(names: ReadonlyMap<string, unknown>): string | undefined {
+  return PLUGIN_INDEX_FILENAMES.find((name) => names.has(name))
+}
 
 const MARKETPLACE_INDEX_MAX_BYTES = 16 * 1024 * 1024
 // Why its own cap: a catalog repository may hold far more than one plugin, and only its index is read.
@@ -47,7 +60,7 @@ export async function fetchPluginMarketplace(
 }
 
 /** Reads only the catalog index blobs, so the rest of the repository is never written out.
- *  Prefers orca-catalog.json; repositories that only publish the frozen v1 file still load. */
+ *  Prefers coding-catalog.json; repositories that only publish the frozen v1 file still load. */
 async function readMarketplaceAtCommit(
   repository: string,
   commit: string,
@@ -55,7 +68,7 @@ async function readMarketplaceAtCommit(
 ): Promise<{ marketplace: PluginMarketplace; images: Buffer[] }> {
   const options = { cwd: repository, timeout: MARKETPLACE_GIT_TIMEOUT_MS }
   const listing = await gitExecFileAsyncBuffer(
-    ['ls-tree', '-l', '-z', commit, '--', PLUGIN_CATALOG_FILENAME, PLUGIN_MARKETPLACE_FILENAME],
+    ['ls-tree', '-l', '-z', commit, '--', ...PLUGIN_INDEX_FILENAMES],
     { ...options, maxBuffer: 64 * 1024 }
   )
   const blobs = new Map<string, { object: string; size: number }>()
@@ -65,11 +78,9 @@ async function readMarketplaceAtCommit(
       blobs.set(match[3]!, { object: match[1]!, size: Number(match[2]) })
     }
   }
-  const filename = blobs.has(PLUGIN_CATALOG_FILENAME)
-    ? PLUGIN_CATALOG_FILENAME
-    : PLUGIN_MARKETPLACE_FILENAME
-  const blob = blobs.get(filename)
-  if (!blob) {
+  const filename = selectPluginIndexFilename(blobs)
+  const blob = filename ? blobs.get(filename) : undefined
+  if (!blob || !filename) {
     throw new Error(`${PLUGIN_MARKETPLACE_FILENAME} not found`)
   }
   if (blob.size > MARKETPLACE_INDEX_MAX_BYTES) {
@@ -234,7 +245,7 @@ export function parsePluginMarketplaceIndex(filename: string, bytes: Buffer): Pl
       `invalid ${filename}: ${error instanceof Error ? error.message : String(error)}`
     )
   }
-  if (filename === PLUGIN_CATALOG_FILENAME) {
+  if (filename === PLUGIN_CATALOG_FILENAME || filename === LEGACY_PLUGIN_CATALOG_FILENAME) {
     const tooNew = pluginCatalogVersionError(raw)
     if (tooNew) {
       throw new Error(`${filename} ${tooNew}`)

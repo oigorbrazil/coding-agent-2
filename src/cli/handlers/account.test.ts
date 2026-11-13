@@ -1,6 +1,6 @@
 import type * as NodeCliCommandResolutionModule from '../../shared/node-cli-command-resolution'
-import type * as ProcessHostModule from '@orca/process-host'
-import type { ProcessSpec } from '@orca/process-host/process-spec'
+import type * as ProcessHostModule from '@coding-agent/process-host'
+import type { ProcessSpec } from '@coding-agent/process-host/process-spec'
 import { EventEmitter } from 'node:events'
 import { existsSync } from 'node:fs'
 import { PassThrough } from 'node:stream'
@@ -41,7 +41,7 @@ vi.mock('node:child_process', () => ({
   execFileSync: vi.fn(),
   spawn: vi.fn()
 }))
-vi.mock('@orca/process-host', async (importOriginal) => ({
+vi.mock('@coding-agent/process-host', async (importOriginal) => ({
   ...(await importOriginal<typeof ProcessHostModule>()),
   spawnProcess: (spec: ProcessSpec) =>
     spec.args?.includes('--help') ? probeMock(spec) : spawnMock(spec.program, spec.args, spec)

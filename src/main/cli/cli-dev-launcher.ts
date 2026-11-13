@@ -1,7 +1,8 @@
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
 import { existsSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join } from 'node:path'
-import { DEV_COMMAND_NAME, DEV_LAUNCHER_DIR } from './cli-install-constants'
+import { CLI_COMMAND_NAME, DEV_COMMAND_NAME, DEV_LAUNCHER_DIR } from './cli-install-constants'
 import { escapeWindowsBatchValue, isAbsoluteForPlatform } from './cli-install-path-format'
 import { quotePosixShellDoubleQuotedApostrophe } from '../../shared/shell/launch/shell-argument-quoting'
 
@@ -36,12 +37,19 @@ export async function ensureDevLauncher(args: {
     encoding: 'utf8',
     mode: args.platform === 'win32' ? undefined : 0o755
   })
-  if (args.commandName === DEV_COMMAND_NAME && args.platform !== 'win32') {
-    // Why: dev PTYs prepend this dir to PATH, so keep a local `orca` alias without claiming the global command.
-    await writeFile(join(dirname(launcherPath), 'orca'), content, {
-      encoding: 'utf8',
-      mode: 0o755
-    })
+  if (args.commandName === DEV_COMMAND_NAME) {
+    // Why: dev PTYs prepend this dir to PATH, so keep local `orca` and `coding-agent` aliases
+    // without claiming the global command.
+    const aliases =
+      args.platform === 'win32'
+        ? [`${CLI_COMMAND_NAME}.cmd`, 'coding-agent.cmd']
+        : [CLI_COMMAND_NAME, 'orca', 'coding-agent']
+    for (const alias of aliases) {
+      await writeFile(join(dirname(launcherPath), alias), content, {
+        encoding: 'utf8',
+        mode: args.platform === 'win32' ? undefined : 0o755
+      })
+    }
   }
   return launcherPath
 }
@@ -56,6 +64,7 @@ export function buildUnixCliLauncher(
     return `#!/usr/bin/env sh
 set -eu
 export ORCA_USER_DATA_PATH=${quotePosixShellDoubleQuotedApostrophe(userDataPath)}
+export CODING_AGENT_USER_DATA_PATH="$ORCA_USER_DATA_PATH"
 unset NODE_OPTIONS NODE_REPL_EXTERNAL_MODULE ELECTRON_RUN_AS_NODE
 exec ${quotePosixShellDoubleQuotedApostrophe(execPathValue)} ${quotePosixShellDoubleQuotedApostrophe(cliEntryPath)} "$@"
 `
@@ -65,12 +74,17 @@ set -euo pipefail
 ELECTRON=${quotePosixShellDoubleQuotedApostrophe(execPathValue)}
 CLI=${quotePosixShellDoubleQuotedApostrophe(cliEntryPath)}
 export ORCA_USER_DATA_PATH=${quotePosixShellDoubleQuotedApostrophe(userDataPath)}
-if [ -z "\${ORCA_APP_EXECUTABLE:-}" ]; then
+export CODING_AGENT_USER_DATA_PATH="$ORCA_USER_DATA_PATH"
+if [ -z "\${CODING_AGENT_APP_EXECUTABLE-\${ORCA_APP_EXECUTABLE:-}}" ]; then
   export ORCA_APP_EXECUTABLE="$ELECTRON"
+export CODING_AGENT_APP_EXECUTABLE="$ORCA_APP_EXECUTABLE"
   export ORCA_APP_EXECUTABLE_NEEDS_APP_ROOT=1
+export CODING_AGENT_APP_EXECUTABLE_NEEDS_APP_ROOT="$ORCA_APP_EXECUTABLE_NEEDS_APP_ROOT"
 fi
 export ORCA_NODE_OPTIONS="\${NODE_OPTIONS-}"
+export CODING_AGENT_NODE_OPTIONS="$ORCA_NODE_OPTIONS"
 export ORCA_NODE_REPL_EXTERNAL_MODULE="\${NODE_REPL_EXTERNAL_MODULE-}"
+export CODING_AGENT_NODE_REPL_EXTERNAL_MODULE="$ORCA_NODE_REPL_EXTERNAL_MODULE"
 unset NODE_OPTIONS
 unset NODE_REPL_EXTERNAL_MODULE
 ELECTRON_RUN_AS_NODE=1 exec "$ELECTRON" "$CLI" "$@"
@@ -84,15 +98,21 @@ export function buildWindowsDevLauncher(
 ): string {
   return `@echo off
 setlocal
+${windowsAppEnvRestore(['USER_DATA_PATH', 'APP_EXECUTABLE', 'APP_EXECUTABLE_NEEDS_APP_ROOT', 'NODE_OPTIONS', 'NODE_REPL_EXTERNAL_MODULE']).join('\r\n')}
 set "ELECTRON=${escapeWindowsBatchValue(execPathValue)}"
 set "CLI=${escapeWindowsBatchValue(cliEntryPath)}"
 set "ORCA_USER_DATA_PATH=${escapeWindowsBatchValue(userDataPath)}"
+set "CODING_AGENT_USER_DATA_PATH=${escapeWindowsBatchValue(userDataPath)}"
 if not defined ORCA_APP_EXECUTABLE (
   set "ORCA_APP_EXECUTABLE=%ELECTRON%"
+  set "CODING_AGENT_APP_EXECUTABLE=%ELECTRON%"
   set "ORCA_APP_EXECUTABLE_NEEDS_APP_ROOT=1"
+  set "CODING_AGENT_APP_EXECUTABLE_NEEDS_APP_ROOT=1"
 )
 set "ORCA_NODE_OPTIONS=%NODE_OPTIONS%"
+set "CODING_AGENT_NODE_OPTIONS=%NODE_OPTIONS%"
 set "ORCA_NODE_REPL_EXTERNAL_MODULE=%NODE_REPL_EXTERNAL_MODULE%"
+set "CODING_AGENT_NODE_REPL_EXTERNAL_MODULE=%NODE_REPL_EXTERNAL_MODULE%"
 set NODE_OPTIONS=
 set NODE_REPL_EXTERNAL_MODULE=
 set ELECTRON_RUN_AS_NODE=1
@@ -103,6 +123,7 @@ set ELECTRON_RUN_AS_NODE=1
 export function buildWindowsForwarder(launcherPath: string): string {
   return `@echo off
 setlocal
+${windowsAppEnvRestore(['USER_DATA_PATH', 'APP_EXECUTABLE', 'APP_EXECUTABLE_NEEDS_APP_ROOT', 'NODE_OPTIONS', 'NODE_REPL_EXTERNAL_MODULE']).join('\r\n')}
 set "ORCA_LAUNCHER=${escapeWindowsBatchValue(launcherPath)}"
 "%ORCA_LAUNCHER%" %*
 `

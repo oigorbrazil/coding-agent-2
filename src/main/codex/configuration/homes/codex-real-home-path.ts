@@ -1,3 +1,4 @@
+import { readAppEnv, appEnvPairs, readAppEnvKey } from '../../../../shared/app-env'
 import { resolve } from 'node:path'
 import { getSystemCodexHomePath } from './codex-home-paths'
 import {
@@ -8,7 +9,7 @@ import { readPowerShellProfileEnvValues } from '../../../pty/shell-startup/power
 
 export function hasCustomCodexHomeOverride(env: NodeJS.ProcessEnv = process.env): boolean {
   const codexHome = env.CODEX_HOME?.trim()
-  const orcaCodexHome = env.ORCA_CODEX_HOME?.trim()
+  const orcaCodexHome = readAppEnv(env, 'CODEX_HOME')?.trim()
   const normalizedCodexHome = codexHome ? normalizePathForComparison(codexHome) : undefined
   const normalizedOrcaCodexHome = orcaCodexHome
     ? normalizePathForComparison(orcaCodexHome)
@@ -25,7 +26,7 @@ export function hasCustomCodexHomeOverrideForLaunch(launchEnv?: NodeJS.ProcessEn
   if (
     hasCustomCodexHomeOverride({
       CODEX_HOME: getLaunchEnvValue(launchEnv, 'CODEX_HOME'),
-      ORCA_CODEX_HOME: getLaunchEnvValue(launchEnv, 'ORCA_CODEX_HOME')
+      ...appEnvPairs('CODEX_HOME', getLaunchEnvValue(launchEnv, 'ORCA_CODEX_HOME'))
     })
   ) {
     return true
@@ -67,7 +68,9 @@ function getLaunchEnvValue(
   launchEnv: NodeJS.ProcessEnv | undefined,
   key: LaunchEnvKey
 ): string | undefined {
-  return launchEnv && Object.hasOwn(launchEnv, key) ? launchEnv[key] : process.env[key]
+  return launchEnv && Object.hasOwn(launchEnv, key)
+    ? launchEnv[key]
+    : readAppEnvKey(process.env, key)
 }
 
 function normalizePathForComparison(value: string): string {

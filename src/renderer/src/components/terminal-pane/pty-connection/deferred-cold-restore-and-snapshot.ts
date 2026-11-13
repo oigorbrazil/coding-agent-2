@@ -1,6 +1,11 @@
+import type { PtyReplayDataMeta } from '../pty-transport/pty-transport-types'
+import type { FreshSpawnOptions, ColdRestoreAgentResumeStartup } from './startup/fresh-spawn-types'
+
+import type { ConnectPanePtySession } from './connect-pane-pty-session'
+import { readAppEnv, appEnvPairs } from '../../../../../shared/app-env'
 import { paneResumeRecord } from './startup/pane-resume-record'
 import { useAppStore } from '@/store/index'
-import type { PtyReplayDataMeta } from '../pty-transport/pty-transport-types'
+
 import { INITIAL_MODE_2031_REPLY_SCAN_STATE } from '../../../../../shared/terminal/protocol/queries/terminal-color-scheme-protocol'
 import { waitForTerminalOutputParsed } from '@/lib/pane-manager/pane-terminal-output-scheduler'
 import { executeTerminalStartupCommandPaste } from '../input/paste/terminal-startup-command-paste'
@@ -11,9 +16,7 @@ import { ORCA_LAYOUT_OWNER_IS_MAIN } from '../../../../../shared/layout-owner-sw
 
 import { shouldKeepHiddenStartupRendererQueriesLive } from './output/hidden-startup-renderer-query'
 import { createForegroundImmediateBudget } from './output/foreground-output-budgets'
-import type { FreshSpawnOptions, ColdRestoreAgentResumeStartup } from './startup/fresh-spawn-types'
 
-import type { ConnectPanePtySession } from './connect-pane-pty-session'
 import { bindCaptureTransportOutputCallbacks } from './lifecycle/transport-output-callbacks'
 import { initializeHiddenOutputRestoreState } from './output-restore/hidden-output-restore-state'
 
@@ -102,16 +105,16 @@ export function bindDeferredColdRestoreAndSnapshot(session: ConnectPanePtySessio
   }
   session.mergeStartupEnvWithPaneIdentity = (
     env: Record<string, string> | undefined
-  ): Record<string, string> | undefined =>
-    env
+  ): Record<string, string> | undefined => {
+    const launchToken = readAppEnv(env, 'AGENT_LAUNCH_TOKEN')
+    return env
       ? {
           ...env,
           ...session.paneIdentityEnv,
-          ...(env.ORCA_AGENT_LAUNCH_TOKEN
-            ? { ORCA_AGENT_LAUNCH_TOKEN: env.ORCA_AGENT_LAUNCH_TOKEN }
-            : {})
+          ...(launchToken ? appEnvPairs('AGENT_LAUNCH_TOKEN', launchToken) : {})
         }
       : undefined
+  }
   // Why ungated: a reveal, a restart replacement on show, or a phone wake already chose to run now.
   session.spawnColdRestoreAgentResume = (
     startup: ColdRestoreAgentResumeStartup | null = session.buildColdRestoreAgentResumeStartup(),

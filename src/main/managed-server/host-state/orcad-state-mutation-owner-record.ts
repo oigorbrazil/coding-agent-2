@@ -15,7 +15,7 @@ export function posixStateMutationPidRecord(lock: string, onTaken: string): stri
 /** Record only groups this workload created, avoiding accidental signaling of the surrounding SSH group. */
 export function posixStateMutationGroupRecord(lock: string): string {
   return [
-    'if [ "${ORCA_STATE_MUTATION_GROUP:-}" = 1 ]; then',
+    'if [ "${CODING_AGENT_STATE_MUTATION_GROUP-${ORCA_STATE_MUTATION_GROUP:-}}" = 1 ]; then',
     `group=$(${posixProcessGroupCommand('$$')});`,
     `case "$group" in ""|*[!0-9]*) ;; *) echo "$group" > ${lock}/pgid;; esac; fi;`
   ].join(' ')

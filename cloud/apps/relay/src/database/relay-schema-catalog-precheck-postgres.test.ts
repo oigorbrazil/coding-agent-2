@@ -1,8 +1,8 @@
 import pg from 'pg'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { applyPostgresSchema } from '@orca-cloud/postgres-schema/apply-postgres-schema'
-import { catalogObjectPresence } from '@orca-cloud/postgres-schema/catalog-object-precheck'
-import { takesRelationLock } from '@orca-cloud/postgres-schema/schema-lock-target'
+import { applyPostgresSchema } from '@coding-agent-cloud/postgres-schema/apply-postgres-schema'
+import { catalogObjectPresence } from '@coding-agent-cloud/postgres-schema/catalog-object-precheck'
+import { takesRelationLock } from '@coding-agent-cloud/postgres-schema/schema-lock-target'
 import {
   openRelayDatabase,
   POSTGRES_LOCK_TIMEOUT_MS,

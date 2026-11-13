@@ -1,23 +1,7 @@
 import type { SFTPWrapper } from 'ssh2'
 import type { AgentHookInstallStatus } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
 import {
-  buildWindowsAgentHookCurlPostCommand,
-  writeHooksJson,
-  writeManagedScript
-} from '../agent-hooks/installer-utils'
-import { refreshManagedScriptIfPresent } from '../agent-hooks/managed-hook-script-refresh'
-import {
-  readTextFileRemote,
-  writeHooksJsonRemote,
-  writeManagedScriptRemote
-} from '../agent-hooks/installer-utils-remote'
-import {
-  buildPosixHookPayloadCapture,
-  buildPosixHookSpoolLines,
-  buildWindowsHookEnvironmentGuardLines
-} from '../agent-hooks/hook-stdin-contract'
-import { buildPosixAgentHookPostCommand } from '../agent-hooks/hook-post-command'
-import {
+  type ZCodeConfig,
   applyZCodeManagedHooks,
   getZCodeConfigPath,
   getZCodeManagedCommand,
@@ -29,9 +13,30 @@ import {
   isZCodeHooksEnabled,
   readManagedZCodeHookEvents,
   removeZCodeManagedHooks,
-  ZCODE_HOOK_EVENTS,
-  type ZCodeConfig
+  ZCODE_HOOK_EVENTS
 } from './hook-settings'
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
+
+import {
+  buildWindowsAgentHookCurlPostCommand,
+  writeHooksJson,
+  writeManagedScript
+} from '../agent-hooks/installer-utils'
+import { refreshManagedScriptIfPresent } from '../agent-hooks/managed-hook-script-refresh'
+import {
+  readTextFileRemote,
+  writeHooksJsonRemote,
+  writeManagedScriptRemote
+} from '../agent-hooks/installer-utils-remote'
+import {
+  buildPosixHookEndpointReloadLines,
+  buildWindowsHookEndpointReloadLines,
+  buildPosixHookPayloadCapture,
+  buildPosixHookSpoolLines,
+  buildWindowsHookEnvironmentGuardLines
+} from '../agent-hooks/hook-stdin-contract'
+import { buildPosixAgentHookPostCommand } from '../agent-hooks/hook-post-command'
+
 import {
   parseZCodeConfigText,
   readZCodeConfigSource,
@@ -43,8 +48,14 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     return [
       '@echo off',
       'setlocal',
+      ...windowsAppEnvRestore([
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN',
+        'PANE_KEY'
+      ]),
       // Refresh port/token from the endpoint file so retained PTYs reach the restarted server.
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       ...buildWindowsHookEnvironmentGuardLines(),
       buildWindowsAgentHookCurlPostCommand('zcode'),
       'exit /b 0',
@@ -57,10 +68,8 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     ...buildPosixHookPayloadCapture(),
     ...buildPosixHookSpoolLines('zcode'),
     // Refresh retained PTY endpoints at invocation; silence source races/parse errors so hooks fail open without polluting transcripts.
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  . "$ORCA_AGENT_HOOK_ENDPOINT" 2>/dev/null || :',
-    'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    ...buildPosixHookEndpointReloadLines(),
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  spool_hook_event',
     '  exit 0',
     'fi',

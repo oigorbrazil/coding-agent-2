@@ -50,7 +50,7 @@ async function assertUniqueIdMutationSupported(client: RuntimeClient): Promise<v
 function folderGone(folderId: string): RuntimeClientError {
   return new RuntimeClientError(
     'selector_not_found',
-    `Folder workspace ${folderWorkspaceKey(folderId)} no longer exists. Run orca worktree ps --json to list workspaces.`
+    `Folder workspace ${folderWorkspaceKey(folderId)} no longer exists. Run coding worktree ps --json to list workspaces.`
   )
 }
 
@@ -78,12 +78,12 @@ async function setFolderWorkspace(
   refuseFolderFlags(flags, [
     [
       'parent-worktree',
-      `does not apply: a folder workspace cannot have a parent. To nest a worktree under it, run orca worktree set --worktree <child> --parent-worktree ${key}.`
+      `does not apply: a folder workspace cannot have a parent. To nest a worktree under it, run coding worktree set --worktree <child> --parent-worktree ${key}.`
     ],
     ['no-parent', 'does not apply: a folder workspace never has a parent.'],
     ...LINK_FLAGS.map((flag): [string, string] => [
       flag,
-      `does not apply to a folder workspace. Link it with orca reference add <url> --worktree ${key}.`
+      `does not apply to a folder workspace. Link it with coding reference add <url> --worktree ${key}.`
     ])
   ])
   const displayName = getOptionalStringFlag(flags, 'display-name')
@@ -154,6 +154,6 @@ async function removeFolderWorkspace(
 export function refuseFolderWorkspaceActivation(folderId: string): never {
   throw new RuntimeClientError(
     'invalid_argument',
-    `Activating a folder workspace from the CLI is not supported yet. Open it from the Coding Agent 2 sidebar, or inspect it with orca worktree show --worktree ${folderWorkspaceKey(folderId)} --json.`
+    `Activating a folder workspace from the CLI is not supported yet. Open it from the Coding Agent 2 sidebar, or inspect it with coding worktree show --worktree ${folderWorkspaceKey(folderId)} --json.`
   )
 }

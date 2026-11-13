@@ -1,6 +1,6 @@
 import { afterEach, expect, it, vi } from 'vitest'
 import { WebSocket } from 'ws'
-import { RELAY_CLOSE_CODE } from '@orca-cloud/relay-contract/close-codes'
+import { RELAY_CLOSE_CODE } from '@coding-agent-cloud/relay-contract/close-codes'
 import { loadRelayConfig } from './config.js'
 import type { RelayDatabase } from './database/database.js'
 import { EDGE_CELL_ID, EdgeAssignments } from './edge-relay.js'

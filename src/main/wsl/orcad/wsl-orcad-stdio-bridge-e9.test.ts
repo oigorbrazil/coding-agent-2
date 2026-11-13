@@ -1,6 +1,6 @@
 import { connect, createServer, type Server, type Socket } from 'node:net'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as ProcessHost from '@orca/process-host'
+import type * as ProcessHost from '@coding-agent/process-host'
 import { checkOrcadStdioBridge, openOrcadStdioBridgeChannel } from '../../ssh/orcad-stdio-bridge'
 import type { StartedPortForward } from '../../ssh/port-forwarding/ssh-port-forward-provider'
 import {
@@ -13,7 +13,7 @@ const probe = vi.hoisted(() => {
   const state: { running: string[]; calls: number } = { running: [], calls: 0 }
   return state
 })
-vi.mock('@orca/process-host', async (importOriginal) => {
+vi.mock('@coding-agent/process-host', async (importOriginal) => {
   const actual = await importOriginal<typeof ProcessHost>()
   return {
     ...actual,

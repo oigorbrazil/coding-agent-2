@@ -1,3 +1,4 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import type { ExecutionHostId } from '../../shared/execution-host'
 import { hostedReviewSshConnectionId } from '../source-control/hosted-review-execution-host'
 import type {
@@ -19,27 +20,22 @@ import { getGiteaRepoRef, type GiteaRepoRef } from './repository-ref'
 
 const CREATE_REQUEST_TIMEOUT_MS = 60_000
 
-function envValue(name: string): string | null {
-  const value = process.env[name]?.trim() ?? ''
-  return value.length > 0 ? value : null
-}
-
 function normalizeApiBaseUrl(value: string): string {
   const trimmed = value.trim().replace(/\/+$/, '')
   return /\/api\/v1$/i.test(trimmed) ? trimmed : `${trimmed}/api/v1`
 }
 
 function configuredApiBaseUrl(repo: GiteaRepoRef): string {
-  const configured = envValue('ORCA_GITEA_API_BASE_URL')
+  const configured = readProviderEnvironment('CODING_GITEA_API_BASE_URL')
   return configured ? normalizeApiBaseUrl(configured) : repo.apiBaseUrl
 }
 
 export function isGiteaReviewCreationAuthenticated(): boolean {
-  return envValue('ORCA_GITEA_TOKEN') !== null
+  return readProviderEnvironment('CODING_GITEA_TOKEN') !== null
 }
 
 function authHeaders(): Record<string, string> {
-  const token = envValue('ORCA_GITEA_TOKEN')
+  const token = readProviderEnvironment('CODING_GITEA_TOKEN')
   return token ? { Authorization: `token ${token}` } : {}
 }
 
@@ -73,7 +69,7 @@ function classifyCreateError(error: unknown): CreateHostedReviewResult {
       ok: false,
       code: 'auth_required',
       error:
-        'Create PR failed: Gitea is not authenticated. Next step: set ORCA_GITEA_TOKEN in this environment.',
+        'Create PR failed: Gitea is not authenticated. Next step: set CODING_AGENT_GITEA_TOKEN (legacy ORCA_* names still work) in this environment.',
       reason: 'auth_required'
     }
   }

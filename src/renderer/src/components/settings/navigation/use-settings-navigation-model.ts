@@ -3,7 +3,7 @@ import { applyDocumentTheme } from '@/lib/document-theme'
 import { resolvePaintedTheme } from '@/lib/terminal-app-theme'
 import { useSettingsNavigationMetadata } from '@/hooks/useSettingsNavigationMetadata'
 import type { SettingsNavInstallStatus } from '@/lib/settings-navigation-types'
-import { COMPUTER_USE_SKILL_NAME, ORCHESTRATION_SKILL_NAME } from '@/lib/agent-feature-skill-names'
+import { COMPUTER_USE_SKILL_NAME } from '@/lib/agent-feature-skill-names'
 import {
   getAgentSkillNavInstallStatus,
   getLinearAgentSkillNavInstallStatus
@@ -43,8 +43,6 @@ export function useSettingsNavigationModel(
 
   const displayedGitUsername = model.repos[0]?.gitUsername ?? ''
   const baseNavSections = useSettingsNavigationMetadata()
-  const { installed: orchestrationSkillInstalled, loading: orchestrationSkillLoading } =
-    model.orchestrationSkill
   const {
     installed: linearSkillInstalled,
     loading: linearSkillLoading,
@@ -54,17 +52,8 @@ export function useSettingsNavigationModel(
     model.computerUseSkill
   const capabilityInstallStatusBySectionId = useMemo(() => {
     const applicableSkillPlan = model.skillFreshnessApplies ? model.skillPlan : null
-    const next = new Map<string, SettingsNavInstallStatus>([
-      [
-        'orchestration',
-        getAgentSkillNavInstallStatus({
-          name: ORCHESTRATION_SKILL_NAME,
-          installed: orchestrationSkillInstalled,
-          loading: orchestrationSkillLoading,
-          plan: applicableSkillPlan
-        })
-      ]
-    ])
+    // Orca's orchestration skill is not offered; Coding Opus covers orchestration.
+    const next = new Map<string, SettingsNavInstallStatus>()
     if (model.linearConnected) {
       next.set(
         'linear',
@@ -110,9 +99,7 @@ export function useSettingsNavigationModel(
     model.showDesktopOnlySettings,
     model.skillFreshnessApplies,
     model.skillPlan,
-    model.voiceModelStatesLoading,
-    orchestrationSkillInstalled,
-    orchestrationSkillLoading
+    model.voiceModelStatesLoading
   ])
   const navSections = useMemo(
     () =>

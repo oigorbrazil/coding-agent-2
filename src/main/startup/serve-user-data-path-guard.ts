@@ -1,4 +1,5 @@
-import { SERVE_USER_DATA_PATH_ENV, isSameUserDataPath } from '../../shared/serve-user-data-path'
+import { readAppEnv, deleteAppEnv } from '../../shared/app-env'
+import { isSameUserDataPath } from '../../shared/serve-user-data-path'
 
 /** Reject mismatched serve profiles before locking: a lock loss on the wrong profile can activate the user's desktop. */
 export function checkServeUserDataPath(options: {
@@ -8,9 +9,9 @@ export function checkServeUserDataPath(options: {
   platform?: NodeJS.Platform
 }): string | null {
   const env = options.env ?? process.env
-  const expected = env[SERVE_USER_DATA_PATH_ENV]
+  const expected = readAppEnv(env, 'SERVE_USER_DATA_PATH')
   // Consume the expectation so hosted terminals cannot inherit stale profile fences.
-  delete env[SERVE_USER_DATA_PATH_ENV]
+  deleteAppEnv(env, 'SERVE_USER_DATA_PATH')
   if (!options.isServeMode || !expected) {
     return null
   }

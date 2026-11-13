@@ -1,6 +1,7 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { win32 as pathWin32 } from 'node:path'
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../../shared/orcad-managed-launch-env'
+
 import { readOpenSshDefaultShell } from '../../../shared/openssh-default-shell'
 
 /** Match relay DefaultShell for SSH-managed Windows hosts only; desktop and user-started servers retain their defaults (#9327). */
@@ -9,7 +10,7 @@ export function resolveManagedSshHostLoginShell(
   existsPath: (path: string) => boolean = existsSync,
   readDefaultShell: () => string = readOpenSshDefaultShell
 ): string | undefined {
-  if (process.platform !== 'win32' || !env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV]) {
+  if (process.platform !== 'win32' || !readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT')) {
     return undefined
   }
   const shell = readDefaultShell()

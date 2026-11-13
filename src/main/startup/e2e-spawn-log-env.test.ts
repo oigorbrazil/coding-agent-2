@@ -2,8 +2,8 @@ import { mkdtempSync, existsSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterEach, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
-import { E2E_SPAWN_LOG_ENV } from '@orca/process-host/spawn-observer'
+import { runProcess } from '@coding-agent/process-host'
+import { E2E_SPAWN_LOG_ENV } from '@coding-agent/process-host/spawn-observer'
 import { dropE2eSpawnLogOutsideE2e } from './e2e-spawn-log-env'
 
 const saved = { log: process.env[E2E_SPAWN_LOG_ENV], userData: process.env.ORCA_E2E_USER_DATA_DIR }

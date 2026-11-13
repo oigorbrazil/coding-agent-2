@@ -4,7 +4,7 @@ import {
   type SelfInitiatedTreeKillScope
 } from '../../crash-reporting/self-initiated-tree-kill-log'
 import { readOrcaChromiumProcessPids } from './orca-chromium-process-pids'
-import { setProcessTreeKillGate } from '@orca/process-host/process-tree-kill-gate'
+import { setProcessTreeKillGate } from '@coding-agent/process-host/process-tree-kill-gate'
 
 /** Refusal forbids only the PID-based tree walk; callers must still kill the root through its handle. */
 export function admitSelfInitiatedTreeKill(target: {

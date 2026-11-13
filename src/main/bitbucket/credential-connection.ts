@@ -1,6 +1,6 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import {
   DEFAULT_API_BASE_URL,
-  envValue,
   getEnvAuthConfig,
   hasAuth,
   type BitbucketAuthConfig
@@ -78,7 +78,7 @@ export function getBitbucketConnectionStatus(): BitbucketConnectionStatus {
       account: null,
       authMode: env.accessToken ? 'token' : 'basic',
       email: env.email,
-      baseUrl: envValue('ORCA_BITBUCKET_API_BASE_URL')
+      baseUrl: readProviderEnvironment('CODING_BITBUCKET_API_BASE_URL')
     }
   }
   if (hasStoredBitbucketCredential()) {

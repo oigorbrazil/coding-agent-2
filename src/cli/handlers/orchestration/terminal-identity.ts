@@ -1,5 +1,7 @@
-import { getOptionalStringFlag, getPresentStringFlag } from '../../flags'
 import { type RuntimeClient, RuntimeClientError } from '../../runtime-client'
+import { readAppEnv } from '../../../shared/app-env'
+import { getOptionalStringFlag, getPresentStringFlag } from '../../flags'
+
 import { getTerminalHandle } from '../../selectors'
 import { hasStructuredSessionMarker } from '../../../shared/structured-session-marker'
 import {
@@ -28,7 +30,7 @@ export async function resolveOrchestrationTerminalHandle(
   if (explicit) {
     return explicit
   }
-  const envHandle = process.env.ORCA_TERMINAL_HANDLE
+  const envHandle = readAppEnv(process.env, 'TERMINAL_HANDLE')
   if (envHandle && envHandle.length > 0) {
     if (flagName === 'from' && options.validateEnvHandle) {
       // Shells can retain stale handles after remint; validate before embedding them in coordinator preambles.
@@ -105,7 +107,7 @@ async function resolveOrchestrationPaneTerminalHandle(
   client: RuntimeClient,
   options: { optional?: boolean } = {}
 ): Promise<string | undefined> {
-  const paneKey = process.env.ORCA_PANE_KEY
+  const paneKey = readAppEnv(process.env, 'PANE_KEY')
   if (!paneKey || paneKey.length === 0) {
     return undefined
   }
@@ -207,11 +209,11 @@ function structuredSessionRefusal(flagName: 'from' | 'terminal'): RuntimeClientE
 
 export function throwNoActiveSenderTerminal(flagName: 'from' | 'terminal' = 'from'): never {
   // Lifecycle sends can refuse before the structured guard; distinguish missing identity from stale handles.
-  if (hasStructuredSessionMarker() && !process.env.ORCA_TERMINAL_HANDLE) {
+  if (hasStructuredSessionMarker() && !readAppEnv(process.env, 'TERMINAL_HANDLE')) {
     throw structuredSessionRefusal(flagName)
   }
   // Codex sets CODEX_THREAD_ID after the env filter that can drop Coding Agent 2 identity (#25775).
-  if (process.env.CODEX_THREAD_ID && !process.env.ORCA_TERMINAL_HANDLE) {
+  if (process.env.CODEX_THREAD_ID && !readAppEnv(process.env, 'TERMINAL_HANDLE')) {
     throw new RuntimeClientError(
       'no_active_sender_terminal',
       'Codex ran this orchestration command without ORCA_TERMINAL_HANDLE. If Codex was started in ' +

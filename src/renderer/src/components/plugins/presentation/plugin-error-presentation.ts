@@ -7,16 +7,16 @@ function errorText(cause: unknown): string {
 
 export function pluginInstallErrorMessage(cause: unknown): string {
   const detail = errorText(cause)
-  if (detail.includes('orca-plugin.json') && /(missing|unreadable|no )/.test(detail)) {
+  if (/(:?coding|orca)-plugin\.json/.test(detail) && /(missing|unreadable|no )/.test(detail)) {
     return translate(
       'auto.components.settings.pluginError.installManifestMissing',
-      "No readable orca-plugin.json was found. Choose the plugin's root folder."
+      "No readable coding-plugin.json was found. Choose the plugin's root folder."
     )
   }
   if (detail.includes('invalid manifest')) {
     return translate(
       'auto.components.settings.pluginError.installManifestInvalid',
-      'orca-plugin.json is invalid. Ask the plugin author to fix the manifest.'
+      'coding-plugin.json is invalid. Ask the plugin author to fix the manifest.'
     )
   }
   if (detail.includes('requires orca')) {
@@ -49,7 +49,7 @@ export function pluginInstallErrorMessage(cause: unknown): string {
   if (detail.includes('reserved for official orca plugins')) {
     return translate(
       'auto.components.settings.pluginError.installReservedIdentity',
-      'This plugin uses a name reserved for official Coding Agent 2 plugins, which install only from Coding Agent 2’s catalog. For your own copy or fork, change "id" in orca-plugin.json so it doesn’t start with "orca-", and set "publisher" to your own name.'
+      'This plugin uses a name reserved for official Coding Agent 2 plugins, which install only from Coding Agent 2’s catalog. For your own copy or fork, change "id" in coding-plugin.json so it doesn’t start with "orca-", and set "publisher" to your own name.'
     )
   }
   if (/(git|repository|fetch|clone|checkout|remote)/.test(detail)) {
@@ -78,16 +78,16 @@ export function invalidPluginErrorMessage(
       "This version can't load in this Coding Agent 2. Update or reinstall it."
     )
   }
-  if (detail.includes('missing orca-plugin.json')) {
+  if (/missing (?:coding|orca)-plugin\.json/.test(detail)) {
     return t(
       'auto.components.settings.pluginError.invalidManifestMissing',
-      'The plugin root is missing orca-plugin.json. Add it, then refresh plugins.'
+      'The plugin root is missing coding-plugin.json. Add it, then refresh plugins.'
     )
   }
   if (detail.includes('invalid manifest')) {
     return t(
       'auto.components.settings.pluginError.invalidManifest',
-      'orca-plugin.json is invalid. Fix it, then refresh plugins.'
+      'coding-plugin.json is invalid. Fix it, then refresh plugins.'
     )
   }
   if (detail.includes('artifact')) {

@@ -1,12 +1,14 @@
 import {
-  isLegacyAgentSessionAccountHome,
-  type OpenCodeAgentSessionAccountHome
+  type OpenCodeAgentSessionAccountHome,
+  isLegacyAgentSessionAccountHome
 } from '../../shared/agent-session/lifecycle/agent-session-account-home'
+import type { AcpAccountBinding } from '../acp/acp-account-binding'
+import { deleteAppEnv } from '../../shared/app-env'
+
 import {
   getManagedDataAccountService,
   type ManagedDataAccountService
 } from '../managed-data-accounts/service'
-import type { AcpAccountBinding } from '../acp/acp-account-binding'
 
 type AccountReader = Pick<
   ManagedDataAccountService,
@@ -19,10 +21,10 @@ function restoredEnvironment(
 ): Record<string, string | undefined> {
   const copy = { ...environment }
   managedAccounts.restoreOriginalEnvironment(copy)
-  delete copy.ORCA_DATA_ACCOUNT_PROVIDER
-  delete copy.ORCA_DATA_ACCOUNT_DATA_HOME
-  delete copy.ORCA_DATA_ACCOUNT_STATE_HOME
-  delete copy.ORCA_DATA_ACCOUNT_ORIGINAL_ENV
+  deleteAppEnv(copy, 'DATA_ACCOUNT_PROVIDER')
+  deleteAppEnv(copy, 'DATA_ACCOUNT_DATA_HOME')
+  deleteAppEnv(copy, 'DATA_ACCOUNT_STATE_HOME')
+  deleteAppEnv(copy, 'DATA_ACCOUNT_ORIGINAL_ENV')
   return copy
 }
 

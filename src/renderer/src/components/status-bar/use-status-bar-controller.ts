@@ -39,11 +39,8 @@ export function useStatusBarController(floatingTerminalOpen: boolean) {
   const statusBarVisible = useAppStore((s) => s.statusBarVisible)
   const statusBarItems = useAppStore((s) => s.statusBarItems)
   const recordFeatureInteraction = useAppStore((s) => s.recordFeatureInteraction)
-  // Why: reuse the floating-button's unread dot so activity shows for either trigger location (see FloatingTerminalToggleButton).
   const hasFloatingUnread = useAppStore(selectFloatingWorkspaceHasUnread)
-  const floatingTerminalEnabled = settings?.floatingTerminalEnabled === true
-  const floatingTerminalTriggerLocation =
-    settings?.floatingTerminalTriggerLocation ?? 'floating-button'
+  const showFloatingTerminalToggle = settings?.floatingTerminalEnabled === true
   // Why: gate per-CLI bars on PATH detection so an uninstalled agent isn't shown a noisy empty bar (auto re-shows when installed).
   const localDetectedAgentIds = useAppStore((s) => s.detectedAgentIds)
   // Why: PATH detection describes this viewer, not the remote host whose bars are shown.
@@ -180,8 +177,6 @@ export function useStatusBarController(floatingTerminalOpen: boolean) {
   const showSsh = statusBarItems.includes('ssh')
   const showResourceUsage = statusBarItems.includes('resource-usage')
   const showPorts = statusBarItems.includes('ports')
-  const showFloatingTerminalToggle =
-    floatingTerminalEnabled && floatingTerminalTriggerLocation === 'status-bar'
   // Why: meter-only children (excludes resource-usage) so the % display callout anchors to a real meter cluster.
   const hasVisibleUsageMeters =
     showClaude ||

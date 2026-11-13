@@ -1,3 +1,4 @@
+import { readAppEnvKey } from '../../../../shared/app-env'
 import type { TuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent'
 import {
   normalizeAgentProviderSession,
@@ -166,10 +167,9 @@ export function dropAgentLaunch(args: ResumeSpawnArgs): void {
     args.env = Object.fromEntries(
       Object.entries(args.env).filter(
         ([key, value]) =>
-          key !== 'ORCA_AGENT_LAUNCH_TOKEN' &&
-          key !== 'ORCA_SEQUENCED_STARTUP_COMMAND' &&
-          key !== 'ORCA_SEQUENCED_STARTUP_SCRIPT' &&
-          agentEnv[key] !== value
+          !/^(?:ORCA|CODING_AGENT)_(?:AGENT_LAUNCH_TOKEN|SEQUENCED_STARTUP_COMMAND|SEQUENCED_STARTUP_SCRIPT)$/.test(
+            key
+          ) && readAppEnvKey(agentEnv, key) !== value
       )
     )
   }

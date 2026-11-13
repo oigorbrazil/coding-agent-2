@@ -1,7 +1,7 @@
 import { mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { describe, expect, it } from 'vitest'
 
 describe('Windows release signing waits for macOS success', () => {

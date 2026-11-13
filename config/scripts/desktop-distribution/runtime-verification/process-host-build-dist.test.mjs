@@ -17,7 +17,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 const realPackageDir = resolve('src/packages/process-host')
@@ -322,7 +322,7 @@ await buildPackageDist(process.argv[2])
     writeFileSync(
       join(packageDir, 'package.json'),
       JSON.stringify({
-        name: '@orca/process-host',
+        name: '@coding-agent/process-host',
         exports: { '.': { 'orca-source': './src/run-process.ts' } }
       })
     )

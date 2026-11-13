@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { stagePackagedProcessHost } from '../../../config/scripts/desktop-distribution/runtime-verification/packaged-process-host-fixture.mjs'
 
 const require = createRequire(import.meta.url)
@@ -63,7 +63,7 @@ describe('packaged node-pty launcher-surviving grandchild', () => {
 
       await rm(join(packageDir, 'package.json'))
       expect(() => packagedProcessHostPath(resourcesDir)).toThrow(
-        /packaged @orca\/process-host has no package\.json/
+        /packaged @coding-agent\/process-host has no package\.json/
       )
     } finally {
       await rm(resourcesDir, { recursive: true, force: true })

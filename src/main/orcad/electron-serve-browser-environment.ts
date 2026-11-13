@@ -1,3 +1,4 @@
+import { readAppEnv, setAppEnv, deleteAppEnvKey } from '../../shared/app-env'
 /** Strip orcad-owned user-data and browser overrides from the helper environment. */
 export function electronServeEnvironment(userDataPath: string): NodeJS.ProcessEnv {
   const environment = { ...process.env }
@@ -17,13 +18,15 @@ export function electronServeEnvironment(userDataPath: string): NodeJS.ProcessEn
     'AGENT_BROWSER_SESSION_NAME',
     'AGENT_BROWSER_STATE'
   ]) {
-    delete environment[key]
+    deleteAppEnvKey(environment, key)
   }
   // Keep Electron's native home override active in isolated sidecars.
-  if (process.env.ORCA_E2E_USER_DATA_DIR || process.env.ORCA_E2E_HOME_DIR) {
+  const configuredEnv =
+    readAppEnv(process.env, 'E2E_USER_DATA_DIR') || readAppEnv(process.env, 'E2E_HOME_DIR')
+  if (configuredEnv) {
     environment.ORCA_E2E_USER_DATA_DIR = userDataPath
   }
   // Older installed apps hide without forwarding opens if given ORCA_BACKGROUND_LAUNCH.
-  environment.ORCA_ORCAD_SIDECAR = '1'
+  setAppEnv(environment, 'ORCAD_SIDECAR', '1')
   return environment
 }

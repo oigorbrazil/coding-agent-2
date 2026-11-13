@@ -1,5 +1,5 @@
 import { providerRetryAfter } from './provider-retry-delay.js'
-import { PUSH_DEFAULTS } from '@orca-cloud/push-contract'
+import { PUSH_DEFAULTS } from '@coding-agent-cloud/push-contract'
 import { orcaDataStrings, type PushDelivery } from './push-delivery-message.js'
 import type { PushProviderOutcome } from './push-provider-outcome.js'
 

@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os'
 import { delimiter, join } from 'node:path'
 import { parse } from 'yaml'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { managedSshShards } from '../e2e-selection/ci-e2e-job-selection.mjs'
 
 const workflow = parse(readFileSync('.github/workflows/e2e.yml', 'utf8'))

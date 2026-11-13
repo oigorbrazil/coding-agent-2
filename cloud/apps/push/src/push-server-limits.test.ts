@@ -1,4 +1,4 @@
-import { PUSH_LIMITS } from '@orca-cloud/push-contract'
+import { PUSH_LIMITS } from '@coding-agent-cloud/push-contract'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createPushHostKeypair, hostPublicKeyB64 } from './host-challenge-answering.test-fixture.js'
 import {

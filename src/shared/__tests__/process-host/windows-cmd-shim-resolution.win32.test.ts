@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { removeTreeSync } from '../../windows-transient-lock-removal'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { WINDOWS_ARGUMENT_CORPUS } from '../../../packages/process-host/src/__fixtures__/windows-argument-corpus'
 import { npmProgNodeShim } from '../../../packages/process-host/src/__fixtures__/windows-cmd-shim-bodies'
 

@@ -8,7 +8,7 @@ import type { AgentJournalAnsweredTurnIdentity } from '../../../../shared/agent-
 import type { AgentJournalItemIdentity } from '../../../../shared/agent-session/journal/agent-session-journal-identity'
 import { randomUUID } from 'node:crypto'
 import type { AgentJournalDispatchRejection } from '../../../../shared/agent-session/failures/agent-session-failure-words'
-import { cancelProcessAcquisition } from '@orca/process-host/cancel-process-acquisition'
+import { cancelProcessAcquisition } from '@coding-agent/process-host/cancel-process-acquisition'
 import type { CodexAppServerConnection } from '../../app-server/codex-app-server-connection-types'
 import type { openCodexAppServerConnection } from '../../app-server/codex-app-server-connection'
 import { CodexAcquisitionWindow } from '../acquisition/codex-structured-acquisition-window'

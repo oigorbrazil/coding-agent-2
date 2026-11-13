@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { posix, win32 } from 'node:path'
 import { isWindowsAbsolutePathLike } from '../../../../shared/cross-platform-path'
 import { RepoRefMaintenance } from '../../../../shared/repo-ref-maintenance'
@@ -54,7 +55,7 @@ export function setRepoMaintenanceActivityProbe(probe: RepoMaintenanceActivityPr
 }
 
 function isDisabled(): boolean {
-  return process.env.ORCA_DISABLE_REPO_REF_MAINTENANCE === '1'
+  return readAppEnv(process.env, 'DISABLE_REPO_REF_MAINTENANCE') === '1'
 }
 
 function localMaintenanceOptions(): RepoRefMaintenanceOptions {

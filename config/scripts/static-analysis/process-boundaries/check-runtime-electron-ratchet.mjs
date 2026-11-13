@@ -99,7 +99,7 @@ export async function collectElectronImporters(entryPoints, { plugins = [] } = {
   const workspaceSources = {
     name: 'runtime-workspace-sources',
     setup(pluginBuild) {
-      pluginBuild.onResolve({ filter: /^@orca\// }, ({ path: specifier }) => {
+      pluginBuild.onResolve({ filter: /^@coding-agent\// }, ({ path: specifier }) => {
         const source = workspace.resolve(specifier)
         return source ? { path: source.path } : undefined
       })

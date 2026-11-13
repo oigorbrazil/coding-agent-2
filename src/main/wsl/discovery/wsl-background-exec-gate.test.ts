@@ -12,7 +12,7 @@ const { runProcess, readWslDistroRunningState, listWslDistrosAsync, cachedList }
   }
 )
 
-vi.mock('@orca/process-host', () => ({ runProcess }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess }))
 vi.mock('./distro-catalog', () => ({
   listWslDistrosAsync,
   getCachedWslDistros: () => cachedList.current

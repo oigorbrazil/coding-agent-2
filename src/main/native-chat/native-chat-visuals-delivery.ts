@@ -1,12 +1,14 @@
+import type { StructuredAgentSessionLogger } from './agent-session-wire/host/structured-agent-session-logger'
+import {
+  type NativeChatVisualsSkillLocation,
+  resolveNativeChatVisualsSkillLocation
+} from './native-chat-visuals-skill-location'
+import { appEnvPairs, deleteAppEnv } from '../../shared/app-env'
 // Best-effort visual setup must never prevent chat startup.
 
 import { mkdir } from 'node:fs/promises'
-import type { StructuredAgentSessionLogger } from './agent-session-wire/host/structured-agent-session-logger'
+
 import { nativeChatScratchFolderFor } from './native-chat-scratch-folder'
-import {
-  resolveNativeChatVisualsSkillLocation,
-  type NativeChatVisualsSkillLocation
-} from './native-chat-visuals-skill-location'
 
 /** Keep the per-chat path in the child environment rather than generated skill text. */
 export const NATIVE_CHAT_SCRATCH_DIR_ENV = 'ORCA_CHAT_SCRATCH_DIR'
@@ -63,10 +65,8 @@ export function withNativeChatVisualsEnv(
   env: Record<string, string>,
   visuals: NativeChatVisualsLaunch | null
 ): Record<string, string> {
-  const {
-    [NATIVE_CHAT_SCRATCH_DIR_ENV]: _inherited,
-    [LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV]: _inheritedLegacy,
-    ...rest
-  } = env
-  return visuals ? { ...rest, [NATIVE_CHAT_SCRATCH_DIR_ENV]: visuals.folder } : rest
+  const rest = { ...env }
+  deleteAppEnv(rest, 'CHAT_SCRATCH_DIR')
+  deleteAppEnv(rest, 'CHAT_VISUALS_DIR')
+  return visuals ? { ...rest, ...appEnvPairs('CHAT_SCRATCH_DIR', visuals.folder) } : rest
 }

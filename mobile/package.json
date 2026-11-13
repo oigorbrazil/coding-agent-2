@@ -23,9 +23,9 @@
     "start:emulator": "node scripts/start-emulator.mjs"
   },
   "dependencies": {
+    "@coding-agent/expo-two-way-audio": "file:./packages/expo-two-way-audio",
     "@formatjs/intl-pluralrules": "6.3.16",
     "@noble/hashes": "1.8.0",
-    "@orca/expo-two-way-audio": "file:./packages/expo-two-way-audio",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@tanstack/query-persist-client-core": "5.105.3",
     "@tanstack/react-query": "5.105.3",
@@ -82,7 +82,7 @@
     "zod": "~4.6.7"
   },
   "devDependencies": {
-    "@orca/process-host": "link:../src/packages/process-host",
+    "@coding-agent/process-host": "link:../src/packages/process-host",
     "@types/markdown-it": "14.1.2",
     "@types/markdown-it-footnote": "^3.0.4",
     "@types/mdast": "^4.0.4",

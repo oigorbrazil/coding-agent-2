@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { randomUUID } from 'node:crypto'
 import type { OrcaCloudCapabilities, OrcaCloudOrgSummary } from '../../shared/orca-profiles'
 import type { OrcaCloudSessionExchangeResponse } from './profile-cloud-session-exchange'
@@ -54,9 +55,12 @@ export function createDevOrcaCloudSession(
     expiresAt: Date.now() + DEV_SESSION_TTL_MS,
     cloud: {
       cloudProfileId,
-      userId: cleanEnvString(process.env.ORCA_CLOUD_DEV_USER_ID, 'dev-user'),
-      email: cleanEnvString(process.env.ORCA_CLOUD_DEV_EMAIL, 'dev@orca.local'),
-      displayName: cleanEnvString(process.env.ORCA_CLOUD_DEV_DISPLAY_NAME, 'Coding Agent 2 Dev'),
+      userId: cleanEnvString(readAppEnv(process.env, 'CLOUD_DEV_USER_ID'), 'dev-user'),
+      email: cleanEnvString(readAppEnv(process.env, 'CLOUD_DEV_EMAIL'), 'dev@orca.local'),
+      displayName: cleanEnvString(
+        readAppEnv(process.env, 'CLOUD_DEV_DISPLAY_NAME'),
+        'Coding Agent 2 Dev'
+      ),
       activeOrgId: selectedOrg?.orgId,
       activeOrgName: selectedOrg?.name,
       linkedAt: Date.now()

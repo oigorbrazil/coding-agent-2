@@ -1,26 +1,30 @@
-import { readFile } from 'node:fs/promises'
-import { homedir } from 'node:os'
-import path from 'node:path'
-import { prepareKimiTextTaskPolicy } from './source-control-kimi-policy'
-import { parse as parseJson, type ParseError } from 'jsonc-parser'
-import { z } from 'zod'
-import { findOptionOccurrence } from '../../shared/command-option-occurrence'
-import {
-  compactRecipeOptions,
-  KIMI_VALUE_OPTIONS
-} from '../../shared/source-control/ai/generation/commit-message-generation-options'
+import { type ParseError, parse as parseJson } from 'jsonc-parser'
 import type { CommitMessagePlan } from '../../shared/source-control/ai/generation/commit-message-plan'
-import { parseWslUncPath, wslDistroForCommand } from '../../shared/wsl-paths'
-import { CODEX_DISABLE_PLUGINS_ARGS } from '../codex-cli/codex-read-only-app-server-args'
-import { runWslProcess } from '../wsl/execution/wsl-runner'
-import { TEXT_TASK_DIRECTORY } from './source-control-prompt-files'
-import { runSourceControlPolicyProbe } from './source-control-policy-probe'
 import type {
   LocalGenerationTarget,
   LocalProcessExecution,
   SpawnSourceControlAgent,
   TextGenerationOperation
 } from './source-control-text-generation-types'
+
+import { appEnvPairs } from '../../shared/app-env'
+import { readFile } from 'node:fs/promises'
+import { homedir } from 'node:os'
+import path from 'node:path'
+import { prepareKimiTextTaskPolicy } from './source-control-kimi-policy'
+
+import { z } from 'zod'
+import { findOptionOccurrence } from '../../shared/command-option-occurrence'
+import {
+  compactRecipeOptions,
+  KIMI_VALUE_OPTIONS
+} from '../../shared/source-control/ai/generation/commit-message-generation-options'
+
+import { parseWslUncPath, wslDistroForCommand } from '../../shared/wsl-paths'
+import { CODEX_DISABLE_PLUGINS_ARGS } from '../codex-cli/codex-read-only-app-server-args'
+import { runWslProcess } from '../wsl/execution/wsl-runner'
+import { TEXT_TASK_DIRECTORY } from './source-control-prompt-files'
+import { runSourceControlPolicyProbe } from './source-control-policy-probe'
 
 const object = z.record(z.string(), z.unknown())
 const strings = z.array(z.string())
@@ -52,9 +56,9 @@ async function recipeFile(
       distro,
       cwd,
       loginPath: 'preferred',
-      ...(home !== undefined ? { env: { ORCA_TEXT_TASK_HOME: home } } : {}),
+      ...(home !== undefined ? { env: { ...appEnvPairs('TEXT_TASK_HOME', home) } } : {}),
       script:
-        'if [ "${ORCA_TEXT_TASK_HOME+x}" ]; then HOME=$ORCA_TEXT_TASK_HOME; fi; case "$1" in "~/"*) file=$HOME/${1#??} ;; *) file=$1 ;; esac; cat -- "$file"',
+        'if [ "${CODING_AGENT_TEXT_TASK_HOME+x}${ORCA_TEXT_TASK_HOME+x}" ]; then HOME=${CODING_AGENT_TEXT_TASK_HOME-$ORCA_TEXT_TASK_HOME}; fi; case "$1" in "~/"*) file=$HOME/${1#??} ;; *) file=$1 ;; esac; cat -- "$file"',
       args: [file],
       timeoutMs: 10_000,
       maxOutputBytes: 1024 * 1024

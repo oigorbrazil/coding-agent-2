@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { app, session } from 'electron'
 import { applyBackgroundActivationPolicy } from '../window/foreground-activation-policy'
 import { applyElectronProxySettings } from '../network/proxy-settings'
@@ -202,7 +203,7 @@ export async function initializeReadyFoundation(): Promise<void> {
   // Wait for profile-sidecar location, then defer potentially blocking OS-keyring probes past first paint (STA-5765).
   scheduleSecretProtectionGapReport({
     dataFile: profile.dataFile,
-    force: process.env.ORCA_ALWAYS_REPORT_SECRET_PROTECTION === '1',
+    force: readAppEnv(process.env, 'ALWAYS_REPORT_SECRET_PROTECTION') === '1',
     deferUntilFirstWindow: !state.isServeMode,
     skipInDevelopment: !app.isPackaged
   })

@@ -10,7 +10,7 @@ import {
 import { createRequire } from 'node:module'
 import os from 'node:os'
 import { dirname, join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { setAppEnvironment } from '../../../../../shared/app-environment'
 import { buildInstallFixture } from './daemon-host-relocation.test-fixture'
@@ -25,7 +25,7 @@ const originalExecPath = process.execPath
 const originalResourcesPath = process.resourcesPath
 const originalLocalAppData = process.env.LOCALAPPDATA
 const originalElectronVersion = Object.getOwnPropertyDescriptor(process.versions, 'electron')
-const packageRel = join('resources', 'node_modules', '@orca', 'process-host')
+const packageRel = join('resources', 'node_modules', '@coding-agent', 'process-host')
 let tempDir: string
 let installDir: string
 let hostRoot: string
@@ -190,7 +190,7 @@ describe('relocated process-host package', () => {
 
   it('runs emitted bare imports from the relocated entry after removing the install tree', () => {
     const require = createRequire(import.meta.url)
-    const actualPackage = dirname(dirname(require.resolve('@orca/process-host')))
+    const actualPackage = dirname(dirname(require.resolve('@coding-agent/process-host')))
     const installedPackage = join(installDir, packageRel)
     cpSync(join(actualPackage, 'package.json'), join(installedPackage, 'package.json'))
     cpSync(join(actualPackage, 'dist'), join(installedPackage, 'dist'), {
@@ -202,8 +202,8 @@ describe('relocated process-host package', () => {
     writeFileSync(
       join(mainDir, 'chunks', 'a.js'),
       `module.exports = {
-      runner: require('@orca/process-host'),
-      observer: require('@orca/process-host/spawn-observer')
+      runner: require('@coding-agent/process-host'),
+      observer: require('@coding-agent/process-host/spawn-observer')
     }`
     )
     writeFileSync(
@@ -249,7 +249,7 @@ describe('relocated process-host package', () => {
 })
 
 describe('relocated Windows registry package', () => {
-  const registryRel = join('resources', 'node_modules', '@orca', 'windows-registry')
+  const registryRel = join('resources', 'node_modules', '@coding-agent', 'windows-registry')
   const required = ['package.json', 'index.js', 'build/Release/orca_windows_registry.node']
 
   it('loads the real root entry and reaches the native binary after the install tree disappears', () => {
@@ -257,7 +257,7 @@ describe('relocated Windows registry package', () => {
     const entryPath = join(root, 'resources', 'app.asar.unpacked', 'out', 'main', 'daemon-entry.js')
     const script = `
       const assert = require('node:assert/strict')
-      const registry = require('node:module').createRequire(process.argv[1])('@orca/windows-registry')
+      const registry = require('node:module').createRequire(process.argv[1])('@coding-agent/windows-registry')
       assert.equal(registry.HK.CU, 0x80000001)
       assert.throws(() => registry.getRegistryKey(registry.HK.CU, 'Environment'), {
         code: 'ERR_DLOPEN_FAILED'
@@ -334,7 +334,7 @@ describe('relocated Windows registry package', () => {
           '-e',
           String.raw`
         const assert = require('node:assert/strict')
-        const registry = require('node:module').createRequire(process.argv[1])('@orca/windows-registry')
+        const registry = require('node:module').createRequire(process.argv[1])('@coding-agent/windows-registry')
         const values = registry.getRegistryKey(registry.HK.LM, 'SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion')
         assert.match(values.ProductName.value, /Windows/)
         process.stdout.write('registry-native-read')

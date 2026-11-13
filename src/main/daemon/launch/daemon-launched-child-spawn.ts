@@ -1,19 +1,24 @@
-import { forkProcess, type ForkSpec } from '@orca/process-host/fork-process'
-import { spawnProcess } from '@orca/process-host'
-import type { SpawnedProcess } from '@orca/process-host/process-spec'
+import { type ForkSpec, forkProcess } from '@coding-agent/process-host/fork-process'
+import type { SpawnedProcess } from '@coding-agent/process-host/process-spec'
+import {
+  type AppImageDaemonLaunch,
+  appImageDaemonIdentityPath,
+  buildAppImageDaemonCommand
+} from '../executable-host/linux/daemon-appimage-launch'
+import {
+  type AppImageGenerationDaemonLaunch,
+  buildAppImageGenerationDaemonCommand
+} from '../executable-host/linux/daemon-appimage-generation-launch'
+import { appEnvPairs } from '../../../shared/app-env'
+
+import { spawnProcess } from '@coding-agent/process-host'
+
 import { getAppEnvironment } from '../../../shared/app-environment'
 import { removeChromiumDisabledSessionBus } from '../../pty/shell-startup/chromium-session-bus-env'
 import { hostMallocTunablesDaemonEnv } from '../../memory/host-malloc-tunables'
-import {
-  appImageDaemonIdentityPath,
-  buildAppImageDaemonCommand,
-  type AppImageDaemonLaunch
-} from '../executable-host/linux/daemon-appimage-launch'
+
 import { buildDurableDaemonScopeCommand } from '../process-scopes/daemon-cgroup-scope'
-import {
-  buildAppImageGenerationDaemonCommand,
-  type AppImageGenerationDaemonLaunch
-} from '../executable-host/linux/daemon-appimage-generation-launch'
+
 import { daemonLogArgs } from './daemon-launch-paths'
 import { TERMINAL_SPAWN_ADMISSION_ARG } from '../admission/terminal-spawn-admission-mode'
 
@@ -95,7 +100,7 @@ export function spawnDaemonChildProcess(
     ELECTRON_RUN_AS_NODE: '1',
     ...hostMallocTunablesDaemonEnv(),
     // The detached daemon lacks AppEnvironment; rcfiles must stay outside swept temporary directories.
-    ORCA_USER_DATA_PATH: userDataPath
+    ...appEnvPairs('USER_DATA_PATH', userDataPath)
   }
   // Every PTY inherits this environment (#21119).
   removeChromiumDisabledSessionBus(daemonEnv)

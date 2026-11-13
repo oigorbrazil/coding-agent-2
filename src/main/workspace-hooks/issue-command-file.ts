@@ -1,4 +1,4 @@
-// .orca/issue-command is local; orca.yaml supplies the tracked project default.
+// .coding-agent-2/issue-command is local; coding.yaml supplies the tracked project default.
 import { readFileSync, existsSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { loadHooks } from './hooks'
@@ -129,7 +129,7 @@ function gitWslDistro(gitOptions: IssueCommandGitOptions): string | undefined {
   }
 }
 
-/** Empty content removes the local override so the shared orca.yaml command applies. */
+/** Empty content removes the local override so the shared coding.yaml command applies. */
 export async function writeIssueCommand(
   repoPath: string,
   content: string,
@@ -204,11 +204,11 @@ function ensureOrcaDirIgnored(repoPath: string): void {
         return
       }
       const separator = content.endsWith('\n') ? '' : '\n'
-      writeFileSync(gitignorePath, `${content}${separator}.orca\n`, 'utf-8')
+      writeFileSync(gitignorePath, `${content}${separator}.coding-agent-2\n`, 'utf-8')
     } else {
       writeFileSync(gitignorePath, '.coding-agent-2\n', 'utf-8')
     }
   } catch {
-    console.warn('[hooks] Could not update .gitignore to exclude .orca')
+    console.warn('[hooks] Could not update .gitignore to exclude .coding-agent-2')
   }
 }

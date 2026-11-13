@@ -1,7 +1,7 @@
 import { copyFile, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import * as path from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { afterEach, expect, it } from 'vitest'
 import { getStatus } from './status-read'
 import { invalidateGitReadCaches } from './git-read-cache-invalidation'

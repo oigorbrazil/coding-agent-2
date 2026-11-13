@@ -78,16 +78,22 @@ fn main() {
         "ORCA_NODE_REPL_EXTERNAL_MODULE",
     );
     env::set_var("ELECTRON_RUN_AS_NODE", "1");
-    env::set_var("ORCA_WINDOWS_PACKAGED_CLI_LAUNCHER", "1");
-    let requested_command = env::var("ORCA_CLI_COMMAND").unwrap_or_default();
-    env::set_var(
-        "ORCA_CLI_COMMAND",
-        if requested_command == "orca-ide" {
-            "orca-ide"
-        } else {
-            "orca"
-        },
-    );
+    set_app_env("WINDOWS_PACKAGED_CLI_LAUNCHER", "1");
+    let requested_command = env::var("CODING_AGENT_CLI_COMMAND")
+        .or_else(|_| env::var("ORCA_CLI_COMMAND"))
+        .unwrap_or_default();
+    let command = match requested_command.as_str() {
+        "orca-ide" => "orca-ide",
+        "coding" => "coding",
+        _ if launcher
+            .file_stem()
+            .is_some_and(|name| name.eq_ignore_ascii_case("coding")) =>
+        {
+            "coding"
+        }
+        _ => "orca",
+    };
+    set_app_env("CLI_COMMAND", command);
 
     run_cli(&electron_path, &cli_path)
 }
@@ -112,7 +118,7 @@ fn run_server_cli(config_path: &Path) -> ! {
             ));
         }
     }
-    env::set_var("ORCA_USER_DATA_PATH", user_data_path);
+    set_app_env("USER_DATA_PATH", user_data_path);
     for name in [
         "NODE_OPTIONS",
         "NODE_REPL_EXTERNAL_MODULE",
@@ -120,6 +126,7 @@ fn run_server_cli(config_path: &Path) -> ! {
         // A server started by the desktop's `orca serve` inherits this marker, which would make
         // orchestration demand a bare `orca` resume command.
         "ORCA_WINDOWS_PACKAGED_CLI_LAUNCHER",
+        "CODING_AGENT_WINDOWS_PACKAGED_CLI_LAUNCHER",
     ] {
         env::remove_var(name);
     }
@@ -154,13 +161,21 @@ fn run_cli(program: &Path, cli_path: &Path) -> ! {
     }
 }
 
+fn set_app_env(name: &str, value: impl AsRef<std::ffi::OsStr>) {
+    env::set_var(format!("CODING_AGENT_{name}"), value.as_ref());
+    env::set_var(format!("ORCA_{name}"), value.as_ref());
+}
+
 fn move_environment_variable(source_name: &str, target_name: &str) {
     match env::var_os(source_name) {
         // A missing source clears the target, so a stale value cannot leak in.
-        None => env::remove_var(target_name),
+        None => {
+            env::remove_var(target_name);
+            env::remove_var(target_name.replacen("ORCA_", "CODING_AGENT_", 1));
+        }
         Some(value) => {
             env::remove_var(source_name);
-            env::set_var(target_name, value);
+            set_app_env(target_name.trim_start_matches("ORCA_"), value);
         }
     }
 }

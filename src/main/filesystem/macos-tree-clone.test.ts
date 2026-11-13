@@ -12,13 +12,13 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as ProcessHost from '@orca/process-host'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type * as ProcessHost from '@coding-agent/process-host'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const { runProcessMock } = vi.hoisted(() => ({
   runProcessMock: vi.fn<(spec: ProcessSpec) => Promise<ProcessResult>>()
 }))
-vi.mock('@orca/process-host', async (importActual) => {
+vi.mock('@coding-agent/process-host', async (importActual) => {
   const actual = await importActual<typeof ProcessHost>()
   runProcessMock.mockImplementation((spec) => actual.runProcess(spec))
   return { runProcess: runProcessMock }

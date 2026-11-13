@@ -79,7 +79,9 @@ fn run(agent: &Agent) {
 }
 
 fn var(name: &str) -> String {
-    env::var_os(name)
+    name.strip_prefix("ORCA_")
+        .and_then(|suffix| env::var_os(format!("CODING_AGENT_{suffix}")))
+        .or_else(|| env::var_os(name))
         .map(|value| value.to_string_lossy().into_owned())
         .unwrap_or_default()
 }
@@ -99,6 +101,11 @@ fn read_endpoint_file() -> String {
 
 /// The last `set KEY=VALUE` for `key`, as `call` would leave it; `lines` strips the CRLF.
 fn endpoint_value(text: &str, key: &str) -> Option<String> {
+    let current = key.replacen("ORCA_", "CODING_AGENT_", 1);
+    endpoint_value_exact(text, &current).or_else(|| endpoint_value_exact(text, key))
+}
+
+fn endpoint_value_exact(text: &str, key: &str) -> Option<String> {
     text.lines().rev().find_map(|line| {
         let assignment = line
             .get(..4)

@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { app } from 'electron'
 import { join } from 'node:path'
 import type {
@@ -27,11 +28,11 @@ import type { MuseUsageDailyAggregate, MuseUsagePersistedState, MuseUsageSession
 let museUsageFile: string | null = null
 
 export function initMuseUsagePath(): void {
-  museUsageFile = join(app.getPath('userData'), 'orca-muse-usage.json')
+  museUsageFile = renamedUserDataFile(join(app.getPath('userData'), 'orca-muse-usage.json'))
 }
 
 function getMuseUsageFile(): string {
-  museUsageFile ??= join(app.getPath('userData'), 'orca-muse-usage.json')
+  museUsageFile ??= renamedUserDataFile(join(app.getPath('userData'), 'orca-muse-usage.json'))
   return museUsageFile
 }
 

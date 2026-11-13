@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { app } from 'electron'
@@ -16,11 +17,22 @@ export function codingOpusBundledSkillDir(): string {
   return join(codingOpusBundleRoot(), CODING_OPUS_SKILL_NAME)
 }
 
-/** Same rule as the skill's orchestrate.py `default_policy_path`: %APPDATA%\CodingOpus or ~/.config/coding-opus. */
-export function codingOpusStateDir(env: NodeJS.ProcessEnv = process.env): string {
-  if (process.platform === 'win32') {
-    const appData = env.APPDATA || join(env.USERPROFILE || homedir(), 'AppData', 'Roaming')
-    return join(appData, 'CodingOpus')
+/**
+ * Same rule as the skill's orchestrate.py `default_policy_path`: %USERPROFILE%\.coding-opus on Windows,
+ * ~/.config/coding-opus elsewhere. Windows moved out of %APPDATA% because packaged apps (the Claude
+ * desktop app among them) virtualize AppData, so their sessions and this app saw different files.
+ */
+export function codingOpusStateDir(
+  env: NodeJS.ProcessEnv = process.env,
+  exists: (path: string) => boolean = existsSync,
+  platform: NodeJS.Platform = process.platform
+): string {
+  if (platform === 'win32') {
+    const profile = env.USERPROFILE || homedir()
+    const current = join(profile, '.coding-opus')
+    const legacy = join(env.APPDATA || join(profile, 'AppData', 'Roaming'), 'CodingOpus')
+    // The runner copies the legacy folder over on its first run; until then the state is still there.
+    return !exists(current) && exists(legacy) ? legacy : current
   }
   const configHome = env.XDG_CONFIG_HOME || join(homedir(), '.config')
   return join(configHome, 'coding-opus')

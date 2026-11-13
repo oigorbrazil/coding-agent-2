@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../legacy-renamed-file'
 import { constants, copyFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { z } from 'zod'
@@ -50,7 +51,7 @@ export function remoteServerPairingStoreError(
 }
 
 export function getEnvironmentStorePath(userDataPath: string): string {
-  return join(userDataPath, ENVIRONMENTS_FILE)
+  return renamedUserDataFile(join(userDataPath, ENVIRONMENTS_FILE))
 }
 
 // Records stay opaque so one bad or newer-format entry cannot hide the rest.

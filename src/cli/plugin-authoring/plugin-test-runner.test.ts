@@ -114,7 +114,7 @@ describe('orca plugin test with a worker', () => {
     "runs a .ts worker's own tests through mountWorker, resolving its imports as Coding Agent 2 does",
     async () => {
       const dir = await componentsPlugin()
-      const manifestPath = join(dir, 'orca-plugin.json')
+      const manifestPath = join(dir, 'coding-plugin.json')
       const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
       await writeFile(
         manifestPath,
@@ -194,7 +194,7 @@ describe('orca plugin check', () => {
     "runs the plugin's worker so panel requests reach it, and renders each fixture scenario",
     async () => {
       const dir = await componentsPlugin()
-      const manifestPath = join(dir, 'orca-plugin.json')
+      const manifestPath = join(dir, 'coding-plugin.json')
       const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
       await writeFile(
         manifestPath,

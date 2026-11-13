@@ -1,11 +1,12 @@
 import { quotePosixShell } from '../../shared/shell/launch/shell-argument-quoting'
+import { setAppEnv } from '../../shared/app-env'
 import {
   buildWslCapturedLoginShellCommand,
   buildWslLoginShellCommand
 } from '../../shared/wsl-login-shell-command'
 import type { SourceControlAgentSpawnInput } from '../text-generation/source-control-text-generation-types'
 
-const TASK_ENV_PREFIX = 'ORCA_OPENCODE_TASK_ENV_'
+const TASK_ENV_PREFIX = 'OPENCODE_TASK_ENV_'
 const ENV_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/
 
 /**
@@ -29,9 +30,9 @@ export function guestLoginShellLaunch(
       throw new Error('OpenCode task environment name is invalid')
     }
     // Private values (server credentials) travel by environment, never argv, and outrank rc files.
-    env[`${TASK_ENV_PREFIX}${key}`] = value
+    setAppEnv(env, `${TASK_ENV_PREFIX}${key}`, value)
     restore.push(
-      `${key}="$${TASK_ENV_PREFIX}${key}"; export ${key}; unset ${TASK_ENV_PREFIX}${key}; `
+      `${key}="\${CODING_AGENT_${TASK_ENV_PREFIX}${key}-$ORCA_${TASK_ENV_PREFIX}${key}}"; export ${key}; unset CODING_AGENT_${TASK_ENV_PREFIX}${key} ORCA_${TASK_ENV_PREFIX}${key}; `
     )
   }
   const assignments = Object.entries(commandEnv)

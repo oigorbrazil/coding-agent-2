@@ -59,7 +59,7 @@ describe('runtime environment sidecar across a downgrade', () => {
     })
   }
 
-  it('keeps SSH access after a shipped build rewrites orca-environments.json', () => {
+  it('keeps SSH access after a shipped build rewrites coding-environments.json', () => {
     const access = linked()
     shippedBuildRewrite(userDataPath, (environments) => {
       environments[0]!.lastUsedAt = 500

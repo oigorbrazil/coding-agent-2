@@ -1,6 +1,6 @@
 // Real payload delivery catches conhost losing stdin and code-page corruption missed by shape assertions.
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { createServer, type Server } from 'node:http'
 import { lstatSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { removeTreeSync } from '../../shared/windows-transient-lock-removal'

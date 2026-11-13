@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { afterEach, describe, expect, it } from 'vitest'
 import { getDiff } from './file-diff'
 import { getSubmoduleStatus } from './submodule-status'

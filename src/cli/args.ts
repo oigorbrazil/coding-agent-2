@@ -224,7 +224,7 @@ export function validateCommandAndFlags(specs: CommandSpec[], parsed: ParsedArgs
     if (isCommandGroup(specs, parsed.commandPath)) {
       throw new RuntimeClientError('invalid_argument', `Missing subcommand for: orca ${path}`, {
         suggestions: [],
-        nextSteps: [`Run \`orca ${path} --help\` to list its commands.`]
+        nextSteps: [`Run \`coding ${path} --help\` to list its commands.`]
       })
     }
     throw new RuntimeClientError(

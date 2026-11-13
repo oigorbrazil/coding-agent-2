@@ -51,7 +51,7 @@ describe('scheduleSecretProtectionGapReport', () => {
     vi.useFakeTimers()
     appListeners.clear()
     dir = mkdtempSync(join(tmpdir(), 'orca-deferred-secret-report-'))
-    dataFile = join(dir, 'orca-data.json')
+    dataFile = join(dir, 'coding-data.json')
     probes = 0
     logged = []
     setSecretStore({

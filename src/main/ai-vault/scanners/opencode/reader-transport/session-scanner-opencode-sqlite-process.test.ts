@@ -3,8 +3,8 @@ import { existsSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import * as processRunner from '@orca/process-host'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import * as processRunner from '@coding-agent/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 import SyncDatabase from '../../../../sqlite/sync-database'
 import {
   appendTurns,

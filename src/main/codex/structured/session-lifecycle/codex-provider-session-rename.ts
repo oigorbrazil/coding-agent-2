@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../../../shared/app-env'
 import { requireLegacyAgentSessionAccountHome } from '../../../../shared/agent-session/lifecycle/agent-session-account-home'
 import type { AgentSessionRecord } from '../../../../shared/agent-session/lifecycle/agent-session-record'
 import {
@@ -141,7 +142,7 @@ export async function runCodexProviderAppServer<T>(
       cwd,
       cliPath: command,
       env: { ...env, CODEX_HOME: codexHome },
-      envToDelete: [NATIVE_CHAT_SCRATCH_DIR_ENV, LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV],
+      envToDelete: appEnvKeys([NATIVE_CHAT_SCRATCH_DIR_ENV, LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV]),
       ...options
     },
     (rpc) => body(rpc, cwd)

@@ -10,7 +10,7 @@ import {
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { spawnSync } from 'node:child_process'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 const projectRoot = resolve(import.meta.dirname, '../../../..')
 const WINDOWS_LOCK_CODES = ['EBUSY', 'ENOTEMPTY', 'EPERM']

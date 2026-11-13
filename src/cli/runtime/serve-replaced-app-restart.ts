@@ -1,10 +1,10 @@
+import { readAppEnv, deleteAppEnv } from '../../shared/app-env'
 /** Re-exec replaced apps before spawning: macOS attributes child permissions to the launchd supervisor. */
 import { accessSync, constants, existsSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import {
   execveThisProcess,
   releaseServeSupervisorSnapshot,
-  SERVE_SUPERVISOR_APP_ROOT_ENV,
   type SupervisorRelocationDeps
 } from './serve-supervisor-relocation'
 
@@ -46,8 +46,8 @@ export function restartServeSupervisorIfReplaced(deps: ReplacedAppRestartDeps): 
     return
   }
   const env = { ...deps.env }
-  const relocated = Boolean(env[SERVE_SUPERVISOR_APP_ROOT_ENV])
-  delete env[SERVE_SUPERVISOR_APP_ROOT_ENV]
+  const relocated = Boolean(readAppEnv(env, 'SERVE_SUPERVISOR_APP_ROOT'))
+  deleteAppEnv(env, 'SERVE_SUPERVISOR_APP_ROOT')
   // Relocated supervisors must copy the new release rather than rerun their old copy.
   const cliEntry = relocated ? join(deps.appRoot, 'out', 'cli', 'index.js') : deps.argv[1]
   // A failed process.execve aborts natively; preflight the executable and entry point.

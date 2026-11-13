@@ -1,3 +1,5 @@
+import { readAppEnv } from '../../shared/app-env'
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import { HOOK_REQUEST_MAX_BYTES } from '../../shared/agent-hook-listener/request-body'
 import {
   POSIX_HOOK_JSON_STDIN_FIRST_BYTE_TIMEOUT_SECONDS,
@@ -9,8 +11,9 @@ export const WINDOWS_ANTIGRAVITY_JSON_POST_SCRIPT = String.raw`
 const http = require('node:http');
 const { StringDecoder } = require('node:string_decoder');
 const env = process.env;
-const port = Number(env.ORCA_AGENT_HOOK_PORT);
-if (!Number.isInteger(port) || port < 1 || port > 65535 || !env.ORCA_AGENT_HOOK_TOKEN || !env.ORCA_PANE_KEY) process.exit(0);
+const readAppEnv = ${readAppEnv.toString()};
+const port = Number(${appEnvReadExpression('env', 'AGENT_HOOK_PORT')});
+if (!Number.isInteger(port) || port < 1 || port > 65535 || !${appEnvReadExpression('env', 'AGENT_HOOK_TOKEN')} || !${appEnvReadExpression('env', 'PANE_KEY')}) process.exit(0);
 const decoder = new StringDecoder('utf8');
 let payload = '';
 let finished = false;
@@ -37,7 +40,7 @@ function finish() {
     ['launchToken', 'ORCA_AGENT_LAUNCH_TOKEN'], ['worktreeId', 'ORCA_WORKTREE_ID'],
     ['env', 'ORCA_AGENT_HOOK_ENV'], ['version', 'ORCA_AGENT_HOOK_VERSION'],
     ['hook_event_name', 'ORCA_ANTIGRAVITY_EVENT']
-  ]) form.set(name, env[variable] || '');
+  ]) form.set(name, readAppEnv(env, variable.slice(5)) || '');
   form.set('payload', payload.trim() ? payload : '{}');
   const body = form.toString();
   if (Buffer.byteLength(body) > maxBytes) process.exit(0);
@@ -48,7 +51,7 @@ function finish() {
     request = http.request({ hostname: '127.0.0.1', port, path: '/hook/antigravity', method: 'POST', headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Content-Length': Buffer.byteLength(body),
-      'X-Orca-Agent-Hook-Token': env.ORCA_AGENT_HOOK_TOKEN
+      'X-Orca-Agent-Hook-Token': ${appEnvReadExpression('env', 'AGENT_HOOK_TOKEN')}
     } }, response => { response.resume(); response.on('end', () => { clearTimeout(postTimer); exit(); }); });
     request.on('error', () => { clearTimeout(postTimer); exit(); });
     request.end(body);

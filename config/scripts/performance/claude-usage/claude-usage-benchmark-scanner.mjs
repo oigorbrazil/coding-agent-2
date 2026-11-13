@@ -41,7 +41,7 @@ export async function describeClaudeUsageBenchmarkTooling() {
 }
 
 export async function readClaudeUsageBenchmarkBaselineSources() {
-  const { runProcessSync } = await import('@orca/process-host')
+  const { runProcessSync } = await import('@coding-agent/process-host')
   const readGit = (args) => {
     const result = runProcessSync({
       program: 'git',
@@ -72,7 +72,7 @@ export async function loadClaudeUsageBenchmarkScanner(
   baselineCommit = null
 ) {
   const sourceFingerprints = {}
-  const { runProcessSync } = await import('@orca/process-host')
+  const { runProcessSync } = await import('@coding-agent/process-host')
   const result = await build({
     stdin: {
       contents: `export { scanClaudeUsageFiles } from './src/main/claude-usage/scanner';

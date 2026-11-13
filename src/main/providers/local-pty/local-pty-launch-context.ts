@@ -1,3 +1,4 @@
+import { readAppEnv, deleteAppEnvKey, readAppEnvKey, setAppEnvKey } from '../../../shared/app-env'
 import { basename, delimiter, win32 as pathWin32 } from 'node:path'
 import { splitWorktreeIdForFilesystem } from '../../../shared/worktree/id'
 import { parseWslPath } from '../../wsl/filesystem/unc-path-access'
@@ -29,7 +30,7 @@ export function removeUnspecifiedPaneIdentityEnv(
 ): void {
   for (const key of PANE_IDENTITY_ENV_KEYS) {
     if (!explicitEnv || !Object.hasOwn(explicitEnv, key)) {
-      delete env[key]
+      deleteAppEnvKey(env, key)
     }
   }
 }
@@ -38,7 +39,7 @@ export function promoteAgentTeamsShimPath(
   env: Record<string, string>,
   requestedPath: string | undefined
 ): void {
-  if (!env.ORCA_AGENT_TEAMS_TEAM_ID || !requestedPath) {
+  if (!readAppEnv(env, 'AGENT_TEAMS_TEAM_ID') || !requestedPath) {
     return
   }
   const normalizedRequestedPath =
@@ -51,8 +52,12 @@ export function promoteAgentTeamsShimPath(
     return
   }
   const pathKey = resolvePathEnvKey(env, process.platform)
-  const currentParts = env[pathKey]?.split(pathDelimiter).filter(Boolean) ?? []
-  env[pathKey] = [shimDir, ...currentParts.filter((part) => part !== shimDir)].join(pathDelimiter)
+  const currentParts = readAppEnvKey(env, pathKey)?.split(pathDelimiter).filter(Boolean) ?? []
+  setAppEnvKey(
+    env,
+    pathKey,
+    [shimDir, ...currentParts.filter((part) => part !== shimDir)].join(pathDelimiter)
+  )
 }
 
 export function getWslContextFromWorktreeId(

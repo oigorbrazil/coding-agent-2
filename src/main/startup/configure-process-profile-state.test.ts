@@ -33,10 +33,10 @@ describe('pre-ready profile-state recovery boundary', () => {
     const profileDirectory = join(userDataPath, 'profiles', 'profile-b')
     mkdirSync(profileDirectory, { recursive: true })
     writeFileSync(
-      join(userDataPath, 'orca-profile-index.json'),
+      join(userDataPath, 'coding-profile-index.json'),
       JSON.stringify({ activeProfileId: 'profile-b', profiles: [{ id: 'profile-b' }] })
     )
-    const dataFile = join(profileDirectory, 'orca-data.json')
+    const dataFile = join(profileDirectory, 'coding-data.json')
     writeFileSync(dataFile, JSON.stringify({ settings: { electronHttp1CompatibilityMode: true } }))
     writeHttp1CompatibilityMarker(userDataPath, true, 'profile-b')
     writeFileSync(profileStateJsonExportPath(dataFile, 7), '{}')

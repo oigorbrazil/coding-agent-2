@@ -380,7 +380,7 @@ function renderManifest({ schema, fieldDocs }) {
     reserved(contributes.properties[key])
   )
   return document(
-    'orca-plugin.json fields',
+    'coding-plugin.json fields',
     [
       `\`Since\` is the first Coding Agent 2 release that reads a field: raise \`engines.orca\` to the newest one you use. Coding Agent 2 refuses unknown keys at every level. File paths are ${pathRules.replace(/^Relative/u, 'relative')}`,
       ''

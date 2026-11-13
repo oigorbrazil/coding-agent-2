@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // Return real Node-host paths or throw: plausible catch-all directories can be forked as executables.
 import { realpathSync } from 'node:fs'
 import { homedir, tmpdir } from 'node:os'
@@ -12,7 +13,7 @@ function env(name: string): string | null {
 }
 
 export function resolveUserDataPath(): string {
-  const explicit = env('ORCA_USER_DATA')
+  const explicit = readAppEnv(process.env, 'USER_DATA')
   if (explicit) {
     return explicit
   }

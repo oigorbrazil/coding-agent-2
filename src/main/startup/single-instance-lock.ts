@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import type { App } from 'electron'
 import { argvRequestsServeMode } from './serve-mode-argv'
 import { writeStartupDiagnosticLine, type StartupDiagnosticSink } from './startup-diagnostics'
@@ -39,7 +40,7 @@ export function shouldBypassSingleInstanceLock(options: {
     platform === 'darwin' &&
     !options.isDev &&
     !options.isServeMode &&
-    env[SINGLE_INSTANCE_LOCK_BYPASS_ENV] === '1'
+    readAppEnv(env, 'BYPASS_SINGLE_INSTANCE_LOCK') === '1'
   )
 }
 
@@ -53,8 +54,8 @@ export function shouldSkipSingleInstanceLock(options: {
   return (
     options.isDev &&
     !options.isServeMode &&
-    Boolean(env.ORCA_E2E_USER_DATA_DIR) &&
-    env[SINGLE_INSTANCE_LOCK_E2E_ENFORCE_ENV] !== '1'
+    Boolean(readAppEnv(env, 'E2E_USER_DATA_DIR')) &&
+    readAppEnv(env, 'E2E_ENFORCE_SINGLE_INSTANCE_LOCK') !== '1'
   )
 }
 

@@ -43,7 +43,7 @@ let directory: string
 
 function paths(profileId: string): { dataFile: string; databaseFile: string } {
   return {
-    dataFile: join(directory, 'profiles', profileId, 'orca-data.json'),
+    dataFile: join(directory, 'profiles', profileId, 'coding-data.json'),
     databaseFile: join(directory, 'profiles', profileId, 'profile-state.db')
   }
 }
@@ -90,7 +90,7 @@ function transfer(mode: 'copy' | 'move' = 'move') {
 beforeEach(() => {
   directory = mkdtempSync(join(tmpdir(), 'orca-profile-transfer-migration-'))
   writeFileSync(
-    join(directory, 'orca-profile-index.json'),
+    join(directory, 'coding-profile-index.json'),
     JSON.stringify({
       schemaVersion: ORCA_PROFILE_INDEX_SCHEMA_VERSION,
       activeProfileId: 'source',
@@ -175,7 +175,7 @@ describe('profile transfer migration', () => {
     expect(readProfileStateWithRevision('source', directory).state.repos).toHaveLength(1)
     expect(readFileSync(paths('target').dataFile, 'utf8')).toBe(targetJson)
     expect(existsSync(paths('target').databaseFile)).toBe(false)
-    expect(readdirSync(join(paths('target').dataFile, '..'))).toEqual(['orca-data.json'])
+    expect(readdirSync(join(paths('target').dataFile, '..'))).toEqual(['coding-data.json'])
   })
 
   it('rejects a JSON edit during migration before publishing SQLite', () => {

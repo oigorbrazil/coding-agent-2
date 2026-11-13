@@ -1,3 +1,4 @@
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
 export type PosixHookEmptyPayloadPolicy = 'exit' | 'empty-object'
 
 // Use the default PATH to drain stdin on stripped-PATH/NixOS hosts and avoid repo-local cat.
@@ -105,7 +106,7 @@ export function buildPosixHookSpoolLines(source: string, eventNameVar?: string):
     eventFormat,
     '"paneKey":"%s","tabId":"%s","worktreeId":"%s","env":"%s","version":"%s","launchToken":"%s","source":"%s","receivedAt":%s,"agentProcess":"%s","tmuxPane":"%s","payload":%s}\\n\'',
     eventArg,
-    ' "$(spool_json_escape "${ORCA_PANE_KEY:-}")" "$(spool_json_escape "${ORCA_TAB_ID:-}")" "$(spool_json_escape "${ORCA_WORKTREE_ID:-}")" "$(spool_json_escape "${ORCA_AGENT_HOOK_ENV:-}")" "$(spool_json_escape "${ORCA_AGENT_HOOK_VERSION:-}")" "$(spool_json_escape "${ORCA_AGENT_LAUNCH_TOKEN:-}")" "$(spool_json_escape "',
+    ' "$(spool_json_escape "${CODING_AGENT_PANE_KEY-${ORCA_PANE_KEY:-}}")" "$(spool_json_escape "${CODING_AGENT_TAB_ID-${ORCA_TAB_ID:-}}")" "$(spool_json_escape "${CODING_AGENT_WORKTREE_ID-${ORCA_WORKTREE_ID:-}}")" "$(spool_json_escape "${CODING_AGENT_AGENT_HOOK_ENV-${ORCA_AGENT_HOOK_ENV:-}}")" "$(spool_json_escape "${CODING_AGENT_AGENT_HOOK_VERSION-${ORCA_AGENT_HOOK_VERSION:-}}")" "$(spool_json_escape "${CODING_AGENT_AGENT_LAUNCH_TOKEN-${ORCA_AGENT_LAUNCH_TOKEN:-}}")" "$(spool_json_escape "',
     source,
     '")" "$spool_now" "$(spool_json_escape "${orca_agent_process:-}")" "$(spool_json_escape "${orca_tmux_pane:-}")" "$payload"; } >> "$spool_file" 2>/dev/null || :'
   )
@@ -114,16 +115,17 @@ export function buildPosixHookSpoolLines(source: string, eventNameVar?: string):
     eventNameVar
       ? `  case "\${${eventNameVar}:-}" in PreToolUse|PostToolUse|PostToolUseFailure|PostToolBatch) return 0 ;; esac`
       : '  case "$payload" in *\'"PreToolUse"\'*|*\'"PostToolUse"\'*|*\'"PostToolUseFailure"\'*|*\'"hook_event_name":"PostToolBatch"\'*|*\'"hook_event_name": "PostToolBatch"\'*) return 0 ;; esac',
-    '  [ -n "${ORCA_AGENT_HOOK_ENDPOINT:-}" ] || return 0',
+    '  [ -n "${CODING_AGENT_AGENT_HOOK_ENDPOINT-${ORCA_AGENT_HOOK_ENDPOINT:-}}" ] || return 0',
     // Stale endpoint variables outside Coding Agent 2 must not accumulate unattributed spool records.
-    '  [ -n "${ORCA_PANE_KEY:-}" ] || return 0',
+    '  [ -n "${CODING_AGENT_PANE_KEY-${ORCA_PANE_KEY:-}}" ] || return 0',
     // A stale variable must not create spool state for an absent Coding Agent 2 installation.
-    '  [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ] || return 0',
-    '  spool_base=${ORCA_AGENT_HOOK_ENDPOINT%/*}',
+    '  [ -r "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ] || return 0',
+    '  spool_base=${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}',
+    '  spool_base=${spool_base%/*}',
     '  spool_dir="$spool_base/spool"',
     '  mkdir -p "$spool_dir" 2>/dev/null || return 0',
     '  chmod 700 "$spool_dir" 2>/dev/null || :',
-    "  spool_id=$(printf %s \"${ORCA_PANE_KEY:-unknown}\" | tail -c 36 | tr '/:' '__')",
+    "  spool_id=$(printf %s \"${CODING_AGENT_PANE_KEY-${ORCA_PANE_KEY:-unknown}}\" | tail -c 36 | tr '/:' '__')",
     '  spool_file="$spool_dir/pane-$spool_id.jsonl"',
     '  if [ -f "$spool_file" ] && find "$spool_file" -mtime +7 -print -quit 2>/dev/null | grep -q .; then : > "$spool_file"; fi',
     '  [ -f "$spool_file" ] || : > "$spool_file"',
@@ -155,10 +157,37 @@ export function buildWindowsHookEnvironmentGuardLines(): string[] {
 
 /** Git Bash on Windows needs default-form variables to pass Grok's static precheck. */
 export const WINDOWS_GIT_BASH_HOOK_ENVIRONMENT_GUARD = `if ${WINDOWS_HOOK_ENVIRONMENT_VARS.map(
-  (name) => `[ -z "\${${name}-}" ]`
+  (name) => `[ -z "\${CODING_AGENT_${name.slice(5)}-\${${name}-}}" ]`
 ).join(' || ')}; then exit 0; fi`
 
 /** Check Coding Agent 2 context before any PowerShell ReadToEnd to avoid hanging on abandoned stdin. */
 export const WINDOWS_POWERSHELL_HOOK_ENVIRONMENT_GUARD = `if (${WINDOWS_HOOK_ENVIRONMENT_VARS.map(
-  (name) => `-not $env:${name}`
+  (name) =>
+    `-not $(if (Test-Path Env:${name.replace('ORCA_', 'CODING_AGENT_')}) { $env:${name.replace('ORCA_', 'CODING_AGENT_')} } else { $env:${name} })`
 ).join(' -or ')}) { exit 0 }`
+
+export function buildWindowsHookEndpointReloadLines(): string[] {
+  const names = [
+    'AGENT_HOOK_PORT',
+    'AGENT_HOOK_TOKEN',
+    'AGENT_HOOK_ENV',
+    'AGENT_HOOK_VERSION',
+    'AGENT_HOOK_TRANSPORT'
+  ]
+  return [
+    'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" (',
+    ...names.map((name) => `set "CODING_AGENT_${name}="`),
+    'call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+    ')',
+    ...windowsAppEnvRestore(names)
+  ]
+}
+
+export function buildPosixHookEndpointReloadLines(): string[] {
+  return [
+    'if [ -n "${CODING_AGENT_AGENT_HOOK_ENDPOINT-${ORCA_AGENT_HOOK_ENDPOINT-}}" ] && [ -r "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ]; then',
+    '  unset CODING_AGENT_AGENT_HOOK_PORT CODING_AGENT_AGENT_HOOK_TOKEN CODING_AGENT_AGENT_HOOK_ENV CODING_AGENT_AGENT_HOOK_VERSION CODING_AGENT_AGENT_HOOK_TRANSPORT',
+    '  . "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" 2>/dev/null || :',
+    'fi'
+  ]
+}

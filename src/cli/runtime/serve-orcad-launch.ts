@@ -1,21 +1,20 @@
-/** The app selects the local serve runtime; the CLI runs that selection. */
-import { dirname, join } from 'node:path'
-import { runProcess, spawnProcess } from '@orca/process-host'
-import type { ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessSpec } from '@coding-agent/process-host/process-spec'
 import {
+  type ServeRuntimeSelection,
   ORCAD_LOCAL_SERVE_SELECTION_ENTRY,
   ORCAD_LOCAL_SERVE_SELECTION_FLAGS as FLAGS,
-  SERVE_RUNTIME_ENV,
-  parseServeRuntimeSelection,
-  type ServeRuntimeSelection
+  parseServeRuntimeSelection
 } from '../../shared/orcad-local-serve-selection'
+import { type ServeOrcaAppArgs, orcadServeArgs } from '../../shared/orcad-serve-argv'
+import { readAppEnv, appEnvPairs } from '../../shared/app-env'
+/** The app selects the local serve runtime; the CLI runs that selection. */
+import { dirname, join } from 'node:path'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
+
 import { waitForRecipeJson } from './serve-recipe-json'
 import { superviseForegroundServe } from './serve-update-supervisor'
 import { isSupervisedSpawnHeld } from './serve-supervised-stop'
 import { redactingSpawn, shouldRedactSupervisedStdout } from './serve-pairing-redaction'
-import { orcadServeArgs, type ServeOrcaAppArgs } from '../../shared/orcad-serve-argv'
-import { SPEECH_RECOGNIZER_DIR_ENV } from '../../shared/speech-recognizer-package'
-import { ORCA_SERVE_SUPERVISED_ENV } from '../../shared/serve-supervised-terminal-durability'
 
 /** A first run may download and verify the pinned Node; bound it well past that. */
 const SELECTION_TIMEOUT_MS = 10 * 60_000
@@ -32,7 +31,10 @@ export async function resolveLocalServeRuntime(
 ): Promise<ServeRuntimeSelection> {
   // orcad has no updater; keep Electron for packaged macOS update handoffs unless orcad is asked for,
   // e.g. over SSH with no desktop login, where Electron cannot start.
-  if (options.usesMacUpdateHandoff && (options.env ?? process.env)[SERVE_RUNTIME_ENV] !== 'orcad') {
+  if (
+    options.usesMacUpdateHandoff &&
+    readAppEnv(options.env ?? process.env, 'SERVE_RUNTIME') !== 'orcad'
+  ) {
     return {
       kind: 'electron',
       reason:
@@ -84,12 +86,12 @@ export function serveWithOrcad(
     env: {
       ...baseEnv,
       // The desktop's profile: its instance lock makes the two refuse each other.
-      ORCA_USER_DATA: userDataPath,
-      ORCA_VERSION: selection.version,
+      ...appEnvPairs('USER_DATA', userDataPath),
+      ...appEnvPairs('VERSION', selection.version),
       // Always set: a value inherited from a Coding Agent 2 terminal would name another install's copy.
-      [SPEECH_RECOGNIZER_DIR_ENV]: speechRecognizerDir ?? '',
+      ...appEnvPairs('SPEECH_RECOGNIZER_DIR', speechRecognizerDir ?? ''),
       // A service manager restarts this server, so it must not run terminals that die with it.
-      [ORCA_SERVE_SUPERVISED_ENV]: args.supervise === true ? '1' : ''
+      ...appEnvPairs('SERVE_SUPERVISED', args.supervise === true ? '1' : '')
     }
   }
   const spawnChild = shouldRedactSupervisedStdout(args.supervise === true)

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BaseWindow, BrowserWindow, protocol, session } from 'electron'
 import { existsSync, mkdirSync, renameSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -23,7 +24,7 @@ if (
   !userData ||
   !echoHost ||
   !exitHost ||
-  process.env.ORCA_BACKGROUND_LAUNCH !== '1'
+  readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1'
 ) {
   throw new Error('Native messaging fixture requires its paths and background launch')
 }

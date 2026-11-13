@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import type { RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { CellReserveClient } from '../../cell/reservations/cell-reserve-client.js'
 import {
   ReserveAssignment,

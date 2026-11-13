@@ -1,13 +1,13 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
-import { ELECTRON_NO_SANDBOX_REQUEST_ENV } from '../../shared/electron-no-sandbox-request'
+import { runProcessSync } from '@coding-agent/process-host'
 
 const USER_NAMESPACE_PROBE_TIMEOUT_MS = 2_000
 
 export function needsElectronNoSandbox(executable: string): boolean {
   return (
-    process.env[ELECTRON_NO_SANDBOX_REQUEST_ENV] === '1' ||
+    readAppEnv(process.env, 'ELECTRON_NO_SANDBOX') === '1' ||
     shouldDisableExtractedAppImageSandbox(executable)
   )
 }

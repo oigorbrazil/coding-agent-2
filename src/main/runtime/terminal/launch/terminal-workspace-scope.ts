@@ -1,10 +1,3 @@
-import { OrcaRuntimeWithBrowserWorkspaceRouting } from '../../browser/client-pages/runtime-browser-workspace-routing'
-
-import {
-  floatingWorkspaceToWorktree,
-  isFloatingWorkspaceSelector
-} from '../../../../shared/floating-workspace-worktree'
-import { resolveFloatingTerminalCwd } from '../../../ipc/floating-workspace-directory'
 import type { BrowserNetworkExecutionHost } from '../../../../shared/browser/client-hosting/browser-network-execution-host'
 import {
   type ExecutionHostId,
@@ -13,6 +6,17 @@ import {
   getWorktreeExecutionHostId,
   parseExecutionHostId
 } from '../../../../shared/execution-host'
+import type { TerminalWorkspaceLaunchScope } from '../../orchestration/terminal-authority/structured-sessions/runtime-legacy-worker-terminal-recovery-types'
+import type { ResolvedTerminalWorkspaceLaunchTarget } from './terminal-workspace-launch-target'
+import { appEnvPairs, deleteAppEnvKey } from '../../../../shared/app-env'
+import { OrcaRuntimeWithBrowserWorkspaceRouting } from '../../browser/client-pages/runtime-browser-workspace-routing'
+
+import {
+  floatingWorkspaceToWorktree,
+  isFloatingWorkspaceSelector
+} from '../../../../shared/floating-workspace-worktree'
+import { resolveFloatingTerminalCwd } from '../../../ipc/floating-workspace-directory'
+
 import { resolveRuntimeBrowserNetworkExecutionHost } from '../../browser/network/runtime-browser-network-execution-host'
 import { resolveLocalProjectRuntimeForWorktreeId } from '../../../workspaces/execution-host/local-project-runtime-resolution'
 import { getRegisteredSshState } from '../../../ssh/targets/ssh-target-registry'
@@ -25,10 +29,9 @@ import type { FolderWorkspace } from '../../../../shared/folder-workspaces/folde
 import type { ResolvedWorktree } from '../../workspaces/catalog/runtime-worktree-path-identity'
 import type { Worktree } from '../../../../shared/worktree/types'
 import { folderWorkspaceToWorktree } from '../../../../shared/folder-workspaces/folder-workspace-worktree'
-import type { TerminalWorkspaceLaunchScope } from '../../orchestration/terminal-authority/structured-sessions/runtime-legacy-worker-terminal-recovery-types'
+
 import { resolveTerminalStartupCwd } from '../../../../shared/shell/launch/terminal-startup-cwd'
 
-import type { ResolvedTerminalWorkspaceLaunchTarget } from './terminal-workspace-launch-target'
 import { FLOATING_TERMINAL_WORKTREE_ID } from '../../../../shared/constants'
 import { homedir } from 'node:os'
 import { getExplicitWorktreeIdSelector } from '../../workspaces/catalog/runtime-worktree-selection'
@@ -224,20 +227,22 @@ export abstract class OrcaRuntimeWithResolveBrowserNetworkExecutionHostForWorktr
   ): Record<string, string> {
     const cleanBaseEnv = { ...baseEnv }
     for (const key of AGENT_HOOK_RUNTIME_ENV_KEYS) {
-      delete cleanBaseEnv[key]
+      deleteAppEnvKey(cleanBaseEnv, key)
     }
     // Spawn stamps pane ids and jcode dir; match the window's ORCA_WORKSPACE_ID for every workspace kind.
     const env = {
       ...cleanBaseEnv,
       ...agentTeamsEnv,
       ...this.buildAgentHookPtyEnv?.(),
-      ORCA_WORKSPACE_ID: scope.id
+      ...appEnvPairs('WORKSPACE_ID', scope.id)
     }
     if (!scope.folderWorkspace) {
       return env
     }
     return {
       ...env,
+      CODING_AGENT_PROJECT_GROUP_ID: scope.folderWorkspace.projectGroupId,
+      CODING_AGENT_WORKSPACE_ROOT: scope.folderWorkspace.folderPath,
       ORCA_PROJECT_GROUP_ID: scope.folderWorkspace.projectGroupId,
       ORCA_WORKSPACE_ROOT: scope.folderWorkspace.folderPath
     }

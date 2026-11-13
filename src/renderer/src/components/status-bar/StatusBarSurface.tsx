@@ -1,4 +1,4 @@
-import { PanelsTopLeft, RefreshCw } from 'lucide-react'
+import { RefreshCw } from 'lucide-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { lazyWithRetry } from '@/lib/lazy-with-retry'
@@ -23,8 +23,6 @@ import { CaffeinateStatusSegment } from './CaffeinateStatusSegment'
 import { PluginsStatusSegment } from './PluginsStatusSegment'
 import { PluginStatusBarItems } from './PluginStatusBarItems'
 import { RemoteServerUpdateStatusSegment } from './RemoteServerUpdateStatusSegment'
-import { TOGGLE_FLOATING_TERMINAL_EVENT } from '@/lib/floating-terminal'
-import { FloatingTerminalIconContextMenu } from '@/components/floating-terminal/FloatingTerminalIconContextMenu'
 import { ClaudeSwitcherMenu } from './ClaudeSwitcherMenu'
 import { CodexSwitcherMenu } from './CodexSwitcherMenu'
 import { ProviderDetailsMenu } from './ProviderDetailsMenu'
@@ -39,6 +37,7 @@ import {
 import { useStatusBarController } from './use-status-bar-controller'
 import { isOwnerNotSetUpPlaceholder } from './owner-usage-rate-limits'
 import { StatusBarVisibilityMenu } from './StatusBarVisibilityMenu'
+import { TopBarRightSidebarToggle } from './TopBarRightSidebarToggle'
 import { isPairedWebClientWindow } from '@/lib/desktop-window-chrome'
 
 const PetStatusSegment = lazyWithRetry(() =>
@@ -79,8 +78,6 @@ export function StatusBarSurface({
     collapseUsage,
     collapsedUsageProviders,
     compact,
-    floatingTerminalActionLabel,
-    floatingTerminalShortcut,
     handleManageAccounts,
     handleOpenProviderAccounts,
     handleRefresh,
@@ -99,8 +96,6 @@ export function StatusBarSurface({
     setMenuPoint,
     setStatusBarUsageMode,
     showEmptyUsageCta,
-    showFloatingTerminalToggle,
-    showFloatingWorkspaceAttentionDot,
     showPorts,
     showResourceUsage,
     showSsh,
@@ -124,7 +119,8 @@ export function StatusBarSurface({
       ref={barRef}
       data-orca-status-bar=""
       // Why: one line at any width — density steps down first. overflow-clip (not hidden) so focus can't scroll the bar; the clip margin spares focus rings and badge dots.
-      className="flex items-center h-6 min-h-[24px] px-3 gap-4 overflow-clip [overflow-clip-margin:3px] whitespace-nowrap border-t border-border bg-[var(--bg-titlebar,var(--card))] text-xs select-none shrink-0 relative"
+      // Coding Agent 2 pins the bar to the top edge (order-first in the column layout), clear of the window controls.
+      className="order-first flex items-center h-6 min-h-6 [-webkit-app-region:drag] [&_*]:[-webkit-app-region:no-drag] pl-3 pr-[calc(var(--window-controls-width,0px)+0.75rem)] gap-4 overflow-clip [overflow-clip-margin:3px] whitespace-nowrap text-xs select-none shrink-0 relative"
       onContextMenuCapture={(event) => {
         if (!shouldOpenStatusBarContextMenu(event.target)) {
           return
@@ -330,43 +326,7 @@ export function StatusBarSurface({
             ) : null}
             {showSsh ? <SshStatusSegment compact={compact} iconOnly={segmentsIconOnly} /> : null}
           </React.Suspense>
-          {showFloatingTerminalToggle && (
-            <FloatingTerminalIconContextMenu currentLocation="status-bar" className="relative">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    className="relative inline-flex size-5 cursor-pointer items-center justify-center rounded border border-border bg-secondary text-secondary-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground"
-                    aria-label={
-                      showFloatingWorkspaceAttentionDot
-                        ? t(
-                            'auto.components.status.bar.StatusBar.floatingTerminalNewActivity',
-                            '{{label}}, new activity',
-                            { label: floatingTerminalActionLabel }
-                          )
-                        : floatingTerminalActionLabel
-                    }
-                    onClick={() => {
-                      window.dispatchEvent(new CustomEvent(TOGGLE_FLOATING_TERMINAL_EVENT))
-                    }}
-                  >
-                    <PanelsTopLeft className="size-3.5" />
-                    {showFloatingWorkspaceAttentionDot ? (
-                      // Why: amber = Coding Agent 2's "needs attention" convention; ring matches the fill so the dot reads on the icon.
-                      <span
-                        aria-hidden
-                        data-floating-terminal-attention
-                        className="pointer-events-none absolute right-0.5 top-0.5 size-1.5 rounded-full bg-amber-500 ring-1 ring-secondary"
-                      />
-                    ) : null}
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="top" sideOffset={6}>
-                  {floatingTerminalActionLabel} ({floatingTerminalShortcut})
-                </TooltipContent>
-              </Tooltip>
-            </FloatingTerminalIconContextMenu>
-          )}
+          <TopBarRightSidebarToggle />
         </div>
       </div>
 

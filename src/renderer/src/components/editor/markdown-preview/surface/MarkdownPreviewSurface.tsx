@@ -117,7 +117,7 @@ export function MarkdownPreviewSurface({
               <div className="mb-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
                 {t('auto.components.editor.MarkdownPreview.2b2b31382c', 'Front Matter')}
               </div>
-              <pre className="max-h-48 overflow-auto whitespace-pre-wrap text-xs text-muted-foreground font-mono scrollbar-editor">
+              <pre className="max-h-48 overflow-auto whitespace-pre-wrap text-xs text-muted-foreground font-code scrollbar-editor">
                 {frontMatterInner}
               </pre>
             </div>

@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { getAppEnvironment } from '../../shared/app-environment'
 import {
   getOrcaProfileDataFile as getSharedOrcaProfileDataFile,
@@ -29,7 +30,7 @@ export function getProfileUserDataPath(): string {
 }
 
 export function getOrcaProfileIndexPath(userDataPath = getProfileUserDataPath()): string {
-  return join(userDataPath, PROFILE_INDEX_FILE_NAME)
+  return renamedUserDataFile(join(userDataPath, PROFILE_INDEX_FILE_NAME))
 }
 
 export function getOrcaProfilesDirectory(userDataPath = getProfileUserDataPath()): string {
@@ -81,7 +82,7 @@ export function getOrcaProfileBrowserSessionMetaFile(
 }
 
 export function legacyDataFilePath(userDataPath: string): string {
-  return join(userDataPath, LEGACY_DATA_FILE_NAME)
+  return renamedUserDataFile(join(userDataPath, LEGACY_DATA_FILE_NAME))
 }
 
 export function legacyBrowserSessionMetaPath(userDataPath: string): string {

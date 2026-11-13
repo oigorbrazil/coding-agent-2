@@ -1,4 +1,4 @@
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import * as agentSpecs from '../../shared/source-control/ai/generation/commit-message-agent-spec'
 import type { ResolvedSourceControlAiGenerationParams } from '../../shared/source-control/ai/source-control-ai-operation-resolution'
 import type { SpawnSourceControlAgent } from './source-control-text-generation-types'

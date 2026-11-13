@@ -8,14 +8,14 @@ import { isTestOnlySourcePath } from '../../process-boundaries/test-only-source-
 
 const BASELINE_PATH = 'config/daemon-blocking-call-baseline.txt'
 const SCAN_ROOTS = ['src/main/daemon', 'src/main/pty', 'src/main/runtime', 'src/main/orcad']
-const PROCESS_ADVICE = 'use runProcess or spawnProcess from @orca/process-host'
+const PROCESS_ADVICE = 'use runProcess or spawnProcess from @coding-agent/process-host'
 const WRITE_ADVICE = 'use an async write or a buffered stream'
 const BLOCKING_CALLS = [
   {
     modules: ['child_process', 'node:child_process'],
     advice: { execFileSync: PROCESS_ADVICE, spawnSync: PROCESS_ADVICE, execSync: PROCESS_ADVICE }
   },
-  { modules: ['@orca/process-host'], advice: { runProcessSync: PROCESS_ADVICE } },
+  { modules: ['@coding-agent/process-host'], advice: { runProcessSync: PROCESS_ADVICE } },
   {
     modules: ['fs', 'node:fs'],
     advice: { appendFileSync: WRITE_ADVICE, writeSync: WRITE_ADVICE }

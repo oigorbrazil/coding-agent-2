@@ -12,13 +12,13 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const { runProcessMock, inspectMock } = vi.hoisted(() => ({
   runProcessMock: vi.fn<(spec: ProcessSpec) => Promise<ProcessResult>>(),
   inspectMock: vi.fn()
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 vi.mock('../daemon-mac-code-identity', () => ({ inspectMacProcessCodeIdentity: inspectMock }))
 
 import { materializeMacDaemonBundle } from '../macos-daemon-bundle'

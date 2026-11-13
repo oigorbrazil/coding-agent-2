@@ -1,10 +1,11 @@
+import { readAppEnv, readAppEnvKey } from '../../shared/app-env'
 // A slot qualified once on an unchanged host need not re-run the disposable startup preflight.
 import { createHash, randomUUID } from 'node:crypto'
 import { readFile, rename, stat, unlink, writeFile } from 'node:fs/promises'
 import { release } from 'node:os'
 import { isAbsolute, join, relative } from 'node:path'
 import process from 'node:process'
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../shared/orcad-managed-launch-env'
+
 import { ORCAD_NODE_RUNTIME_IDENTITY } from '../../shared/orcad-node-runtime-identity'
 import { listOrcadArtifactFilenames } from './orcad-artifact-identity'
 import { detectNativeHostAbi } from './native-host-abi'
@@ -28,7 +29,7 @@ export function isQualifiableOrcadSlot(
   env: NodeJS.ProcessEnv = process.env,
   resourcesPath: string | undefined = process.resourcesPath
 ): boolean {
-  if (!env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV]) {
+  if (!readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT')) {
     return false
   }
   if (!resourcesPath) {
@@ -53,7 +54,11 @@ export async function orcadStartupQualificationKey(
     files.update(JSON.stringify([filename, size, mtimeMs, ctimeMs, ino]))
   }
   const launchEnv = createHash('sha256')
-    .update(JSON.stringify(ORCAD_STARTUP_QUALIFICATION_ENV.map((name) => env[name] ?? null)))
+    .update(
+      JSON.stringify(
+        ORCAD_STARTUP_QUALIFICATION_ENV.map((name) => readAppEnvKey(env, name) ?? null)
+      )
+    )
     .digest('hex')
   const abi = detectNativeHostAbi()
   return JSON.stringify({

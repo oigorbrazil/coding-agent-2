@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../../shared/legacy-renamed-file'
 import { getAppEnvironment } from '../../../shared/app-environment'
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
@@ -12,21 +13,21 @@ let _userDataDir: string | null = null
 export function initDataPath(): void {
   const userDataDir = getAppEnvironment().getPath('userData')
   _userDataDir = userDataDir
-  _dataFile = join(userDataDir, 'orca-data.json')
+  _dataFile = renamedUserDataFile(join(userDataDir, 'orca-data.json'))
 }
 
 export function getDataFile(): string {
   if (!_dataFile) {
     const userDataDir = getAppEnvironment().getPath('userData')
     _userDataDir = userDataDir
-    _dataFile = join(userDataDir, 'orca-data.json')
+    _dataFile = renamedUserDataFile(join(userDataDir, 'orca-data.json'))
   }
   return _dataFile
 }
 
 // Cache polls use a disposable sidecar to avoid full-profile rewrites; snapshots accelerate next-launch badges.
 export function getGithubCacheFile(dataFile = getDataFile()): string {
-  return join(dirname(dataFile), 'orca-github-cache.json')
+  return renamedUserDataFile(join(dirname(dataFile), 'orca-github-cache.json'))
 }
 
 export function readGithubCacheSnapshot(dataFile: string): PersistedState['githubCache'] | null {
@@ -61,8 +62,14 @@ export function migrateMobilePairingDataToCanonicalUserDataPath(sourceUserDataDi
   }
 
   const migrations = MOBILE_PAIRING_USERDATA_FILES.map((fileName) => ({
-    sourcePath: join(sourceUserDataDir, fileName),
-    targetPath: join(targetUserDataDir, fileName)
+    sourcePath:
+      fileName === 'coding-e2ee-keypair.json'
+        ? renamedUserDataFile(join(sourceUserDataDir, fileName))
+        : join(sourceUserDataDir, fileName),
+    targetPath:
+      fileName === 'coding-e2ee-keypair.json'
+        ? renamedUserDataFile(join(targetUserDataDir, fileName))
+        : join(targetUserDataDir, fileName)
   }))
   if (migrations.some(({ sourcePath }) => !existsSync(sourcePath))) {
     return

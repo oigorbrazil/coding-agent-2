@@ -1,6 +1,6 @@
 import { EventEmitter } from 'node:events'
-import { ASSIGNMENT_LIMITS } from '@orca-cloud/relay-contract/assignment-invariants'
-import { RELAY_CLOSE_CODE } from '@orca-cloud/relay-contract/close-codes'
+import { ASSIGNMENT_LIMITS } from '@coding-agent-cloud/relay-contract/assignment-invariants'
+import { RELAY_CLOSE_CODE } from '@coding-agent-cloud/relay-contract/close-codes'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type WebSocket from 'ws'
 import { RelayAssignmentStore } from '../assignment/assignment-store.js'

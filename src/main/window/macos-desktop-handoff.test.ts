@@ -10,7 +10,7 @@ vi.mock('electron', () => ({
     setActivationPolicy: vi.fn()
   }
 }))
-vi.mock('@orca/process-host', () => ({ spawnProcess: spawnProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ spawnProcess: spawnProcessMock }))
 
 const { createDesktopHandoff, handOffToDesktopApp } = await import('./macos-desktop-handoff')
 

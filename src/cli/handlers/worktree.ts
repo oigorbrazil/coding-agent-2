@@ -1,12 +1,21 @@
-import { withWorktreeSelectorRecovery } from '../worktree-selector-recovery'
 import type {
+  RuntimeWorktreeRecord,
   RuntimeWorktreeListResult,
   RuntimeWorktreePsResult,
-  RuntimeWorktreeRecord,
   RuntimeWorktreeSetResult,
   RuntimeWorktreeCreateResult
 } from '../../shared/runtime-types'
 import type { CommandHandler } from '../dispatch'
+import type { TuiAgent } from '../../shared/agent-launch/catalog/tui-agent'
+import {
+  type CliRepoTarget,
+  assertWorkspaceTargetFlagsCompatible,
+  hasWorkspaceProjectTarget,
+  getCreateRepoTarget
+} from '../worktree-project-target'
+import { readAppEnv } from '../../shared/app-env'
+import { withWorktreeSelectorRecovery } from '../worktree-selector-recovery'
+
 import { printHookWarning, printPreservedBranchWarning } from './worktree-removal-warnings'
 import { requestWorktreeRemoval } from './worktree-removal-request'
 import { removeIfFolderWorkspace, setIfFolderWorkspace } from './folder-workspace-mutations'
@@ -28,7 +37,7 @@ import {
   resolveWorktreeCreateCwdContext,
   resolveCurrentWorktreeSelector
 } from '../selectors'
-import type { TuiAgent } from '../../shared/agent-launch/catalog/tui-agent'
+
 import { parseCliAgent, readCliAgentLaunch } from '../agent-launch-request'
 import { createWorktreeWithAgent } from './worktree-create-agent-launch'
 import { printLineageSummary, printSetParentLine } from './worktree-lineage-summary'
@@ -37,12 +46,7 @@ import { callNamingParentEnvironment } from './worktree-parent-environment'
 import { annotatePsRows, annotateShown } from './worktree-address-annotation'
 import { refuseCurrentForRemoval } from './worktree-removal-current-refusal'
 import { projectWorktreePsTerminalVerdict } from '../worktree-ps-terminal-verdict'
-import {
-  assertWorkspaceTargetFlagsCompatible,
-  hasWorkspaceProjectTarget,
-  getCreateRepoTarget,
-  type CliRepoTarget
-} from '../worktree-project-target'
+
 import {
   assertWorktreeParentFlagsCompatible,
   getEnvParentWorkspace,
@@ -123,7 +127,7 @@ export const WORKTREE_HANDLERS: Record<string, CommandHandler> = {
     assertWorkspaceTargetFlagsCompatible(flags)
     const branchNameOverride = getPresentStringFlag(flags, 'branch')
     const reviewLinks = getReviewTargetLinkFlags(flags)
-    const callerTerminalHandle = process.env.ORCA_TERMINAL_HANDLE || undefined
+    const callerTerminalHandle = readAppEnv(process.env, 'TERMINAL_HANDLE') || undefined
     const explicitParent = await resolveCreateParentSelector(flags, cwd, client)
     const explicitParentWorktree = explicitParent.parentWorktree
     const explicitParentWorkspace = explicitParent.parentWorkspace
@@ -245,7 +249,7 @@ export const WORKTREE_HANDLERS: Record<string, CommandHandler> = {
       parentSelector
         ? [
             `Coding Agent 2 could not find the worktree selector "${worktree}" or the parent selector "${parentSelector}". The server did not identify which selector failed.`,
-            'Check both selectors with orca worktree show --worktree <selector> --json.'
+            'Check both selectors with coding worktree show --worktree <selector> --json.'
           ]
         : []
     )

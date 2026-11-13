@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../../shared/app-env'
 import {
   isTerminalSnapshotForcedUnavailable,
   sendSnapshotFrames,
@@ -37,7 +38,7 @@ export async function publishMultiplexInitialSnapshot(
   const { ptyId } = stream
   const isMobile = stream.isMobile
   const forcedInitialSnapshotTruncated =
-    process.env.ORCA_E2E_FORCE_REMOTE_TERMINAL_INITIAL_SNAPSHOT_TRUNCATED === '1'
+    readAppEnv(process.env, 'E2E_FORCE_REMOTE_TERMINAL_INITIAL_SNAPSHOT_TRUNCATED') === '1'
   // A WSL-moved pane replays its whole carried history once; the first view must hold all of it.
   const firstRows = isMovedPaneHistorySessionId(ptyId)
     ? MOVED_PANE_SUBSCRIBE_SCROLLBACK_ROWS

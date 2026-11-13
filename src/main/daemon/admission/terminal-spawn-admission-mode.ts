@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 export type TerminalSpawnAdmissionMode = 'observe' | 'enforce'
 
 export const TERMINAL_SPAWN_ADMISSION_ARG = '--spawn-admission'
@@ -9,7 +10,7 @@ export const TERMINAL_SPAWN_ADMISSION_ENV_VAR = 'ORCA_TERMINAL_SPAWN_ADMISSION'
 export function resolveTerminalSpawnAdmissionMode(
   env: NodeJS.ProcessEnv = process.env
 ): TerminalSpawnAdmissionMode {
-  return env[TERMINAL_SPAWN_ADMISSION_ENV_VAR]?.trim().toLowerCase() === 'observe'
+  return readAppEnv(env, 'TERMINAL_SPAWN_ADMISSION')?.trim().toLowerCase() === 'observe'
     ? 'observe'
     : 'enforce'
 }

@@ -557,8 +557,16 @@ module.exports = {
         to: 'bin/orca.cmd'
       },
       {
+        from: 'resources/win32/bin/coding-agent.cmd',
+        to: 'bin/coding-agent.cmd'
+      },
+      {
         from: 'native/windows-cli-launcher/.build/orca.exe',
         to: 'bin/orca.exe'
+      },
+      {
+        from: 'native/windows-cli-launcher/.build/coding.exe',
+        to: 'bin/coding.exe'
       },
       {
         from: 'native/windows-cli-launcher/.build/orca-administrator-restart.exe',
@@ -637,6 +645,14 @@ module.exports = {
         to: 'bin/orca'
       },
       {
+        from: 'resources/darwin/bin/coding-agent',
+        to: 'bin/coding-agent'
+      },
+      {
+        from: 'resources/darwin/bin/orca',
+        to: 'bin/coding'
+      },
+      {
         from: 'node_modules/agent-browser/bin/agent-browser-darwin-${arch}',
         to: 'agent-browser-darwin-${arch}'
       },
@@ -704,6 +720,10 @@ module.exports = {
       {
         from: 'resources/linux/bin/orca-ide',
         to: 'bin/orca-ide'
+      },
+      {
+        from: 'resources/linux/bin/orca-ide',
+        to: 'bin/coding'
       },
       {
         from: 'node_modules/agent-browser/bin/agent-browser-linux-${arch}',
@@ -789,7 +809,7 @@ function chmodUnixCliLaunchers(resourcesDir, electronPlatformName) {
   if (electronPlatformName === 'win32') {
     return
   }
-  for (const launcherName of ['orca', 'orca-ide']) {
+  for (const launcherName of ['coding', 'orca', 'orca-ide']) {
     const launcherPath = join(resourcesDir, 'bin', launcherName)
     if (!existsSync(launcherPath)) {
       continue

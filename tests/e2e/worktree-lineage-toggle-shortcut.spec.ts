@@ -195,7 +195,7 @@ test.describe('Toggle Child Workspaces shortcut', () => {
   test('a focused floating workspace keeps the shortcut input', async ({ orcaPage }) => {
     const { parentId, childId } = await seedLineageScenario(orcaPage)
     await setToggleBinding(orcaPage, ['Mod+Alt+H'])
-    await orcaPage.getByRole('button', { name: 'Show floating workspace', exact: true }).click()
+    await orcaPage.getByRole('button', { name: 'Show Floating Workspace', exact: true }).click()
     const panel = orcaPage.locator('[data-floating-terminal-panel][aria-hidden="false"]')
     await expect(panel).toBeVisible()
     await panel.locator('[data-floating-terminal-shortcut-surface]').first().focus()

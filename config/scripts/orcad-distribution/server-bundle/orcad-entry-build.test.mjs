@@ -10,7 +10,7 @@ import {
   findNonAsciiSource,
   ORCAD_COMMONJS_MODULE_OPTIONS
 } from './orcad-entry-build.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 
 const directory = mkdtempSync(join(tmpdir(), 'orca-structured-provider-build-'))
 const bundle = join(directory, 'orcad-server.js')

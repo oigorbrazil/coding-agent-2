@@ -5,7 +5,7 @@ import { join, resolve } from 'node:path'
 import { resolveConfig } from 'electron-vite'
 import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { stagePackagedProcessHost } from '../../desktop-distribution/runtime-verification/packaged-process-host-fixture.mjs'
 
 const projectDir = resolve(import.meta.dirname, '../../../..')

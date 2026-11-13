@@ -1,9 +1,9 @@
+import { readAppEnv } from '../../shared/app-env'
 import { statfsSync } from 'node:fs'
 import { app } from 'electron'
 import { recordCrashBreadcrumb } from '../crash-reporting/crash-breadcrumb-store'
 
 const DEV_SHM_PATH = '/dev/shm'
-const DEV_SHM_OVERRIDE_ENV_VAR = 'ORCA_DEV_SHM'
 // Docker/Codespaces often provide only 64MiB; Chromium ring buffers/textures can exhaust it and crash every reload.
 const MIN_DEV_SHM_TOTAL_MIB = 512
 const MIB = 1024 * 1024
@@ -27,7 +27,7 @@ export function configureLinuxDevShmUsage(): void {
   if (process.platform !== 'linux') {
     return
   }
-  const override = (process.env[DEV_SHM_OVERRIDE_ENV_VAR] ?? '').trim().toLowerCase()
+  const override = (readAppEnv(process.env, 'DEV_SHM') ?? '').trim().toLowerCase()
   const reading = readDevShm()
   const reason =
     override === 'off' || override === 'force'

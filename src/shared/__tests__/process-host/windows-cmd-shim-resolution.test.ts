@@ -7,8 +7,8 @@ import { removeTreeSync } from '../../windows-transient-lock-removal'
 import {
   parseWindowsCmdShim,
   resolveWindowsCmdShim
-} from '@orca/process-host/windows-cmd-shim-resolution'
-import '@orca/process-host'
+} from '@coding-agent/process-host/windows-cmd-shim-resolution'
+import '@coding-agent/process-host'
 import {
   REAL_AGENT_BROWSER_CMD,
   REAL_CODEX_CMD,

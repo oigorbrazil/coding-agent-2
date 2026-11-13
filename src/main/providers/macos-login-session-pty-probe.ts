@@ -1,13 +1,13 @@
+import { appEnvPairs } from '../../shared/app-env'
 import { execFile } from 'node:child_process'
 import { existsSync } from 'node:fs'
 
 const MACOS_EXPECT_PATH = '/usr/bin/expect'
 const LOGIN_PREFLIGHT_MARKER = 'ORCA_LOGIN_PREFLIGHT_OK'
-const LOGIN_PROBE_USERNAME_ENV = 'ORCA_LOGIN_PROBE_USERNAME'
 // expect owns the probe PTY without leaving a long-lived native handle in the daemon.
 const EXPECT_LOGIN_PROBE_SCRIPT =
   'log_user 1; ' +
-  'spawn -noecho /usr/bin/login -flpq $env(ORCA_LOGIN_PROBE_USERNAME) /usr/bin/printf ORCA_LOGIN_PREFLIGHT_OK; ' +
+  'if {[info exists env(CODING_AGENT_LOGIN_PROBE_USERNAME)]} { set env(ORCA_LOGIN_PROBE_USERNAME) $env(CODING_AGENT_LOGIN_PROBE_USERNAME) }; spawn -noecho /usr/bin/login -flpq $env(ORCA_LOGIN_PROBE_USERNAME) /usr/bin/printf ORCA_LOGIN_PREFLIGHT_OK; ' +
   'send "\\004"; expect eof; wait; exit 0'
 
 export type LoginPreflightOutcome = {
@@ -35,7 +35,7 @@ export function runMacosLoginSessionPtyProbe(
         {
           cwd: accountHome,
           encoding: 'utf8',
-          env: { ...process.env, [LOGIN_PROBE_USERNAME_ENV]: username },
+          env: { ...process.env, ...appEnvPairs('LOGIN_PROBE_USERNAME', username) },
           killSignal: 'SIGKILL',
           maxBuffer: maxOutputBytes,
           signal,

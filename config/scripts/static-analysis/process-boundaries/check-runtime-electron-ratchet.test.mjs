@@ -82,7 +82,7 @@ describe('structured chat coverage', () => {
   )
 
   it('checks public workspace imports against source without requiring a built package', async () => {
-    const root = fixture({ 'entry.ts': "import '@orca/process-host'" })
+    const root = fixture({ 'entry.ts': "import '@coding-agent/process-host'" })
     const target = path.join(process.cwd(), 'src/packages/process-host/src/run-process.ts')
     const current = await collectElectronImporters([path.join(root, 'entry.ts')], {
       plugins: [

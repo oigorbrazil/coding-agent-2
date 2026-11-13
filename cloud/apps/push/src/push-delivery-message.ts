@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { type PushNotification } from '@orca-cloud/push-contract'
+import { type PushNotification } from '@coding-agent-cloud/push-contract'
 
 export type PushOrcaData = {
   kind?: 'alert' | 'dismiss'

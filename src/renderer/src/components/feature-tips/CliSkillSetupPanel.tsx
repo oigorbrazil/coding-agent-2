@@ -1,6 +1,6 @@
 import { CliSkillSetupTerminal } from './CliSkillSetupTerminal'
 import { AgentSkillSetupPanel } from '@/components/skills/setup/AgentSkillSetupPanel'
-import { ORCA_CLI_SKILL_NAME, ORCHESTRATION_SKILL_NAME } from '@/lib/agent-feature-skill-names'
+import { ORCA_CLI_SKILL_NAME } from '@/lib/agent-feature-skill-names'
 import { useActiveProjectSkillRuntime } from '@/hooks/useActiveProjectSkillRuntime'
 import {
   GLOBAL_AGENT_SKILL_SOURCE_KINDS,
@@ -9,7 +9,7 @@ import {
 } from '@/hooks/useInstalledAgentSkills'
 import { useTranslate } from '@/i18n/use-translate'
 
-const CLI_TIP_SKILL_NAMES = [ORCA_CLI_SKILL_NAME, ORCHESTRATION_SKILL_NAME] as const
+const CLI_TIP_SKILL_NAMES = [ORCA_CLI_SKILL_NAME] as const
 
 function BundledCliSkillSetupPanel(): React.JSX.Element {
   const t = useTranslate()
@@ -34,7 +34,7 @@ function BundledCliSkillSetupPanel(): React.JSX.Element {
       title={t('auto.components.feature.tips.CliSkillSetupPanel.title', 'Skill setup')}
       description={t(
         'auto.components.feature.tips.CliSkillSetupPanel.description',
-        'Install the Coding Agent 2 CLI and orchestration skills for your agents.'
+        'Install the Coding Agent 2 CLI skill for your agents.'
       )}
       skillNames={CLI_TIP_SKILL_NAMES}
       installed={installed}

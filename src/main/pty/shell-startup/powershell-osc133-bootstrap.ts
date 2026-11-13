@@ -7,10 +7,10 @@ import { getPowerShellAgentWrappers } from '../../../shared/powershell-agent-wra
 const POWERSHELL_OSC133_BOOTSTRAP = `# Coding Agent 2 OSC 133 shell integration for PowerShell.
 # Profiles have already loaded normally by the time -EncodedCommand runs.
 # Restore managed ownership before the shell-integration compatibility guard.
-if ($env:ORCA_OPENCODE_CONFIG_DIR) { $env:OPENCODE_CONFIG_DIR = $env:ORCA_OPENCODE_CONFIG_DIR }
+if ($(if (Test-Path Env:CODING_AGENT_OPENCODE_CONFIG_DIR) { $env:CODING_AGENT_OPENCODE_CONFIG_DIR } else { $env:ORCA_OPENCODE_CONFIG_DIR })) { $env:OPENCODE_CONFIG_DIR = $(if (Test-Path Env:CODING_AGENT_OPENCODE_CONFIG_DIR) { $env:CODING_AGENT_OPENCODE_CONFIG_DIR } else { $env:ORCA_OPENCODE_CONFIG_DIR }) }
 ${MANAGED_DATA_ACCOUNT_POWERSHELL_RESTORE}
-if ($env:ORCA_MIMOCODE_CONFIG_DIR) { $env:MIMOCODE_CONFIG_DIR = $env:ORCA_MIMOCODE_CONFIG_DIR }
-if ($env:ORCA_CODEX_HOME) { $env:CODEX_HOME = $env:ORCA_CODEX_HOME }
+if ($(if (Test-Path Env:CODING_AGENT_MIMOCODE_CONFIG_DIR) { $env:CODING_AGENT_MIMOCODE_CONFIG_DIR } else { $env:ORCA_MIMOCODE_CONFIG_DIR })) { $env:MIMOCODE_CONFIG_DIR = $(if (Test-Path Env:CODING_AGENT_MIMOCODE_CONFIG_DIR) { $env:CODING_AGENT_MIMOCODE_CONFIG_DIR } else { $env:ORCA_MIMOCODE_CONFIG_DIR }) }
+if ($(if (Test-Path Env:CODING_AGENT_CODEX_HOME) { $env:CODING_AGENT_CODEX_HOME } else { $env:ORCA_CODEX_HOME })) { $env:CODEX_HOME = $(if (Test-Path Env:CODING_AGENT_CODEX_HOME) { $env:CODING_AGENT_CODEX_HOME } else { $env:ORCA_CODEX_HOME }) }
 
 if ($ExecutionContext.SessionState.LanguageMode -eq "FullLanguage" -and
     ((-not (Test-Path variable:global:__OrcaOsc133State)) -or

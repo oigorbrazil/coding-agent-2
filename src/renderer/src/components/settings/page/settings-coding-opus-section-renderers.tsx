@@ -1,5 +1,6 @@
+import { AccountPane } from '../coding-opus/AccountPane'
 import { CodingOpusPlaybooksPane } from '../coding-opus/CodingOpusPlaybooksPane'
-import { FeaturesPane } from '../coding-opus/FeaturesPane'
+import { LanguagePane } from '../coding-opus/LanguagePane'
 import { SecondBrainPane } from '../coding-opus/SecondBrainPane'
 import { SkillsPane } from '../coding-opus/SkillsPane'
 import { SettingsSection } from '../section-layout/SettingsSection'
@@ -7,22 +8,44 @@ import { translate } from '@/i18n/i18n'
 import type { Translate } from '@/i18n/use-translate'
 import type { SettingsRenderContext } from './settings-render-context'
 
-export function renderFeaturesSettingsSection(
+export function renderAccountSettingsSection(
+  context: SettingsRenderContext,
+  t: Translate = translate
+): React.JSX.Element | null {
+  const { model, navigation, view } = context
+  return model.showDesktopOnlySettings ? (
+    <SettingsSection
+      id="account"
+      title={t('codingOpus.account.navTitle', 'Account')}
+      description={t(
+        'codingOpus.account.sectionDescription',
+        'Your local profile, the email linked to it and the sign-in server.'
+      )}
+      searchEntries={navigation.getSectionSearchEntries('account')}
+    >
+      {view.isSectionMounted('account') ? <AccountPane /> : null}
+    </SettingsSection>
+  ) : null
+}
+
+export function renderLanguageSettingsSection(
   context: SettingsRenderContext,
   t: Translate = translate
 ): React.JSX.Element {
-  const { navigation, view } = context
+  const { model, navigation, view } = context
   return (
     <SettingsSection
-      id="features"
-      title={t('codingOpus.features.navTitle', 'Features')}
+      id="language"
+      title={t('codingOpus.language.navTitle', 'Language')}
       description={t(
-        'codingOpus.features.sectionDescription',
-        'Everything Coding Agent 2 does. Open takes you to the setting behind each one.'
+        'codingOpus.language.sectionDescription',
+        'Pick the language of the whole app.'
       )}
-      searchEntries={navigation.getSectionSearchEntries('features')}
+      searchEntries={navigation.getSectionSearchEntries('language')}
     >
-      {view.isSectionMounted('features') ? <FeaturesPane /> : null}
+      {view.isSectionMounted('language') ? (
+        <LanguagePane settings={model.settings} updateSettings={model.updateSettings} />
+      ) : null}
     </SettingsSection>
   )
 }

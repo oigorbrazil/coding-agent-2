@@ -47,7 +47,7 @@ export function buildCapabilitySettingsSections(
         includeAgentWorkspaceTrust: !isWebClient,
         includeCodexTerminalServerIsolation: !isWebClient
       }),
-      group: 'capabilities'
+      group: 'coding-opus'
     },
     {
       id: 'accounts',
@@ -58,7 +58,7 @@ export function buildCapabilitySettingsSections(
       ),
       icon: UserCog,
       searchEntries: getAccountsPaneSearchEntries(),
-      group: 'capabilities',
+      group: 'coding-opus',
       badge: t('auto.hooks.useSettingsNavigationMetadata.7c79d3b7bf', 'Optional')
     },
     {
@@ -72,7 +72,7 @@ export function buildCapabilitySettingsSections(
       searchEntries: getOrchestrationPaneSearchEntries({
         includeLocalRuntimeSettings: !isWebClient
       }),
-      group: 'capabilities'
+      group: 'coding-opus'
     },
     // Expose only with connected Linear; its skill needs linked provider capability.
     ...(isLinearConnected

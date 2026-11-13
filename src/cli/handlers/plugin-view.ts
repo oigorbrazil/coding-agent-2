@@ -1,6 +1,15 @@
+import type { CommandHandler, HandlerContext } from '../dispatch'
+
+import {
+  type PluginShotAct,
+  type PluginShotActResult,
+  parsePluginShotActs
+} from '../../shared/plugins/view/plugin-shot-acts'
+
+import { readAppEnv } from '../../shared/app-env'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join, resolve } from 'node:path'
-import type { CommandHandler, HandlerContext } from '../dispatch'
+
 import { getOptionalPositiveIntegerFlag } from '../flags'
 import { printPluginResult } from '../plugin-authoring/plugin-cli-output'
 import { RuntimeClientError } from '../runtime/types'
@@ -8,11 +17,7 @@ import {
   PLUGIN_SHOT_MAX_WIDTH,
   PLUGIN_SHOT_MIN_WIDTH
 } from '../../shared/rpc-contract/plugins-params'
-import {
-  parsePluginShotActs,
-  type PluginShotAct,
-  type PluginShotActResult
-} from '../../shared/plugins/view/plugin-shot-acts'
+
 import { callPlugins, requirePluginKey, resolveHostPluginPath, stringFlag } from './plugin-runtime'
 import { defaultPluginShotsDir } from './plugin-shot-default-dir'
 import { takePluginScenarioShot } from './plugin-shot-scenario'
@@ -81,10 +86,10 @@ export function defaultPluginShotPath(dir: string, pluginKey: string, panelId: s
 
 /** The PNG lands on the machine that runs the CLI, also with --environment. */
 export function resolveLocalShotPath(ctx: HandlerContext, value: string): string {
-  if (process.env.ORCA_CLI_CWD) {
+  if (readAppEnv(process.env, 'CLI_CWD')) {
     throw new RuntimeClientError(
       'invalid_environment',
-      'orca plugin shot writes the PNG on the machine that runs it, but this shell forwards orca to the Coding Agent 2 host. Run it on the machine that should keep the image.'
+      'coding plugin shot writes the PNG on the machine that runs it, but this shell forwards orca to the Coding Agent 2 host. Run it on the machine that should keep the image.'
     )
   }
   return isAbsolute(value) ? value : resolve(ctx.cwd, value)

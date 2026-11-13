@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import type {
   LocalBaseRefRefreshResult,
   LocalBaseRefUpdateSuggestion
@@ -65,7 +66,7 @@ export const WORKTREE_LIST_TIMEOUT_MS = 30_000
 
 /** Clamp ORCA_WORKTREE_ADD_TIMEOUT_MS; warn for nonblank rejected/clamped values, not fractional truncation. */
 export function resolveWorktreeAddTimeoutMs(env: NodeJS.ProcessEnv = process.env): number {
-  const raw = env.ORCA_WORKTREE_ADD_TIMEOUT_MS?.trim()
+  const raw = readAppEnv(env, 'WORKTREE_ADD_TIMEOUT_MS')?.trim()
   const requested = Math.floor(Number(raw))
   // Guard against values entered in seconds rather than milliseconds.
   const resolved = Number.isNaN(requested)
@@ -88,7 +89,7 @@ export function worktreeAddTimeoutMessage(timeoutMs: number): string {
   if (timeoutMs >= WORKTREE_ADD_TIMEOUT_MAX_MS) {
     return stopped
   }
-  return `${stopped} To allow more time, set ORCA_WORKTREE_ADD_TIMEOUT_MS (milliseconds, up to ${WORKTREE_ADD_TIMEOUT_MAX_MS}) in the environment that starts Coding Agent 2 on the machine running Git (the remote host for SSH or \`orca serve\` workspaces), then restart Coding Agent 2 there.`
+  return `${stopped} To allow more time, set CODING_AGENT_WORKTREE_ADD_TIMEOUT_MS (legacy ORCA_WORKTREE_ADD_TIMEOUT_MS still works; milliseconds, up to ${WORKTREE_ADD_TIMEOUT_MAX_MS}) in the environment that starts Coding Agent 2 on the machine running Git (the remote host for SSH or \`orca serve\` workspaces), then restart Coding Agent 2 there.`
 }
 
 export type GitExecOptionsForWorktree = {

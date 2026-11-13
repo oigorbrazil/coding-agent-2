@@ -1,10 +1,19 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname } from 'node:path'
 import type { SFTPWrapper } from 'ssh2'
 import type {
   AgentHookInstallState,
   AgentHookInstallStatus
 } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
+
+import {
+  type JcodeHooksTable,
+  applyJcodeManagedHooks,
+  parseJcodeHooksTable,
+  removeJcodeManagedHooks
+} from './hook-config'
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { dirname } from 'node:path'
+
 import {
   buildWindowsAgentHookPostCommand,
   createManagedCommandMatcher,
@@ -18,16 +27,13 @@ import {
   writeTextFileRemoteAtomic
 } from '../agent-hooks/installer-utils-remote'
 import {
+  buildPosixHookEndpointReloadLines,
+  buildWindowsHookEndpointReloadLines,
   buildWindowsHookEnvironmentGuardLines,
   POSIX_HOOK_STDIN_DRAIN_COMMAND,
   WINDOWS_HOOK_STDIN_DRAIN_COMMAND
 } from '../agent-hooks/hook-stdin-contract'
-import {
-  applyJcodeManagedHooks,
-  parseJcodeHooksTable,
-  removeJcodeManagedHooks,
-  type JcodeHooksTable
-} from './hook-config'
+
 import {
   getJcodeConfigPath,
   getJcodeManagedCommand,
@@ -47,13 +53,21 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
       '@echo off',
       // Delayed expansion keeps JSON quotes and & out of cmd parsing.
       'setlocal EnableDelayedExpansion',
+      ...windowsAppEnvRestore([
+        'JCODE_PAYLOAD_FILE',
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN',
+        'PANE_KEY'
+      ]),
       // Refresh endpoint credentials for PTYs surviving a Coding Agent 2 restart.
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       // Guard before reading: abandoned Windows stdin can hang forever outside Coding Agent 2 (#11549).
       ...buildWindowsHookEnvironmentGuardLines(),
       // Drain pre_tool input before POST so jcode cannot block writing a payload larger than the pipe.
       `if "%JCODE_HOOK_EVENT%"=="pre_tool" ${WINDOWS_HOOK_STDIN_DRAIN_COMMAND}`,
-      `set "ORCA_JCODE_PAYLOAD_FILE=%TEMP%\\orca-jcode-hook-%RANDOM%%RANDOM%.json"`,
+      `set "ORCA_JCODE_PAYLOAD_FILE=%TEMP%\\orca-jcode-hook-%RANDOM%%RANDOM%.json"
+set "CODING_AGENT_JCODE_PAYLOAD_FILE=%TEMP%\\orca-jcode-hook-%RANDOM%%RANDOM%.json"`,
       `>"${payloadFile}" echo(!JCODE_HOOK_PAYLOAD!`,
       // Input redirection avoids spawning cmd's extra pipeline shells on every event.
       `<"${payloadFile}" ${buildWindowsAgentHookPostCommand('jcode', [
@@ -70,14 +84,12 @@ function getManagedScript(target: 'local' | 'posix' = 'local'): string {
   return [
     '#!/bin/sh',
     // Refresh surviving PTYs; silence sourcing failures from endpoint races or CRLF damage.
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  . "$ORCA_AGENT_HOOK_ENDPOINT" 2>/dev/null || :',
-    'fi',
+    ...buildPosixHookEndpointReloadLines(),
     // Drain gated input before every exit path so jcode cannot block mid-write.
     'if [ "$JCODE_HOOK_EVENT" = pre_tool ]; then',
     `  ${POSIX_HOOK_STDIN_DRAIN_COMMAND}`,
     'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  exit 0',
     'fi',
     // Forward jcode's JSON payload verbatim; rebuilding arbitrary text in shell is unsafe.

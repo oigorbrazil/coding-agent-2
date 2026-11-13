@@ -119,8 +119,8 @@ function BundledLinearAgentSkillInstallCta({
           {skill.installed ? null : (
             <p className="text-xs text-muted-foreground">
               {t(
-                'auto.components.settings.linear.agent.skill.install.cta.description',
-                'Let agents read and edit Linear tasks. Full guided setup (connect + skill + visibility) is under Settings → Task Sources.'
+                'integrations.linearSkillDescription',
+                'Let agents read and edit Linear tasks. Connect your Linear account in Integrations.'
               )}
             </p>
           )}

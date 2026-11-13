@@ -1,21 +1,23 @@
+import type { RuntimeRpcClientActivity } from '../runtime/rpc/server/runtime-rpc-shutdown'
+import {
+  type OrcadIdleExitEvidence,
+  type OrcadIdleProbe,
+  type OrcadIdleVerdict,
+  OrcadIdleExitMonitor
+} from './orcad-idle-exit-monitor'
+
+import { readAppEnv } from '../../shared/app-env'
 // Live terminals block idle exit; ordinary shutdown disconnects without killing their daemon.
 import { stat } from 'node:fs/promises'
 import { join } from 'node:path'
 import { RELAY_INSTALL_LOCK_NAME } from '../../shared/relay-install-lock-name'
 import { hasErrorCode } from '../daemon/endpoint/identity/daemon-process-inspection'
-import type { RuntimeRpcClientActivity } from '../runtime/rpc/server/runtime-rpc-shutdown'
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../shared/orcad-managed-launch-env'
+
 import {
   ORCAD_IDLE_EXIT_TIMEOUT_MS,
   readOrcadE2EIdleTimeoutMs,
   readOrcadIdleTimeoutMs
 } from '../../shared/orcad-idle-exit'
-import {
-  OrcadIdleExitMonitor,
-  type OrcadIdleExitEvidence,
-  type OrcadIdleProbe,
-  type OrcadIdleVerdict
-} from './orcad-idle-exit-monitor'
 
 export type OrcadManagedIdleExitConfig = { timeoutMs: number; activationRoot: string }
 
@@ -23,7 +25,7 @@ export type OrcadManagedIdleExitConfig = { timeoutMs: number; activationRoot: st
 export function resolveOrcadManagedIdleExit(
   env: NodeJS.ProcessEnv
 ): OrcadManagedIdleExitConfig | null {
-  const activationRoot = env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV]
+  const activationRoot = readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT')
   if (!activationRoot) {
     return null
   }

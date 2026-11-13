@@ -1,4 +1,4 @@
-import type { ApnsEnvironment } from '@orca-cloud/push-contract'
+import type { ApnsEnvironment } from '@coding-agent-cloud/push-contract'
 import { ApnsAuthenticationToken } from './apns-authentication-token.js'
 import type { ApnsTransport } from './apns-http2-transport.js'
 import type { ApnsCredentials } from './config.js'

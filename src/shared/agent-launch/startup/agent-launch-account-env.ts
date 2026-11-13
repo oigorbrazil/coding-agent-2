@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../app-env'
 /** Desktop account routing for terminal agents on WSL orcad hosts without account services: four variables, absolute POSIX paths (the shell pointer may use ~/). Structured-session homes remain host-derived. */
 
 import * as z from 'zod'
@@ -41,7 +42,7 @@ export const AgentLaunchAccountEnv = z.record(z.string(), z.string()).superRefin
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: [key], message: 'Invalid account path' })
     }
   }
-  const injected = env[CLAUDE_INJECTED_CONFIG_DIR_ENV]
+  const injected = readAppEnv(env, 'CLAUDE_INJECTED_CONFIG_DIR')
   if (injected !== undefined && injected !== env.CLAUDE_CONFIG_DIR) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

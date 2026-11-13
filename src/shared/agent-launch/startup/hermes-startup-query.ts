@@ -1,11 +1,12 @@
-import { encodePowerShellCommand } from '../../powershell-command-encoding'
 import {
+  type AgentStartupShell,
   buildShellCommandFromArgv,
   isPosixStartupShell,
   quoteStartupArg,
-  tokenizeStartupCommand,
-  type AgentStartupShell
+  tokenizeStartupCommand
 } from './tui-agent-startup-shell'
+import { appEnvPairs } from '../../app-env'
+import { encodePowerShellCommand } from '../../powershell-command-encoding'
 
 const QUERY_ENV_LIMIT = 24_000
 const QUERY_PLACEHOLDER = '__ORCA_HERMES_STARTUP_QUERY__'
@@ -147,7 +148,7 @@ function buildQueryCommand(argv: string[], shell: AgentStartupShell): string {
     )
     // Remove startup prompts from child-tool env; the long-lived parent retains transport env for compatibility.
     // PowerShell 5 requires native-Windows quote escaping before constructing argv.
-    const script = `$${POWERSHELL_QUERY_VARIABLE} = $env:${ORCA_HERMES_STARTUP_QUERY_ENV}; $${POWERSHELL_NATIVE_QUERY_VARIABLE} = $${POWERSHELL_QUERY_VARIABLE} -replace '(\\\\*)"', '$1$1\\"'; Remove-Item Env:${ORCA_HERMES_STARTUP_QUERY_ENV} -ErrorAction SilentlyContinue; ${invocation}`
+    const script = `$${POWERSHELL_QUERY_VARIABLE} = $(if (Test-Path Env:CODING_AGENT_HERMES_STARTUP_QUERY) { $env:CODING_AGENT_HERMES_STARTUP_QUERY } else { $env:ORCA_HERMES_STARTUP_QUERY }); $${POWERSHELL_NATIVE_QUERY_VARIABLE} = $${POWERSHELL_QUERY_VARIABLE} -replace '(\\\\*)"', '$1$1\\"'; Remove-Item Env:CODING_AGENT_HERMES_STARTUP_QUERY,Env:ORCA_HERMES_STARTUP_QUERY -ErrorAction SilentlyContinue; ${invocation}`
     return `powershell.exe -NoProfile -EncodedCommand ${encodePowerShellCommand(script)}`
   }
   const invocation = buildShellCommandFromArgv(argv, 'posix').replace(
@@ -156,7 +157,7 @@ function buildQueryCommand(argv: string[], shell: AgentStartupShell): string {
   )
   const encodedInvocation = encodePosixEvalScript(invocation)
   // Keep the wrapper single-quote-safe for POSIX/pwsh; decode dynamic argv only inside known sh grammar.
-  const script = `${POSIX_QUERY_VARIABLE}="\${${ORCA_HERMES_STARTUP_QUERY_ENV}}"; unset ${ORCA_HERMES_STARTUP_QUERY_ENV}; eval "$(printf %b "${encodedInvocation}")"`
+  const script = `${POSIX_QUERY_VARIABLE}="\${CODING_AGENT_HERMES_STARTUP_QUERY-$ORCA_HERMES_STARTUP_QUERY}"; unset CODING_AGENT_HERMES_STARTUP_QUERY ORCA_HERMES_STARTUP_QUERY; eval "$(printf %b "${encodedInvocation}")"`
   // Outer quoting is parsed by the typing shell, even though the body uses sh; octal payload escapes only happen to survive POSIX quoting in fish.
   return `sh -c ${quoteStartupArg(script, shell)}`
 }
@@ -182,7 +183,7 @@ export function planHermesStartupQuery(args: {
   const command = buildQueryCommand(argv, args.shell)
   const env = {
     ...args.agentEnv,
-    [ORCA_HERMES_STARTUP_QUERY_ENV]: args.prompt
+    ...appEnvPairs('HERMES_STARTUP_QUERY', args.prompt)
   }
   const envSize = Object.entries(env).reduce((total, [key, value]) => {
     if (args.platform === 'win32') {

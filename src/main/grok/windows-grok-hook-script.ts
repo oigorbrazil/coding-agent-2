@@ -1,5 +1,9 @@
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
 import { buildWindowsAgentHookPostCommand } from '../agent-hooks/installer-utils'
-import { buildWindowsHookEnvironmentGuardLines } from '../agent-hooks/hook-stdin-contract'
+import {
+  buildWindowsHookEndpointReloadLines,
+  buildWindowsHookEnvironmentGuardLines
+} from '../agent-hooks/hook-stdin-contract'
 
 /** Matches the envelope length cap used by the POSIX grok-hook branch. */
 export const GROK_HOME_ENVELOPE_MAX_LENGTH = 4096
@@ -14,7 +18,8 @@ export function buildWindowsGrokHookScript(): string {
     '@echo off',
     // Inherited delayed expansion would consume literal ! characters in Windows paths and pane identity.
     'setlocal DisableDelayedExpansion',
-    'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+    ...windowsAppEnvRestore(['AGENT_HOOK_ENDPOINT']),
+    ...buildWindowsHookEndpointReloadLines(),
     ...buildWindowsHookEnvironmentGuardLines(),
     'set "ORCA_GROK_HOME="',
     'if not defined GROK_HOME goto :orca_grok_home_ready',

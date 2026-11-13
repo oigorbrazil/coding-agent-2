@@ -23,7 +23,7 @@ async function editorPlugin(): Promise<string> {
 describe('orca plugin create --template editor', () => {
   it('writes the recipe: a session-based TypeScript editor in an isolated frame', async () => {
     const dir = await editorPlugin()
-    const manifest: unknown = JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
+    const manifest: unknown = JSON.parse(await readFile(join(dir, 'coding-plugin.json'), 'utf8'))
     expect(manifest).toMatchObject({
       engines: { orca: '>=1.4.248' },
       contributes: {

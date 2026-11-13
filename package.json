@@ -5,6 +5,7 @@
   "homepage": "https://github.com/oigorbrazil/coding-agent-2",
   "author": "oigorbrazil",
   "bin": {
+    "coding": "./out/cli/index.js",
     "orca": "./out/cli/index.js",
     "orca-dev": "./config/scripts/development/launch/orca-dev.mjs"
   },
@@ -226,13 +227,14 @@
     "check:process-host-imports": "node config/scripts/static-analysis/process-boundaries/check-process-host-imports.mjs",
     "check:main-sync-spawn-ratchet": "node config/scripts/static-analysis/process-boundaries/check-main-sync-spawn-ratchet.mjs",
     "check:compat-boundary-imports": "node config/scripts/static-analysis/process-boundaries/check-compat-boundary-imports.mjs",
-    "check:import-boundaries": "bun config/scripts/static-analysis/process-boundaries/check-import-boundaries.mjs"
+    "check:import-boundaries": "bun config/scripts/static-analysis/process-boundaries/check-import-boundaries.mjs",
+    "build:playbooks-editor": "vite build --config config/playbooks-editor/vite.config.mjs"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "0.3.284",
+    "@coding-agent/process-host": "workspace:*",
     "@floating-ui/dom": "1.8.0",
     "@linear/sdk": "^97.0.0",
-    "@orca/process-host": "workspace:*",
     "@parcel/watcher": "^2.5.6",
     "@xterm/addon-serialize": "0.15.0-beta.330",
     "@xterm/headless": "6.1.0-beta.334",
@@ -389,8 +391,8 @@
     "zustand": "^5.0.15"
   },
   "optionalDependencies": {
-    "@orca/windows-registry": "workspace:*",
-    "@orca/windows-security": "workspace:*",
+    "@coding-agent/windows-registry": "workspace:*",
+    "@coding-agent/windows-security": "workspace:*",
     "@vscode/windows-process-tree": "0.8.0",
     "sherpa-onnx-darwin-arm64": "1.12.37",
     "sherpa-onnx-darwin-x64": "1.12.37",

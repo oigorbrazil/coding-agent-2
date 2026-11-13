@@ -1,5 +1,5 @@
 import type { PopupCompatibilityStatus } from './browser-popup-compatibility-status'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { createServer } from 'node:http'
 import { createServer as createPortServer } from 'node:net'
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'

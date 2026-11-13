@@ -1,6 +1,6 @@
 
 import { afterEach, expect, it, vi } from 'vitest'
-import type { PushNotification } from '@orca-cloud/push-contract'
+import type { PushNotification } from '@coding-agent-cloud/push-contract'
 import { DurablePushStore } from './durable-push-store.js'
 import { DurablePushWorker } from './durable-push-worker.js'
 import { PushDispatcher } from './push-dispatcher.js'

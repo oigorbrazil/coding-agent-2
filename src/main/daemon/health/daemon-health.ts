@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { randomUUID } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { connect, type Socket } from 'node:net'
@@ -44,7 +45,7 @@ export function checkDaemonHealthWithCoverage(
     const fallbackCoverage = ptySpawnHealthPlatformCoverage()
     const resolveVerdict = (verdict: DaemonHealth): void =>
       resolve({ verdict, coverage: fallbackCoverage })
-    if (process.env[E2E_FORCE_DAEMON_HEALTH_UNREACHABLE_ENV] === '1') {
+    if (readAppEnv(process.env, 'E2E_FORCE_DAEMON_HEALTH_UNREACHABLE') === '1') {
       resolveVerdict('unreachable')
       return
     }

@@ -2,7 +2,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { afterEach, describe, expect, it } from 'vitest'
 import { createPluginFromTemplate } from '../../../../src/cli/plugin-authoring/plugin-create'
 

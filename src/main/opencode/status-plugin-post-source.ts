@@ -1,9 +1,10 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 export function getStatusPluginPostSource(hookPathname: string): string[] {
   return [
     'async function post(hookEventName, extraProperties) {',
     '  // Refresh endpoint coordinates per post after Coding Agent 2 restarts; per-PTY identity stays in process.env.',
     '  const coords = resolveHookCoords();',
-    '  const paneKey = process.env.ORCA_PANE_KEY;',
+    `  const paneKey = ${appEnvReadExpression('process.env', 'PANE_KEY')};`,
     '  if (!coords.port || !coords.token || !paneKey) return false;',
     '  const tmuxMatch = /^(.*),[0-9]+,[0-9]+$/.exec(process.env.TMUX || "");',
     '  const tmuxPane = process.env.TMUX_PANE;',
@@ -12,9 +13,9 @@ export function getStatusPluginPostSource(hookPathname: string): string[] {
     '  const body = JSON.stringify({',
     '    paneKey,',
     '    ...(tmuxMatch && /^%[0-9]+$/.test(tmuxPane || "") ? { tmux: { socket: tmuxMatch[1], pane: tmuxPane } } : {}),',
-    '    launchToken: process.env.ORCA_AGENT_LAUNCH_TOKEN || "",',
-    '    tabId: process.env.ORCA_TAB_ID || "",',
-    '    worktreeId: process.env.ORCA_WORKTREE_ID || "",',
+    `    launchToken: ${appEnvReadExpression('process.env', 'AGENT_LAUNCH_TOKEN')} || "",`,
+    `    tabId: ${appEnvReadExpression('process.env', 'TAB_ID')} || "",`,
+    `    worktreeId: ${appEnvReadExpression('process.env', 'WORKTREE_ID')} || "",`,
     '    env: coords.env,',
     '    version: coords.version,',
     // Mark only recognized OpenCode 2 setup contexts, never infer from binary version.

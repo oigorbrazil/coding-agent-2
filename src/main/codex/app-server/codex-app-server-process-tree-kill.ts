@@ -1,6 +1,6 @@
-import { spawnProcess } from '@orca/process-host'
-import type { ChildProcessHandle, ProcessSpec } from '@orca/process-host/process-spec'
-import { admitProcessTreeKill } from '@orca/process-host/process-tree-kill-gate'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { ChildProcessHandle, ProcessSpec } from '@coding-agent/process-host/process-spec'
+import { admitProcessTreeKill } from '@coding-agent/process-host/process-tree-kill-gate'
 
 /** Spawn seam for tests; production always goes through the hardened spawnProcess wrapper. */
 export type CodexAppServerSpawn = (

@@ -1,8 +1,10 @@
+import { fishAppEnvRestore } from '../../../shared/app-env-script'
+import type { ShellWrapperFile } from './shell-wrapper-file-writer'
+import { appEnvPairs } from '../../../shared/app-env'
 /** Use vendor_conf.d to restore XDG_DATA_DIRS and defer agent hooks until after user config. */
 import { getFishCodexShellLaunchPreflight } from '../../../shared/codex-shell-function'
 import { getFishClaudeShellFunction } from '../../../shared/claude-shell-function'
 import { MANAGED_DATA_ACCOUNT_FISH_RESTORE } from '../../../shared/managed-data-account-shell'
-import type { ShellWrapperFile } from './shell-wrapper-file-writer'
 
 /** Exactly what Coding Agent 2 prepended, so the snippet can remove that and nothing else. */
 export const FISH_XDG_DATA_DIRS_PREFIX_ENV = 'ORCA_FISH_XDG_DATA_DIRS_PREFIX'
@@ -39,7 +41,7 @@ export function getFishXdgDataDirsLaunchEnv(
   const prefix = inheritedXdgDataDirs ? dataDir : `${dataDir}:${XDG_DATA_DIRS_DEFAULT}`
   return {
     XDG_DATA_DIRS: inheritedXdgDataDirs ? `${prefix}:${inheritedXdgDataDirs}` : prefix,
-    [FISH_XDG_DATA_DIRS_PREFIX_ENV]: prefix
+    ...appEnvPairs('FISH_XDG_DATA_DIRS_PREFIX', prefix)
   }
 }
 
@@ -49,9 +51,10 @@ export function getFishVendorConfSnippet(): string {
   return `# Coding Agent 2-generated. Loaded only because Coding Agent 2 put this directory on
 # XDG_DATA_DIRS for one fish launch; the first thing it does is take it off.
 function __orca_fish_xdg_handoff
+${fishAppEnvRestore(['FISH_XDG_DATA_DIRS_PREFIX'])}
     set -q ${FISH_XDG_DATA_DIRS_PREFIX_ENV}; or return 0
     set -l prefix "$${FISH_XDG_DATA_DIRS_PREFIX_ENV}"
-    set -e -g ${FISH_XDG_DATA_DIRS_PREFIX_ENV}
+    set -e -g ${FISH_XDG_DATA_DIRS_PREFIX_ENV} CODING_AGENT_FISH_XDG_DATA_DIRS_PREFIX
     set -l dirs (string replace -- ":$prefix:" : ":$XDG_DATA_DIRS:")
     set dirs (string replace -r -a -- '^:|:$' '' "$dirs")
     if test -n "$dirs"

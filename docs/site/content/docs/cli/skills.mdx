@@ -1,6 +1,6 @@
 ---
 title: Coding Agent 2 skills registry & MCP
-description: Install Coding Agent 2 agent skills with npx skills add. Hybrid stubs stay thin; orca skills get serves the version-matched guide. Coding Agent 2 updates its own skills without npx.
+description: Install Coding Agent 2 agent skills with npx skills add. Hybrid stubs stay thin; coding skills get serves the version-matched guide. Coding Agent 2 updates its own skills without npx.
 keywords:
   - Coding Agent 2 skills
   - npx skills add
@@ -24,7 +24,7 @@ Use `npx skills add` with the public Coding Agent 2 repo and the skill name. Def
 | [`orca-cli`](#orca-cli)                             | `npx skills add https://github.com/stablyai/orca --skill orca-cli --global`               | Worktrees, terminals, files, automations, embedded browser.   |
 | [`orchestration`](#orchestration)                   | `npx skills add https://github.com/stablyai/orca --skill orchestration --global`          | Multi-agent Runs, tasks, supervised workers, messages, gates. |
 | [`orca-computer-use`](#orca-computer-use)           | `npx skills add https://github.com/stablyai/orca --skill orca-computer-use --global`      | Desktop apps via accessibility trees and safe UI actions.     |
-| [`orca-linear`](#orca-linear)                       | `npx skills add https://github.com/stablyai/orca --skill orca-linear --global`            | Linear ticket read/write through `orca linear`.               |
+| [`orca-linear`](#orca-linear)                       | `npx skills add https://github.com/stablyai/orca --skill orca-linear --global`            | Linear ticket read/write through `coding linear`.             |
 | [`orca-emulator`](#orca-emulator)                   | `npx skills add https://github.com/stablyai/orca --skill orca-emulator --global`          | iOS Simulator control.                                        |
 | [`orca-emulator-android`](#orca-emulator-android)   | `npx skills add https://github.com/stablyai/orca --skill orca-emulator-android --global`  | Android emulator/device via adb.                              |
 | [`orca-per-workspace-env`](#orca-per-workspace-env) | `npx skills add https://github.com/stablyai/orca --skill orca-per-workspace-env --global` | Per-workspace environment recipes (`orca.yaml`).              |
@@ -35,16 +35,16 @@ Use `npx skills add` with the public Coding Agent 2 repo and the skill name. Def
 After `npx skills add`, agents see a short stub that says:
 
 1. Resolve the CLI executable for this session (`ORCA_CLI_COMMAND`, `orca-dev`, Linux `orca-ide`, else `orca`).
-2. Load the full guide: `orca skills get <topic>` (or `--full` for the long guide).
+2. Load the full guide: `coding skills get <topic>` (or `--full` for the long guide).
 3. Prefer `--json` and do not invent flags from memory.
 
 ```bash
-orca skills list
-orca skills get orca-cli
-orca skills get orchestration --references
-orca skills get orchestration --reference recovery-and-cleanup
-orca skills get orchestration --full
-orca skills get orca-linear --json
+coding skills list
+coding skills get orca-cli
+coding skills get orchestration --references
+coding skills get orchestration --reference recovery-and-cleanup
+coding skills get orchestration --full
+coding skills get orca-linear --json
 ```
 
 A guide's action gates name conditional references. `--reference <name>` prints one of them alone, so an agent pays for the kernel plus that document instead of the whole package; `--references` lists the names. The name may be bare (`recovery-and-cleanup`) or spelled as the guide writes it (`references/recovery-and-cleanup.md`). `--full` still prints the kernel plus every reference.
@@ -62,17 +62,17 @@ When this Coding Agent 2 build ships a newer version of a skill you installed, t
 - Runs exactly the plan you reviewed: if a folder changed after you opened the dialog, that skill reports **Changed since you reviewed it** and nothing is written there.
 - Shows the result per skill, for example `Updated · 1 left alone: You've changed this copy`, and a status-bar segment while it runs.
 
-This covers skills installed on this computer. The app does not check WSL projects, SSH hosts or paired Coding Agent 2 servers yet; run `orca skills update` there.
+This covers skills installed on this computer. The app does not check WSL projects, SSH hosts or paired Coding Agent 2 servers yet; run `coding skills update` there.
 
-On headless hosts (SSH, containers, CI, `orca serve`) use the CLI. It runs the same planner on the machine that runs it and does **not** need a running Coding Agent 2 app:
+On headless hosts (SSH, containers, CI, `coding serve`) use the CLI. It runs the same planner on the machine that runs it and does **not** need a running Coding Agent 2 app:
 
 ```bash
-orca skills install                                      # list installable names
-orca skills install --skill orca-cli --skill orchestration
-orca skills install --skill orca-cli --agent claude,codex
-orca skills update --all --dry-run                       # what would change, and the plan digest
-orca skills update --all
-orca skills update --all --force                         # also replace copies left alone (backup kept)
+coding skills install                                      # list installable names
+coding skills install --skill orca-cli --skill orchestration
+coding skills install --skill orca-cli --agent claude,codex
+coding skills update --all --dry-run                       # what would change, and the plan digest
+coding skills update --all
+coding skills update --all --force                         # also replace copies left alone (backup kept)
 ```
 
 - Default scope is **global**; pass `--local` for the current project only (Coding Agent 2 links only into agent folders the project already has).
@@ -96,8 +96,8 @@ Anyone with an active link can inspect and install the shared skills without sig
 Agents can publish an explicitly named set from the CLI after you enable the separate, default-off **Settings → Share Skills → Allow agents and the Coding Agent 2 CLI to publish skill links** permission:
 
 ```bash
-orca skills installed --json
-orca skills share --skill frontend --skill testing --bundle-name "Team Toolkit" --json
+coding skills installed --json
+coding skills share --skill frontend --skill testing --bundle-name "Team Toolkit" --json
 ```
 
 `skills installed` returns safe selectors without exposing local paths. `skills share` accepts exact discovery IDs or unambiguous names; it does not accept arbitrary paths or `--all`.
@@ -108,7 +108,7 @@ orca skills share --skill frontend --skill testing --bundle-name "Team Toolkit" 
 npx skills add https://github.com/stablyai/orca --skill orca-cli --global
 ```
 
-After install, load the version-matched command guide with `orca skills get orca-cli`. See [Coding Agent 2 CLI](/docs/cli/overview).
+After install, load the version-matched command guide with `coding skills get orca-cli`. See [Coding Agent 2 CLI](/docs/cli/overview).
 
 ## orchestration
 
@@ -116,7 +116,7 @@ After install, load the version-matched command guide with `orca skills get orca
 npx skills add https://github.com/stablyai/orca --skill orchestration --global
 ```
 
-Use this when an agent should coordinate other agents through Runs, tasks, supervised workers, and decision gates. See [Orchestration](/docs/cli/orchestration). Always load `orca skills get orchestration --full` before mutating orchestration state — the legacy `orchestration run` command is retired.
+Use this when an agent should coordinate other agents through Runs, tasks, supervised workers, and decision gates. See [Orchestration](/docs/cli/orchestration). Always load `coding skills get orchestration --full` before mutating orchestration state — the legacy `orchestration run` command is retired.
 
 <span id="computer-use" />
 
@@ -134,7 +134,7 @@ Use this when an agent needs to inspect and operate local desktop app windows. S
 npx skills add https://github.com/stablyai/orca --skill orca-linear --global
 ```
 
-Agents should load `orca skills get orca-linear` before mutating tickets. Covers `issue --full`, `save-issue`, `list-issues`, relations, completion attach+comment flow, and untrusted-ticket rules. Existing `linear-tickets` installs still resolve. See [CLI reference → Linear](/docs/cli/reference#linear).
+Agents should load `coding skills get orca-linear` before mutating tickets. Covers `issue --full`, `save-issue`, `list-issues`, relations, completion attach+comment flow, and untrusted-ticket rules. Existing `linear-tickets` installs still resolve. See [CLI reference → Linear](/docs/cli/reference#linear).
 
 ## orca-emulator
 
@@ -142,7 +142,7 @@ Agents should load `orca skills get orca-linear` before mutating tickets. Covers
 npx skills add https://github.com/stablyai/orca --skill orca-emulator --global
 ```
 
-Use this when an agent should control an iOS Simulator from inside Coding Agent 2 through `orca emulator` commands.
+Use this when an agent should control an iOS Simulator from inside Coding Agent 2 through `coding emulator` commands.
 
 ## orca-emulator-android
 
@@ -150,7 +150,7 @@ Use this when an agent should control an iOS Simulator from inside Coding Agent 
 npx skills add https://github.com/stablyai/orca --skill orca-emulator-android --global
 ```
 
-Use for adb-connected Android AVDs/devices: list/boot, tap/swipe/type, hardware buttons, install/launch, permissions, accessibility tree, logcat. Load details with `orca skills get orca-emulator-android`.
+Use for adb-connected Android AVDs/devices: list/boot, tap/swipe/type, hardware buttons, install/launch, permissions, accessibility tree, logcat. Load details with `coding skills get orca-emulator-android`.
 
 ## orca-per-workspace-env
 
@@ -166,7 +166,7 @@ Use when setting up or debugging per-workspace environment recipes in `orca.yaml
 npx skills add https://github.com/stablyai/orca --skill orca-plugin-authoring --global
 ```
 
-Use when an agent should make, debug, test or publish a Coding Agent 2 plugin: themes, syntaxes, custom editors, TSX components panels and worker commands. Load it with `orca skills get orca-plugin-authoring`; its references (components, host API, events, manifest fields, CLI) are generated from the running Coding Agent 2.
+Use when an agent should make, debug, test or publish a Coding Agent 2 plugin: themes, syntaxes, custom editors, TSX components panels and worker commands. Load it with `coding skills get orca-plugin-authoring`; its references (components, host API, events, manifest fields, CLI) are generated from the running Coding Agent 2.
 
 ## Discovery sources
 

@@ -1,6 +1,6 @@
 /** A detached login-shell probe gets no terminal signals, so its owner ends it: on timeout and when the owner exits. */
-import type { SpawnedProcess } from '@orca/process-host/process-spec'
-import { signalProcessTree } from '@orca/process-host/process-tree-termination'
+import type { SpawnedProcess } from '@coding-agent/process-host/process-spec'
+import { signalProcessTree } from '@coding-agent/process-host/process-tree-termination'
 
 export type ShellProbeLifetime = {
   /** SIGKILL the probe and everything its rc started, even once the shell itself has exited. */

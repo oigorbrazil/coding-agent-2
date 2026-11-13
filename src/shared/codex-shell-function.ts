@@ -1,3 +1,5 @@
+import { appEnvKeys } from './app-env'
+import { fishAppEnvRestore, posixAppEnvRestore } from './app-env-script'
 import {
   CODEX_REMOTE_VIEWER_SSH_CONNECTION,
   REMOTE_VIEWER_CLIPBOARD_ENV
@@ -11,16 +13,24 @@ const CODEX_SHARED_SERVER_ARG_PATTERN = argPattern(CODEX_SHARED_SERVER_ARGS)
 const CODEX_NO_DAEMON_SKIP_ARG_PATTERN = argPattern(CODEX_NO_DAEMON_SKIP_ARGS)
 
 /** Restore nonsecret Coding Agent 2 caller identity stripped by inherit=core (#25775). set overrides inherit/exclude but include_only still wins; never send tokens through locally readable argv. */
-export const CODEX_COMMAND_IDENTITY_ENV_KEYS = [
+export const CODEX_COMMAND_IDENTITY_ENV_KEYS = appEnvKeys([
   'ORCA_TERMINAL_HANDLE',
   'ORCA_PANE_KEY',
   'ORCA_WORKTREE_ID',
   'ORCA_WORKSPACE_ID',
   'ORCA_USER_DATA_PATH'
-] as const
+])
 
 // Blank Coding Agent 2's clipboard marker for commands Codex runs: agy reads SSH_CONNECTION as a remote host and ignores its local login (#37723).
 // Why set, not exclude: -c exclude would replace the user's own exclude list. Real SSH never reports port 0.
+const identityEnvNames = [
+  ...CODEX_COMMAND_IDENTITY_ENV_KEYS.filter((key) => key.startsWith('ORCA_')).map((key) =>
+    key.slice(5)
+  ),
+  'REMOTE_VIEWER_CLIPBOARD',
+  'CODEX_LAUNCH_PREFLIGHT'
+]
+
 const CLEAR_SSH_MARKER_ARG = "shell_environment_policy.set.SSH_CONNECTION=''"
 
 // Skip apostrophes: TOML literals cannot hold them and Codex parse fallback may truncate paths; missing identity is safer than wrong identity.
@@ -28,7 +38,8 @@ const identitySetArg = (key: string, value: string): string =>
   `shell_environment_policy.set.${key}='${value}'`
 
 export function getPosixCodexShellLaunchPreflight(): string {
-  return `# Why: a typed alias expands inside the shell, after pane launch prep.
+  return `${posixAppEnvRestore(identityEnvNames)}
+# Why: a typed alias expands inside the shell, after pane launch prep.
 # Why unalias inside the substitution: an alias named codex makes command -v
 # report the alias text, and the subshell leaves the user's own alias intact.
 # Why || : twice — zsh alone aborts inside the substitution, but every shell's
@@ -44,8 +55,8 @@ if ! typeset -f codex >/dev/null 2>&1 && [[ -n "\${__orca_codex_binary:-}" && -x
     if [[ "\${${REMOTE_VIEWER_CLIPBOARD_ENV}:-}" == 1 && -z "\${SSH_CONNECTION+x}" && -z "\${SSH_TTY+x}" ]]; then
       local -x SSH_CONNECTION='${CODEX_REMOTE_VIEWER_SSH_CONNECTION}'
     fi
-    if [[ -n "\${ORCA_CODEX_LAUNCH_PREFLIGHT:-}" && -x "\${ORCA_CODEX_LAUNCH_PREFLIGHT}" ]]; then
-      "\${ORCA_CODEX_LAUNCH_PREFLIGHT}" agent hooks prepare-codex >/dev/null 2>&1 || :
+    if [[ -n "\${CODING_AGENT_CODEX_LAUNCH_PREFLIGHT-\${ORCA_CODEX_LAUNCH_PREFLIGHT:-}}" && -x "\${CODING_AGENT_CODEX_LAUNCH_PREFLIGHT-\${ORCA_CODEX_LAUNCH_PREFLIGHT}}" ]]; then
+      "\${CODING_AGENT_CODEX_LAUNCH_PREFLIGHT-\${ORCA_CODEX_LAUNCH_PREFLIGHT}}" agent hooks prepare-codex >/dev/null 2>&1 || :
     fi
     for __orca_codex_arg in "$@"; do
       case "$__orca_codex_arg" in
@@ -69,7 +80,8 @@ unset __orca_codex_binary
 }
 
 export function getFishCodexShellLaunchPreflight(): string {
-  return `# Why captured: an unquoted (type -t codex) expands to zero words when codex is
+  return `${fishAppEnvRestore(identityEnvNames)}
+# Why captured: an unquoted (type -t codex) expands to zero words when codex is
 # absent, leaving "test = file" — fish then errors instead of failing closed.
 # Quoting in place is not the fix; fish never substitutes inside double quotes.
 set -l __orca_codex_type (type -t codex 2>/dev/null)
@@ -100,7 +112,8 @@ set -e __orca_codex_type`
 
 // Keep the identity loop compact to share PowerShell’s command-line budget with startup commands.
 export function getPowerShellCodexShellLaunchPreflight(): string {
-  return `$orcaCodexCommand = Get-Command codex -ErrorAction SilentlyContinue | Select-Object -First 1
+  return `${identityEnvNames.map((name) => `if (Test-Path Env:CODING_AGENT_${name}) { $env:ORCA_${name} = $env:CODING_AGENT_${name} } elseif (Test-Path Env:ORCA_${name}) { $env:CODING_AGENT_${name} = $env:ORCA_${name} }`).join('\n')}
+$orcaCodexCommand = Get-Command codex -ErrorAction SilentlyContinue | Select-Object -First 1
 if ($orcaCodexCommand -and
     $orcaCodexCommand.CommandType -in @("Application", "ExternalScript")) {
     function Global:codex {
@@ -112,9 +125,9 @@ if ($orcaCodexCommand -and
         }
         $orcaCodexFlags = @()
         # Why try/catch: under the user's $ErrorActionPreference = 'Stop', a failing prep or probe must not abort the launch.
-        if ($env:ORCA_CODEX_LAUNCH_PREFLIGHT) {
+        if ($(if (Test-Path Env:CODING_AGENT_CODEX_LAUNCH_PREFLIGHT) { $env:CODING_AGENT_CODEX_LAUNCH_PREFLIGHT } else { $env:ORCA_CODEX_LAUNCH_PREFLIGHT })) {
             try {
-                & $env:ORCA_CODEX_LAUNCH_PREFLIGHT agent hooks prepare-codex *> $null
+                & $(if (Test-Path Env:CODING_AGENT_CODEX_LAUNCH_PREFLIGHT) { $env:CODING_AGENT_CODEX_LAUNCH_PREFLIGHT } else { $env:ORCA_CODEX_LAUNCH_PREFLIGHT }) agent hooks prepare-codex *> $null
             } catch {
             }
         }

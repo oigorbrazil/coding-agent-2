@@ -24,7 +24,7 @@ function userDataWithProfiles(
   roots.push(root)
   mkdirSync(join(root, 'profiles'), { recursive: true })
   writeFileSync(
-    join(root, 'orca-profile-index.json'),
+    join(root, 'coding-profile-index.json'),
     JSON.stringify({
       activeProfileId,
       profiles: profiles.map(({ id }) => ({
@@ -41,10 +41,10 @@ function userDataWithProfiles(
   for (const profile of profiles) {
     mkdirSync(join(root, 'profiles', profile.id), { recursive: true })
     if (profile.raw !== undefined) {
-      writeFileSync(join(root, 'profiles', profile.id, 'orca-data.json'), profile.raw)
+      writeFileSync(join(root, 'profiles', profile.id, 'coding-data.json'), profile.raw)
     } else if (profile.state !== undefined) {
       writeFileSync(
-        join(root, 'profiles', profile.id, 'orca-data.json'),
+        join(root, 'profiles', profile.id, 'coding-data.json'),
         JSON.stringify(profile.state)
       )
     }
@@ -93,7 +93,7 @@ describe('getOtherProfileWorktreeIdsForHistoryGc', () => {
         { id: 'active', state: {} },
         { id: 'other', ...(hasJson ? { state } : {}) }
       ])
-      const dataFile = join(root, 'profiles', 'other', 'orca-data.json')
+      const dataFile = join(root, 'profiles', 'other', 'coding-data.json')
       const exportPath = `${dataFile}.sqlite-export.1.json`
       const exportJson = JSON.stringify({ worktreeMeta: { 'repo::/export': {} } })
       writeFileSync(exportPath, exportJson)

@@ -5,7 +5,7 @@ import {
   speechFeed,
   tearDown,
   toggleRecording
-} from '@orca/expo-two-way-audio'
+} from '@coding-agent/expo-two-way-audio'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import { BRIDGE_AUDIO_INTERRUPTIONS } from '../mobile-web-shell/bridge/bridge-audio-verbs'
 import { createMicrophoneScreenLock } from './microphone-screen-lock'

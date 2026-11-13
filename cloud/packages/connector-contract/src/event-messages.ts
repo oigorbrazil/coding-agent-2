@@ -1,4 +1,4 @@
-import { EpochMsSchema, OpaqueIdSchema, SequenceSchema } from '@orca-cloud/push-contract'
+import { EpochMsSchema, OpaqueIdSchema, SequenceSchema } from '@coding-agent-cloud/push-contract'
 import { z } from 'zod'
 import { CONNECTOR_LIMITS } from './connector-limits.js'
 import { ConnectorConversationSchema } from './connector-wire-scalars.js'

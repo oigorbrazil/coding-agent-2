@@ -1,6 +1,7 @@
+import { readAppEnv } from '../../shared/app-env'
 import { app } from 'electron'
 import { dirname, resolve } from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { applyBackgroundActivationPolicy } from './foreground-activation-policy'
 
 /** macOS 27 LaunchServices routes opens to the first registered bundle instance, even an SSH-started sidecar. Hand them to a fresh desktop instance instead of revealing the sidecar profile. */
@@ -46,7 +47,7 @@ function launchDesktopInstance(args: readonly string[], executablePath: string |
 
 function isAutomatedLaunch(env: Readonly<Record<string, string | undefined>>): boolean {
   return (
-    env.ORCA_BACKGROUND_LAUNCH === '1' ||
+    readAppEnv(env, 'BACKGROUND_LAUNCH') === '1' ||
     Object.keys(env).some((key) => key.startsWith('ORCA_E2E_') && Boolean(env[key]))
   )
 }

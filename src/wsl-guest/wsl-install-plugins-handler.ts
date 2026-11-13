@@ -1,14 +1,12 @@
+import { type PluginOverlayManager, getRelayOpenCodePluginPath } from './plugin-overlay'
+import { readAppEnv } from '../shared/app-env'
 // Cache host-shipped sources and install guest overlays without binding the hook listener.
 import { existsSync } from 'node:fs'
 
-import { getRelayOpenCodePluginPath, type PluginOverlayManager } from './plugin-overlay'
 import { resolveOpenCodeSourceConfigDir } from './plugin-overlay-env'
 import { resolveOpenCodeConfigDirectory } from '../shared/opencode-config-directory'
 import { assertPluginSourceUnderByteCap } from './plugin-source-limit'
-import {
-  sanitizeWslHookInstanceKey,
-  WSL_HOOK_RELAY_INSTANCE_ENV
-} from '../shared/wsl-hook-relay-contract'
+import { sanitizeWslHookInstanceKey } from '../shared/wsl-hook-relay-contract'
 
 export type InstallPluginsResult = {
   installed: {
@@ -90,7 +88,7 @@ export function createInstallPluginsHandler(
         opencodeDir = cached.dir
       } else {
         const overlayId =
-          sanitizeWslHookInstanceKey(env[WSL_HOOK_RELAY_INSTANCE_ENV]) ?? 'wsl-opencode'
+          sanitizeWslHookInstanceKey(readAppEnv(env, 'WSL_HOOK_INSTANCE')) ?? 'wsl-opencode'
         // Write failure falls back to guest config without status; never pass a Windows overlay path into WSL.
         opencodeDir = pluginOverlay.materializeOpenCode(overlayId, existingSourceDir) ?? undefined
         materialized =
@@ -116,7 +114,7 @@ export function createInstallPluginsHandler(
         opencode2Dir = cached.dir
       } else {
         const overlayId =
-          sanitizeWslHookInstanceKey(env[WSL_HOOK_RELAY_INSTANCE_ENV]) ?? 'wsl-opencode2'
+          sanitizeWslHookInstanceKey(readAppEnv(env, 'WSL_HOOK_INSTANCE')) ?? 'wsl-opencode2'
         opencode2Dir = pluginOverlay.materializeOpenCode2(overlayId, existingSourceDir) ?? undefined
         materialized2 =
           opencode2Dir && incoming !== null
@@ -159,7 +157,7 @@ export function createInstallPluginsHandler(
     )
     const startupPromptInstalled = promptInstallResults.every(Boolean)
     const claude = pluginOverlay.claudeAgentView.materialize(
-      env[WSL_HOOK_RELAY_INSTANCE_ENV] ?? 'wsl-claude',
+      readAppEnv(env, 'WSL_HOOK_INSTANCE') ?? 'wsl-claude',
       env.CLAUDE_CONFIG_DIR
     )
     return {

@@ -11,7 +11,6 @@ type StoreState = {
   closeMobilePage: () => void
   orcaProfileAuthStatus: { state: 'connected' | 'local' }
   settings: {
-    showMobileButton: boolean
     mobilePairingConnectionMode?: MobilePairingConnectionMode
     mobilePairingCustomAddress?: string | null
     mobilePairingCustomAddresses?: string[]
@@ -91,7 +90,7 @@ describe('MobilePage pairing connection mode', () => {
     mocks.storeState = {
       closeMobilePage: vi.fn(),
       orcaProfileAuthStatus: { state: 'connected' },
-      settings: { showMobileButton: true },
+      settings: {},
       updateSettings: vi.fn().mockResolvedValue(undefined),
       fetchOrcaProfileAuthStatus: vi.fn().mockResolvedValue(null)
     }

@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { build } from 'vite'
 import { expect, it } from 'vitest'
 import { z } from 'zod'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveElectronProbeLaunch } from '../../src/main/browser/electron-fixtures/electron-probe-display-launch'
 import { createElectronHomeIsolation } from './helpers/electron-home-isolation'
 

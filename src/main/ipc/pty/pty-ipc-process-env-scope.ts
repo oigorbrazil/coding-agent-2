@@ -1,19 +1,20 @@
+import { readAppEnv, deleteAppEnv, setAppEnv } from '../../../shared/app-env'
 // Split suites rewrite platform and agent-home environment; capture and restore the host values.
 export function createPtyIpcProcessEnvScope() {
   const savedOpenCodeConfigDir = process.env.OPENCODE_CONFIG_DIR
-  const savedOrcaOpenCodeConfigDir = process.env.ORCA_OPENCODE_CONFIG_DIR
-  const savedOrcaOpenCodeSourceConfigDir = process.env.ORCA_OPENCODE_SOURCE_CONFIG_DIR
+  const savedOrcaOpenCodeConfigDir = readAppEnv(process.env, 'OPENCODE_CONFIG_DIR')
+  const savedOrcaOpenCodeSourceConfigDir = readAppEnv(process.env, 'OPENCODE_SOURCE_CONFIG_DIR')
   const savedPiAgentDir = process.env.PI_CODING_AGENT_DIR
-  const savedOrcaPiAgentDir = process.env.ORCA_PI_CODING_AGENT_DIR
-  const savedOrcaPiSourceAgentDir = process.env.ORCA_PI_SOURCE_AGENT_DIR
-  const savedOrcaCodexHome = process.env.ORCA_CODEX_HOME
-  const savedOrcaOmpAgentDir = process.env.ORCA_OMP_CODING_AGENT_DIR
-  const savedOrcaOmpSourceAgentDir = process.env.ORCA_OMP_SOURCE_AGENT_DIR
-  const savedOrcaOmpStatusExtension = process.env.ORCA_OMP_STATUS_EXTENSION
+  const savedOrcaPiAgentDir = readAppEnv(process.env, 'PI_CODING_AGENT_DIR')
+  const savedOrcaPiSourceAgentDir = readAppEnv(process.env, 'PI_SOURCE_AGENT_DIR')
+  const savedOrcaCodexHome = readAppEnv(process.env, 'CODEX_HOME')
+  const savedOrcaOmpAgentDir = readAppEnv(process.env, 'OMP_CODING_AGENT_DIR')
+  const savedOrcaOmpSourceAgentDir = readAppEnv(process.env, 'OMP_SOURCE_AGENT_DIR')
+  const savedOrcaOmpStatusExtension = readAppEnv(process.env, 'OMP_STATUS_EXTENSION')
   const savedPrimeAgentDir = process.env.PRIME_AGENT_CODING_AGENT_DIR
-  const savedOrcaPrimeAgentSourceDir = process.env.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR
-  const savedOrcaPrimeAgentStatusExtension = process.env.ORCA_PRIME_AGENT_STATUS_EXTENSION
-  const savedOrcaClaudeAgentStatusSettings = process.env.ORCA_CLAUDE_AGENT_STATUS_SETTINGS
+  const savedOrcaPrimeAgentSourceDir = readAppEnv(process.env, 'PRIME_AGENT_SOURCE_AGENT_DIR')
+  const savedOrcaPrimeAgentStatusExtension = readAppEnv(process.env, 'PRIME_AGENT_STATUS_EXTENSION')
+  const savedOrcaClaudeAgentStatusSettings = readAppEnv(process.env, 'CLAUDE_AGENT_STATUS_SETTINGS')
   const savedProcessPlatform = Object.getOwnPropertyDescriptor(process, 'platform')
   const savedDisableMacosLoginShell = process.env.ORCA_DISABLE_MACOS_LOGIN_SHELL
   const savedOrcaUserDataPath = process.env.ORCA_USER_DATA_PATH
@@ -27,20 +28,20 @@ export function createPtyIpcProcessEnvScope() {
     // Disable the TCC argv wrapper except in its dedicated tests.
     process.env.ORCA_DISABLE_MACOS_LOGIN_SHELL = '1'
     delete process.env.OPENCODE_CONFIG_DIR
-    delete process.env.ORCA_OPENCODE_SOURCE_CONFIG_DIR
-    delete process.env.ORCA_OPENCODE_CONFIG_DIR
-    delete process.env.ORCA_AGENT_HOOK_ENDPOINT
-    delete process.env.ORCA_CLAUDE_AGENT_STATUS_SETTINGS
+    deleteAppEnv(process.env, 'OPENCODE_SOURCE_CONFIG_DIR')
+    deleteAppEnv(process.env, 'OPENCODE_CONFIG_DIR')
+    deleteAppEnv(process.env, 'AGENT_HOOK_ENDPOINT')
+    deleteAppEnv(process.env, 'CLAUDE_AGENT_STATUS_SETTINGS')
     delete process.env.PI_CODING_AGENT_DIR
-    delete process.env.ORCA_PI_SOURCE_AGENT_DIR
-    delete process.env.ORCA_PI_CODING_AGENT_DIR
-    delete process.env.ORCA_CODEX_HOME
-    delete process.env.ORCA_OMP_SOURCE_AGENT_DIR
-    delete process.env.ORCA_OMP_CODING_AGENT_DIR
-    delete process.env.ORCA_OMP_STATUS_EXTENSION
+    deleteAppEnv(process.env, 'PI_SOURCE_AGENT_DIR')
+    deleteAppEnv(process.env, 'PI_CODING_AGENT_DIR')
+    deleteAppEnv(process.env, 'CODEX_HOME')
+    deleteAppEnv(process.env, 'OMP_SOURCE_AGENT_DIR')
+    deleteAppEnv(process.env, 'OMP_CODING_AGENT_DIR')
+    deleteAppEnv(process.env, 'OMP_STATUS_EXTENSION')
     delete process.env.PRIME_AGENT_CODING_AGENT_DIR
-    delete process.env.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR
-    delete process.env.ORCA_PRIME_AGENT_STATUS_EXTENSION
+    deleteAppEnv(process.env, 'PRIME_AGENT_SOURCE_AGENT_DIR')
+    deleteAppEnv(process.env, 'PRIME_AGENT_STATUS_EXTENSION')
   }
 
   function restoreProcessEnv() {
@@ -53,9 +54,9 @@ export function createPtyIpcProcessEnvScope() {
       delete process.env.ORCA_DISABLE_MACOS_LOGIN_SHELL
     }
     if (savedOrcaUserDataPath !== undefined) {
-      process.env.ORCA_USER_DATA_PATH = savedOrcaUserDataPath
+      setAppEnv(process.env, 'USER_DATA_PATH', savedOrcaUserDataPath)
     } else {
-      delete process.env.ORCA_USER_DATA_PATH
+      deleteAppEnv(process.env, 'USER_DATA_PATH')
     }
     if (savedOpenCodeConfigDir !== undefined) {
       process.env.OPENCODE_CONFIG_DIR = savedOpenCodeConfigDir
@@ -63,14 +64,14 @@ export function createPtyIpcProcessEnvScope() {
       delete process.env.OPENCODE_CONFIG_DIR
     }
     if (savedOrcaOpenCodeConfigDir !== undefined) {
-      process.env.ORCA_OPENCODE_CONFIG_DIR = savedOrcaOpenCodeConfigDir
+      setAppEnv(process.env, 'OPENCODE_CONFIG_DIR', savedOrcaOpenCodeConfigDir)
     } else {
-      delete process.env.ORCA_OPENCODE_CONFIG_DIR
+      deleteAppEnv(process.env, 'OPENCODE_CONFIG_DIR')
     }
     if (savedOrcaOpenCodeSourceConfigDir !== undefined) {
-      process.env.ORCA_OPENCODE_SOURCE_CONFIG_DIR = savedOrcaOpenCodeSourceConfigDir
+      setAppEnv(process.env, 'OPENCODE_SOURCE_CONFIG_DIR', savedOrcaOpenCodeSourceConfigDir)
     } else {
-      delete process.env.ORCA_OPENCODE_SOURCE_CONFIG_DIR
+      deleteAppEnv(process.env, 'OPENCODE_SOURCE_CONFIG_DIR')
     }
     if (savedPiAgentDir !== undefined) {
       process.env.PI_CODING_AGENT_DIR = savedPiAgentDir
@@ -78,34 +79,34 @@ export function createPtyIpcProcessEnvScope() {
       delete process.env.PI_CODING_AGENT_DIR
     }
     if (savedOrcaPiAgentDir !== undefined) {
-      process.env.ORCA_PI_CODING_AGENT_DIR = savedOrcaPiAgentDir
+      setAppEnv(process.env, 'PI_CODING_AGENT_DIR', savedOrcaPiAgentDir)
     } else {
-      delete process.env.ORCA_PI_CODING_AGENT_DIR
+      deleteAppEnv(process.env, 'PI_CODING_AGENT_DIR')
     }
     if (savedOrcaPiSourceAgentDir === undefined) {
-      delete process.env.ORCA_PI_SOURCE_AGENT_DIR
+      deleteAppEnv(process.env, 'PI_SOURCE_AGENT_DIR')
     } else {
-      process.env.ORCA_PI_SOURCE_AGENT_DIR = savedOrcaPiSourceAgentDir
+      setAppEnv(process.env, 'PI_SOURCE_AGENT_DIR', savedOrcaPiSourceAgentDir)
     }
     if (savedOrcaCodexHome === undefined) {
-      delete process.env.ORCA_CODEX_HOME
+      deleteAppEnv(process.env, 'CODEX_HOME')
     } else {
-      process.env.ORCA_CODEX_HOME = savedOrcaCodexHome
+      setAppEnv(process.env, 'CODEX_HOME', savedOrcaCodexHome)
     }
     if (savedOrcaOmpAgentDir !== undefined) {
-      process.env.ORCA_OMP_CODING_AGENT_DIR = savedOrcaOmpAgentDir
+      setAppEnv(process.env, 'OMP_CODING_AGENT_DIR', savedOrcaOmpAgentDir)
     } else {
-      delete process.env.ORCA_OMP_CODING_AGENT_DIR
+      deleteAppEnv(process.env, 'OMP_CODING_AGENT_DIR')
     }
     if (savedOrcaOmpSourceAgentDir !== undefined) {
-      process.env.ORCA_OMP_SOURCE_AGENT_DIR = savedOrcaOmpSourceAgentDir
+      setAppEnv(process.env, 'OMP_SOURCE_AGENT_DIR', savedOrcaOmpSourceAgentDir)
     } else {
-      delete process.env.ORCA_OMP_SOURCE_AGENT_DIR
+      deleteAppEnv(process.env, 'OMP_SOURCE_AGENT_DIR')
     }
     if (savedOrcaOmpStatusExtension !== undefined) {
-      process.env.ORCA_OMP_STATUS_EXTENSION = savedOrcaOmpStatusExtension
+      setAppEnv(process.env, 'OMP_STATUS_EXTENSION', savedOrcaOmpStatusExtension)
     } else {
-      delete process.env.ORCA_OMP_STATUS_EXTENSION
+      deleteAppEnv(process.env, 'OMP_STATUS_EXTENSION')
     }
     if (savedPrimeAgentDir !== undefined) {
       process.env.PRIME_AGENT_CODING_AGENT_DIR = savedPrimeAgentDir
@@ -113,19 +114,19 @@ export function createPtyIpcProcessEnvScope() {
       delete process.env.PRIME_AGENT_CODING_AGENT_DIR
     }
     if (savedOrcaPrimeAgentSourceDir !== undefined) {
-      process.env.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR = savedOrcaPrimeAgentSourceDir
+      setAppEnv(process.env, 'PRIME_AGENT_SOURCE_AGENT_DIR', savedOrcaPrimeAgentSourceDir)
     } else {
-      delete process.env.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR
+      deleteAppEnv(process.env, 'PRIME_AGENT_SOURCE_AGENT_DIR')
     }
     if (savedOrcaPrimeAgentStatusExtension !== undefined) {
-      process.env.ORCA_PRIME_AGENT_STATUS_EXTENSION = savedOrcaPrimeAgentStatusExtension
+      setAppEnv(process.env, 'PRIME_AGENT_STATUS_EXTENSION', savedOrcaPrimeAgentStatusExtension)
     } else {
-      delete process.env.ORCA_PRIME_AGENT_STATUS_EXTENSION
+      deleteAppEnv(process.env, 'PRIME_AGENT_STATUS_EXTENSION')
     }
     if (savedOrcaClaudeAgentStatusSettings === undefined) {
-      delete process.env.ORCA_CLAUDE_AGENT_STATUS_SETTINGS
+      deleteAppEnv(process.env, 'CLAUDE_AGENT_STATUS_SETTINGS')
     } else {
-      process.env.ORCA_CLAUDE_AGENT_STATUS_SETTINGS = savedOrcaClaudeAgentStatusSettings
+      setAppEnv(process.env, 'CLAUDE_AGENT_STATUS_SETTINGS', savedOrcaClaudeAgentStatusSettings)
     }
   }
 

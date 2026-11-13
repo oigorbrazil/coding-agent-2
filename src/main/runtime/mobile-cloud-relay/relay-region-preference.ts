@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { measureRelayRegionDecision } from './relay-region-decision'
 import { existsSync, readFileSync, rmSync, statSync } from 'node:fs'
 import { join } from 'node:path'
@@ -246,7 +247,7 @@ export class RelayRegionPreferenceResolver {
 
   private overrideRegion(): RelayRegion | undefined {
     const override = RelayRegionSchema.safeParse(
-      this.options.diagnosticOverride ?? process.env.ORCA_RELAY_REGION_OVERRIDE
+      this.options.diagnosticOverride ?? readAppEnv(process.env, 'RELAY_REGION_OVERRIDE')
     )
     return override.success ? override.data : undefined
   }

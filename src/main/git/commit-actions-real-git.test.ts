@@ -3,7 +3,7 @@ import { detectConflictOperation } from './source-control/git-conflict-operation
 import { chmod, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { installRealWorkerThreadChildProcesses } from '../worker-thread-child-process/worker-thread-child-process-real.test-fixtures'
 import { applyCommit, recoverSequencer } from './commit-actions'

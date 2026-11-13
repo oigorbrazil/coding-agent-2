@@ -16,11 +16,11 @@ import { setAppEnvironment } from '../../shared/app-environment'
 import { readAgentHookSettingsFromProfileState } from '../../main/persistence/profile-state/profile-state-offline-settings'
 import { acquireProfileStateMaintenance } from '../../main/persistence/profile-state/profile-state-access'
 import { PROFILE_STATE_RECOVERY_RESULT_PREFIX } from '../../shared/profile-state-recovery-command'
-import type * as ProcessHost from '@orca/process-host'
+import type * as ProcessHost from '@coding-agent/process-host'
 import { main } from '../index'
 
 const { runChild } = vi.hoisted(() => ({ runChild: vi.fn() }))
-vi.mock('@orca/process-host', async (original) => ({
+vi.mock('@coding-agent/process-host', async (original) => ({
   ...(await original<typeof ProcessHost>()),
   runProcess: runChild
 }))

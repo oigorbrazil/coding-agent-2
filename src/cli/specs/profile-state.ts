@@ -5,7 +5,7 @@ export const PROFILE_STATE_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['profile', 'state', 'exports'],
     summary: 'List retained SQLite backups and JSON exports for profile-state recovery',
-    usage: 'orca profile state exports [--profile-id <id>] [--json]',
+    usage: 'coding profile state exports [--profile-id <id>] [--json]',
     allowedFlags: [...LOCAL_COMMAND_FLAGS, 'profile-id']
   },
   {
@@ -14,7 +14,7 @@ export const PROFILE_STATE_COMMAND_SPECS: CommandSpec[] = [
     summary:
       'Repair damaged sections, restore a SQLite backup or retained JSON export, or keep the current JSON or SQLite profile',
     usage:
-      'orca profile state rollback (--repair | --backup <id> | --revision <revision> | --current-json | --current-sqlite | --latest-json) [--profile-id <id>] [--json]',
+      'coding profile state rollback (--repair | --backup <id> | --revision <revision> | --current-json | --current-sqlite | --latest-json) [--profile-id <id>] [--json]',
     allowedFlags: [
       ...LOCAL_COMMAND_FLAGS,
       'repair',
@@ -35,13 +35,13 @@ export const PROFILE_STATE_COMMAND_SPECS: CommandSpec[] = [
       '--current-sqlite keeps the current SQLite state and discards JSON edits from an older build. The JSON is archived, then rewritten from SQLite.'
     ],
     examples: [
-      'orca profile state exports',
-      'orca profile state rollback --repair',
-      'orca profile state rollback --backup <id>',
-      'orca profile state rollback --revision 1',
-      'orca profile state rollback --latest-json',
-      'orca profile state rollback --current-json',
-      'orca profile state rollback --current-sqlite'
+      'coding profile state exports',
+      'coding profile state rollback --repair',
+      'coding profile state rollback --backup <id>',
+      'coding profile state rollback --revision 1',
+      'coding profile state rollback --latest-json',
+      'coding profile state rollback --current-json',
+      'coding profile state rollback --current-sqlite'
     ]
   }
 ]

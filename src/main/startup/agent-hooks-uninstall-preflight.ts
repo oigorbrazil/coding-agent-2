@@ -1,5 +1,7 @@
-import { app } from 'electron'
 import type { AgentHookInstallStatus } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
+import { setAppEnv } from '../../shared/app-env'
+import { app } from 'electron'
+
 import { setAppEnvironment } from '../../shared/app-environment'
 import { ElectronAppEnvironment } from '../host/electron-app-environment'
 import { ensureWindowsAppDataPath } from './windows-app-data-path'
@@ -41,7 +43,7 @@ export function runAgentHooksUninstallPreflight(argv: readonly string[] = proces
   // Armed first: nothing below may leave the uninstaller waiting on an error box.
   const timeout = setTimeout(() => app.exit(1), UNINSTALL_HOOK_REMOVAL_TIMEOUT_MS)
   try {
-    process.env.ORCA_BACKGROUND_LAUNCH = '1'
+    setAppEnv(process.env, 'BACKGROUND_LAUNCH', '1')
     // The same userData the app's managed runtime homes live under.
     ensureWindowsAppDataPath(app)
     // Removers read userData through this port (Claude's profile homes); the app's own preflight is skipped.

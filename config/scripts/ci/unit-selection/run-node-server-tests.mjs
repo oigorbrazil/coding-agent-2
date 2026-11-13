@@ -17,7 +17,7 @@ import { packagedNodeRuntimePath } from '../../orcad-distribution/prebuilds/buil
 import { ensurePinnedNodeExecutable } from '../../orcad-distribution/prebuilds/pinned-node-downloads.mjs'
 import { currentTarget } from '../../orcad-distribution/prebuilds/server-build-target.mjs'
 import { UNIT_INCLUDE } from './dependency-graph/ci-unit-files.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { describeProcessFailure } from '../../tool-invocation/process-failure-message.mjs'
 import {
   CROSS_RUNTIME_TEST_PATHS,

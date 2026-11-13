@@ -1,5 +1,7 @@
-import { buildHookProcessCapture } from '../agent-hooks/hook-process-capture'
 import type { AgentHookSource } from '../../shared/agent-hook-listener/transport/agent-hook-relay'
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
+import { buildHookProcessCapture } from '../agent-hooks/hook-process-capture'
+
 import { buildWindowsAgentHookCurlPostCommand } from '../agent-hooks/installer-utils'
 import {
   buildPosixAgentHookPostCommand,
@@ -18,6 +20,7 @@ import {
   buildWindowsGrokReplayGuardLines
 } from '../agent-hooks/grok-replay-guard'
 import {
+  buildWindowsHookEndpointReloadLines,
   buildPosixHookPayloadCapture,
   buildPosixHookSpoolLines,
   buildWindowsHookEnvironmentGuardLines,
@@ -49,12 +52,19 @@ export function getManagedScript(
     return [
       '@echo off',
       'setlocal',
+      ...windowsAppEnvRestore([
+        'PANE_KEY',
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_TRANSPORT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN'
+      ]),
       // Permission hooks fail closed on empty stdout, including skip paths.
       'echo {}',
       // CLAUDE_CODE_SUBPROCESS_ENV_SCRUB drops ORCA_PANE_KEY; restore it before any guard reads it.
       ...buildWindowsScrubSafeEnvRestoreLines(),
       // Refresh endpoint coordinates for PTYs surviving a Coding Agent 2 restart.
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       // Outside a Coding Agent 2 pane the caller may abandon stdin; exit before owning it (#11549).
       ...buildWindowsHookEnvironmentGuardLines(),
       WINDOWS_CLAUDE_BACKGROUND_JOB_GUARD,
@@ -96,11 +106,12 @@ export function getManagedScript(
     ...buildPosixClaudeBackgroundJobGuardLines(),
     ...(source === 'claude' ? buildHookProcessCapture() : []),
     // Surviving PTYs need fresh endpoint coordinates; suppress errors and survive outer set -e.
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  unset ORCA_AGENT_HOOK_TRANSPORT',
-    '  . "$ORCA_AGENT_HOOK_ENDPOINT" 2>/dev/null || :',
+    'if [ -n "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ] && [ -r "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ]; then',
+    '  unset ORCA_AGENT_HOOK_TRANSPORT CODING_AGENT_AGENT_HOOK_TRANSPORT',
+    '  unset CODING_AGENT_AGENT_HOOK_PORT CODING_AGENT_AGENT_HOOK_TOKEN CODING_AGENT_AGENT_HOOK_ENV CODING_AGENT_AGENT_HOOK_VERSION CODING_AGENT_AGENT_HOOK_TRANSPORT',
+    '  . "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" 2>/dev/null || :',
     'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  spool_hook_event',
     '  exit 0',
     'fi',

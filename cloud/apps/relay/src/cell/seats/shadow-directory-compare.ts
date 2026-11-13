@@ -1,4 +1,4 @@
-import { RELAY_PROTOCOL_LIMITS } from '@orca-cloud/relay-contract/protocol-limits'
+import { RELAY_PROTOCOL_LIMITS } from '@coding-agent-cloud/relay-contract/protocol-limits'
 import { relayHostLogDigest } from '../../observability/relay-host-log-digest.js'
 import type { ShadowSeatDirectory } from './shadow-seat-directory.js'
 

@@ -3,20 +3,20 @@ import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { afterEach, expect, it, vi } from 'vitest'
-import { MobilePRSidebar } from '@orca/test-mobile/components/MobilePRSidebar'
+import { MobilePRSidebar } from '@coding-agent/test-mobile/components/MobilePRSidebar'
 import {
   createFakeRpcClient,
   rpcSuccess
-} from '@orca/test-mobile/mobile-web-shell/bridge-host-test-fakes'
-import { createStableLogicalRpcClient } from '@orca/test-mobile/transport/stable-logical-rpc-client'
-import { createOrcaQueryClient } from '@orca/test-mobile/query/orca-query-client'
-import type { HostConnectionInputs } from '@orca/test-mobile/transport/client-context-connection-metrics'
-import { RuntimeGitHubRepositoryQueryCommands } from '@orca/test-host/main/runtime/integrations/github/runtime-github-repository-query-commands'
-import { GITHUB_REPO_WORK_ITEM_METHODS } from '@orca/test-host/main/runtime/rpc/methods/source-control/github/github-repo-work-item-methods'
-import type { OrcaRuntimeService } from '@orca/test-host/main/runtime/orca-runtime'
-import { eraseRpcMethods } from '@orca/test-host/main/runtime/rpc/core'
-import type { GitHubWorkItemDetails } from '@orca/test-host/shared/github/work-item-types'
-import type { Repo } from '@orca/test-host/shared/repo-types'
+} from '@coding-agent/test-mobile/mobile-web-shell/bridge-host-test-fakes'
+import { createStableLogicalRpcClient } from '@coding-agent/test-mobile/transport/stable-logical-rpc-client'
+import { createOrcaQueryClient } from '@coding-agent/test-mobile/query/orca-query-client'
+import type { HostConnectionInputs } from '@coding-agent/test-mobile/transport/client-context-connection-metrics'
+import { RuntimeGitHubRepositoryQueryCommands } from '@coding-agent/test-host/main/runtime/integrations/github/runtime-github-repository-query-commands'
+import { GITHUB_REPO_WORK_ITEM_METHODS } from '@coding-agent/test-host/main/runtime/rpc/methods/source-control/github/github-repo-work-item-methods'
+import type { OrcaRuntimeService } from '@coding-agent/test-host/main/runtime/orca-runtime'
+import { eraseRpcMethods } from '@coding-agent/test-host/main/runtime/rpc/core'
+import type { GitHubWorkItemDetails } from '@coding-agent/test-host/shared/github/work-item-types'
+import type { Repo } from '@coding-agent/test-host/shared/repo-types'
 // Typed here: the field's own props name native types this Node-checked program must not load.
 type SearchField = { value?: string; placeholder?: string; onChangeText?: (text: string) => void }
 const io = vi.hoisted(
@@ -166,7 +166,7 @@ vi.mock('../../i18n/use-mobile-translation', () => ({
 }))
 vi.mock(
   '../../../../src/main/github/client',
-  async () => import('@orca/test-host/main/github/issue-field-options')
+  async () => import('@coding-agent/test-host/main/github/issue-field-options')
 )
 vi.mock('../../../../src/main/github/gh-utils', () => ({
   ghExecFileAsync: io.gh,

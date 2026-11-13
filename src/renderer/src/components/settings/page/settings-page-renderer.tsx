@@ -1,6 +1,7 @@
 import {
+  renderAccountSettingsSection,
   renderCodingOpusPlaybooksSettingsSection,
-  renderFeaturesSettingsSection,
+  renderLanguageSettingsSection,
   renderSecondBrainSettingsSection,
   renderSkillsSettingsSection
 } from './settings-coding-opus-section-renderers'
@@ -26,27 +27,20 @@ import {
   renderMobileSettingsSection
 } from './settings-setup-workflow-section-renderers'
 import { renderGitSettingsSection } from './settings-git-task-section-renderers'
-import {
-  renderQuickCommandsSettingsSection,
-  renderTerminalSettingsSection
-} from './settings-interface-primary-section-renderers'
+import { renderTerminalSettingsSection } from './settings-interface-primary-section-renderers'
 import {
   renderAppearanceSettingsSection,
   renderChatSettingsSection,
-  renderInputSettingsSection,
   renderNotificationsSettingsSection,
   renderShortcutsSettingsSection
 } from './settings-interface-secondary-section-renderers'
 import {
-  renderDeveloperPermissionsSettingsSection,
-  renderPrivacySettingsSection,
   renderServersSettingsSection,
   renderSshSettingsSection
 } from './settings-remote-security-section-renderers'
 import {
   renderAdvancedSettingsSection,
-  renderDevSettingsSection,
-  renderExperimentalSettingsSection
+  renderDevSettingsSection
 } from './settings-advanced-section-renderers'
 import { renderProjectSettingsSections } from './settings-project-section-renderer'
 import {
@@ -116,7 +110,11 @@ export function renderSettingsPage(
             className={cn(
               'mx-auto flex w-full flex-col gap-10 px-8 pt-10',
               view.isFocusedShortcutsPane ? 'h-full pb-6' : 'pb-24',
-              view.isFocusedSetupGuidePane || view.isWidePluginsPane ? 'max-w-6xl' : 'max-w-4xl'
+              view.isFullWidthPlaybooksPane
+                ? 'max-w-none px-6'
+                : view.isFocusedSetupGuidePane || view.isWidePluginsPane
+                  ? 'max-w-6xl'
+                  : 'max-w-4xl'
             )}
           >
             {navigation.visibleNavSections.length === 0 ? (
@@ -130,33 +128,29 @@ export function renderSettingsPage(
             ) : (
               <SettingsContentScrollElementProvider value={interactions.contentScrollElement}>
                 <ActiveSettingsSectionProvider value={model.activeSectionId}>
-                  {renderFeaturesSettingsSection(context, t)}
-                  {renderSkillsSettingsSection(context, t)}
+                  {renderAccountSettingsSection(context, t)}
+                  {renderAgentsSettingsSection(context, t)}
+                  {renderOrchestrationSettingsSection(context, t)}
                   {renderCodingOpusPlaybooksSettingsSection(context, t)}
                   {renderSecondBrainSettingsSection(context, t)}
-                  {renderAgentsSettingsSection(context, t)}
+                  {renderSkillsSettingsSection(context, t)}
                   {renderAccountsSettingsSection(context, t)}
-                  {renderOrchestrationSettingsSection(context, t)}
                   {renderGeneralSettingsSection(context, t)}
+                  {renderLanguageSettingsSection(context, t)}
                   {renderIntegrationsSettingsSection(context, t)}
-                  {renderMobileSettingsSection(context, t)}
-                  {renderAutomationsSettingsSection(context, t)}
-                  {renderSessionHistorySettingsSection(context, t)}
-                  {renderGitSettingsSection(context, t)}
                   {renderTerminalSettingsSection(context, t)}
-                  {renderQuickCommandsSettingsSection(context, t)}
+                  {renderGitSettingsSection(context, t)}
+                  {renderSessionHistorySettingsSection(context, t)}
+                  {renderAutomationsSettingsSection(context, t)}
                   {renderAppearanceSettingsSection(context, t)}
                   {renderChatSettingsSection(context)}
-                  {renderInputSettingsSection(context, t)}
                   {renderNotificationsSettingsSection(context, t)}
                   {renderShortcutsSettingsSection(context, t)}
+                  {renderMobileSettingsSection(context, t)}
                   {renderServersSettingsSection(context, t)}
                   {renderSshSettingsSection(context, t)}
-                  {renderDeveloperPermissionsSettingsSection(context, t)}
-                  {renderPrivacySettingsSection(context, t)}
                   {renderAdvancedSettingsSection(context, t)}
                   {renderDevSettingsSection(context, t)}
-                  {renderExperimentalSettingsSection(context, t)}
                   {renderProjectSettingsSections(context, t)}
                 </ActiveSettingsSectionProvider>
               </SettingsContentScrollElementProvider>

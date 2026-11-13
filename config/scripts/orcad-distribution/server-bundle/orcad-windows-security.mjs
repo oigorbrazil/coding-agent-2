@@ -1,7 +1,7 @@
 import { copyFileSync, existsSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { ORCAD_WINDOWS_SECURITY_FILENAME } from '../../../../src/shared/orcad-artifacts.ts'
 import { windowsSecurityAddonOutput } from '../../native-build/windows/build-windows-security-addon.mjs'
 

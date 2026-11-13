@@ -1,5 +1,5 @@
-import { spawnProcess } from '@orca/process-host'
-import type { ProcessSpec, SpawnedProcess } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { ProcessSpec, SpawnedProcess } from '@coding-agent/process-host/process-spec'
 
 // The pipe closes even on SIGKILL; a live/reused owner PID always vetoes cleanup.
 const SCOPE_DEATH_WATCH_SCRIPT = `

@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect, it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { FULL_SHARD_COUNT } from './ci-unit-matrix.mjs'
 
 it('emits the full matrix from a sparse checkout without dependencies or test discovery', () => {
@@ -62,7 +62,7 @@ it.each([
       writeFileSync(join(root, 'src/value.ts'), 'export const value = 1')
       writeFileSync(
         join(root, 'src/consumer.test.ts'),
-        unresolvedPackage ? "import '@orca/missing-package'" : "import './value'"
+        unresolvedPackage ? "import '@coding-agent/missing-package'" : "import './value'"
       )
       writeFileSync(join(root, 'src/unrelated.test.ts'), 'export const unrelated = true')
       git(['init', '--quiet'])
@@ -114,7 +114,7 @@ it.each([
         !withParent
           ? 'Error: Changed paths unavailable'
           : unresolvedPackage
-            ? 'Error: No public orca-source export for @orca/missing-package'
+            ? 'Error: No public orca-source export for @coding-agent/missing-package'
             : 'Transitive imports plus indirect-input consumers'
       )
       expect(plan.shards).toHaveLength(selected ? 1 : FULL_SHARD_COUNT)

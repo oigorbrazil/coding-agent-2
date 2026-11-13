@@ -1,6 +1,13 @@
-import { LoaderCircle } from 'lucide-react'
+import { useState } from 'react'
+import { ChevronDown, ChevronRight, LoaderCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { useTranslate } from '@/i18n/use-translate'
 import { cn } from '@/lib/utils'
-import { useIntegrationCardShellClass } from './integration-card-presentation'
+import {
+  useIntegrationCardPresentation,
+  useIntegrationCardShellClass
+} from './integration-card-presentation'
 
 export type IntegrationCardStatusTone = 'connected' | 'attention' | 'neutral'
 
@@ -22,6 +29,10 @@ export function IntegrationCardShell(props: {
   actions?: React.ReactNode
   children?: React.ReactNode
 }): React.JSX.Element {
+  const t = useTranslate()
+  const collapsible = useIntegrationCardPresentation() === 'settings'
+  const [expanded, setExpanded] = useState<boolean | null>(null)
+  const open = !collapsible || (expanded ?? (!props.checking && props.statusTone === 'connected'))
   const shellClass = useIntegrationCardShellClass(props.className)
   const status = props.checking ? (
     <LoaderCircle className="size-4 shrink-0 animate-spin text-muted-foreground" />
@@ -37,21 +48,48 @@ export function IntegrationCardShell(props: {
   )
 
   return (
-    <div className={shellClass} data-settings-section={props.settingsSectionId}>
+    <Collapsible
+      open={open}
+      onOpenChange={setExpanded}
+      className={shellClass}
+      data-settings-section={props.settingsSectionId}
+    >
       <div className="flex flex-wrap items-start gap-3">
         <span className="shrink-0 text-muted-foreground">{props.icon}</span>
         <div className="min-w-0 flex-1 basis-[16rem] space-y-0.5">
           <p className="text-sm font-medium">{props.name}</p>
-          <p className="text-xs text-muted-foreground">{props.description}</p>
+          {open ? <p className="text-xs text-muted-foreground">{props.description}</p> : null}
         </div>
         {/* Wrap actions before narrow Settings layouts squeeze provider copy into unreadable columns. */}
         <div className="flex basis-full shrink-0 flex-wrap items-center justify-start gap-1.5 min-[1100px]:ml-auto min-[1100px]:basis-auto min-[1100px]:justify-end">
-          {props.actions}
+          {!collapsible ? props.actions : null}
           {status}
+          {collapsible ? (
+            <CollapsibleTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                aria-label={t('integrations.configureProvider', 'Configure {{provider}}', {
+                  provider: props.name
+                })}
+              >
+                {t('integrations.configure', 'Configure')}
+                {open ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
+              </Button>
+            </CollapsibleTrigger>
+          ) : null}
         </div>
       </div>
-      {props.children}
-    </div>
+      {collapsible ? (
+        <CollapsibleContent>
+          {props.actions ? <div className="mt-3 flex flex-wrap gap-2">{props.actions}</div> : null}
+          {props.children}
+        </CollapsibleContent>
+      ) : (
+        props.children
+      )}
+    </Collapsible>
   )
 }
 

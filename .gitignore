@@ -157,3 +157,6 @@ ci-shards/
 /.build/windows-native-benchmark/
 
 .local/static-analysis-research/
+
+# Local fixture screenshots and dev caches
+.cache/

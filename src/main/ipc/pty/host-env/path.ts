@@ -1,3 +1,9 @@
+import {
+  readAppEnv,
+  readAppEnvKey,
+  setAppEnvKey,
+  deleteAppEnvKey
+} from '../../../../shared/app-env'
 import { delimiter } from 'node:path'
 import { isLegacyTerminalShimPathEntry } from '../../../pty/shell-startup/legacy-terminal-shim-dir'
 import { resolvePathEnvKey } from '../../../pty/environment/windows-path-segment-merge'
@@ -7,7 +13,7 @@ export function readInheritedPath(
   platform: NodeJS.Platform = process.platform
 ): string {
   const pathKey = resolvePathEnvKey(baseEnv, platform)
-  return baseEnv[pathKey] ?? process.env[pathKey] ?? ''
+  return readAppEnvKey(baseEnv, pathKey) ?? readAppEnvKey(process.env, pathKey) ?? ''
 }
 
 export function firstPathEntry(pathValue: string | undefined): string | null {
@@ -19,7 +25,7 @@ export function promoteAgentTeamsShimPath(
   env: Record<string, string> | undefined,
   requestedPath: string | undefined
 ): void {
-  if (!env?.ORCA_AGENT_TEAMS_TEAM_ID) {
+  if (!env || !readAppEnv(env, 'AGENT_TEAMS_TEAM_ID')) {
     return
   }
   const shimPath = firstPathEntry(requestedPath)
@@ -28,12 +34,12 @@ export function promoteAgentTeamsShimPath(
     return
   }
   const currentPathKey = env.PATH !== undefined || env.Path === undefined ? 'PATH' : 'Path'
-  const currentPath = env[currentPathKey] ?? ''
+  const currentPath = readAppEnvKey(env, currentPathKey) ?? ''
   const remaining = currentPath
     .split(delimiter)
     .filter((entry) => entry.length > 0 && entry !== shimPath)
   // Agent Teams must resolve Coding Agent 2's tmux shim before any real tmux, including after host prepends.
-  env[currentPathKey] = [shimPath, ...remaining].join(delimiter)
+  setAppEnvKey(env, currentPathKey, [shimPath, ...remaining].join(delimiter))
 }
 
 export function deleteRequestedEnvKeys(
@@ -44,6 +50,6 @@ export function deleteRequestedEnvKeys(
     return
   }
   for (const key of keys) {
-    delete env[key]
+    deleteAppEnvKey(env, key)
   }
 }

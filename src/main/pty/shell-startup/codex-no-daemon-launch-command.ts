@@ -1,5 +1,6 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { isAbsolute, win32 as pathWin32 } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { tokenizeStartupCommand } from '../../../shared/agent-launch/startup/tui-agent-startup-shell'
 import { resolveLocalWindowsAgentStartupShell } from '../../../shared/windows-terminal-shell'
 import { resolveCommandOnLocalPath } from '../../ipc/command-path/command-path-resolver'
@@ -53,7 +54,7 @@ export function planCodexNoDaemonLaunch(launch: LocalCodexLaunch): Promise<strin
     delete env[key]
   }
   if (
-    env.ORCA_CODEX_ISOLATE === '0' ||
+    readAppEnv(env, 'CODEX_ISOLATE') === '0' ||
     args.some((arg) => NO_DAEMON_SKIP_ARGS.has(arg) || arg.startsWith('--remote='))
   ) {
     return null

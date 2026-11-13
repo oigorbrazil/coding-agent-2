@@ -282,7 +282,7 @@ export function terminalTabActivityToAgentDotState(
   }
 }
 
-/** Bell or unacked agent completion — same sources the tab strip and floating launcher use. */
+/** Bell or unacked agent completion, shared by the tab strip and status bar. */
 export function terminalTabHasUnreadActivity({
   terminalTabId,
   unreadTerminalTabs,

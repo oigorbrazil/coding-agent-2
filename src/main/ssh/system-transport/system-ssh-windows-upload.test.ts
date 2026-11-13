@@ -18,7 +18,7 @@ vi.mock('./system-ssh-command', () => ({
   spawnSystemSshCommand: spawnSystemSshCommandMock
 }))
 
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock
 }))
 

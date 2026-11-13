@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterAll, beforeAll, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveElectronProbeLaunch } from '../../browser/electron-fixtures/electron-probe-display-launch'
 
 const root = mkdtempSync(join(tmpdir(), 'orca-writer-electron-'))

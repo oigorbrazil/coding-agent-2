@@ -4,6 +4,7 @@ import { MobileEmulatorSettingsPane } from '../mobile/emulator/MobileEmulatorSet
 import { QuickCommandsPane } from '../quick-commands/QuickCommandsPane'
 import { TerminalPane } from '../terminal/TerminalPane'
 import { SettingsSection } from '../section-layout/SettingsSection'
+import { SettingsGroupHeader } from '../section-layout/SettingsGroup'
 import { translate } from '@/i18n/i18n'
 import type { Translate } from '@/i18n/use-translate'
 import type { SettingsRenderContext } from './settings-render-context'
@@ -38,6 +39,22 @@ export function renderTerminalSettingsSection(
           gitBashAvailable={terminal.windowsTerminalCapabilities.gitBashAvailable}
           isWindowsTerminalHost={terminal.isWindowsTerminalHost}
         />
+      ) : null}
+      {/* Coding Agent 2 folds Quick Commands into Terminal. */}
+      {view.isSectionMounted('terminal') ? (
+        <div className="mt-8 space-y-3">
+          <SettingsGroupHeader
+            title={t('auto.components.settings.Settings.13d4fe30ad', 'Quick Commands')}
+            description={t(
+              'auto.components.settings.Settings.6742c7932c',
+              'Saved terminal commands, scoped globally or per project.'
+            )}
+          />
+          <QuickCommandsPane
+            settings={model.settings}
+            addCommandIntentSignal={model.quickCommandAddIntentSignal}
+          />
+        </div>
       ) : null}
     </SettingsSection>
   )

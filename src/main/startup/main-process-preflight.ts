@@ -1,3 +1,4 @@
+import { readAppEnv, setAppEnv } from '../../shared/app-env'
 import { antigravityHookService } from '../antigravity/hook-service'
 import { getRelocatedDaemonHost } from '../daemon/executable-host/windows/daemon-host-relocation'
 import { app, ipcMain, powerMonitor, session } from 'electron'
@@ -43,7 +44,7 @@ import {
   recordSubprocessSpawn,
   startMainThreadChurnProbe
 } from '../diagnostics/main-thread-churn-probe'
-import { setSpawnObserver } from '@orca/process-host/spawn-observer'
+import { setSpawnObserver } from '@coding-agent/process-host/spawn-observer'
 import { settledDiffCache } from '../git/source-control/git-read-cache-invalidation'
 import { reserveServeStdoutForReadiness } from '../server/serve-stdout-boundary'
 import { createServeDesktopActivationGate } from './serve-desktop-activation'
@@ -174,7 +175,7 @@ function initializeMainProcessPreflight(options: MainProcessPreflightOptions): b
   // #9441: log background rejections so restore failure cannot silently kill main.
   installUnhandledRejectionLogging()
   // Expose version without Electron imports for main/daemon TERM_PROGRAM_VERSION.
-  process.env.ORCA_APP_VERSION = app.getVersion()
+  setAppEnv(process.env, 'APP_VERSION', app.getVersion())
   configureRemoteServerUpdater({
     getSnapshot: getRemoteServerUpdaterSnapshot,
     check: checkForRemoteServerUpdate,
@@ -220,7 +221,7 @@ function initializeMainProcessPreflight(options: MainProcessPreflightOptions): b
       platform: process.platform,
       osRelease: os.release(),
       userData: app.getPath('userData'),
-      e2eUserData: Boolean(process.env.ORCA_E2E_USER_DATA_DIR)
+      e2eUserData: Boolean(readAppEnv(process.env, 'E2E_USER_DATA_DIR'))
     })
     startEventLoopStallProbe()
   }

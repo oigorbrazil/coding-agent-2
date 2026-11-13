@@ -3,7 +3,7 @@ import { mkdir, mkdtemp, readFile, realpath, rm, symlink, writeFile } from 'node
 import { createServer } from 'node:net'
 import { userInfo } from 'node:os'
 import { join, posix } from 'node:path'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 import {
   forbiddenToolShimScript,
   forbiddenToolsFor,

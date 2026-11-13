@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import {
   cpSync,
   lstatSync,
@@ -72,8 +73,9 @@ export function getCodexSessionBackfillStateDirPath(): string {
 }
 
 export function getOrcaUserDataPath(): string {
-  if (process.env.ORCA_USER_DATA_PATH) {
-    return process.env.ORCA_USER_DATA_PATH
+  const configuredEnv = readAppEnv(process.env, 'USER_DATA_PATH')
+  if (configuredEnv) {
+    return configuredEnv
   }
   // Offline CLI hooks run outside Electron and must resolve the same userData path.
   if (process.platform === 'darwin') {

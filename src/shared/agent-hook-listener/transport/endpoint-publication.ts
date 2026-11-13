@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../app-env'
 import { randomUUID } from 'node:crypto'
 import { chmodSync, mkdirSync, renameSync, unlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -52,7 +53,12 @@ export function writeEndpointFile(
       return false
     }
   }
-  const lines = [...valuesToWrite.map(([key, value]) => `${prefix}${key}=${value}`), '']
+  const lines = [
+    ...valuesToWrite.flatMap(([key, value]) =>
+      appEnvKeys([key]).map((name) => `${prefix}${name}=${value}`)
+    ),
+    ''
+  ]
   let tmpWritten = false
   try {
     // Keep the endpoint directory owner-only to hide this install from other local users.

@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../../shared/app-env'
 // Win32-OpenSSH kills session jobs; require native breakaway without WMI/PowerShell, then record PID plus creation time.
 import {
   ORCAD_WINDOWS_BREAKAWAY_CONTRACT,
@@ -95,13 +96,16 @@ export function windowsOrcadLaunchCommand(
     WINDOWS_BREAKAWAY_PROCESS_FILE_FLAG,
     joinRemotePath(host, dir, ORCAD_WINDOWS_PROCESS_FILENAME),
     WINDOWS_BREAKAWAY_ENV_FLAG,
+    `CODING_AGENT_VERSION=${spec.fullVersion}`,
+    WINDOWS_BREAKAWAY_ENV_FLAG,
     `ORCA_VERSION=${spec.fullVersion}`,
     WINDOWS_BREAKAWAY_ENV_FLAG,
+    `CODING_AGENT_USER_DATA=${spec.userDataDir}`,
+    WINDOWS_BREAKAWAY_ENV_FLAG,
     `ORCA_USER_DATA=${spec.userDataDir}`,
-    ...orcadManagedLaunchEnv(spec).flatMap(([name, value]) => [
-      WINDOWS_BREAKAWAY_ENV_FLAG,
-      `${name}=${value}`
-    ]),
+    ...orcadManagedLaunchEnv(spec).flatMap(([name, value]) =>
+      appEnvKeys([name]).flatMap((key) => [WINDOWS_BREAKAWAY_ENV_FLAG, `${key}=${value}`])
+    ),
     ORCAD_WINDOWS_BREAKAWAY_CONTRACT.argsFlag,
     '--json',
     '--bind',

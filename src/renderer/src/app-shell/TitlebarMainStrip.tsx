@@ -1,37 +1,11 @@
-import { Minimize2, PanelRight } from 'lucide-react'
+import { Minimize2 } from 'lucide-react'
 import { useTranslate } from '@/i18n/use-translate'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { TOGGLE_TERMINAL_PANE_EXPAND_EVENT } from '@/constants/terminal'
 import { ActivityTitlebarControls } from '../components/activity/ActivityTitlebarControls'
-import { useShortcutLabel } from '../hooks/useShortcutLabel'
 import { useAppStore } from '../store'
 import { selectActiveTerminalChromeState } from './active-terminal-chrome-selector'
-import { hasCustomTitleBar } from './app-window-chrome'
 import type { AppChromeLayout } from './use-app-chrome-layout'
-
-export function RightSidebarToggle(): React.JSX.Element {
-  const t = useTranslate()
-  const toggleRightSidebar = useAppStore((s) => s.toggleRightSidebar)
-  const rightSidebarShortcutLabel = useShortcutLabel('sidebar.right.toggle')
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          className="sidebar-toggle mr-2"
-          onClick={toggleRightSidebar}
-          aria-label={t('auto.App.9e0b441a91', 'Toggle right sidebar')}
-        >
-          <PanelRight size={16} />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="bottom" sideOffset={6}>
-        {t('auto.App.c184e056de', 'Toggle right sidebar ({{value0}})', {
-          value0: rightSidebarShortcutLabel
-        })}
-      </TooltipContent>
-    </Tooltip>
-  )
-}
 
 export function TitlebarMainStrip({ layout }: { layout: AppChromeLayout }): React.JSX.Element {
   const t = useTranslate()
@@ -74,10 +48,6 @@ export function TitlebarMainStrip({ layout }: { layout: AppChromeLayout }): Reac
           </TooltipContent>
         </Tooltip>
       )}
-      {/* The open sidebar already renders its close button. */}
-      {layout.showRightSidebarControls && !layout.rightSidebarOpen ? <RightSidebarToggle /> : null}
-      {/* Reserve the custom window-controls overlay’s width. */}
-      {hasCustomTitleBar && <div className="window-controls-titlebar-spacer" />}
     </>
   )
 }

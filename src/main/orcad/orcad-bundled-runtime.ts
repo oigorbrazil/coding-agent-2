@@ -1,7 +1,8 @@
+import { appEnvPairs } from '../../shared/app-env'
 import { existsSync, readFileSync, realpathSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { constants } from 'node:os'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { resolveOrcadInstallRoot } from './orcad-app-paths'
 import { ORCAD_EXIT_CONFIGURATION } from './orcad-configuration-exit'
 import {
@@ -102,7 +103,7 @@ export function handoffToBundledOrcad(): boolean {
   const child = spawnProcess({
     program: runtime,
     args: [entry, ...process.argv.slice(2)],
-    env: { ...process.env, [ORCAD_BUNDLED_LAUNCHER_ENV]: '1' },
+    env: { ...process.env, ...appEnvPairs('BUNDLED_LAUNCHER_CHANNEL', '1') },
     // Detach so Windows child jobs cannot kill the runtime before launcher-disconnect cleanup.
     detached: true,
     stdio: ['inherit', 'inherit', 'inherit', 'ipc']

@@ -1,4 +1,4 @@
-import { RELAY_ADMISSION_BUDGETS } from '@orca-cloud/relay-contract/admission-budgets'
+import { RELAY_ADMISSION_BUDGETS } from '@coding-agent-cloud/relay-contract/admission-budgets'
 import type { RelayCellConfig } from '../../config.js'
 import type { RelayDatabase, SqlRow } from '../../database/database.js'
 

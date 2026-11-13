@@ -76,7 +76,7 @@ export function editor(input: PluginTemplateInput): PluginTemplate {
     description:
       'Custom editor in TypeScript on the document session, with a Node test (needs --approve to load)',
     files: {
-      'orca-plugin.json': manifest(
+      'coding-plugin.json': manifest(
         input,
         `Edits ${extension} files.`,
         {
@@ -105,7 +105,7 @@ export function editor(input: PluginTemplateInput): PluginTemplate {
       }),
       'README.md': readme(
         input,
-        `A custom editor for \`${extension}\` files, in TypeScript with no build step. \`editor/sync.ts\` keeps the file in step through \`orca.document.session\` (replace its stand-in \`mergeText\` with your format's merge), and \`editor/main.ts\` is the view. \`orca plugin test .\` runs \`editor/sync.test.ts\` in Node with \`mockEditorHost\`; \`orca plugin check .\` reads every file the editor loads; \`orca plugin shot <plugin-key> --editor <file>\` saves a PNG of it. \`"frame": "isolated"\` keeps it to the Coding Agent 2 desktop app. Loading it needs approval: \`orca plugin dev watch .\` prints the exact access and the \`--approve\` fingerprint.`
+        `A custom editor for \`${extension}\` files, in TypeScript with no build step. \`editor/sync.ts\` keeps the file in step through \`orca.document.session\` (replace its stand-in \`mergeText\` with your format's merge), and \`editor/main.ts\` is the view. \`coding plugin test .\` runs \`editor/sync.test.ts\` in Node with \`mockEditorHost\`; \`coding plugin check .\` reads every file the editor loads; \`coding plugin shot <plugin-key> --editor <file>\` saves a PNG of it. \`"frame": "isolated"\` keeps it to the Coding Agent 2 desktop app. Loading it needs approval: \`coding plugin dev watch .\` prints the exact access and the \`--approve\` fingerprint.`
       ),
       ...COMMON_FILES
     }

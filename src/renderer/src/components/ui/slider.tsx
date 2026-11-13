@@ -32,9 +32,12 @@ function Slider({
     >
       <SliderPrimitive.Track
         data-slot="slider-track"
-        className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-primary/20"
+        className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-foreground/10"
       >
-        <SliderPrimitive.Range data-slot="slider-range" className="absolute h-full bg-primary" />
+        <SliderPrimitive.Range
+          data-slot="slider-range"
+          className="absolute h-full bg-control-fill"
+        />
       </SliderPrimitive.Track>
       {Array.from({ length: thumbCount }, (_, index) => (
         <SliderPrimitive.Thumb
@@ -43,7 +46,7 @@ function Slider({
           aria-label={thumbLabels?.[index]}
           aria-valuetext={thumbValueLabels?.[index]}
           className={cn(
-            'block size-4 rounded-full border border-primary/40 bg-background shadow-sm',
+            'block h-4 w-6 rounded-full bg-white shadow-[0_1px_4px_rgb(0_0_0/0.2),0_0_0_0.5px_rgb(0_0_0/0.06)]',
             'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
             'disabled:pointer-events-none disabled:opacity-50'
           )}

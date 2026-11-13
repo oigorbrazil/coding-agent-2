@@ -1,3 +1,8 @@
+import {
+  type ShellStartupFeature,
+  encodeShellStartupFeatures
+} from '../../pty/shell-startup/shell-startup-features'
+import { readAppEnv, appEnvPairs } from '../../../shared/app-env'
 import { tmpdir } from 'node:os'
 import { basename, join, win32 as pathWin32 } from 'node:path'
 import { statSync } from 'node:fs'
@@ -10,11 +15,7 @@ import { getFishCodexShellLaunchPreflight } from '../../../shared/codex-shell-fu
 import { getFishClaudeShellFunction } from '../../../shared/claude-shell-function'
 import { getFishXdgDataDirsLaunchEnv } from '../../pty/shell-startup/fish-xdg-data-dirs-handoff'
 import { getFishShellReadyInitCommand } from '../../pty/shell-startup/shell-templates'
-import {
-  encodeShellStartupFeatures,
-  SHELL_STARTUP_FEATURE_ENV,
-  type ShellStartupFeature
-} from '../../pty/shell-startup/shell-startup-features'
+
 import { resolveShellWrapperRoot } from '../../pty/shell-startup/shell-wrapper-content-address'
 import { writeShellWrapperFiles } from '../../pty/shell-startup/shell-wrapper-file-writer'
 import {
@@ -27,10 +28,8 @@ import {
 } from '../../pty/shell-startup/zsh-wrapper-dir-ownership'
 import { SHELL_READY_MARKER } from './daemon-shell-ready-marker'
 
-const ORCA_USER_DATA_PATH_ENV = 'ORCA_USER_DATA_PATH'
-
 function getShellReadyWrapperBaseDir(): string {
-  const userDataPath = process.env[ORCA_USER_DATA_PATH_ENV]
+  const userDataPath = readAppEnv(process.env, 'USER_DATA_PATH')
   // Isolate content-addressed trees from older daemons that overwrite the legacy shell-ready directory.
   // Temp fallback serves old/test launchers; production supplies ORCA_USER_DATA_PATH.
   // Only file sizes are checked, so do not use the shared-temp fallback in production.
@@ -87,7 +86,7 @@ function ensureShellReadyWrappers(): boolean {
 
 export function resolvePtyShellPath(env: Record<string, string>): string {
   if (process.platform === 'win32') {
-    return env.ORCA_TERMINAL_WINDOWS_SHELL || 'powershell.exe'
+    return readAppEnv(env, 'TERMINAL_WINDOWS_SHELL') || 'powershell.exe'
   }
   return env.SHELL || process.env.SHELL || '/bin/zsh'
 }
@@ -143,7 +142,7 @@ export function getShellLaunchConfig(
       env: {
         ...inheritedZdotdirEnv(resolveInheritedZdotdir(process.env)),
         ZDOTDIR: join(getShellReadyWrapperRoot(), 'zsh'),
-        [SHELL_STARTUP_FEATURE_ENV]: encodeShellStartupFeatures(features)
+        ...appEnvPairs('SHELL_FEATURES', encodeShellStartupFeatures(features))
       },
       supportsReadyMarker: features.includes('ready')
     }
@@ -156,7 +155,7 @@ export function getShellLaunchConfig(
     return {
       args: ['--rcfile', join(getShellReadyWrapperRoot(), 'bash', 'rcfile')],
       env: {
-        [SHELL_STARTUP_FEATURE_ENV]: encodeShellStartupFeatures(features)
+        ...appEnvPairs('SHELL_FEATURES', encodeShellStartupFeatures(features))
       },
       supportsReadyMarker: features.includes('ready')
     }

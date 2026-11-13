@@ -7,7 +7,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'run-create'],
     summary: 'Create and bind a lightweight orchestration Run',
     usage:
-      'orca orchestration run-create --objective <text> [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration run-create --objective <text> [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'objective', 'from', 'retry-request'],
     identityFlagRoles: { from: 'caller' },
     notes: [
@@ -19,7 +19,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'run-use'],
     summary: 'Resume coordinating a Run',
     usage:
-      'orca orchestration run-use --id <run_id> [--from <handle>] [--takeover-legacy] [--retry-request <id>] [--json]',
+      'coding orchestration run-use --id <run_id> [--from <handle>] [--takeover-legacy] [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id', 'from', 'takeover-legacy', 'retry-request'],
     identityFlagRoles: { from: 'caller' },
     notes: [
@@ -29,27 +29,27 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['orchestration', 'run-current'],
     summary: 'Show the Run bound to this coordinator',
-    usage: 'orca orchestration run-current [--from <handle>] [--json]',
+    usage: 'coding orchestration run-current [--from <handle>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'from'],
     identityFlagRoles: { from: 'caller' }
   },
   {
     path: ['orchestration', 'run-list'],
     summary: 'List lightweight orchestration Runs',
-    usage: 'orca orchestration run-list [--limit <n>] [--cursor <cursor>] [--json]',
+    usage: 'coding orchestration run-list [--limit <n>] [--cursor <cursor>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'limit', 'cursor']
   },
   {
     path: ['orchestration', 'run-show'],
     summary: 'Show one lightweight orchestration Run',
-    usage: 'orca orchestration run-show --id <run_id> [--removed] [--cursor <cursor>] [--json]',
+    usage: 'coding orchestration run-show --id <run_id> [--removed] [--cursor <cursor>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id', 'removed', 'cursor']
   },
   {
     path: ['orchestration', 'send'],
     summary: 'Send an inter-agent message',
     usage:
-      'orca orchestration send --subject <text> [--to <run:id|dispatch:id|legacy_handle>] [--run <run_id>] [--from <handle>] [--body <text>] [--type <type>] [--priority <level>] [--thread-id <id>] [--payload <json>] [--task-id <id>] [--dispatch-id <id>] [--outcome <succeeded|failed>] [--files-modified <csv>] [--report-path <path>] [--phase <text>] [--retry-request <id>] [--json]',
+      'coding orchestration send --subject <text> [--to <run:id|dispatch:id|legacy_handle>] [--run <run_id>] [--from <handle>] [--body <text>] [--type <type>] [--priority <level>] [--thread-id <id>] [--payload <json>] [--task-id <id>] [--dispatch-id <id>] [--outcome <succeeded|failed>] [--files-modified <csv>] [--report-path <path>] [--phase <text>] [--retry-request <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'to',
@@ -89,7 +89,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'check'],
     summary: "Check this agent's messages",
     usage:
-      'orca orchestration check [--terminal <handle>] [--run <run_id>] [--ack <delivery_id>] [--unread | --peek | --all] [--types <type,...>] [--format] [--wait] [--timeout-ms <n>] [--retry-request <id>] [--json]\n' +
+      'coding orchestration check [--terminal <handle>] [--run <run_id>] [--ack <delivery_id>] [--unread | --peek | --all] [--types <type,...>] [--format] [--wait] [--timeout-ms <n>] [--retry-request <id>] [--json]\n' +
       "  default: return the bound Run's oldest unread FIFO batch and mark it handled.\n" +
       '  --ack: optional; acknowledges a batch from an older Coding Agent 2 that does not mark it.\n' +
       '  --peek: return only unread messages without marking them read.\n' +
@@ -118,21 +118,21 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
       'On Windows PowerShell, quote comma-separated type filters, e.g. --types "worker_done,escalation".',
       '--types is the wake condition for --wait; a returned Delivery is always the whole FIFO batch, so it is never filtered by type. Without --wait it has no effect on consuming checks. Only --peek and --all filter their rows.',
       '--format renders the returned rows as local text only; it never writes to another terminal.',
-      "A consuming check marks the batch it returns as handled, so the next check returns newer mail; no --ack is needed. Several --wait calls may wait on one inbox; waiting reserves nothing, listeners woken by the same arrival get the same Delivery, and --ack of a handled Delivery is a no-op. Consuming checks belong to the agent itself. A script that only watches the inbox must use --peek (including --peek --wait) and must never --ack, or it takes mail the agent never sees. If a check response was lost, rerun it with the --retry-request it printed to get the same batch. To find mail after losing context, run orca orchestration inbox --terminal <mailbox> --limit <n> --full and name the mailbox: run:<run_id> for a coordinator's bound Run, or dispatch:<dispatch_id> for a worker, including mail it read before it bound a helper Run."
+      "A consuming check marks the batch it returns as handled, so the next check returns newer mail; no --ack is needed. Several --wait calls may wait on one inbox; waiting reserves nothing, listeners woken by the same arrival get the same Delivery, and --ack of a handled Delivery is a no-op. Consuming checks belong to the agent itself. A script that only watches the inbox must use --peek (including --peek --wait) and must never --ack, or it takes mail the agent never sees. If a check response was lost, rerun it with the --retry-request it printed to get the same batch. To find mail after losing context, run coding orchestration inbox --terminal <mailbox> --limit <n> --full and name the mailbox: run:<run_id> for a coordinator's bound Run, or dispatch:<dispatch_id> for a worker, including mail it read before it bound a helper Run."
     ]
   },
   {
     path: ['orchestration', 'reply'],
     summary: 'Reply to a message',
     usage:
-      'orca orchestration reply --id <msg_id> --body <text> [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration reply --id <msg_id> --body <text> [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id', 'body', 'run', 'from', 'retry-request'],
     identityFlagRoles: { from: 'caller' }
   },
   {
     path: ['orchestration', 'inbox'],
     summary: 'Show messages across (or for) recipients',
-    usage: 'orca orchestration inbox [--limit <n>] [--terminal <handle>] [--full] [--json]',
+    usage: 'coding orchestration inbox [--limit <n>] [--terminal <handle>] [--full] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'limit', 'terminal', 'full'],
     identityFlagRoles: { terminal: 'target' },
     notes: [
@@ -143,7 +143,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'task-create'],
     summary: 'Create an orchestration task',
     usage:
-      'orca orchestration task-create (--spec <text> | --spec-file <path|->) [--task-title <text>] [--display-name <text>] [--deps <json_array>] [--parent <task_id>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration task-create (--spec <text> | --spec-file <path|->) [--task-title <text>] [--display-name <text>] [--deps <json_array>] [--parent <task_id>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'spec',
@@ -162,7 +162,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'task-list'],
     summary: 'List orchestration tasks',
     usage:
-      'orca orchestration task-list [--status <status>] [--ready] [--brief] [--run <run_id>] [--from <handle>] [--json]',
+      'coding orchestration task-list [--status <status>] [--ready] [--brief] [--run <run_id>] [--from <handle>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'status', 'ready', 'brief', 'run', 'from'],
     identityFlagRoles: { from: 'caller' },
     notes: [
@@ -173,7 +173,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'task-update'],
     summary: 'Update a task status',
     usage:
-      'orca orchestration task-update --id <task_id> --status <status> [--result <text>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration task-update --id <task_id> --status <status> [--result <text>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id', 'status', 'result', 'run', 'from', 'retry-request'],
     identityFlagRoles: { from: 'caller' },
     notes: [
@@ -186,7 +186,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'dispatch'],
     summary: 'Dispatch a task to a terminal',
     usage:
-      'orca orchestration dispatch --task <task_id> --to <handle> [--from <handle>] [--run <run_id>] [--inject] [--dry-run] [--return-preamble] [--retry-request <id>] [--json]',
+      'coding orchestration dispatch --task <task_id> --to <handle> [--from <handle>] [--run <run_id>] [--inject] [--dry-run] [--return-preamble] [--retry-request <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'task',
@@ -203,7 +203,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['orchestration', 'request-show'],
     summary: 'Ask whether one orchestration mutation request already took effect',
-    usage: 'orca orchestration request-show --request <request_id> [--json]',
+    usage: 'coding orchestration request-show --request <request_id> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'request'],
     notes: [
       'Read-only: it never starts, retries, or settles anything, so it is safe to run after any lost response.',
@@ -215,7 +215,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'dispatch-show'],
     summary: 'Show dispatch context for a task',
     usage:
-      'orca orchestration dispatch-show --task <task_id> [--preamble] [--from <handle>] [--json]',
+      'coding orchestration dispatch-show --task <task_id> [--preamble] [--from <handle>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'task', 'preamble', 'from'],
     identityFlagRoles: { from: 'target' }
   },
@@ -223,7 +223,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'ask'],
     summary: 'Ask the coordinator a question; Coding Agent 2 wakes you with the answer',
     usage:
-      'orca orchestration ask (--question <text> | --resume <message_id>) [--to <run:id>] [--run <run_id>] [--options <csv>] [--wait] [--timeout-ms <n>] [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration ask (--question <text> | --resume <message_id>) [--to <run:id>] [--run <run_id>] [--options <csv>] [--wait] [--timeout-ms <n>] [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'to',
@@ -247,7 +247,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     aliases: [['orchestration', 'run']],
     summary: 'Retired: load the current orchestration skill',
     usage:
-      'orca orchestration coordinator-start --spec <text> [--from <handle>] [--poll-interval-ms <n>] [--max-concurrent <n>] [--worktree <selector>] [--json]',
+      'coding orchestration coordinator-start --spec <text> [--from <handle>] [--poll-interval-ms <n>] [--max-concurrent <n>] [--worktree <selector>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'spec',
@@ -266,7 +266,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'coordinator-stop'],
     aliases: [['orchestration', 'run-stop']],
     summary: 'Retired: load the current orchestration skill',
-    usage: 'orca orchestration coordinator-stop [--json]',
+    usage: 'coding orchestration coordinator-stop [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
     notes: [
       'This command performs no effects and returns the exact `skills get orchestration --full` recovery action.'
@@ -278,7 +278,7 @@ export const ORCHESTRATION_COMMAND_SPECS: CommandSpec[] = [
     destructive: true,
     summary: 'Reset one explicit orchestration state scope',
     usage:
-      'orca orchestration reset (--all | --tasks | --messages) [--retry-request <id>] [--json]',
+      'coding orchestration reset (--all | --tasks | --messages) [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'all', 'tasks', 'messages', 'retry-request']
   }
 ]

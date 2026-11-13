@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { createHash, randomUUID } from 'node:crypto'
 import { lstat, mkdir, rm, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
@@ -112,7 +113,7 @@ export class HostTerminalPolicy {
     private readonly system = new SystemPtyLimit(),
     private readonly readSaved: (path: string) => Promise<number | null> = readSavedMaximum
   ) {
-    const raw = env.ORCA_DAEMON_MAX_HOST_TERMINALS?.trim()
+    const raw = readAppEnv(env, 'DAEMON_MAX_HOST_TERMINALS')?.trim()
     this.environment =
       raw && /^\d+$/.test(raw) && isConfiguredTerminalLimit(Number(raw))
         ? resolveMaxHostTerminals(env)

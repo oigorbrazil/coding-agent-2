@@ -1,7 +1,12 @@
 import { ipcMain } from 'electron'
 import { getRepoDialableSshTargetId, type ExecutionHostId } from '../../../shared/execution-host'
 import { isFolderRepo } from '../../../shared/repo-kind'
-import { hasHooksFile, loadHooks, hasUnrecognizedOrcaYamlKeys } from '../../workspace-hooks/hooks'
+import {
+  hookConfigWarning,
+  hasHooksFile,
+  loadHooks,
+  hasUnrecognizedOrcaYamlKeys
+} from '../../workspace-hooks/hooks'
 import { resolveRepoForExecutionHost } from '../worktrees/repo-host-ownership'
 import { blockedWslDistroForPath } from '../../wsl/filesystem/wsl-unc-access-gate'
 import type { WorktreeIpcContext } from '../worktrees/worktree-ipc-context'
@@ -60,7 +65,8 @@ export function registerWorktreeHookCheckHandler(context: WorktreeIpcContext): v
         status: 'ok',
         hasHooks: has,
         hooks,
-        mayNeedUpdate
+        mayNeedUpdate,
+        warning: hookConfigWarning(repo.path)
       }
     }
   )

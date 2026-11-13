@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { parseRetryAfterMs } from '../exec-error'
 import { createAbortError } from './abort-error'
 
@@ -49,7 +50,7 @@ export async function sleep(ms: number, signal?: AbortSignal): Promise<void> {
 }
 
 export function defaultGhExecTimeoutMs(env: NodeJS.ProcessEnv = process.env): number {
-  const raw = env.ORCA_GH_EXEC_TIMEOUT_MS
+  const raw = readAppEnv(env, 'GH_EXEC_TIMEOUT_MS')
   if (!raw) {
     return DEFAULT_GH_EXEC_TIMEOUT_MS
   }

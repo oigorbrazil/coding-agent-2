@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { dirname, extname, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build, version } from 'esbuild'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 
 const ROOT = fileURLToPath(new URL('../../../..', import.meta.url))
 const MIB = 1024 * 1024

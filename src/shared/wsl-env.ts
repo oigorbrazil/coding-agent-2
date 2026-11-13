@@ -1,3 +1,4 @@
+import { appEnvKeys } from './app-env'
 export function addWslEnvKeys(
   env: Record<string, string | undefined>,
   keys: readonly string[]
@@ -6,7 +7,7 @@ export function addWslEnvKeys(
   const tokens = existing.split(':').filter(Boolean)
   const tokenNames = new Set(tokens.map((token) => token.split('/')[0]))
 
-  for (const key of keys) {
+  for (const key of appEnvKeys(keys)) {
     if (!tokenNames.has(key)) {
       tokens.push(key)
       tokenNames.add(key)

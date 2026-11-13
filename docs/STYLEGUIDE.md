@@ -2,7 +2,7 @@
 
 UI rules for Coding Agent 2. Token values live in `src/renderer/src/assets/main.css` (canonical); this file documents _roles and rules_, not values.
 
-The identity is **monochrome and quiet**: neutral grays carry the chrome, color is reserved for state (selection ring, destructive, git decorations). Coding Agent 2 mostly hosts other tools (Monaco, xterm, Markdown previews), so its own UI should recede and frame. When in doubt:
+The identity is **liquid glass over a quiet workspace** (adapted from glisse; see [`DESIGN.md`](../DESIGN.md)): neutral iOS grays carry the chrome, floating layers use `.glass-material`, buttons are pills, and color is reserved for meaning (action blue, switch green, destructive, git decorations). Coding Agent 2 mostly hosts other tools (Monaco, xterm, Markdown previews), so its own UI should recede and frame. When in doubt:
 
 - Reach for **muted/accent/border** before color.
 - Reach for **CSS variables** before hardcoded hex.

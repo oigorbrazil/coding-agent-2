@@ -16,7 +16,7 @@ import {
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   buildDaemonLauncherDriver,
   closeLauncherWindows,

@@ -4,7 +4,7 @@ import type { GlobalSettings } from '../../../../../shared/global-settings-types
 
 import {
   type TaskProvider,
-  TASK_PROVIDERS,
+  SELECTABLE_TASK_PROVIDERS,
   normalizeVisibleTaskProviders,
   resolveVisibleTaskProvider
 } from '../../../../../shared/task-providers'
@@ -105,11 +105,14 @@ export function TasksPane({ settings, updateSettings }: TasksPaneProps): React.J
   useIntegrationProviderStatusRefresh()
 
   // Warn only about started-then-stalled setup; untouched providers are the default.
-  const stalledVisible = getStalledVisibleTaskProviders(TASK_PROVIDERS, readinessByProvider)
+  const stalledVisible = getStalledVisibleTaskProviders(
+    SELECTABLE_TASK_PROVIDERS,
+    readinessByProvider
+  )
   // Claim sticky expansion through render state before passive effects; rechecks must preserve open install terminals without impure ref writes.
   const [previousAutoExpanded, setPreviousAutoExpanded] = useState<TaskProvider | null>(null)
   const autoExpandedProvider = resolveStickyAutoExpandedTaskProvider({
-    providers: TASK_PROVIDERS,
+    providers: SELECTABLE_TASK_PROVIDERS,
     readinessByProvider,
     previousAutoExpanded
   })
@@ -125,7 +128,9 @@ export function TasksPane({ settings, updateSettings }: TasksPaneProps): React.J
 
     const nextProviders = isVisible
       ? visibleProviders.filter((entry) => entry !== provider)
-      : TASK_PROVIDERS.filter((entry) => entry === provider || visibleProviders.includes(entry))
+      : SELECTABLE_TASK_PROVIDERS.filter(
+          (entry) => entry === provider || visibleProviders.includes(entry)
+        )
 
     updateSettings({
       visibleTaskProviders: nextProviders,
@@ -181,7 +186,7 @@ export function TasksPane({ settings, updateSettings }: TasksPaneProps): React.J
         keywords={getTasksPaneSearchKeywords()}
         className="divide-y divide-border"
       >
-        {TASK_PROVIDERS.map((provider) => {
+        {SELECTABLE_TASK_PROVIDERS.map((provider) => {
           const meta = PROVIDER_META[provider]
           const readiness = readinessByProvider[provider]
           const Icon = meta.Icon

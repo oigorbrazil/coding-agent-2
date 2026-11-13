@@ -13,7 +13,7 @@ vi.mock('../../app-server/codex-app-server-session', async (importOriginal) => (
   ...(await importOriginal<typeof AppServerSession>()),
   runCodexAppServerSession: mocks.runCodexAppServerSession
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: mocks.runProcess }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: mocks.runProcess }))
 
 import { CodexAppServerRequestError } from '../../app-server/codex-app-server-request-error'
 import { CodexAppServerUnsupportedError } from '../../app-server/codex-app-server-session'

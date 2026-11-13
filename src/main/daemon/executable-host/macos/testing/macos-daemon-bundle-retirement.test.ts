@@ -2,12 +2,12 @@ import { access, mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 const { run } = vi.hoisted(() => ({
   run: vi.fn<(spec: ProcessSpec) => Promise<ProcessResult>>()
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: run }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: run }))
 import {
   retireOtherMacDaemonCopies,
   retireUnusedMacDaemonCopy

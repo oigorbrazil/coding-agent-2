@@ -50,7 +50,7 @@ describe('runtime environment store', () => {
   function writeProfileKeypair(userDataPath: string, fill: number): void {
     const publicKeyB64 = Buffer.from(new Uint8Array(32).fill(fill)).toString('base64')
     writeFileSync(
-      join(userDataPath, 'orca-e2ee-keypair.json'),
+      join(userDataPath, 'coding-e2ee-keypair.json'),
       JSON.stringify({ v: 1, publicKeyB64, secretKeyB64: publicKeyB64 })
     )
   }
@@ -139,7 +139,7 @@ describe('runtime environment store', () => {
 
     expect(listEnvironments(userDataPath)).toEqual([added])
     const backups = readdirSync(userDataPath).filter((name) =>
-      name.startsWith('orca-environments.json.corrupt-')
+      name.startsWith('coding-environments.json.corrupt-')
     )
     // The rejected save above left no copy; only the save that replaced the file did.
     expect(backups).toHaveLength(1)
@@ -157,7 +157,7 @@ describe('runtime environment store', () => {
     expect(() =>
       addEnvironmentFromPairingCode(userDataPath, { name: 'dev box', pairingCode: pairingCode() })
     ).toThrow(RuntimeEnvironmentStoreError)
-    expect(readdirSync(userDataPath)).toEqual(['orca-environments.json'])
+    expect(readdirSync(userDataPath)).toEqual(['coding-environments.json'])
     expect(readFileSync(getEnvironmentStorePath(userDataPath), 'utf8')).toBe(contents)
   })
 

@@ -1,14 +1,16 @@
+import { type DaemonPtySpawnContext, DaemonPtySpawnRequest } from './daemon-pty-spawn-request'
+import type { DaemonCreateOrAttachResult as CreateOrAttachResult } from '../../protocol/daemon-create-or-attach-result'
+import type { PtySpawnResult } from '../../../providers/pty-provider-contract'
+import { readAppEnv } from '../../../../shared/app-env'
 import { isAgentSessionClaimedSpawnResult } from '../../../../shared/agent-session/agent-session-host-authority'
 import { parseTerminalKittyKeyboardFlags } from '../../../../shared/terminal/protocol/input-modes/terminal-kitty-keyboard-flags'
 import { daemonSpawnResultIdentity } from './daemon-spawn-result-identity'
 import { retireUnexpectedAttachOnlySpawn } from './daemon-attach-only-retirement'
-import { DaemonPtySpawnRequest, type DaemonPtySpawnContext } from './daemon-pty-spawn-request'
+
 import { providerSequenceFromCreateOrAttach } from './daemon-pty-provider-sequence'
 import { takeHistoryRecoveryFreeze } from '../checkpointing/daemon-history-recovery-freeze'
 import { getRecoveredHistorySeedSegments } from '../../history/seed-transfer/terminal-history-seed-segments'
 import { SessionNotFoundError } from '../../protocol/daemon-errors'
-import type { DaemonCreateOrAttachResult as CreateOrAttachResult } from '../../protocol/daemon-create-or-attach-result'
-import type { PtySpawnResult } from '../../../providers/pty-provider-contract'
 
 export abstract class DaemonPtySpawnResult extends DaemonPtySpawnRequest {
   protected async finishSpawn(
@@ -96,8 +98,9 @@ export abstract class DaemonPtySpawnResult extends DaemonPtySpawnRequest {
       providerWslDistro === null || result.isNew,
       result.incarnationId
     )
-    if (wslDistro && opts.env?.ORCA_PANE_KEY) {
-      this.wslPaneKeysBySessionId.set(sessionId, opts.env.ORCA_PANE_KEY)
+    const paneKey = readAppEnv(opts.env, 'PANE_KEY')
+    if (wslDistro && paneKey) {
+      this.wslPaneKeysBySessionId.set(sessionId, paneKey)
     }
 
     if (effectiveCwd) {

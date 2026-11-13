@@ -7,17 +7,17 @@ import { Callout } from '@/components/docs/prose'
 
 Orchestration is Coding Agent 2's structured multi-agent layer: a **Run** (namespace + coordinator inbox), **Tasks**, **Dispatches**, supervised **workers**, messages, and decision gates.
 
-Use it when you need ownership, completion tracking, or a DAG. For one-off prompts, use `orca terminal send`. For full ownership handoffs without supervision, use worktree/terminal commands from the `orca-cli` skill.
+Use it when you need ownership, completion tracking, or a DAG. For one-off prompts, use `coding terminal send`. For full ownership handoffs without supervision, use worktree/terminal commands from the `orca-cli` skill.
 
 <Callout title="Experimental">
   Enable orchestration under Settings → Experimental before using these commands. The CLI talks to
-  the running Coding Agent 2 runtime, so `orca status --json` should succeed first.
+  the running Coding Agent 2 runtime, so `coding status --json` should succeed first.
 </Callout>
 
 <Callout title="Legacy commands retired">
-  `orca orchestration run` and `run-stop` (and `coordinator-start` / `coordinator-stop`) perform
-  **no effects**. They return recovery text pointing at `orca skills get orchestration --full`. Use
-  the Run + worker-start flow below.
+  `coding orchestration run` and `run-stop` (and `coordinator-start` / `coordinator-stop`) perform
+  **no effects**. They return recovery text pointing at `coding skills get orchestration --full`.
+  Use the Run + worker-start flow below.
 </Callout>
 
 ## Output
@@ -39,13 +39,13 @@ Task IDs printed in terminals, such as `task_...`, are clickable links. Clicking
 ## Preferred supervised loop
 
 ```bash
-orca orchestration run-create --objective "Split checkout QA and summarize blockers"
-orca orchestration task-create --spec "Audit billing settings for mobile layout" --task-title "Billing audit"
-orca orchestration worker-start --task <taskId> --worktree current --agent codex
+coding orchestration run-create --objective "Split checkout QA and summarize blockers"
+coding orchestration task-create --spec "Audit billing settings for mobile layout" --task-title "Billing audit"
+coding orchestration worker-start --task <taskId> --worktree current --agent codex
 # or new worktree:
-orca orchestration worker-start --task <taskId> --worktree new-child --name billing-audit --agent codex --setup run
+coding orchestration worker-start --task <taskId> --worktree new-child --name billing-audit --agent codex --setup run
 # optional per-worker model / effort (Claude, Codex, Cursor, Antigravity, Grok, Muse; not with --terminal):
-orca orchestration worker-start --task <taskId> --worktree current --agent claude --model <opaque-model-id> --effort high
+coding orchestration worker-start --task <taskId> --worktree current --agent claude --model <opaque-model-id> --effort high
 ```
 
 `--agent` takes any Coding Agent 2 agent ID enabled on the worker server, for example `claude`, `codex`, `cursor`, `antigravity`, `muse`, `opencode`, or `opencode2`. `--model` accepts opaque provider model IDs for Claude, Codex, Cursor, Antigravity, Grok, and Muse (for example `--agent muse --model muse-spark-1.3`); OpenCode accepts a per-launch model only in an existing worktree, when the execution host verifies its CLI version and model availability; OpenCode effort remains unsupported. Other agents run the model from their own config. `--effort` requires `--model` and only applies when that agent/model supports the level. Neither flag can combine with `--terminal` (reuse an existing pane). Overrides apply to that launch only and show as `model` / `effort` in the start receipt (`--full --json` shows `launch.requested` / `launch.effective`). Federated starts need a worker host that advertises launch-preference support.
@@ -53,13 +53,13 @@ orca orchestration worker-start --task <taskId> --worktree current --agent claud
 After starting workers, end your turn. Coding Agent 2 wakes the coordinator when a worker reports, asks, or stops; run the `check` command the wake gives you and handle every message it prints:
 
 ```bash
-orca orchestration check --run <runId>
+coding orchestration check --run <runId>
 ```
 
 Worker completion (from the worker pane; include injected IDs):
 
 ```bash
-orca orchestration send \
+coding orchestration send \
   --type worker_done \
   --subject "Completed mobile audit" \
   --body "Fixed footer overlap; no follow-ups." \
@@ -74,16 +74,16 @@ orca orchestration send \
 Inspect / recover:
 
 ```bash
-orca orchestration worker-show --dispatch <dispatchId>
-orca orchestration worker-read --dispatch <dispatchId> --limit 50
-orca orchestration worker-stop --dispatch <dispatchId>
+coding orchestration worker-show --dispatch <dispatchId>
+coding orchestration worker-read --dispatch <dispatchId> --limit 50
+coding orchestration worker-stop --dispatch <dispatchId>
 # After an accepted worker_done: reuse the same terminal for a follow-up Dispatch, or release it
 # (archives inspectable output, then closes only that coordinator-owned agent terminal):
-orca orchestration worker-release --dispatch <dispatchId>
+coding orchestration worker-release --dispatch <dispatchId>
 # Keep a worker open after it finishes (or start it with worker-start --keep-open):
-orca orchestration worker-keep-open --dispatch <dispatchId>
+coding orchestration worker-keep-open --dispatch <dispatchId>
 # retry placement is explicit — --retry-of does not inherit --on/worktree:
-orca orchestration worker-start --task <taskId> --retry-of <dispatchId> --worktree current --agent codex
+coding orchestration worker-start --task <taskId> --retry-of <dispatchId> --worktree current --agent codex
 ```
 
 Do not leave completed worker terminals open just to re-read output — use `worker-read` after `worker-release`. Do not substitute a broad `terminal close` when release returns `release_pending` or `release_unknown`; follow the receipt's recovery action.
@@ -91,7 +91,7 @@ Do not leave completed worker terminals open just to re-read output — use `wor
 ## Federated workers (optional)
 
 ```bash
-orca orchestration worker-start \
+coding orchestration worker-start \
   --task <taskId> \
   --on windows \
   --worktree new-top-level \
@@ -99,7 +99,7 @@ orca orchestration worker-start \
   --name remote-worker \
   --agent codex \
   --setup run
-orca orchestration send --to dispatch:<dispatchId> --subject "Follow-up" --body "…"
+coding orchestration send --to dispatch:<dispatchId> --subject "Follow-up" --body "…"
 ```
 
 Use `--worktree new-child` instead to nest the server's worktree under your workspace in the sidebar. A server too old to nest across machines still starts the worker, top-level, with a `warning` in the receipt.
@@ -109,9 +109,9 @@ Later commands route by Dispatch ID; do not repeat `--on`.
 ## Low-level dispatch (custom topology)
 
 ```bash
-orca worktree create --name billing-audit --agent codex --json
-orca terminal wait --terminal <workerHandle> --for tui-idle --timeout-ms 60000 --json
-orca orchestration dispatch --task <taskId> --to <workerHandle> --inject
+coding worktree create --name billing-audit --agent codex --json
+coding terminal wait --terminal <workerHandle> --for tui-idle --timeout-ms 60000 --json
+coding orchestration dispatch --task <taskId> --to <workerHandle> --inject
 ```
 
 ## Messaging notes
@@ -124,9 +124,9 @@ orca orchestration dispatch --task <taskId> --to <workerHandle> --inject
 - Quote PowerShell group addresses: `--to "@all"`.
 
 ```bash
-orca orchestration send --to @all --subject "Heads up" --body "Pausing dispatches for a review."
-orca orchestration send --to @idle --subject "Anyone free?"
-orca orchestration send --to @codex --subject "Codex workers in this Run only"
+coding orchestration send --to @all --subject "Heads up" --body "Pausing dispatches for a review."
+coding orchestration send --to @idle --subject "Anyone free?"
+coding orchestration send --to @codex --subject "Codex workers in this Run only"
 ```
 
 While a wait is active, the CLI emits small JSON heartbeat lines to stderr every 15 seconds. Stdout remains the final command result.
@@ -138,10 +138,10 @@ Dispatched workers receive a preamble that tells them how to communicate with th
 - Send `worker_done` exactly once, even on failure, with `--outcome`.
 - Include a short `--body` summary: what was done, what was found, and what remains.
 - Include both task and dispatch IDs so stale retries cannot complete the wrong dispatch.
-- Use `orca orchestration ask` for questions instead of local TUI prompts, then end your turn. Coding Agent 2 wakes you with the answer as mail; `check` shows it.
+- Use `coding orchestration ask` for questions instead of local TUI prompts, then end your turn. Coding Agent 2 wakes you with the answer as mail; `check` shows it.
 
 ```bash
-orca orchestration ask \
+coding orchestration ask \
   --question "Should I update the shared component or only this page?" \
   --options "shared,page-only"
 ```
@@ -153,45 +153,45 @@ orca orchestration ask \
 Use `ask` for worker-to-coordinator questions. Use explicit gates when the coordinator has created a task DAG and wants to block a task until a decision is recorded:
 
 ```bash
-orca orchestration gate-create \
+coding orchestration gate-create \
   --task <taskId> \
   --question "Merge the shared button change into the task branch?" \
   --options '["yes","no"]'
 
-orca orchestration gate-resolve --id <gateId> --resolution "yes"
+coding orchestration gate-resolve --id <gateId> --resolution "yes"
 ```
 
 ## Recovery
 
 ```bash
-orca orchestration dispatch-show --task <taskId>
-orca orchestration dispatch-show --task <taskId> --preamble
-orca orchestration task-list
-orca orchestration task-update --id <taskId> --status blocked --result '{"reason":"waiting on credentials"}'
+coding orchestration dispatch-show --task <taskId>
+coding orchestration dispatch-show --task <taskId> --preamble
+coding orchestration task-list
+coding orchestration task-update --id <taskId> --status blocked --result '{"reason":"waiting on credentials"}'
 ```
 
 Reset only when you are intentionally abandoning orchestration state:
 
 ```bash
-orca orchestration reset --tasks
-orca orchestration reset --messages
-orca orchestration reset --all
+coding orchestration reset --tasks
+coding orchestration reset --messages
+coding orchestration reset --all
 ```
 
 `reset` affects runtime-global orchestration state. Do not run it while another coordinator is active unless that is the intended cleanup.
 
 ## Choosing the right command
 
-Use `orca terminal send` for a lightweight prompt to an agent you are watching.
+Use `coding terminal send` for a lightweight prompt to an agent you are watching.
 
-Use `orca orchestration worker-start` (or `dispatch --inject`) when a worker must report `worker_done`, ask questions through the coordinator, and be tracked by task ID.
+Use `coding orchestration worker-start` (or `dispatch --inject`) when a worker must report `worker_done`, ask questions through the coordinator, and be tracked by task ID.
 
-Use `orca orchestration run-create` + tasks + workers when you want a durable Run namespace and supervised multi-agent loop — not the retired `orchestration run` command.
+Use `coding orchestration run-create` + tasks + workers when you want a durable Run namespace and supervised multi-agent loop — not the retired `orchestration run` command.
 
 ## Full guide
 
 Command flags evolve with the app. After install, agents should run:
 
 ```bash
-orca skills get orchestration --full
+coding skills get orchestration --full
 ```

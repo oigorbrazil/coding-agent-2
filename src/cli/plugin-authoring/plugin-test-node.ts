@@ -1,8 +1,8 @@
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import { runProcess } from '@coding-agent/process-host'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 
 /** `module.register` (the `--import` hooks) arrived in Node 20.6; `node:test` is older. */
 const MIN_NODE = [20, 6] as const

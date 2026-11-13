@@ -86,7 +86,7 @@ export const PLUGIN_CATALOG_POLICY_NOTES: readonly string[] = [
   '',
   '## Clients before format 2',
   '',
-  `Coding Agent 2 reads \`${PLUGIN_CATALOG_FILENAME}\` first and falls back to \`${PLUGIN_MARKETPLACE_FILENAME}\`. That older file is frozen: shipped clients reject any key they do not know, so it carries only \`name\`, \`owner\` and each plugin's \`id\`, \`source\`, \`description\` and \`categories\`, and leaves out plugins with a \`source.path\`, which those clients would install from the repository root. Generate it from \`${PLUGIN_CATALOG_FILENAME}\` rather than editing two files:`,
+  `Coding Agent 2 reads \`${PLUGIN_CATALOG_FILENAME}\` first and falls back to \`orca-catalog.json\`, then \`${PLUGIN_MARKETPLACE_FILENAME}\` and \`orca-marketplace.json\`. That older file is frozen: shipped clients reject any key they do not know, so it carries only \`name\`, \`owner\` and each plugin's \`id\`, \`source\`, \`description\` and \`categories\`, and leaves out plugins with a \`source.path\`, which those clients would install from the repository root. Generate it from \`${PLUGIN_CATALOG_FILENAME}\` rather than editing two files:`,
   '',
   '```sh',
   `node config/scripts/export-legacy-plugin-catalog.mjs ${PLUGIN_CATALOG_FILENAME} ${PLUGIN_MARKETPLACE_FILENAME}`,

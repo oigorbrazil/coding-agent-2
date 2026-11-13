@@ -195,7 +195,7 @@ export function BitbucketCredentialsDialog({
           <p className="text-xs text-muted-foreground">
             {t(
               'auto.components.settings.bitbucket.credentials.dialog.environmentManaged',
-              'Bitbucket is already configured through ORCA_BITBUCKET_* environment variables, which take precedence. Unset them to save a credential in Coding Agent 2.'
+              'Bitbucket is already configured through CODING_BITBUCKET_* environment variables, which take precedence. Unset them to save a credential in Coding Agent 2.'
             )}
           </p>
         ) : (
@@ -366,11 +366,11 @@ export function BitbucketCredentialsDialog({
               {remoteRuntime
                 ? t(
                     'auto.components.settings.bitbucket.credentials.dialog.remoteRuntime',
-                    'Stored on this machine, not on the active remote runtime — set ORCA_BITBUCKET_* there instead. Environment variables always take precedence over what you save here.'
+                    'Stored on this machine, not on the active remote runtime — set CODING_BITBUCKET_* there instead. Environment variables always take precedence over what you save here.'
                   )
                 : t(
                     'auto.components.settings.bitbucket.credentials.dialog.storageNote',
-                    'Stored on this machine with encrypted storage when the OS keychain is available. ORCA_BITBUCKET_* environment variables always take precedence over what you save here.'
+                    'Stored on this machine with encrypted storage when the OS keychain is available. CODING_BITBUCKET_* environment variables always take precedence over what you save here.'
                   )}
             </p>
           </div>

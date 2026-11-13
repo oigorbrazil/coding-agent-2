@@ -1,3 +1,4 @@
+import { readAppEnvKey, setAppEnvKey, deleteAppEnvKey } from '../../app-env'
 /** DSH0.1.5-rc.1 and Claude2.1.310 (CLAUDE_CODE_SUBPROCESS_ENV_SCRUB) scrub KEY/TOKEN/SECRET/PASSWORD names, including pane identity. Use scrub-safe aliases without replacing canonical names. */
 
 /** Alias for `ORCA_PANE_KEY`. */
@@ -14,26 +15,36 @@ const ALIASES: readonly (readonly [source: string, alias: string])[] = [
 /** Drop aliases whose source is absent so inherited parent identity cannot claim this pane's hooks. */
 export function applyScrubSafeAgentEnvAliases(env: Record<string, string>): void {
   for (const [source, alias] of ALIASES) {
-    const value = env[source]
+    const value = readAppEnvKey(env, source)
     if (value === undefined || value === '') {
-      delete env[alias]
+      deleteAppEnvKey(env, alias)
       continue
     }
-    env[alias] = value
+    setAppEnvKey(env, alias, value)
   }
 }
 
 /** POSIX hook prologue: refill the canonical names from their aliases; never overwrites a live value. */
 export function buildPosixScrubSafeEnvRestoreLines(): string[] {
-  return [
-    ...ALIASES.map(([source, alias]) => `: "\${${source}:=\${${alias}:-}}"`),
-    `export ${ALIASES.map(([source]) => source).join(' ')}`
-  ]
+  return ALIASES.flatMap(([source, alias]) => {
+    const current = source.replace('ORCA_', 'CODING_AGENT_')
+    const currentAlias = alias.replace('ORCA_', 'CODING_AGENT_')
+    return [
+      `${source}="\${${current}-\${${source}:-\${${currentAlias}-\${${alias}:-}}}}"`,
+      `${current}="$${source}"; export ${source} ${current}`
+    ]
+  })
 }
 
-/** Windows `.cmd` hook prologue with the same contract. */
 export function buildWindowsScrubSafeEnvRestoreLines(): string[] {
-  return ALIASES.map(
-    ([source, alias]) => `if not defined ${source} if defined ${alias} set "${source}=%${alias}%"`
-  )
+  return ALIASES.flatMap(([source, alias]) => {
+    const current = source.replace('ORCA_', 'CODING_AGENT_')
+    const currentAlias = alias.replace('ORCA_', 'CODING_AGENT_')
+    return [
+      `if defined ${current} set "${source}=%${current}%"`,
+      `if not defined ${source} if defined ${currentAlias} set "${source}=%${currentAlias}%"`,
+      `if not defined ${source} if defined ${alias} set "${source}=%${alias}%"`,
+      `if defined ${source} set "${current}=%${source}%"`
+    ]
+  })
 }

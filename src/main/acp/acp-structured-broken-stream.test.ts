@@ -1,4 +1,4 @@
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 // Real Node children: direct stdout EOF at the connection boundary, then supervised root exit
 // while a descendant holds stdout. POSIX supervisors keep their own stdout open after provider EOF.
 
@@ -66,7 +66,7 @@ const CLOSES_STDOUT_MID_TURN = `
   ${agentScript('fs.closeSync(1)')}
 `
 const EXITS_HOLDING_STDOUT = agentScript(String.raw`
-  const held = require('@orca/process-host').spawnProcess({
+  const held = require('@coding-agent/process-host').spawnProcess({
     program: process.execPath,
     args: ['-e', 'setInterval(() => {}, 60000)'],
     stdio: ['ignore', 'inherit', 'ignore']

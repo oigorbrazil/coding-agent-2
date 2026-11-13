@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 import { FolderOpen } from 'lucide-react'
 import type { GlobalSettings } from '../../../../../shared/global-settings-types'
-import type { FloatingTerminalTriggerLocation } from '../../../../../shared/ui-chrome-types'
 import { Button } from '../../ui/button'
 import { Input } from '../../ui/input'
-import { ToggleGroup, ToggleGroupItem } from '../../ui/toggle-group'
 import { SearchableSetting } from '../section-layout/SearchableSetting'
 import { SettingsRow, SettingsSwitchRow } from '../form-controls/SettingsFormControls'
 import { getFloatingWorkspaceSearchEntries } from './floating-workspace-search'
@@ -154,39 +152,6 @@ export function FloatingWorkspacePane({
                 <FolderOpen className="size-4" />
               </Button>
             </div>
-          }
-        />
-
-        <SettingsRow
-          label={t(
-            'auto.components.settings.FloatingWorkspacePane.5e5a8da236',
-            'Toggle Button Location'
-          )}
-          description={t(
-            'auto.components.settings.FloatingWorkspacePane.3c900e26e5',
-            'The keyboard shortcut works regardless of where the toggle is shown.'
-          )}
-          control={
-            <ToggleGroup
-              type="single"
-              value={settings.floatingTerminalTriggerLocation ?? 'floating-button'}
-              onValueChange={(value) => {
-                if (!value) {
-                  return
-                }
-                updateSettings({
-                  floatingTerminalTriggerLocation: value as FloatingTerminalTriggerLocation
-                })
-                useAppStore.getState().recordFeatureInteraction('floating-workspace')
-              }}
-            >
-              <ToggleGroupItem value="floating-button">
-                {t('auto.components.settings.FloatingWorkspacePane.9fb225f2d7', 'Floating Button')}
-              </ToggleGroupItem>
-              <ToggleGroupItem value="status-bar">
-                {t('auto.components.settings.FloatingWorkspacePane.aeaf76fda9', 'Status Bar')}
-              </ToggleGroupItem>
-            </ToggleGroup>
           }
         />
       </SearchableSetting>

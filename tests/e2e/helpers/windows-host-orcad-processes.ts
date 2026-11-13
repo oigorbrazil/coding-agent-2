@@ -1,6 +1,6 @@
 // Observe the Windows host-cell account locally: the runner provisioned it and its sshd listens on loopback.
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 export type HostProcess = { pid: number; commandLine: string }
 

@@ -12,9 +12,9 @@ export const hasCustomTitleBar = shouldRenderDesktopWindowChrome({
   isWebClient: isPairedWebClientWindow()
 })
 
-// Offset surfaces by three 46px controls and their 36px titlebar.
-export const WINDOW_CONTROLS_WIDTH = hasCustomTitleBar ? '138px' : '0px'
-export const WINDOW_CONTROLS_HEIGHT = hasCustomTitleBar ? '36px' : '0px'
+// Offset surfaces by three 36px controls and their 24px top bar.
+export const WINDOW_CONTROLS_WIDTH = hasCustomTitleBar ? '108px' : '0px'
+export const WINDOW_CONTROLS_HEIGHT = hasCustomTitleBar ? '24px' : '0px'
 
 // Only macOS desktop windows need left-side traffic-light clearance.
 export const hasMacTrafficLights = isMac && !isPairedWebClientWindow()

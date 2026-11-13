@@ -1,4 +1,4 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   isZCodeMissingTuiOutput,
   type ZCodeInteractiveCapability

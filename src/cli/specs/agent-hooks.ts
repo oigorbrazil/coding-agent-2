@@ -5,28 +5,28 @@ export const AGENT_HOOK_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['agent', 'hooks', 'prepare-codex'],
     summary: "Prepare a WSL pane's Coding Agent 2-managed Codex home before a shell launch",
-    usage: 'orca agent hooks prepare-codex',
+    usage: 'coding agent hooks prepare-codex',
     allowedFlags: [...LOCAL_COMMAND_FLAGS]
   },
   {
     path: ['agent', 'hooks', 'status'],
     summary: 'Show whether Coding Agent 2-managed agent status hooks are enabled',
-    usage: 'orca agent hooks status [--json]',
+    usage: 'coding agent hooks status [--json]',
     allowedFlags: [...LOCAL_COMMAND_FLAGS],
-    examples: ['orca agent hooks status', 'orca agent hooks status --json']
+    examples: ['coding agent hooks status', 'coding agent hooks status --json']
   },
   {
     path: ['agent', 'hooks', 'off'],
     summary: 'Disable Coding Agent 2-managed agent status hooks and remove local hook entries',
-    usage: 'orca agent hooks off [--json]',
+    usage: 'coding agent hooks off [--json]',
     allowedFlags: [...LOCAL_COMMAND_FLAGS],
-    examples: ['orca agent hooks off']
+    examples: ['coding agent hooks off']
   },
   {
     path: ['agent', 'hooks', 'on'],
     summary: 'Enable Coding Agent 2-managed agent status hooks',
-    usage: 'orca agent hooks on [--json]',
+    usage: 'coding agent hooks on [--json]',
     allowedFlags: [...LOCAL_COMMAND_FLAGS],
-    examples: ['orca agent hooks on']
+    examples: ['coding agent hooks on']
   }
 ]
