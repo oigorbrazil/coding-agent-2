@@ -40,6 +40,7 @@ describe('host-private managed account originals', () => {
       XDG_STATE_HOME: join(tmpdir(), 'different-profile', 'state')
     })
     foreign.ORCA_DATA_ACCOUNT_ORIGINAL_ENV = captured.ORCA_DATA_ACCOUNT_ORIGINAL_ENV
+    foreign.CODING_AGENT_DATA_ACCOUNT_ORIGINAL_ENV = captured.CODING_AGENT_DATA_ACCOUNT_ORIGINAL_ENV
     service.restoreOriginalEnvironment(foreign)
     expect(foreign.OPENCODE_AUTH_CONTENT).toBeUndefined()
   })

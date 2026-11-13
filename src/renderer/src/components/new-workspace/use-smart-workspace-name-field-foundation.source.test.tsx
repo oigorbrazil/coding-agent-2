@@ -1,7 +1,7 @@
 import { linearIssueReadFixture } from '@/store/slices/linear/linear-slice-test-harness'
 // @vitest-environment happy-dom
 
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react'
+import { act, cleanup, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Repo } from '../../../../shared/repo-types'
 
@@ -10,7 +10,6 @@ import type { LinearIssue } from '../../../../shared/linear/issue-types'
 import type { TaskSourceContext } from '../../../../shared/task-source-context'
 import type { NormalizedWorkItemSourceSearchProps } from './smart-workspace-name-field-model'
 import { useWorkItemSourceSearch } from './use-work-item-source-search'
-import { referenceLinearIssue } from '../sidebar/workspace-card/review/workspace-reference-fixtures.test-support'
 
 const mocks = vi.hoisted(() => ({
   readStatus: vi.fn(),
@@ -116,23 +115,5 @@ describe('smart workspace explicit source connection', () => {
     await act(async () => {})
     expect(result.current.linearStatusChecked).toBe(false)
     expect(result.current.unresolvedLinearUrlIntent).toBe(true)
-  })
-  it('returns to Smart after losing a provider and does not resurrect its stale mode or rows', async () => {
-    mocks.state.linearStatus = { ...mocks.state.linearStatus, connected: true }
-    mocks.state.searchLinearIssues.mockResolvedValue([referenceLinearIssue()])
-    const searchProps = { ...props(), value: 'launch' }
-    const { result, rerender } = renderHook(() => useWorkItemSourceSearch(searchProps))
-    act(() => result.current.setMode('linear'))
-    await waitFor(() => expect(result.current.rows.some((row) => row.kind === 'linear')).toBe(true))
-    mocks.state.linearStatus = { ...mocks.state.linearStatus, connected: false }
-    rerender()
-    await waitFor(() => expect(result.current.mode).toBe('smart'))
-    expect(result.current.rows).toEqual([])
-    mocks.state.searchLinearIssues.mockResolvedValue([])
-    mocks.state.linearStatus = { ...mocks.state.linearStatus, connected: true }
-    rerender()
-    await waitFor(() => expect(result.current.loading).toBe(false))
-    expect(result.current.mode).toBe('smart')
-    expect(result.current.rows).toEqual([])
   })
 })

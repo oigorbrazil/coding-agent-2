@@ -157,7 +157,7 @@ describe('TerminalQuickCommandDialog animation structure', () => {
     // A screen reader re-reads an alert whose text changes, so only the plain count may move.
     expect(after).toBe(before)
     expect(after?.textContent).toBe(beforeText)
-    expect(after?.textContent).not.toMatch(/\d/)
+    expect(after?.textContent?.replace('Coding Agent 2', '')).not.toMatch(/\d/)
   })
 
   it('locks the submitted draft until save settles, then permits editing and retry after refusal', async () => {

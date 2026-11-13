@@ -10,8 +10,8 @@ import type { RuntimeHostStatusSnapshot } from '../../../shared/remote-runtime/h
 // Web transport messages the shared classifier doesn't list: the connection waiter's deadline and
 // a socket that dropped mid-request.
 const WEB_CONNECTION_FAILURE_FRAGMENTS = [
-  'timed out while connecting to the remote orca runtime',
-  'remote orca runtime connection interrupted'
+  'timed out while connecting to the remote coding agent 2 runtime',
+  'remote coding agent 2 runtime connection interrupted'
 ]
 
 function isConnectionFailure(error: unknown): boolean {

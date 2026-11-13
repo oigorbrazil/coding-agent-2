@@ -8,7 +8,7 @@ describe('crash report submit notices', () => {
   it('builds an allow-listed copy context with the exact sanitized failure reasons', () => {
     expect(
       getCrashReportCopySubmissionFailure({
-        error: 'request failed at C:\\Users\\alice\\Coding Agent 2',
+        error: 'request failed at C:\\Users\\alice\\orca',
         diagnosticBundle: {
           status: 'not_uploaded',
           reason: 'attachment timeout token=super-secret-value'

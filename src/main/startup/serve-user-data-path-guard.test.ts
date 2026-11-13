@@ -22,7 +22,7 @@ describe('checkServeUserDataPath', () => {
       checkServeUserDataPath({
         isServeMode: true,
         userDataPath: 'C:\\Users\\Me\\Coding Agent 2',
-        env: { ORCA_SERVE_USER_DATA_PATH: 'c:\\users\\me\\orca' },
+        env: { ORCA_SERVE_USER_DATA_PATH: 'c:\\users\\me\\coding agent 2' },
         platform: 'win32'
       })
     ).toBeNull()

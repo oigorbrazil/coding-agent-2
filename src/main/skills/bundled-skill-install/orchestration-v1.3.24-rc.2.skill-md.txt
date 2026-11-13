@@ -1,11 +1,11 @@
 ---
 name: orchestration
-description: Use the Coding Agent 2 CLI to coordinate multiple coding agents via inter-agent messaging, task DAGs, dispatch with preamble injection, decision gates, and coordinator loops. Use when an agent needs to send or check inter-agent messages; create, dispatch, or track orchestration tasks; coordinate multi-agent workflows; or act as a coordinator dispatching work across terminals. Triggers include "orchestrate agents", "dispatch task", "send message to agent", "check inbox", "coordinate agents", "multi-agent", "create task DAG", "worker_done", "escalation", or any task involving inter-agent coordination through Coding Agent 2.
+description: Use the Orca CLI to coordinate multiple coding agents via inter-agent messaging, task DAGs, dispatch with preamble injection, decision gates, and coordinator loops. Use when an agent needs to send or check inter-agent messages; create, dispatch, or track orchestration tasks; coordinate multi-agent workflows; or act as a coordinator dispatching work across terminals. Triggers include "orchestrate agents", "dispatch task", "send message to agent", "check inbox", "coordinate agents", "multi-agent", "create task DAG", "worker_done", "escalation", or any task involving inter-agent coordination through Orca.
 ---
 
-# Coding Agent 2 Inter-Agent Orchestration
+# Orca Inter-Agent Orchestration
 
-Use this skill when the task involves coordinating multiple coding agents through Coding Agent 2's orchestration system. For basic terminal and worktree management, use the `orca-cli` skill instead.
+Use this skill when the task involves coordinating multiple coding agents through Orca's orchestration system. For basic terminal and worktree management, use the `orca-cli` skill instead.
 
 ## When To Use
 
@@ -17,10 +17,10 @@ Use this skill when the task involves coordinating multiple coding agents throug
 
 ## Preconditions
 
-- Coding Agent 2 must be running (`orca status --json` should return `runtime: true`).
-- The `orca` CLI must be on PATH (installed via Settings > Browser > Enable Coding Agent 2 CLI).
+- Orca must be running (`orca status --json` should return `runtime: true`).
+- The `orca` CLI must be on PATH (installed via Settings > Browser > Enable Orca CLI).
 - The orchestration experimental feature must be enabled in Settings > Experimental.
-- All `orca orchestration` commands are RPC calls to the running Coding Agent 2 runtime — they require an active Coding Agent 2 session.
+- All `orca orchestration` commands are RPC calls to the running Orca runtime — they require an active Orca session.
 
 ## Command Surface
 
@@ -35,7 +35,7 @@ orca orchestration reply --id <msg_id> --body <text> [--from <handle>] [--json]
 orca orchestration inbox [--limit <n>] [--json]
 ```
 
-Why: `--from` auto-resolves via the `ORCA_TERMINAL_HANDLE` environment variable injected into every Coding Agent 2-managed terminal. Omit it unless impersonating another terminal.
+Why: `--from` auto-resolves via the `ORCA_TERMINAL_HANDLE` environment variable injected into every Orca-managed terminal. Omit it unless impersonating another terminal.
 
 Why: `--inject` formats messages as readable banners with priority indicators (`[HIGH]`, `[URGENT]`) for agent prompt injection. Use `--json` for machine-readable output.
 
@@ -113,7 +113,7 @@ orca orchestration run --spec <text> [--from <handle>] [--poll-interval-ms <n>] 
 orca orchestration run-stop [--json]
 ```
 
-Why: `run` returns immediately with a run ID. The coordinator loop runs in the background inside the Coding Agent 2 runtime. Query progress via `orca orchestration task-list`. Only one coordinator can run at a time.
+Why: `run` returns immediately with a run ID. The coordinator loop runs in the background inside the Orca runtime. Query progress via `orca orchestration task-list`. Only one coordinator can run at a time.
 
 **Coordinator phases**: `decomposing` → `dispatching` → `monitoring` → `merging` → `done`.
 
@@ -141,7 +141,7 @@ orca terminal stop [--terminal <handle>] [--json]
 orca terminal close [--terminal <handle>] [--json]
 ```
 
-Why: `--terminal` is optional for most commands. When omitted, Coding Agent 2 auto-resolves to the active terminal in the current worktree.
+Why: `--terminal` is optional for most commands. When omitted, Orca auto-resolves to the active terminal in the current worktree.
 
 Why: `--command "claude"` launches Claude Code in the new terminal. After creating a `--command` terminal, use `terminal wait --for tui-idle` to wait for the agent to boot before dispatching.
 
@@ -149,7 +149,7 @@ Why: `--for tui-idle` detects the working→idle OSC title transition for recogn
 
 Why: `--direction horizontal` splits left/right (new pane to the right). `--direction vertical` splits top/bottom (new pane below). Default is horizontal.
 
-Why: terminal handles are runtime-scoped. If Coding Agent 2 restarts, handles go stale. Re-acquire with `terminal list`.
+Why: terminal handles are runtime-scoped. If Orca restarts, handles go stale. Re-acquire with `terminal list`.
 
 Why: the 120-line terminal output buffer (`terminal read`) is for status monitoring, not result extraction. Prefer structured `worker_done` payloads over parsing terminal output.
 
@@ -165,7 +165,7 @@ Why: the 120-line terminal output buffer (`terminal read`) is for status monitor
 - When acting as coordinator: prefer `check --wait` over sleep+poll loops. `--wait` blocks until a message arrives, eliminating wasted time. Always pass `--timeout-ms` as a safety net. If the wait times out with no messages, fall back to `terminal wait --for tui-idle` and then reading terminal output.
 - `check --wait` returns one message at a time. If N workers finish near-simultaneously, call `check --wait` N times in a loop to collect all results. After each return, mark the task complete (which auto-promotes dependents) and dispatch the next wave before looping back to wait.
 - After receiving `worker_done` from a terminal, that terminal is guaranteed idle — skip the `terminal wait --for tui-idle` round-trip and dispatch the next task immediately.
-- Terminal handles are ephemeral and runtime-scoped. If Coding Agent 2 restarts mid-workflow, all handles go stale. Re-acquire them with `terminal list` before continuing.
+- Terminal handles are ephemeral and runtime-scoped. If Orca restarts mid-workflow, all handles go stale. Re-acquire them with `terminal list` before continuing.
 - Keep dependency chains to 3-4 steps maximum. Prefer parallel waves of independent tasks over deep sequential chains.
 - Insert decision gates (`gate-create`) between phases for human oversight on risky operations.
 

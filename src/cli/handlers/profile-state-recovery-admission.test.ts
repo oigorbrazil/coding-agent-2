@@ -98,11 +98,11 @@ async function fixture() {
   const directory = join(root, 'profiles', profileId)
   mkdirSync(directory, { recursive: true })
   writeFileSync(
-    join(root, 'orca-profile-index.json'),
+    join(root, 'coding-profile-index.json'),
     JSON.stringify({ activeProfileId: profileId, profiles: [{ id: profileId }] })
   )
   const databasePath = join(directory, 'profile-state.db')
-  const dataFile = join(directory, 'orca-data.json')
+  const dataFile = join(directory, 'coding-data.json')
   const backupId = createProfileStateDatabaseBackupId()
   const backupPath = profileStateDatabaseBackupPath(databasePath, backupId)
   const source = openProfileStateDatabase(databasePath, profileId)
@@ -209,7 +209,7 @@ describe('offline recovery excludes runtime admission', () => {
     }
     const archived = join(profile.directory, quarantine)
     expect(readFileSync(join(archived, 'profile-state.db'))).toEqual(original)
-    expect(readFileSync(join(archived, 'orca-data.json'), 'utf8')).toBe(staleJson)
+    expect(readFileSync(join(archived, 'coding-data.json'), 'utf8')).toBe(staleJson)
     expect(
       JSON.parse(readFileSync(join(archived, 'orca-data.json.sqlite-export.2.json'), 'utf8'))
     ).toEqual(liveState)

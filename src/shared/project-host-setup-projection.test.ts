@@ -41,7 +41,7 @@ describe('project host setup projection', () => {
     path: '/Users/alice/orca',
     displayName: 'Coding Agent 2',
     addedAt: 100,
-    upstream: { owner: 'StablyAI', repo: 'Coding Agent 2' }
+    upstream: { owner: 'StablyAI', repo: 'Orca' }
   })
   const unknownSibling = repo({
     id: 'remote-repo',
@@ -111,7 +111,7 @@ describe('project host setup projection', () => {
         id: 'local-repo',
         path: '/Users/alice/orca',
         displayName: 'Coding Agent 2',
-        upstream: { owner: 'StablyAI', repo: 'Coding Agent 2' }
+        upstream: { owner: 'StablyAI', repo: 'Orca' }
       }),
       repo({
         id: 'remote-repo',
@@ -126,7 +126,7 @@ describe('project host setup projection', () => {
     expect(projection.projects[0]).toMatchObject({
       id: 'github:stablyai/orca',
       sourceRepoIds: ['local-repo', 'remote-repo'],
-      providerIdentity: { provider: 'github', owner: 'StablyAI', repo: 'Coding Agent 2' }
+      providerIdentity: { provider: 'github', owner: 'StablyAI', repo: 'Orca' }
     })
     expect(getProjectHostSetupsForProject(projection.setups, 'github:stablyai/orca')).toHaveLength(
       2

@@ -68,7 +68,7 @@ describe('verifyProvisionedRootCheckout', () => {
       verifyProvisionedRootCheckout({
         worktrees: [gitWorktree('c:/workspace/orca/')],
         sparseCheckoutEnabled: false,
-        projectRoot: 'C:\\Workspace\\Coding Agent 2',
+        projectRoot: 'C:\\Workspace\\Orca',
         request: { name: 'fix-sandbox' }
       }).path
     ).toBe('c:/workspace/orca/')

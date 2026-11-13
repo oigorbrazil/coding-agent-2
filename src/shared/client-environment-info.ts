@@ -13,7 +13,7 @@ const ORCA_LINE_PREFIX = 'Coding Agent 2:'
 
 // Strip the whole prefilled footer including optional Shell while retaining user-authored text above and below it.
 const CLIENT_ENVIRONMENT_FOOTER_BLOCK =
-  /(^|\r?\n)---\r?\nOrca:[^\r\n]*\r?\nOS:[^\r\n]*(?:\r?\nShell:[^\r\n]*)?/
+  /(^|\r?\n)---\r?\n(?:Coding Agent 2|Orca):[^\r\n]*\r?\nOS:[^\r\n]*(?:\r?\nShell:[^\r\n]*)?/
 
 function normalizeEnvironmentValue(value: string): string {
   return value.trim().replace(/[\r\n]+/g, ' ')

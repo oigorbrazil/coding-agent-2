@@ -209,7 +209,7 @@ function run(
     PATH: `${sandbox.bin}${delimiter}${process.env.PATH ?? ''}`,
     CODEX_HOME: join(sandbox.bin, '..', 'codex-home'),
     // Nested Coding Agent 2 tests must not forward the host pane's identity.
-    ...Object.fromEntries(CODEX_COMMAND_IDENTITY_ENV_KEYS.map((key) => [key, ''])),
+    ...Object.fromEntries(CODEX_COMMAND_IDENTITY_ENV_KEYS.map((key) => [key, undefined])),
     SSH_CONNECTION: undefined,
     SSH_TTY: undefined,
     [REMOTE_VIEWER_CLIPBOARD_ENV]: undefined,

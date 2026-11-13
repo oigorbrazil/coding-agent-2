@@ -98,7 +98,7 @@ it('compares Windows partition folders case-insensitively', async () => {
   const winRoot = 'C:\\Users\\Me\\AppData\\Coding Agent 2\\Partitions'
   expect(browserRoutePartitionDirectoryKey(`${winRoot}\\Abc`, win32.resolve)).toBe(
     browserRoutePartitionDirectoryKey(
-      'c:\\users\\me\\appdata\\orca\\partitions\\abc',
+      'c:\\users\\me\\appdata\\coding agent 2\\partitions\\abc',
       win32.resolve
     )
   )

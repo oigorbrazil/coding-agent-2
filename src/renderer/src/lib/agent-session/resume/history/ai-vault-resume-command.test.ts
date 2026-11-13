@@ -259,7 +259,7 @@ describe('ai vault resume command runtime', () => {
         }
       })
     ).toBe(
-      "Remove-Item Env:CODEX_HOME -ErrorAction SilentlyContinue; Remove-Item Env:ORCA_CODEX_HOME -ErrorAction SilentlyContinue; Set-Location -LiteralPath 'C:\\Users\\alice\\repo'; codex '-c' 'tui.resume_cwd=current' 'resume' 'session one'"
+      "Remove-Item Env:CODEX_HOME -ErrorAction SilentlyContinue; Remove-Item Env:CODING_AGENT_CODEX_HOME -ErrorAction SilentlyContinue; Remove-Item Env:ORCA_CODEX_HOME -ErrorAction SilentlyContinue; Set-Location -LiteralPath 'C:\\Users\\alice\\repo'; codex '-c' 'tui.resume_cwd=current' 'resume' 'session one'"
     )
   })
 
@@ -280,7 +280,7 @@ describe('ai vault resume command runtime', () => {
         }
       })
     ).toBe(
-      'set "CODEX_HOME=" & set "ORCA_CODEX_HOME=" & cd /d "C:\\Users\\alice\\repo" && codex "-c" "tui.resume_cwd=current" "resume" "session one"'
+      'set "CODEX_HOME=" & set "CODING_AGENT_CODEX_HOME=" & set "ORCA_CODEX_HOME=" & cd /d "C:\\Users\\alice\\repo" && codex "-c" "tui.resume_cwd=current" "resume" "session one"'
     )
   })
 
@@ -301,7 +301,7 @@ describe('ai vault resume command runtime', () => {
         }
       })
     ).toBe(
-      `cd '/home/alice/repo' && env -u CODEX_HOME -u ORCA_CODEX_HOME codex '-c' 'disable_paste_burst=true' '-c' 'tui.resume_cwd=current' 'resume' 'session one'`
+      `cd '/home/alice/repo' && env -u CODEX_HOME -u CODING_AGENT_CODEX_HOME -u ORCA_CODEX_HOME codex '-c' 'disable_paste_burst=true' '-c' 'tui.resume_cwd=current' 'resume' 'session one'`
     )
   })
 
@@ -562,7 +562,7 @@ describe('ai vault resume command runtime', () => {
     })
 
     expect(command).toBe(
-      `cd '/home/alice/repo' && env -u CODEX_HOME -u ORCA_CODEX_HOME codex '-c' 'disable_paste_burst=true' '-c' 'tui.resume_cwd=current' 'resume' 'session one'`
+      `cd '/home/alice/repo' && env -u CODEX_HOME -u CODING_AGENT_CODEX_HOME -u ORCA_CODEX_HOME codex '-c' 'disable_paste_burst=true' '-c' 'tui.resume_cwd=current' 'resume' 'session one'`
     )
     expect(command).not.toContain('/retired/shared-home')
   })

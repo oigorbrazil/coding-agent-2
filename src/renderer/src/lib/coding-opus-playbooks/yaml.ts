@@ -13,7 +13,7 @@ export class PlaybooksYamlError extends Error {
   }
 }
 
-const hasKey = (obj: object, key: string) => Object.hasOwn(obj, key)
+const hasKey = (obj: Readonly<Record<string, unknown>>, key: string) => Object.hasOwn(obj, key)
 const space = (ch: string | undefined) => ch !== undefined && /\s/.test(ch)
 const isItem = (text: string) => text === '-' || text.startsWith('- ')
 const isQuote = (ch: string | undefined) => ch === '"' || ch === "'"

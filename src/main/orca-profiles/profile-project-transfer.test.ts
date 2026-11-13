@@ -179,7 +179,7 @@ describe('profile project transfer', () => {
     writeProfileState(
       'personal',
       makeState({
-        repos: [makeRepo({ path: 'C:\\Work\\Coding Agent 2\\' })]
+        repos: [makeRepo({ path: 'C:\\Work\\Orca\\' })]
       })
     )
     writeProfileState(

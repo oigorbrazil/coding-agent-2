@@ -19,7 +19,7 @@ export function pluginInstallErrorMessage(cause: unknown): string {
       'coding-plugin.json is invalid. Ask the plugin author to fix the manifest.'
     )
   }
-  if (detail.includes('requires orca')) {
+  if (detail.includes('requires coding agent 2')) {
     return translate(
       'auto.components.settings.pluginError.incompatible',
       'This plugin requires a different Coding Agent 2 version.'
@@ -46,7 +46,7 @@ export function pluginInstallErrorMessage(cause: unknown): string {
   // Why: a fork of an official template keeps its reserved id/publisher, and this refusal used to
   // fall through to a generic failure with no hint to rename (#12598). Checked before the Git
   // heuristic because a reserved key such as `github.x` contains "git".
-  if (detail.includes('reserved for official orca plugins')) {
+  if (detail.includes('reserved for official coding agent 2 plugins')) {
     return translate(
       'auto.components.settings.pluginError.installReservedIdentity',
       'This plugin uses a name reserved for official Coding Agent 2 plugins, which install only from Coding Agent 2’s catalog. For your own copy or fork, change "id" in coding-plugin.json so it doesn’t start with "orca-", and set "publisher" to your own name.'
@@ -72,7 +72,7 @@ export function invalidPluginErrorMessage(
 ): string {
   const detail = detailValue.toLowerCase()
   // Why everything but a version gap: the user of an installed copy can't fix its files.
-  if (installed && !detail.includes('requires orca')) {
+  if (installed && !detail.includes('requires coding agent 2')) {
     return t(
       'auto.components.settings.pluginError.installedManifestUnloadable',
       "This version can't load in this Coding Agent 2. Update or reinstall it."
@@ -96,7 +96,7 @@ export function invalidPluginErrorMessage(
       'A worker or panel file is missing or unsafe. Fix it, then refresh.'
     )
   }
-  if (detail.includes('requires orca')) {
+  if (detail.includes('requires coding agent 2')) {
     return t(
       'auto.components.settings.pluginError.incompatible',
       'This plugin requires a different Coding Agent 2 version.'

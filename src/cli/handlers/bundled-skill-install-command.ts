@@ -33,6 +33,10 @@ import {
   localBundledSkillInput,
   previewBundledSkillInstall
 } from '../../main/skills/bundled-skill-install/cli-entry'
+import {
+  INHERITED_SKILL_WRITES_ENABLED,
+  skippedBundledSkillInstall
+} from '../../main/skills/bundled-skill-install/inherited-skill-writes'
 
 export type SkillMutationVerb = 'install' | 'update'
 
@@ -249,7 +253,9 @@ export function createSkillMutationHandler(verb: SkillMutationVerb): CommandHand
       return
     }
 
-    const result = await installBundledSkills(input, plan.planDigest)
+    const result = INHERITED_SKILL_WRITES_ENABLED
+      ? await installBundledSkills(input, plan.planDigest)
+      : skippedBundledSkillInstall(plan.scope)
     const summary = summarizeBundledSkillOutcomes(result)
     process.exitCode = summary.exitCode
     if (json) {

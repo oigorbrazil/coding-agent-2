@@ -171,7 +171,7 @@ describe.skipIf(process.platform === 'win32')(
           const config = JSON.parse(
             readFileSync(join(root, 'HOME', '.claude', 'settings.json'), 'utf8')
           )
-          expect(JSON.stringify(config.hooks ?? {}).includes('orca')).toBe(enabled)
+          expect(JSON.stringify(config.hooks ?? {}).includes('agent-hooks')).toBe(enabled)
         }
       }
     )

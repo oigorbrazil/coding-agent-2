@@ -15,6 +15,10 @@ import {
   previewBundledSkillInstall,
   type BundledSkillServiceInput
 } from '../../../skills/bundled-skill-install/service'
+import {
+  INHERITED_SKILL_WRITES_ENABLED,
+  skippedBundledSkillInstall
+} from '../../../skills/bundled-skill-install/inherited-skill-writes'
 import { clearSkillDiscoveryCaches } from '../../../skills/skill-discovery-target'
 import { resolveSkillInstallDestination } from '../../../skills/skill-install-destinations'
 import type { RuntimeSkillCommandHost } from './runtime-skill-command-contract'
@@ -59,6 +63,9 @@ export async function executeLocalBundledSkills(
   host: RuntimeSkillCommandHost,
   { planDigest, request }: LocalBundledSkillExecuteRequest
 ): Promise<BundledSkillInstallResult> {
+  if (!INHERITED_SKILL_WRITES_ENABLED) {
+    return skippedBundledSkillInstall('global')
+  }
   const result = await installBundledSkills(await appInput(host, request), planDigest)
   // Discovery would otherwise serve its pre-install answer from cache.
   clearSkillDiscoveryCaches()
@@ -69,6 +76,9 @@ export async function autoUpdateLocalBundledSkills(
   host: RuntimeSkillCommandHost,
   { names }: BundledSkillAutoUpdateRequest
 ): Promise<BundledSkillInstallResult> {
+  if (!INHERITED_SKILL_WRITES_ENABLED) {
+    return skippedBundledSkillInstall('global')
+  }
   const input = await appInput(host, {})
   const result = await autoUpdateInstalledBundledSkills({ ...input, names })
   clearSkillDiscoveryCaches()

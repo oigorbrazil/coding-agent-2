@@ -106,11 +106,11 @@ function createProfile(): {
   const profileDirectory = join(userDataPath, 'profiles', profileId)
   mkdirSync(profileDirectory, { recursive: true })
   writeFileSync(
-    join(userDataPath, 'orca-profile-index.json'),
+    join(userDataPath, 'coding-profile-index.json'),
     JSON.stringify({ activeProfileId: profileId, profiles: [{ id: profileId }] }),
     'utf8'
   )
-  const dataFile = join(profileDirectory, 'orca-data.json')
+  const dataFile = join(profileDirectory, 'coding-data.json')
   const databaseFile = profileStateDatabaseFile(profileDirectory)
   const exportPath = profileStateJsonExportPath(dataFile, 1)
   writeFileSync(dataFile, JSON.stringify({ settings: { theme: 'old' } }), 'utf8')

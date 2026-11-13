@@ -127,7 +127,7 @@ afterEach(async () => {
 it('awaits loading before the first disabled cached snapshot and all historical queries', async () => {
   const cached = historicalState()
   writeFileSync(
-    join(directory, 'orca-claude-usage.json'),
+    join(directory, 'coding-claude-usage.json'),
     `${JSON.stringify(cached)}${' '.repeat(9 * 1024 * 1024)}`
   )
   const pending = Promise.withResolvers<UsageCacheSplitResult>()

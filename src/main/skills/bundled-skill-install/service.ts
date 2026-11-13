@@ -28,22 +28,11 @@ export async function previewBundledSkillInstall(
   return (await buildBundledSkillPlan(withDefaults(input))).plan
 }
 
-// Coding Agent 2 shares skill folders with an installed Orca, whose skills carry these same names.
-// The inherited installer stays off; Settings → Skills installs the app's copies under ca2- names.
-const INHERITED_SKILL_WRITES_ENABLED = false
-
-function skippedInstall(input: BundledSkillServiceInput): BundledSkillInstallResult {
-  return { scope: input.destination.scope, skills: [] }
-}
-
 /** Execute by preview digest, never by client-supplied operations. */
 export async function installBundledSkills(
   input: BundledSkillServiceInput,
   planDigest: string
 ): Promise<BundledSkillInstallResult> {
-  if (!INHERITED_SKILL_WRITES_ENABLED) {
-    return skippedInstall(input)
-  }
   return executeBundledSkillPlan(withDefaults(input), planDigest)
 }
 
@@ -51,8 +40,5 @@ export async function installBundledSkills(
 export async function autoUpdateInstalledBundledSkills(
   input: BundledSkillServiceInput & { names: readonly string[] }
 ): Promise<BundledSkillInstallResult> {
-  if (!INHERITED_SKILL_WRITES_ENABLED) {
-    return skippedInstall(input)
-  }
   return autoUpdateBundledSkills({ ...withDefaults(input), names: input.names })
 }
