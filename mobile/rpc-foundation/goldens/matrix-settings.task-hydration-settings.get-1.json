@@ -223,6 +223,11 @@
       "ordinal": 17,
       "value": false
     },
+    "3ce89d0c0369": {
+      "name": "visibleProviders",
+      "ordinal": 53,
+      "value": ["github", "jira"]
+    },
     "3d31b2fc3a47": {
       "name": "jiraConnection",
       "ordinal": 47,
@@ -338,6 +343,11 @@
       "name": "githubPreset",
       "ordinal": 57,
       "value": "issues"
+    },
+    "5d1563260162": {
+      "name": "visibleProviders",
+      "ordinal": 53,
+      "value": ["github"]
     },
     "600862ad27b3": {
       "name": "githubProjectHiddenFieldIdsByView",
@@ -523,11 +533,6 @@
       "name": "trustedOrcaHooks",
       "ordinal": 45,
       "value": {}
-    },
-    "8a053731b837": {
-      "name": "visibleProviders",
-      "ordinal": 53,
-      "value": ["github", "linear"]
     },
     "8c4056edb811": {
       "name": "linear.status#1",
@@ -759,11 +764,6 @@
           }
         }
       }
-    },
-    "b7cc1194ed29": {
-      "name": "visibleProviders",
-      "ordinal": 53,
-      "value": ["github", "jira", "linear"]
     },
     "ba788c58e435": {
       "name": "runtimeTaskSettings",
@@ -1246,7 +1246,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "8a053731b837",
+            "5d1563260162",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1450,7 +1450,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1530,7 +1530,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1610,7 +1610,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1690,7 +1690,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1770,7 +1770,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",
@@ -1850,7 +1850,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",

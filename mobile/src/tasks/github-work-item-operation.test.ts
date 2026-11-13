@@ -109,7 +109,7 @@ it.each([false, true])(
     expect(b.writes).toEqual([])
     await (capable
       ? expect(update(logical)).resolves.toMatchObject({ ok: true })
-      : expect(update(logical)).rejects.toThrow('Update Orca'))
+      : expect(update(logical)).rejects.toThrow('Update Coding Agent 2'))
     expect(b.writes).toHaveLength(capable ? 1 : 0)
     logical.close()
   }
@@ -165,7 +165,7 @@ it.each([
   })
   await (sent
     ? expect(pending).resolves.toBeDefined()
-    : expect(pending).rejects.toThrow('Update Orca on the executing server'))
+    : expect(pending).rejects.toThrow('Update Coding Agent 2 on the executing server'))
   expect(frames.filter((frame) => frame.method === 'github.updateIssue')).toEqual(
     sent ? [{ method: 'github.updateIssue', params, envelope: undefined }] : []
   )

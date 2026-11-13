@@ -33,7 +33,7 @@ vi.mock('../main/preflight/installed-agent-detection', () => ({
   detectInstalledAgentsWithShellPathHydration: detectAgentsMock
 }))
 // The shipped app keeps inherited skill writes off; these cases cover the installer behind that gate.
-vi.mock('../main/skills/bundled-skill-install/inherited-skill-writes', async (importOriginal) => ({
+vi.mock('../main/skills/bundled-skill-install/cli-entry', async (importOriginal) => ({
   ...(await importOriginal<object>()),
   INHERITED_SKILL_WRITES_ENABLED: true
 }))

@@ -17,7 +17,7 @@ import {
   Wallet,
   XCircle
 } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import type { MessageKey } from '@/lib/coding-opus-playbooks/i18n'
 import { usePlaybooks } from './context'
@@ -130,10 +130,14 @@ export function Palette({
   const { s, t } = usePlaybooks()
   const [dragging, setDragging] = useState<Dragging | null>(null)
   const draggingRef = useRef(dragging)
-  draggingRef.current = dragging
+  useLayoutEffect(() => {
+    draggingRef.current = dragging
+  })
   const suppress = useRef(false)
   const dropRef = useRef(onDrop)
-  dropRef.current = onDrop
+  useLayoutEffect(() => {
+    dropRef.current = onDrop
+  })
   const active = dragging !== null
 
   useEffect(() => {

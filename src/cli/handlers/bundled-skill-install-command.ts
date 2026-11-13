@@ -29,14 +29,12 @@ import {
 } from '../../shared/skill-install-providers'
 import { SKILLS_CLI_AGENT_KEY_BY_TUI_AGENT } from '../../shared/skills-cli-agent-keys'
 import {
+  INHERITED_SKILL_WRITES_ENABLED,
   installBundledSkills,
   localBundledSkillInput,
-  previewBundledSkillInstall
-} from '../../main/skills/bundled-skill-install/cli-entry'
-import {
-  INHERITED_SKILL_WRITES_ENABLED,
+  previewBundledSkillInstall,
   skippedBundledSkillInstall
-} from '../../main/skills/bundled-skill-install/inherited-skill-writes'
+} from '../../main/skills/bundled-skill-install/cli-entry'
 
 export type SkillMutationVerb = 'install' | 'update'
 

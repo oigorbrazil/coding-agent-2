@@ -100,7 +100,9 @@ export function PlaybooksEditor({
   // Every edit bumps the revision; a save clears the edited flags only if nothing changed meanwhile.
   const [revision, setRevision] = useState(0)
   const revisionRef = useRef(0)
-  revisionRef.current = revision
+  useEffect(() => {
+    revisionRef.current = revision
+  }, [revision])
   const [failedRevision, setFailedRevision] = useState<number | null>(null)
   // What the file holds as far as this editor knows, in the form this editor writes it.
   const [loadedText] = useState(() => toYaml(initial))
@@ -243,8 +245,11 @@ export function PlaybooksEditor({
     bump()
   }
 
-  const scenario = (apply: () => void) => {
-    apply()
+  const setScenario = <K extends 'task' | 'checks' | 'budget' | 'spent'>(
+    key: K,
+    value: PlaybooksState[K]
+  ) => {
+    s[key] = value
     animate()
     bump()
   }
@@ -305,7 +310,9 @@ export function PlaybooksEditor({
     }
   }
   const saveRef = useRef(save)
-  saveRef.current = save
+  useEffect(() => {
+    saveRef.current = save
+  })
 
   useEffect(() => {
     if (!edited || blocked || saving || failedRevision === revision) {
@@ -635,10 +642,8 @@ export function PlaybooksEditor({
                   label: taskLabel(t, task)
                 }))}
                 onChange={(value) =>
-                  scenario(() => {
-                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
-                    s.task = value as TaskId
-                  })
+                  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
+                  setScenario('task', value as TaskId)
                 }
               />
             </label>
@@ -651,10 +656,8 @@ export function PlaybooksEditor({
                 ariaLabel={t('playbooks.scenarioChecks')}
                 options={CHECKS.map((check) => ({ value: check, label: t(CHECK_KEYS[check]) }))}
                 onChange={(value) =>
-                  scenario(() => {
-                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
-                    s.checks = value as PlaybooksState['checks']
-                  })
+                  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
+                  setScenario('checks', value as PlaybooksState['checks'])
                 }
               />
             </label>
@@ -670,10 +673,8 @@ export function PlaybooksEditor({
                   label: t(BUDGET_KEYS[budget])
                 }))}
                 onChange={(value) =>
-                  scenario(() => {
-                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
-                    s.budget = value as PlaybooksState['budget']
-                  })
+                  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
+                  setScenario('budget', value as PlaybooksState['budget'])
                 }
               />
             </label>
@@ -688,11 +689,7 @@ export function PlaybooksEditor({
                   value: String(amount),
                   label: formatUsd(amount)
                 }))}
-                onChange={(value) =>
-                  scenario(() => {
-                    s.spent = Number(value)
-                  })
-                }
+                onChange={(value) => setScenario('spent', Number(value))}
               />
             </label>
             {allLow ? (

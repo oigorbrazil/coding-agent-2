@@ -1,10 +1,12 @@
-import { readAppEnv } from '../../../../shared/app-env.ts'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { realpathSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 import { performance, monitorEventLoopDelay } from 'node:perf_hooks'
 import { workload } from '../../../../../config/scripts/performance/check-job-log/check-job-log-performance-cases.mjs'
+
+// Plain Node runs this script, so it reads the mirrored app env without importing app source.
+const readAppEnv = (env, name) => env[`CODING_AGENT_${name}`] ?? env[`ORCA_${name}`]
 
 assert(
   !process.versions.bun && typeof globalThis.gc === 'function',

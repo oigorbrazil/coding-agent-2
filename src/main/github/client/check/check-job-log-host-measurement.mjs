@@ -1,4 +1,3 @@
-import { readAppEnv } from '../../../../shared/app-env.ts'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises'
@@ -10,6 +9,9 @@ import { build, version as esbuildVersion } from 'esbuild'
 import { runProcess } from '@coding-agent/process-host'
 import { nodeExecutable } from '../../../../../config/scripts/performance/check-job-log/check-job-log-byte-cap-benchmark.mjs'
 import { workload } from '../../../../../config/scripts/performance/check-job-log/check-job-log-performance-cases.mjs'
+
+// Plain Node runs this script, so it reads the mirrored app env without importing app source.
+const readAppEnv = (env, name) => env[`CODING_AGENT_${name}`] ?? env[`ORCA_${name}`]
 
 const require = createRequire(import.meta.url)
 export const hash = (value) => createHash('sha256').update(value).digest('hex')

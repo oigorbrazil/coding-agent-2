@@ -447,7 +447,7 @@ describe('ai vault resume command runtime', () => {
     ).toMatchObject({
       command: "codex '-c' 'tui.resume_cwd=current' 'resume' 'session one'",
       cwd: '/home/alice/repo',
-      envToDelete: ['CODEX_HOME', 'ORCA_CODEX_HOME']
+      envToDelete: ['CODEX_HOME', 'CODING_AGENT_CODEX_HOME', 'ORCA_CODEX_HOME']
     })
   })
 
@@ -538,7 +538,7 @@ describe('ai vault resume command runtime', () => {
     ).toMatchObject({
       command: "codex '-c' 'tui.resume_cwd=current' 'resume' 'session one'",
       cwd: '/home/alice/repo',
-      envToDelete: ['CODEX_HOME', 'ORCA_CODEX_HOME'],
+      envToDelete: ['CODEX_HOME', 'CODING_AGENT_CODEX_HOME', 'ORCA_CODEX_HOME'],
       providerSession: { key: 'session_id', id: 'session one' }
     })
   })

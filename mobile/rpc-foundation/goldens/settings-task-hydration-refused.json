@@ -215,6 +215,11 @@
       "ordinal": 17,
       "value": false
     },
+    "3ce89d0c0369": {
+      "name": "visibleProviders",
+      "ordinal": 53,
+      "value": ["github", "jira"]
+    },
     "3ff235330cbe": {
       "name": "jiraFilter",
       "ordinal": 60,
@@ -576,11 +581,6 @@
       "ordinal": 39,
       "json": "{\"id\":\"frame-2\",\"deviceToken\":\"recording-device\",\"method\":\"jira.status\"}"
     },
-    "b7cc1194ed29": {
-      "name": "visibleProviders",
-      "ordinal": 53,
-      "value": ["github", "jira", "linear"]
-    },
     "bbce658fe3f5": {
       "name": "showRepoPicker",
       "ordinal": 13,
@@ -825,7 +825,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "b7cc1194ed29",
+            "3ce89d0c0369",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",

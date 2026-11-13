@@ -104,20 +104,52 @@ export function AccountPane(): React.JSX.Element {
     )
   }
 
-  const run = async (task: () => Promise<boolean>, success?: string): Promise<void> => {
+  // Takes the started request, not a callback, so no state update runs inside a passed function.
+  const run = async (pending: Promise<boolean>, success?: string): Promise<boolean> => {
     setNotice(null)
-    await runWithBusyFlag(setBusy, async () => {
-      if ((await task()) && success) {
+    return runWithBusyFlag(setBusy, async () => {
+      const ok = await pending
+      if (ok && success) {
         setNotice(success)
       }
+      return ok
     })
   }
   const profileDirty = name !== account.name || email !== account.email || photo !== account.photo
-  const saveProfile = (): Promise<void> =>
-    run(
-      () => apply(api.saveProfile({ name, email, photo })),
+  const saveProfile = async (): Promise<void> => {
+    await run(
+      apply(api.saveProfile({ name, email, photo })),
       t('codingOpus.account.saved', 'Profile saved.')
     )
+  }
+  const signOut = async (): Promise<void> => {
+    await run(apply(api.signOut()))
+  }
+  const sendCode = async (): Promise<void> => {
+    const sent = await run(
+      apply(api.sendCode()),
+      t('codingOpus.account.codeSent', 'Code sent to {{value0}}.', { value0: account.email })
+    )
+    setCodeSent(sent)
+  }
+  const verifyCode = async (): Promise<void> => {
+    if (
+      await run(apply(api.verifyCode(code)), t('codingOpus.account.confirmed', 'Email confirmed.'))
+    ) {
+      setCode('')
+      setCodeSent(false)
+    }
+  }
+  const saveServer = async (): Promise<void> => {
+    if (
+      await run(
+        apply(api.setServer(serverUrl, serverKey)),
+        t('codingOpus.account.serverSaved', 'Server saved.')
+      )
+    ) {
+      setServerKey('')
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -226,35 +258,14 @@ export function AccountPane(): React.JSX.Element {
                   value0: account.email
                 })}
               </span>
-              <Button
-                size="xs"
-                variant="ghost"
-                disabled={busy}
-                onClick={() => void run(() => apply(api.signOut()))}
-              >
+              <Button size="xs" variant="ghost" disabled={busy} onClick={() => void signOut()}>
                 <LogOut />
                 {t('codingOpus.account.signOut', 'Sign out')}
               </Button>
             </div>
           ) : account.server.configured ? (
             <div className="flex flex-wrap items-center gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={busy}
-                onClick={() =>
-                  void run(
-                    async () => {
-                      const sent = await apply(api.sendCode())
-                      setCodeSent(sent)
-                      return sent
-                    },
-                    t('codingOpus.account.codeSent', 'Code sent to {{value0}}.', {
-                      value0: account.email
-                    })
-                  )
-                }
-              >
+              <Button size="sm" variant="outline" disabled={busy} onClick={() => void sendCode()}>
                 <Mail />
                 {codeSent
                   ? t('codingOpus.account.resend', 'Send again')
@@ -273,19 +284,7 @@ export function AccountPane(): React.JSX.Element {
                   <Button
                     size="sm"
                     disabled={busy || code.trim().length < 6}
-                    onClick={() =>
-                      void run(
-                        async () => {
-                          const done = await apply(api.verifyCode(code))
-                          if (done) {
-                            setCode('')
-                            setCodeSent(false)
-                          }
-                          return done
-                        },
-                        t('codingOpus.account.confirmed', 'Email confirmed.')
-                      )
-                    }
+                    onClick={() => void verifyCode()}
                   >
                     {t('codingOpus.account.confirm', 'Confirm')}
                   </Button>
@@ -338,18 +337,7 @@ export function AccountPane(): React.JSX.Element {
             variant="outline"
             className="ml-auto"
             disabled={busy || (!serverKey.trim() && serverUrl === account.server.url)}
-            onClick={() =>
-              void run(
-                async () => {
-                  const saved = await apply(api.setServer(serverUrl, serverKey))
-                  if (saved) {
-                    setServerKey('')
-                  }
-                  return saved
-                },
-                t('codingOpus.account.serverSaved', 'Server saved.')
-              )
-            }
+            onClick={() => void saveServer()}
           >
             {t('codingOpus.account.saveServer', 'Save server')}
           </Button>

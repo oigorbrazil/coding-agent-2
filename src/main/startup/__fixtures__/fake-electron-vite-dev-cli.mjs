@@ -1,7 +1,9 @@
-import { readAppEnv } from '../../../shared/app-env.ts'
 import { spawn } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
+
+// Plain Node runs this fixture, so it reads the mirrored app env without importing app source.
+const readAppEnv = (env, name) => env[`CODING_AGENT_${name}`] ?? env[`ORCA_${name}`]
 
 const __dirname = import.meta.dirname
 const grandchildPath = path.join(__dirname, 'electron-vite-dev-grandchild.mjs')

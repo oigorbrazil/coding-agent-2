@@ -445,10 +445,14 @@ export function FlowCanvas({
   const { s, t, select } = usePlaybooks()
   const svgRef = useRef<SVGSVGElement>(null)
   const graphRef = useRef(graph)
-  graphRef.current = graph
+  useLayoutEffect(() => {
+    graphRef.current = graph
+  })
   const [view, setView] = useState<View | null>(null)
   const viewRef = useRef(view)
-  viewRef.current = view
+  useLayoutEffect(() => {
+    viewRef.current = view
+  })
   const drag = useRef<Drag | null>(null)
   const [panning, setPanning] = useState(false)
 

@@ -52,6 +52,7 @@ const OWNER = String.raw`
     const supervisor = JSON.parse(Buffer.from(env.ORCA_PROVIDER_SUPERVISOR_SPEC, 'base64').toString())
     supervisor.ownerPid = process.pid
     env.ORCA_PROVIDER_SUPERVISOR_SPEC = Buffer.from(JSON.stringify(supervisor)).toString('base64')
+    env.CODING_AGENT_PROVIDER_SUPERVISOR_SPEC = env.ORCA_PROVIDER_SUPERVISOR_SPEC
   }
   const child = spawn(spec.program, spec.args, {
     cwd: spec.cwd,

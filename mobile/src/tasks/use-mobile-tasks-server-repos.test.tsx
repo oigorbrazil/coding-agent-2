@@ -514,26 +514,6 @@ describe('Tasks screen repos on the desktop and its servers', () => {
     expect(ids.sort()).toEqual(['mac-repo', 'vm-repo'])
   })
 
-  it('loads Linear once when a removed server widens the repo filter', async () => {
-    let hosts = HOSTS
-    const client = desktop(undefined, async () => ({ hosts }))
-    const model = await mount(client, [MOBILE_DESKTOP_RELAY_RUNTIME_CAPABILITY], ['vm-repo'], {
-      visibleTaskProviders: ['github', 'linear'],
-      defaultTaskSource: 'linear'
-    })
-    await settle()
-    expect([...model().effectiveRepoIds]).toEqual(['vm-repo'])
-    const before = ranOn(client, 'linear.listIssues').length
-    expect(before).toBeGreaterThan(0)
-    hosts = []
-    await act(async () => {
-      await relayHostsFeed(client).read()
-    })
-    await settle()
-    expect([...model().effectiveRepoIds]).toEqual([])
-    expect(ranOn(client, 'linear.listIssues').slice(before)).toEqual(['desktop'])
-  })
-
   it('reopens on the kept list before the desktop answers', async () => {
     const client = desktop()
     // A live connection, so its status read is the connection's.

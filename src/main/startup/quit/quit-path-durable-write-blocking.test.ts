@@ -162,7 +162,7 @@ async function createStatsCollector(dir: string): Promise<TestStatsCollector> {
   return stats
 }
 
-const dataFile = (dir: string): string => join(dir, 'coding-data.json')
+const dataFile = (dir: string): string => join(dir, 'orca-data.json')
 const statsFile = (dir: string): string => join(dir, 'coding-stats.json')
 const activeViewFile = (dir: string): string => join(dir, 'active-view.json')
 

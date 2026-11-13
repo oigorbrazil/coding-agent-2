@@ -463,6 +463,11 @@
       "ordinal": 57,
       "value": "issues"
     },
+    "5d1563260162": {
+      "name": "visibleProviders",
+      "ordinal": 53,
+      "value": ["github"]
+    },
     "600862ad27b3": {
       "name": "githubProjectHiddenFieldIdsByView",
       "ordinal": 46,
@@ -707,11 +712,6 @@
       "name": "trustedOrcaHooks",
       "ordinal": 45,
       "value": {}
-    },
-    "8a053731b837": {
-      "name": "visibleProviders",
-      "ordinal": 53,
-      "value": ["github", "linear"]
     },
     "8bd8507b3be1": {
       "name": "mergeMethodProjectRow",
@@ -1433,7 +1433,7 @@
             "3a03e162efd9",
             "3082bf4965fa",
             "2aad05f979a9",
-            "8a053731b837",
+            "5d1563260162",
             "22b355deb2df",
             "19505460d94b",
             "e61de5a1b27e",

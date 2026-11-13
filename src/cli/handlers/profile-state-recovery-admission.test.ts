@@ -211,7 +211,7 @@ describe('offline recovery excludes runtime admission', () => {
     expect(readFileSync(join(archived, 'profile-state.db'))).toEqual(original)
     expect(readFileSync(join(archived, 'coding-data.json'), 'utf8')).toBe(staleJson)
     expect(
-      JSON.parse(readFileSync(join(archived, 'orca-data.json.sqlite-export.2.json'), 'utf8'))
+      JSON.parse(readFileSync(join(archived, 'coding-data.json.sqlite-export.2.json'), 'utf8'))
     ).toEqual(liveState)
     acquireProfileStateRuntimeAdmission(profile.root).release()
   })
@@ -261,7 +261,7 @@ describe('offline recovery excludes runtime admission', () => {
         for (let revision = 1; revision <= 5; revision++) {
           expect(
             readFileSync(
-              join(profile.directory, archive, `orca-data.json.sqlite-export.${revision}.json`),
+              join(profile.directory, archive, `coding-data.json.sqlite-export.${revision}.json`),
               'utf8'
             )
           ).toBe(retained[revision - 1].content)

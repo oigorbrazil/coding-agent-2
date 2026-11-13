@@ -156,7 +156,9 @@ export function NodeCanvas({
   const svgRef = useRef<SVGSVGElement>(null)
   const [view, setView] = useState<View | null>(null)
   const viewRef = useRef(view)
-  viewRef.current = view
+  useLayoutEffect(() => {
+    viewRef.current = view
+  })
   const drag = useRef<Drag | null>(null)
   const [link, setLink] = useState<{ from: string; port: DocPort; x: number; y: number } | null>(
     null
@@ -164,7 +166,9 @@ export function NodeCanvas({
   const [panning, setPanning] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(true)
   const extentRef = useRef(docView.nodes)
-  extentRef.current = docView.nodes
+  useLayoutEffect(() => {
+    extentRef.current = docView.nodes
+  })
 
   const fit = useCallback(() => {
     const svg = svgRef.current
