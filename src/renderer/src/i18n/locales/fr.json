@@ -802,7 +802,6 @@
     "showStatusBar": "Afficher la barre d'état",
     "showTasksButton": "Afficher le bouton Tâches",
     "showAutomationsButton": "Afficher le bouton Automatisations",
-    "showMobileButton": "Afficher le bouton Coding Agent 2 Mobile",
     "showTitlebarAppName": "Afficher le nom de l'app dans la barre de titre",
     "view": "Affichage",
     "reload": "Recharger",
@@ -2173,24 +2172,15 @@
         "commentTooLarge": "Le commentaire est trop volumineux pour être envoyé sans risque."
       },
       "Landing": {
-        "f9eaa9e12d": "Ajouter un projet",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Logo Coding Agent 2",
-        "c1cf168479": "Masquer",
         "00cee697c1": "Exécutez \"gh auth login\" dans un terminal pour connecter votre compte GitHub.",
         "9f96d018b7": "GitHub CLI n'est pas authentifiée",
         "73e1ad4282": "Coding Agent 2 utilise la GitHub CLI (gh) pour afficher les pull requests, les tickets et les vérifications.",
         "5beaef5f9e": "GitHub CLI n'est pas installée",
         "b673e7cf1b": "Git est requis pour les projets Git, le contrôle de version et la gestion des espaces de travail.",
         "e5b7296d9d": "Git n'est pas installé",
-        "cd21242762": "Ajoutez un projet pour commencer.",
-        "9c00bd4adf": "Sélectionnez un espace de travail dans la barre latérale pour commencer.",
-        "0d0ace8861": "Mettre une étoile sur GitHub",
-        "ec43b38ba7": "Étoile ajoutée sur GitHub",
-        "157bb5ecbb": "Ouvrir GitHub",
         "preflightDismiss": "Ignorer",
-        "moveUpWorkspace": "Sélectionner l’espace de travail précédent",
-        "moveDownWorkspace": "Sélectionner l’espace de travail suivant",
         "installGit": "Installer Git",
         "installGitHubCli": "Installer GitHub CLI",
         "learnMore": "En savoir plus"
@@ -4359,7 +4349,6 @@
             "remoteServerLabel": "Serveur distant",
             "antigravityUsage": "Utilisation Antigravity",
             "grokUsageMenu": "Utilisation Grok",
-            "floatingTerminalNewActivity": "{{label}}, nouvelle activité",
             "4fba7dc1e7": "solde {{value0}}",
             "codexSignInSuccess": "Connecté à Codex",
             "codexSignInError": "Échec de la connexion à Codex. Veuillez réessayer.",
@@ -6083,8 +6072,6 @@
         "SidebarNav": {
           "80611a8b10": "Recherche",
           "0c3395fd32": "Rechercher parmi les worktrees et les onglets du navigateur",
-          "c86d83b5c3": "Nouveau",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "Automatisations",
           "e7ad3c540d": "Ouvrir les tâches Jira",
           "c39ab10000": "Ouvrir les tâches Linear",
@@ -7462,19 +7449,10 @@
           "storedDefaultUndetected": "Enregistré par défaut, mais non détecté actuellement",
           "noAgentsDetected": "Aucun agent détecté. Si un agent est installé, la détection a peut-être expiré."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "Icône suivante",
-          "415fa76f64": "Icône d'app sélectionnée",
-          "5f5142a62a": "Icône précédente"
-        },
         "AppearancePane": {
           "3057983501": "Non assigné",
           "2edf606c46": "Réduire dans la zone de notification à la fermeture",
           "b707773a0d": "Quand activé, fermer la fenêtre laisse Coding Agent 2 tourner dans la zone de notification au lieu de quitter.",
-          "0cd9b8228f": "Choisissez l'icône d'app affichée dans le Dock et le sélecteur de fenêtres.",
-          "ca1590d42f": "Icône de l'app",
-          "61d842eca0": "Afficher le raccourci Coding Agent 2 Mobile dans la barre latérale. Il reste accessible depuis la Toolbox.",
-          "9da1020447": "Afficher le bouton Coding Agent 2 Mobile",
           "511f270ebb": "Afficher le bouton Automatisations",
           "cf81907069": "Afficher le bouton Tâches",
           "dc29f3cc0d": "Barre latérale",
@@ -7663,8 +7641,7 @@
           "cbe55e4d48": "Afficher dans l'Explorateur",
           "9fd4023db0": "Afficher dans le Gestionnaire de fichiers",
           "installFailureUnknownReason": "Coding Agent 2 n'a pas pu terminer l'enregistrement de l'interface CLI et n'a signalé aucune raison.",
-          "installFailureConflictRemedy": "Supprimez {{value0}} s'il n'est plus nécessaire, puis réenregistrez la CLI.",
-          "outsideOrcaDescription": "Les terminaux Coding Agent 2 disposent déjà de `coding`. Activez cette option pour utiliser `coding` depuis d'autres terminaux en dehors d'Coding Agent 2."
+          "installFailureConflictRemedy": "Supprimez {{value0}} s'il n'est plus nécessaire, puis réenregistrez la CLI."
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL par défaut"
@@ -7852,10 +7829,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Barre d'état",
-          "9fb225f2d7": "Bouton flottant",
-          "3c900e26e5": "Le raccourci clavier fonctionne quel que soit l'emplacement du bouton d'activation.",
-          "5e5a8da236": "Emplacement du bouton d'activation",
           "505001823e": "Choisir le dossier de l'espace de travail flottant",
           "81afb79785": "C'est ici que démarrent les nouveaux onglets de terminal flottants. Les notes Markdown sont enregistrées dans l'espace de travail flottant propre à l'application Coding Agent 2.",
           "12aa09f10c": "Dossier du terminal",
@@ -8237,10 +8210,7 @@
           "installOutro": ", puis appairez ci-dessous.",
           "androidApkLabel": "APK Android",
           "e7a3ae8c4e": "Mobile",
-          "174f4a3c6d": "Contrôlez les terminaux et les agents depuis votre téléphone.",
-          "1de96ec8a6": "Afficher le bouton Coding Agent 2 Mobile",
-          "682293cadf": "Afficher le bouton Coding Agent 2 Mobile en haut de la barre latérale gauche.",
-          "d4f2b65f30": "Afficher le raccourci Coding Agent 2 Mobile dans la barre latérale."
+          "174f4a3c6d": "Contrôlez les terminaux et les agents depuis votre téléphone."
         },
         "NotificationsPane": {
           "906b4afebf": "Envoyer une notification de test",
@@ -8310,15 +8280,9 @@
           "f79084947b": "Nouvelle app"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Demandez à un agent coordinateur d'utiliser l'orchestration pour les passations, les transferts de worktree et les agents enfants séquentiels ou parallèles.",
-          "ae79504732": "Comment l'utiliser",
-          "9bedd2a6e5": "Permet aux agents de transmettre le contexte et de coordonner le travail via Coding Agent 2.",
-          "07641b9768": "Skill d'orchestration",
-          "2aacdb0517": "Coordonnez les agents de codage entre passations, transferts de worktree et travaux d'agents enfants.",
           "191ac34567": "Orchestration d'agents",
           "nestedWorkerDepthTitle": "Profondeur du travailleur imbriqué",
           "nestedWorkerDepthDescription": "Combien de générations de travailleurs détachés peuvent engendrer leurs propres travailleurs. 1 maintient l'arborescence des agents à plat : un coordinateur répartit les travailleurs, et ces travailleurs ne répartissent pas.",
-          "7bc082f4de": "Copier la commande d'installation",
           "workerAutoReleaseTitle": "Fermer automatiquement les workers terminés",
           "workerAutoReleaseDescription": "Ferme le terminal ou le chat d’un worker 2 minutes après sa fin, sauf si vous choisissez Garder ouvert. S’il reprend son travail, le délai de 2 minutes recommence lorsqu’il termine.",
           "workerAutoReleaseKeywordClose": "fermer",
@@ -8327,18 +8291,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Permet aux agents de transmettre le contexte et de coordonner le travail via Coding Agent 2.",
           "2777ff0fdc": "Skill d'orchestration"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Couverture des agents",
-          "ffe13e36fb": "Manquant",
-          "1e8f8d8fae": "Prêt",
-          "checking": "Vérification des agents installés et des chemins des skills…",
-          "noAgents": "Aucune CLI d'agent détectée sur le PATH. Installez des agents dans Paramètres → Agents, puis relancez la vérification.",
-          "fullCoverage_one": "L'unique agent détecté possède le skill.",
-          "fullCoverage_other": "Tous les {{value0}} agents détectés possèdent le skill.",
-          "fullCoverage_many": "Tous les {{value0}} agents détectés possèdent le skill.",
-          "noCoverage": "Installez le skill ci-dessus, puis relancez la vérification.",
-          "partialCoverage": "{{value0}} des {{value1}} agents détectés possèdent le skill."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Créer le fichier de diagnostic",
@@ -8811,7 +8763,6 @@
           "43b68e10f0": "Des paramètres IA ne sont pas enregistrés. Ils seront abandonnés en quittant.",
           "17bdee4ff1": "Abandonner les paramètres IA non enregistrés ?",
           "084d8fac5b": "Confidentialité et sécurité",
-          "23931df7e8": "Hôtes distants",
           "8bd117d669": "Interface",
           "e1578cd4bc": "Workflows",
           "9abb9be3bc": "Configurer",
@@ -9026,7 +8977,6 @@
           "reconnectOnLaunch": "Se reconnecter au lancement",
           "reconnectOnLaunchHelp": "Si désactivé, Coding Agent 2 laisse cet hôte, et tout serveur Coding Agent 2 joint par son intermédiaire, déconnecté au démarrage jusqu'à ce que vous le connectiez.",
           "allowRemoteCliControl": "Autoriser cet hôte à contrôler les onglets du navigateur Coding Agent 2 dans ses espaces de travail",
-          "allowRemoteCliControlHelp": "Activé par défaut pour les nouveaux hôtes. Les agents et commandes orca de cet hôte peuvent ouvrir, lire et utiliser des onglets du navigateur Coding Agent 2 sur ce bureau, uniquement dans les espaces de travail de cet hôte et uniquement tant qu'il est connecté. Les onglets qu'il contrôle affichent son nom. Les terminaux lancés sur cet hôte par une ancienne version d'Coding Agent 2 ont aussi besoin de cette option pour exécuter les commandes d'orchestration orca. Il ne peut pas lire vos fichiers, votre presse-papiers ni vos cookies.",
           "addHost": "Ajouter un hôte",
           "proxyConnectionReuse": "Réutiliser une seule connexion proxy",
           "proxyConnectionReuseHelp": "Connexions plus rapides via des hôtes ProxyCommand ou ProxyJump lents. Activez-le uniquement si votre ssh_config ne dépend pas de règles Match ou %h propres à chaque hôte."
@@ -9557,24 +9507,12 @@
           "search": {
             "9a115966d3": "Réduire dans la zone de notification à la fermeture",
             "4d5b9427b5": "Quand activé, fermer la fenêtre laisse Coding Agent 2 tourner dans la zone de notification au lieu de quitter.",
-            "468448bba4": "aquarelle",
-            "f586abfa35": "bleu",
-            "651f35b2c6": "sélecteur",
             "e5bc35d59e": "fenêtre",
-            "d18b54ca90": "dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "icône de l'app",
-            "e80c2af428": "Choisissez l'icône d'app affichée dans le Dock et le sélecteur de fenêtres.",
-            "2b313598c6": "Icône de l'app",
-            "839fb1e3ed": "boîte à outils",
             "ac79fe4a04": "afficher",
             "648eeada79": "masquer",
             "6cf5f54ce1": "bouton",
             "5bff6a2ef0": "barre latérale",
-            "5e5b8878bf": "téléphone",
-            "74618577c7": "mobile",
-            "682293cadf": "Afficher le bouton Coding Agent 2 Mobile en haut de la barre latérale gauche.",
-            "1de96ec8a6": "Afficher le bouton Coding Agent 2 Mobile",
             "4c920ab2d1": "planification",
             "58f4e22fa2": "automatisation",
             "b186f3cefb": "automatisations",
@@ -10067,7 +10005,6 @@
               "ebeedb2f6a": "terminal rapide",
               "6f183fa1b9": "terminal flottant",
               "a08e482f6d": "espace de travail flottant",
-              "b96b5ee6cf": "Activer l'espace de travail flottant, choisir où s'ouvrent les nouveaux onglets et où apparaît le bouton de bascule.",
               "b2b60e7163": "Workspace flottant"
             }
           }
@@ -10479,16 +10416,8 @@
               "f213400800": "mobile",
               "671eb4173c": "Contrôlez les terminaux et les agents depuis votre téléphone.",
               "ffd52a96e4": "Mobile",
-              "1de96ec8a6": "Afficher le bouton Coding Agent 2 Mobile",
-              "682293cadf": "Afficher le bouton Coding Agent 2 Mobile en haut de la barre latérale gauche.",
               "e4f4daea0e": "relais",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "mobile",
-              "5e5b8878bf": "téléphone",
-              "5bff6a2ef0": "barre latérale",
-              "6cf5f54ce1": "bouton",
-              "648eeada79": "cacher",
-              "ac79fe4a04": "montrer"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -11612,7 +11541,6 @@
                   "installed": "Installés",
                   "notInstalled": "Non installé",
                   "recheck": "Revérifier",
-                  "description": "Permet aux agents de lire et modifier les tâches Linear. La configuration guidée complète (connexion + skill + visibilité) se trouve dans Paramètres → Task Sources.",
                   "copyFailed": "Échec de la copie de la commande.",
                   "copyCommand": "Copier la commande",
                   "installedDescription": "Skill d'agent installée. Pour la mettre à jour, exécutez :",
@@ -12920,15 +12848,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Mettez à jour Coding Agent 2 sur le serveur pour installer ses skills.",
           "connectHost": "Connectez-vous à cet hôte SSH pour installer ses skills."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "Échec de la copie de la commande d'installation.",
-          "f08d45293d": "Copier la commande",
-          "b99f375eb2": "Exécutez cette commande dans un terminal pour installer le skill d'orchestration pour vos agents.",
-          "35550f3b3b": "Terminé",
-          "2914abcfa2": "Installer le skill d'orchestration",
-          "1bdce1911e": "Copier la commande d'installation du skill d'orchestration",
-          "239bf9132b": "Commande d'installation copiée."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "Installer pour {{value0}}",
@@ -15290,11 +15209,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Fermer · Esc",
-          "9883b58693": "Fermer Coding Agent 2 Mobile",
-          "fb5f28330e": "Afficher dans la barre latérale",
-          "c669abcf8f": "Masquer de la barre latérale",
-          "e1c7b4a92d": "À configurer dans Réglages > Mobile.",
-          "f3d8e5b71a": "Remet le raccourci dans la barre latérale."
+          "9883b58693": "Fermer Coding Agent 2 Mobile"
         },
         "PhoneCarousel": {
           "96d651cb87": "Session de terminal",
@@ -15439,9 +15354,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Masquer l'espace de travail flottant",
-            "763f5fa2c1": "Déplacer vers le bouton flottant",
-            "0ee79e0674": "Déplacer vers la barre d'état"
+            "8e7d775287": "Masquer l'espace de travail flottant"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Permet aux agents de transmettre le contexte et de coordonner le travail via Coding Agent 2.",
@@ -15463,12 +15376,6 @@
             "8cf80db43b": "Configurez le CLI Coding Agent 2 et la skill d'agent pour que les agents puissent se coordonner via Coding Agent 2.",
             "2a3c5ddf5e": "Activer l'orchestration",
             "8b14ba6c17": "Nouvel onglet de navigateur"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Afficher l'espace de travail flottant",
-            "4cb418b991": "Afficher l'espace de travail flottant, nouvelle activité",
-            "5785dd9148": "Réduire l'espace de travail flottant",
-            "bfe7809a70": "Espace de travail flottant {{value0}} ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Réduire",
@@ -15857,7 +15764,6 @@
             "4795ac2d4a": "Essayez de demander :",
             "53905bd076": "Aperçu de développement : ouverture du terminal de configuration des skills.",
             "1da82af45b": "L'Coding Agent 2 CLI requiert votre attention",
-            "ce13a742d0": "`coding` enregistré dans le PATH.",
             "d1a86c7eb5": "Ouvrez les paramètres pour terminer la configuration du CLI.",
             "cliInstallFailed": "Impossible d'installer le CLI Coding Agent 2.",
             "splitPrPrompt": "« Divise cette PR en deux <term>worktrees</term> et crée une PR pour chacun. »"
@@ -21020,7 +20926,6 @@
       "continueButton": "Continuer sans CLI",
       "title": "CLI Coding Agent 2 indisponible",
       "message": "Coding Agent 2 n'a pas pu démarrer son transport de commandes local.",
-      "detail": "Coding Agent 2 continuera de fonctionner, mais les commandes telles que coding-agent status, coding-agent terminal et l'orchestration sont indisponibles pour cette session.\n\n{{guidance}}\n\nCause : {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 n'a pas pu écrire son fichier runtime. Vérifiez les permissions du dossier de données d'Coding Agent 2, puis redémarrez.",
         "storageUnavailable": "Votre disque est peut-être plein ou en lecture seule. Libérez de l'espace, puis redémarrez Coding Agent 2.",

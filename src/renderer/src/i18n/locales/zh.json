@@ -575,7 +575,6 @@
     "showStatusBar": "显示状态栏",
     "showTasksButton": "显示任务按钮",
     "showAutomationsButton": "显示自动化按钮",
-    "showMobileButton": "显示 Coding Agent 2 手机端按钮",
     "showTitlebarAppName": "显示标题栏应用名称",
     "view": "查看",
     "reload": "重新加载",
@@ -1914,24 +1913,15 @@
         "commentTooLarge": "评论过长，无法安全提交。"
       },
       "Landing": {
-        "f9eaa9e12d": "添加项目",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 标志",
-        "c1cf168479": "隐藏",
         "00cee697c1": "在终端中运行“gh auth login”以连接您的 GitHub 账户。",
         "9f96d018b7": "GitHub CLI 未经过身份验证",
         "73e1ad4282": "Coding Agent 2 使用 GitHub CLI (gh) 来显示PR、议题和检查。",
         "5beaef5f9e": "GitHub CLI 未安装",
         "b673e7cf1b": "Git 项目、源代码控制和工作区管理需要 Git。",
         "e5b7296d9d": "未安装 Git",
-        "cd21242762": "添加一个项目即可开始。",
-        "9c00bd4adf": "从侧边栏中选择一个工作区开始。",
-        "0d0ace8861": "在 GitHub 上加星标",
-        "ec43b38ba7": "已在 GitHub 上加星标",
-        "157bb5ecbb": "打开 GitHub",
         "preflightDismiss": "关闭",
-        "moveUpWorkspace": "选择上一个工作区",
-        "moveDownWorkspace": "选择下一个工作区",
         "installGit": "安装 Git",
         "installGitHubCli": "安装 GitHub CLI",
         "learnMore": "了解更多"
@@ -4061,7 +4051,6 @@
             "remoteServerLabel": "远程服务器",
             "antigravityUsage": "Antigravity 使用情况",
             "grokUsageMenu": "Grok 使用情况",
-            "floatingTerminalNewActivity": "{{label}}，有新活动",
             "4fba7dc1e7": "余额 {{value0}}",
             "codexSignInSuccess": "已登录 Codex",
             "codexSignInError": "Codex 登录失败，请重试。",
@@ -5598,8 +5587,6 @@
         "SidebarNav": {
           "80611a8b10": "搜索",
           "0c3395fd32": "搜索工作树和浏览器选项卡",
-          "c86d83b5c3": "新功能",
-          "1b5c41caee": "Coding Agent 2 手机端",
           "f323383e9a": "自动化",
           "e7ad3c540d": "打开 Jira 任务",
           "c39ab10000": "打开 Linear 任务",
@@ -6945,17 +6932,8 @@
           "storedDefaultUndetected": "已保存为默认值，但目前未检测到",
           "noAgentsDetected": "未检测到智能体。如果安装了探测器，探测器可能会超时。"
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "下一个图标",
-          "415fa76f64": "选定的应用程序图标",
-          "5f5142a62a": "上一个图标"
-        },
         "AppearancePane": {
           "3057983501": "未分配",
-          "0cd9b8228f": "选择 Dock 和窗口切换器中显示的应用程序图标。",
-          "ca1590d42f": "应用程序图标",
-          "61d842eca0": "在侧边栏中显示 Coding Agent 2 手机端 快捷方式。它仍然可以从工具箱中获取。",
-          "9da1020447": "显示 Coding Agent 2 手机端按钮",
           "511f270ebb": "显示自动化按钮",
           "cf81907069": "显示任务按钮",
           "dc29f3cc0d": "侧边栏",
@@ -7146,8 +7124,7 @@
           "cbe55e4d48": "在资源管理器中显示",
           "9fd4023db0": "在文件管理器中显示",
           "installFailureUnknownReason": "Coding Agent 2 无法完成 CLI 注册，且未报告任何原因。",
-          "installFailureConflictRemedy": "删除 {{value0}} 并在不再需要时重新注册。",
-          "outsideOrcaDescription": "Coding Agent 2 终端已内置 `coding`。开启后可在 Coding Agent 2 以外的其他终端中使用 `coding`。"
+          "installFailureConflictRemedy": "删除 {{value0}} 并在不再需要时重新注册。"
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL 默认值"
@@ -7335,10 +7312,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "状态栏",
-          "9fb225f2d7": "浮动按钮",
-          "3c900e26e5": "无论切换显示在何处，键盘快捷键都有效。",
-          "5e5a8da236": "切换按钮位置",
           "505001823e": "选择浮动工作区目录",
           "81afb79785": "新的浮动终端选项卡从这里开始。 Markdown 笔记保存在 Coding Agent 2 应用程序拥有的浮动工作区中。",
           "12aa09f10c": "终端目录",
@@ -7403,7 +7376,6 @@
           "476f302aca": "http://proxy.example.com:8080",
           "1e214e265a": "留空以使用系统代理设置和继承的代理环境变量。",
           "f00daf6324": "HTTP 代理",
-          "823e0f15b1": "用于 Coding Agent 2 网络请求和本地终端子进程的代理 URL。",
           "c46cdbbd4e": "网络",
           "configureProxy": "配置代理",
           "nodeDistMirrorPlaceholder": "https://mirror.example.com/nodejs/dist",
@@ -7681,9 +7653,6 @@
           "b5a2ed83ff": "应用商店",
           "e7a3ae8c4e": "移动端",
           "174f4a3c6d": "通过手机控制终端和智能体。",
-          "1de96ec8a6": "显示 Coding Agent 2 手机端按钮",
-          "682293cadf": "在左侧边栏顶部显示 Coding Agent 2 手机端按钮。",
-          "d4f2b65f30": "在边栏中显示 Coding Agent 2 手机端 快捷入口。",
           "installIntro": "从以下应用商店安装 Coding Agent 2 Mobile",
           "installOutro": "，然后在下方配对。",
           "androidApkLabel": "Android APK"
@@ -7756,15 +7725,9 @@
           "f79084947b": "新应用程序"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "让协调智能体通过编排处理交接、工作树移交，以及顺序或并行的子智能体。",
-          "ae79504732": "如何使用",
-          "9bedd2a6e5": "使智能体能够通过 Coding Agent 2 传递上下文并协调工作。",
-          "07641b9768": "编排技能",
-          "2aacdb0517": "在交接、工作树移交和子智能体工作中协调编码智能体。",
           "191ac34567": "智能体编排",
           "nestedWorkerDepthTitle": "工作智能体嵌套深度",
           "nestedWorkerDepthDescription": "已派发的工作智能体可以再派发自己的工作智能体的层数。设为 1 时智能体树保持扁平：协调者派发工作智能体，这些工作智能体不再派发。",
-          "7bc082f4de": "复制安装命令",
           "workerAutoReleaseTitle": "自动关闭已完成的工作者",
           "workerAutoReleaseDescription": "除非选择“保持打开”，否则工作者完成后 2 分钟会关闭其终端或聊天。如果它再次开始工作，完成后将重新计时 2 分钟。",
           "workerAutoReleaseKeywordClose": "关闭",
@@ -7773,17 +7736,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "使智能体能够通过 Coding Agent 2 传递上下文并协调工作。",
           "2777ff0fdc": "编排技能"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "智能体覆盖范围",
-          "ffe13e36fb": "缺失",
-          "1e8f8d8fae": "就绪",
-          "checking": "检查已安装的智能体和技能路径...",
-          "noAgents": "在 PATH 上未检测到智能体 CLI。在“设置”→“智能体”中安装智能体，然后重新检查。",
-          "fullCoverage_one": "所有 1 名已检测的智能体都拥有该技能。",
-          "fullCoverage_other": "所有 {{value0}} 已检测的智能体都拥有该技能。",
-          "noCoverage": "安装上面的技能，然后重新检查。",
-          "partialCoverage": "{{value1}} 的 {{value0}} 已检测智能体拥有该技能。"
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "创建诊断文件",
@@ -8250,7 +8202,6 @@
           "43b68e10f0": "你有未保存的 AI 设置。离开后这些设置将被放弃。",
           "17bdee4ff1": "放弃未保存的 AI 设置？",
           "084d8fac5b": "隐私与安全",
-          "23931df7e8": "远程主机",
           "8bd117d669": "界面",
           "e1578cd4bc": "工作流程",
           "9abb9be3bc": "初始设置",
@@ -8467,7 +8418,6 @@
           "reconnectOnLaunch": "启动时重新连接",
           "reconnectOnLaunchHelp": "关闭后，Coding Agent 2 启动时会让此主机及通过它访问的 Coding Agent 2 服务器保持断开，直到你手动连接。",
           "allowRemoteCliControl": "允许此主机控制其工作区中的 Coding Agent 2 浏览器标签页",
-          "allowRemoteCliControlHelp": "新主机默认开启。此主机上的智能体和 orca 命令可以打开、读取和使用此桌面上的 Coding Agent 2 浏览器标签页，但仅限此主机的工作区，且仅在主机连接期间。它控制的标签页会显示其名称。此主机上由旧版 Coding Agent 2 启动的终端也需要开启此项才能运行 orca 编排命令。它无法读取你的文件、剪贴板或 Cookie。",
           "addHost": "添加主机"
         },
         "TasksPane": {
@@ -8990,24 +8940,12 @@
         },
         "appearance": {
           "search": {
-            "468448bba4": "水彩",
-            "f586abfa35": "蓝色",
-            "651f35b2c6": "切换器",
             "e5bc35d59e": "窗口",
-            "d18b54ca90": "码头",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "应用程序图标",
-            "e80c2af428": "选择 Dock 和窗口切换器中显示的应用程序图标。",
-            "2b313598c6": "应用程序图标",
-            "839fb1e3ed": "工具箱",
             "ac79fe4a04": "显示",
             "648eeada79": "隐藏",
             "6cf5f54ce1": "按钮",
             "5bff6a2ef0": "侧边栏",
-            "5e5b8878bf": "手机",
-            "74618577c7": "移动端",
-            "682293cadf": "在左侧边栏顶部显示 Coding Agent 2 手机端按钮。",
-            "1de96ec8a6": "显示 Coding Agent 2 手机端按钮",
             "4c920ab2d1": "日程",
             "58f4e22fa2": "自动化",
             "b186f3cefb": "自动化",
@@ -9502,7 +9440,6 @@
               "ebeedb2f6a": "快捷终端",
               "6f183fa1b9": "浮动终端",
               "a08e482f6d": "浮动工作区",
-              "b96b5ee6cf": "启用浮动工作区，选择新选项卡的开始位置，然后选择切换按钮的显示位置。",
               "b2b60e7163": "浮动工作区"
             }
           }
@@ -9914,16 +9851,8 @@
               "f213400800": "移动端",
               "671eb4173c": "通过手机控制终端和智能体。",
               "ffd52a96e4": "移动端",
-              "1de96ec8a6": "显示 Coding Agent 2 Mobile 按钮",
-              "682293cadf": "在左侧边栏顶部显示 Coding Agent 2 Mobile 按钮。",
               "e4f4daea0e": "中继",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "移动端",
-              "5e5b8878bf": "手机",
-              "5bff6a2ef0": "侧边栏",
-              "6cf5f54ce1": "按钮",
-              "648eeada79": "隐藏",
-              "ac79fe4a04": "显示"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -11125,7 +11054,6 @@
                   "installed": "已安装",
                   "notInstalled": "未安装",
                   "recheck": "重新检查",
-                  "description": "让智能体读取和编辑 Linear 任务。完整引导设置（连接 + 技能 + 可见性）位于设置 → 任务来源。",
                   "copyFailed": "复制命令失败。",
                   "copyCommand": "复制命令",
                   "installedDescription": "智能体技能已安装。要更新，请运行：",
@@ -12160,7 +12088,6 @@
           "automationsLeftDisabled_one": "此主机上的 Coding Agent 2 服务器接管了 {{count}} 个自动化任务，但无法重新启用。请在“自动化”中开启。",
           "automationsLeftDisabled_other": "此主机上的 Coding Agent 2 服务器接管了 {{count}} 个自动化任务，但无法重新启用。请在“自动化”中开启。",
           "nodeDownloadBlocked": "这台电脑和这台主机都无法下载 Coding Agent 2 服务器所需的 Node.js。请使用 Node.js 镜像，或检查两台机器的网络。",
-          "nodeDownloadBlockedNoMirror": "这台电脑和这台主机都无法下载 Coding Agent 2 服务器所需的 Node.js。请检查两台机器的网络或代理，然后重新连接。",
           "nodeDownloadBlockedMirrorTried": "这台电脑和这台主机都无法下载 Node.js，包括从 Node.js 下载镜像下载。请检查镜像设置，然后重新连接。",
           "reassurance": "在 {{host}} 上运行，通过你自己的 SSH 连接访问。你的代码和文件留在原处。只有 Coding Agent 2 的项目、标签页和终端列表会移到 {{host}}。",
           "launchSessionEnded": "启动此主机上 Coding Agent 2 服务器的 SSH 会话已结束，因此这台 Mac 上的终端可能已失去本地网络访问权限。重启 Coding Agent 2 服务器即可恢复。",
@@ -12408,15 +12335,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "请更新服务器上的 Coding Agent 2 以安装其技能。",
           "connectHost": "请连接此 SSH 主机，才能安装其技能。"
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "无法复制安装命令。",
-          "f08d45293d": "复制命令",
-          "b99f375eb2": "在终端中运行此命令来为您的智能体安装编排技能。",
-          "35550f3b3b": "完成",
-          "2914abcfa2": "安装编排技能",
-          "1bdce1911e": "复制编排技能安装命令",
-          "239bf9132b": "复制安装命令。"
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "为 {{value0}} 安装",
@@ -14690,11 +14608,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "关闭 · Esc",
-          "9883b58693": "关闭 Coding Agent 2 手机",
-          "fb5f28330e": "在侧边栏中显示",
-          "c669abcf8f": "从侧边栏隐藏",
-          "e1c7b4a92d": "在设置 > 移动端中配置。",
-          "f3d8e5b71a": "将快捷方式添加回左侧边栏。"
+          "9883b58693": "关闭 Coding Agent 2 手机"
         },
         "PhoneCarousel": {
           "96d651cb87": "终端会话",
@@ -14839,9 +14753,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "隐藏浮动工作区",
-            "763f5fa2c1": "手机到浮动按钮",
-            "0ee79e0674": "移至状态栏"
+            "8e7d775287": "隐藏浮动工作区"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "使智能体能够通过 Coding Agent 2 传递上下文并协调工作。",
@@ -14863,12 +14775,6 @@
             "8cf80db43b": "设置 Coding Agent 2 CLI 和智能体技能，以便智能体可以通过 Coding Agent 2 进行协调。",
             "2a3c5ddf5e": "启用编排",
             "8b14ba6c17": "新浏览器选项卡"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "显示浮动工作区",
-            "4cb418b991": "显示浮动工作区，有新活动",
-            "5785dd9148": "最小化浮动工作区",
-            "bfe7809a70": "{{value0}} 浮动工作区 ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "最小化",
@@ -15257,7 +15163,6 @@
             "4795ac2d4a": "尝试询问：",
             "53905bd076": "开发预览：打开技能设置终端。",
             "1da82af45b": "Coding Agent 2 CLI 需要注意",
-            "ce13a742d0": "在 PATH 中注册了 `coding`。",
             "d1a86c7eb5": "打开“设置”以完成 CLI 设置。",
             "cliInstallFailed": "无法安装 Coding Agent 2 CLI。",
             "splitPrPrompt": "“将此 PR 拆分到两个<term>工作树</term>，并分别创建 PR。”"
@@ -20427,7 +20332,6 @@
       "continueButton": "不使用 CLI 继续",
       "title": "Coding Agent 2 CLI 不可用",
       "message": "Coding Agent 2 无法启动其本地命令传输通道。",
-      "detail": "Coding Agent 2 仍可正常工作，但本会话中 coding-agent status、coding-agent terminal 和编排等命令不可用。\n\n{{guidance}}\n\n原因：{{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 无法写入其运行时文件。请检查 Coding Agent 2 数据文件夹的权限，然后重启。",
         "storageUnavailable": "磁盘可能已满或为只读。请释放空间，然后重启 Coding Agent 2。",

@@ -1,4 +1,4 @@
-import { pluginManifestPath } from './plugin-manifest-file'
+import { pluginManifestPath, readPluginManifestText } from './plugin-manifest-file'
 import { createHash } from 'node:crypto'
 import { mkdtemp, readFile, rm, stat } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -19,7 +19,6 @@ import {
 import { validatePluginInstallTree } from './plugin-artifact-validation'
 import { materializePluginGitTree, type PluginGitBytesRunner } from './installation/plugin-git-tree'
 import { hashPluginTree } from './plugin-content-hash'
-import { readPluginManifestText } from './plugin-manifest-file'
 import { formatPluginSchemaIssues } from '../../shared/plugins/manifest/plugin-schema-issues'
 
 const GIT_QUERY_TIMEOUT_MS = 30_000

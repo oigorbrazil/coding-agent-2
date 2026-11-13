@@ -94,4 +94,5 @@ export const ROUTING_PRESETS: Record<StaticRoutingPresetId, RoutingPreset> = {
   }
 }
 
+// oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: Object.keys of a literal record returns exactly its own keys.
 export const ROUTING_PRESET_IDS = Object.keys(ROUTING_PRESETS) as StaticRoutingPresetId[]

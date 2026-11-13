@@ -37,6 +37,7 @@ function readLayout(): Layout {
   try {
     const raw = readScopedStorage(LAYOUT_KEY)
     const parsed: unknown = raw ? JSON.parse(raw) : {}
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with isMap on the same value; the skill validates the rest of the file.
     return isMap(parsed) ? (parsed as Layout) : {}
   } catch {
     return {}
@@ -58,6 +59,7 @@ export function saveLayout(wf: PlaybookWorkflow) {
   }
 }
 
+// oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: a key-echo function is a valid TFunction for label-free layout.
 const noText = ((key: string) => key) as TFunction
 
 const layoutId = (wf: PlaybookWorkflow, id: string) => {
@@ -150,6 +152,7 @@ export function addPlaybook(s: PlaybooksState, name: string): PlaybookWorkflow {
 
 export function duplicatePlaybook(s: PlaybooksState, source: PlaybookWorkflow, name: string) {
   const key = freshKey(s, source.key)
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: a JSON round-trip deep clone keeps the value's own type.
   const pb = JSON.parse(JSON.stringify({ ...source.pb, name })) as PlaybookWorkflow['pb']
   const wf: PlaybookWorkflow = {
     id: `playbook:${key}`,
@@ -232,6 +235,7 @@ function viewNode(
 }
 
 export function buildDocView(s: PlaybooksState, t: TFunction, wf: PlaybookWorkflow): DocView {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: flow workflows always carry their flow doc once built.
   const doc = wf.doc as FlowDoc
   const c = context(s)
   const nodes = doc.nodes.map((n) => viewNode(s, t, wf, n, c))

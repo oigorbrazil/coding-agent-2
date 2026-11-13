@@ -640,10 +640,6 @@
           "workerAutoReleaseKeywordClose": "close",
           "workerAutoReleaseKeywordRelease": "release"
         },
-        "OrchestrationSkillAgentCoverage": {
-          "fullCoverage_one": "All 1 detected agent has the skill.",
-          "fullCoverage_other": "All {{value0}} detected agents have the skill."
-        },
         "PluginAuthor": {
           "shownPluginCount_one": "{{count}} matching plugin shown, including this one",
           "shownPluginCount_other": "{{count}} matching plugins shown, including this one"
@@ -691,7 +687,6 @@
         },
         "Settings": {
           "084d8fac5b": "Privacy & Security",
-          "23931df7e8": "Remote Hosts",
           "23c6874fdf": "AI Capabilities",
           "8bd117d669": "Interface",
           "9abb9be3bc": "Set Up",
@@ -1447,6 +1442,15 @@
       "repoNotFound": "Repo not found"
     }
   },
+  "codingOpus": {
+    "groupDevices": "Other devices",
+    "groupMain": "Main",
+    "home": {
+      "afternoon": "Good afternoon",
+      "evening": "Good evening",
+      "morning": "Good morning"
+    }
+  },
   "components": {
     "native-chat": {
       "approval": {
@@ -2115,7 +2119,7 @@
       "alreadyPairedAddAgain": "This server is already paired as \"{{name}}\". To update its connection, add it again under Settings > Remote Coding Agent 2 Servers.",
       "alreadyPairedCloudIdentity": "This server is already paired as \"{{name}}\". The cloud workspace's server reuses that server's identity, so it was not saved.",
       "alreadyPairedCloudWorkspace": "This server is already paired as \"{{name}}\". It belongs to a cloud workspace, which pairs it again when it resumes.",
-      "alreadyPairedManagedDeployment": "This server is already paired as \"{{name}}\". Coding Agent 2 runs this server on an SSH host for you; its pairing cannot be replaced or removed here. To decommission it, run `orca environment stop --environment <name> --yes` or use Settings > Coding Agent 2 on your SSH hosts; for a host that is gone, run `orca environment forget --environment <name> --yes`.",
+      "alreadyPairedManagedDeployment": "This server is already paired as \"{{name}}\". Coding Agent 2 runs this server on an SSH host for you; its pairing cannot be replaced or removed here. To decommission it, run `coding-agent environment stop --environment <name> --yes` or use Settings > Coding Agent 2 on your SSH hosts; for a host that is gone, run `coding-agent environment forget --environment <name> --yes`.",
       "alreadyPairedSshAccessChangePending": "This server is already paired as \"{{name}}\". This server's SSH access change didn't finish. Retry or cancel it under Settings > Remote Coding Agent 2 Servers > SSH access for paired servers before replacing its pairing or removing it.",
       "alreadyPairedSshAccessLinked": "This server is already paired as \"{{name}}\". Unlink this server's SSH access under Settings > Remote Coding Agent 2 Servers > SSH access for paired servers before replacing its pairing or removing it.",
       "alreadyPairedUnreadable": "This server is already paired as \"{{name}}\", whose saved settings this version of Coding Agent 2 cannot read.",
@@ -2123,7 +2127,7 @@
       "hostSaveFailed": "Coding Agent 2 verified the host but could not save it. Check local settings storage and try again.",
       "idNeedsNewerOrca": "A server with this id already exists in a format that needs a newer version of Coding Agent 2.",
       "invalidPairingCode": "Invalid pairing code. Expected an codingagent2://pair?... URL or bare pairing payload.",
-      "managedDeployment": "Coding Agent 2 runs this server on an SSH host for you; its pairing cannot be replaced or removed here. To decommission it, run `orca environment stop --environment <name> --yes` or use Settings > Coding Agent 2 on your SSH hosts; for a host that is gone, run `orca environment forget --environment <name> --yes`.",
+      "managedDeployment": "Coding Agent 2 runs this server on an SSH host for you; its pairing cannot be replaced or removed here. To decommission it, run `coding-agent environment stop --environment <name> --yes` or use Settings > Coding Agent 2 on your SSH hosts; for a host that is gone, run `coding-agent environment forget --environment <name> --yes`.",
       "nameTaken": "A server named \"{{name}}\" already exists.",
       "repairCloudWorkspace": "This server belongs to a cloud workspace, which pairs it again when it resumes.",
       "repairSaveFailed": "Coding Agent 2 verified the server but could not save the new pairing. Check local settings storage and try again.",

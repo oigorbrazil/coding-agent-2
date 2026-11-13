@@ -47,7 +47,8 @@ export type CodingOpusAccountsContext = {
 
 function readJson<T>(path: string): T | null {
   try {
-    return JSON.parse(readFileSync(path, 'utf8')) as T
+    const value: T = JSON.parse(readFileSync(path, 'utf8'))
+    return value
   } catch {
     return null
   }
@@ -218,7 +219,7 @@ export function readCodingOpusAccountsAt(context: CodingOpusAccountsContext): Co
   const usage =
     readJson<{ providers?: Record<string, Reading> }>(join(context.stateDir, USAGE_FILE))
       ?.providers ?? {}
-  const providers = {} as CodingOpusAccounts['providers']
+  const providers: CodingOpusAccounts['providers'] = { codex: [], claude: [] }
   for (const provider of PROVIDERS) {
     const all = new Map(entries(context, provider).map((entry) => [entry.name, entry]))
     const rotation = accountRotation(context, provider)
@@ -280,9 +281,9 @@ export function orderCodingOpusAccountsAt(
 
 function thresholds(): { critical: number; stop: number } {
   try {
-    const doc = parse(readFileSync(codingOpusPlaybooksPath(), 'utf8')) as {
-      quota?: { criticalThreshold?: unknown; stopAt?: unknown }
-    }
+    const doc: { quota?: { criticalThreshold?: unknown; stopAt?: unknown } } | null = parse(
+      readFileSync(codingOpusPlaybooksPath(), 'utf8')
+    )
     const critical = Number(doc?.quota?.criticalThreshold ?? 80)
     const stop = Number(doc?.quota?.stopAt ?? Math.max(95, critical))
     if (Number.isFinite(critical) && Number.isFinite(stop)) {

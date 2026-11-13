@@ -39,7 +39,7 @@ function accountPath(): string {
 
 export async function readStoredAccount(): Promise<StoredAccount> {
   try {
-    const parsed = JSON.parse(await readFile(accountPath(), 'utf8')) as Partial<StoredAccount>
+    const parsed: Partial<StoredAccount> = JSON.parse(await readFile(accountPath(), 'utf8'))
     return { ...EMPTY, ...parsed, version: 1 }
   } catch {
     return { ...EMPTY }

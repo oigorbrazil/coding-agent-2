@@ -67,16 +67,11 @@ if (ignoreModules.length > 0) {
 }
 
 // Explicit onlyModules bypasses unreliable pnpm-store walker so every native module uses Electron’s Node ABI.
+const WIN_ADDONS = ['registry', 'security'].map((n) => `@coding-agent/windows-${n}`)
 const NATIVE_MODULES = [
   'node-pty',
   'cpu-features',
-  ...(rebuildPlatform === 'win32'
-    ? [
-        '@coding-agent/windows-registry',
-        '@coding-agent/windows-security',
-        '@vscode/windows-process-tree'
-      ]
-    : [])
+  ...(rebuildPlatform === 'win32' ? [...WIN_ADDONS, '@vscode/windows-process-tree'] : [])
 ]
 const onlyModules = NATIVE_MODULES.filter((m) => !ignoreModules.includes(m))
 // Global pnpm store shares packages across worktrees; publish per-ABI build beside build/Release instead of mutating it.

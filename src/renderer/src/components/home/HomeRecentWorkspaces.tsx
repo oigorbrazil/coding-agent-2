@@ -4,6 +4,7 @@ import { useAppStore } from '../../store'
 import { activateAndRevealWorktree } from '@/lib/workspace/activation/worktree-activation'
 import { formatTimeAgo } from '../right-sidebar/ai-vault/session-list/ai-vault-session-time'
 import { useTranslate } from '@/i18n/use-translate'
+import { selectWorktreesByRepo } from '@/store/workspaces/catalog/workspace-record-fields'
 
 const RECENT_LIMIT = 6
 
@@ -14,7 +15,7 @@ export function HomeRecentWorkspaces({
   onAddProject: () => void
 }): React.JSX.Element {
   const t = useTranslate()
-  const worktreesByRepo = useAppStore((s) => s.worktreesByRepo)
+  const worktreesByRepo = useAppStore(selectWorktreesByRepo)
   const repos = useAppStore((s) => s.repos)
   const recent = useMemo(() => {
     const repoNames = new Map(repos.map((repo) => [repo.id, repo.displayName]))

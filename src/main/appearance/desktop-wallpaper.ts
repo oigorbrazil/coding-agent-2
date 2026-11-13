@@ -1,10 +1,7 @@
-import { execFile } from 'node:child_process'
 import { readFile, stat } from 'node:fs/promises'
 import { join } from 'node:path'
-import { promisify } from 'node:util'
 import { nativeImage } from 'electron'
-
-const execFileAsync = promisify(execFile)
+import { runProcess } from '@coding-agent/process-host'
 
 // The backdrop is blurred heavily, so a small copy looks the same and keeps the IPC payload light.
 const BACKDROP_WIDTH = 960
@@ -19,12 +16,10 @@ function transcodedWallpaperPath(): string | null {
 
 async function registryWallpaperPath(): Promise<string | null> {
   try {
-    const { stdout } = await execFileAsync('reg', [
-      'query',
-      'HKCU\\Control Panel\\Desktop',
-      '/v',
-      'WallPaper'
-    ])
+    const { stdout } = await runProcess({
+      program: 'reg',
+      args: ['query', 'HKCU\\Control Panel\\Desktop', '/v', 'WallPaper']
+    })
     const match = /WallPaper\s+REG_SZ\s+(.+)/i.exec(stdout)
     return match?.[1]?.trim() || null
   } catch {

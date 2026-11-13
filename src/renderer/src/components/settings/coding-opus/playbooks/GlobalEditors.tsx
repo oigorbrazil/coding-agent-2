@@ -96,6 +96,7 @@ export function GlobalRulesEditor() {
   const base = s.profile === 'base'
   const target = (): Partial<QuotaRule> => (base ? s.quota : (profileNow(s).quota ??= {}))
   const setQuota = (key: keyof QuotaRule, value: string | number) => {
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the setter writes the field the caller picked by key, with that field's value type.
     target()[key] = value as never
     touch(true)
   }
@@ -234,6 +235,7 @@ export function ProviderPanel({ id }: { id: string }) {
   if (!def) {
     return null
   }
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
   const adapters = s.data.adapters as
     | Record<string, { command?: string; args?: string[]; checked?: string }>
     | undefined

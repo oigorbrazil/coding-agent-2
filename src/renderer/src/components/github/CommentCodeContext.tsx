@@ -345,7 +345,7 @@ export function CommentCodeContext({
               return (
                 <div
                   key={lineNumber}
-                  className={cn('flex font-code', isCommentedLine && 'bg-emerald-500/10')}
+                  className={cn('flex font-code', isCommentedLine && 'bg-status-success/10')}
                 >
                   <span className="w-12 shrink-0 select-none border-r border-border/40 px-2 text-right text-muted-foreground">
                     {lineNumber}

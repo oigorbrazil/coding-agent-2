@@ -783,7 +783,6 @@
       "continueButton": "Continuar sem CLI",
       "title": "CLI do Coding Agent 2 indisponível",
       "message": "O Coding Agent 2 não conseguiu iniciar seu transporte local de comandos.",
-      "detail": "O Coding Agent 2 continuará funcionando, mas comandos como coding-agent status, coding-agent terminal e orquestração ficam indisponíveis nesta sessão.\n\n{{guidance}}\n\nCausa: {{cause}}",
       "guidance": {
         "permissionDenied": "O Coding Agent 2 não conseguiu gravar seu arquivo de runtime. Verifique as permissões da pasta de dados do Coding Agent 2 e reinicie.",
         "storageUnavailable": "Seu disco pode estar cheio ou somente leitura. Libere espaço e reinicie o Coding Agent 2.",
@@ -853,7 +852,6 @@
     "showStatusBar": "Mostrar Barra de Status",
     "showTasksButton": "Mostrar Botão de Tarefas",
     "showAutomationsButton": "Mostrar Botão de Automações",
-    "showMobileButton": "Mostrar Botão do Coding Agent 2 Mobile",
     "showTitlebarAppName": "Mostrar Nome do App na Barra de Título",
     "view": "Exibir",
     "reload": "Recarregar",
@@ -3152,7 +3150,6 @@
             "remoteServerLabel": "Servidor remoto",
             "antigravityUsage": "Uso do Antigravity",
             "grokUsageMenu": "Uso do Grok",
-            "floatingTerminalNewActivity": "{{label}}, nova atividade",
             "codexSignInSuccess": "Login realizado no Codex",
             "codexSignInError": "Falha no login do Codex. Tente novamente.",
             "4fba7dc1e7": "Saldo {{value0}}",
@@ -4239,24 +4236,12 @@
           "search": {
             "9a115966d3": "Minimizar para a Bandeja ao Fechar",
             "4d5b9427b5": "Quando ativado, fechar a janela mantém o Coding Agent 2 em execução na bandeja do sistema em vez de encerrá-lo.",
-            "468448bba4": "aquarela",
-            "f586abfa35": "azul",
-            "651f35b2c6": "alternador",
             "e5bc35d59e": "janela",
-            "d18b54ca90": "dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "ícone do app",
-            "e80c2af428": "Escolha o ícone do app exibido no Dock e no alternador de janelas.",
-            "2b313598c6": "Ícone do App",
-            "839fb1e3ed": "caixa de ferramentas",
             "ac79fe4a04": "mostrar",
             "648eeada79": "ocultar",
             "6cf5f54ce1": "botão",
             "5bff6a2ef0": "barra lateral",
-            "5e5b8878bf": "celular",
-            "74618577c7": "mobile",
-            "682293cadf": "Mostra o botão do Coding Agent 2 Mobile no topo da barra lateral esquerda.",
-            "1de96ec8a6": "Mostrar Botão do Coding Agent 2 Mobile",
             "4c920ab2d1": "agendar",
             "58f4e22fa2": "automação",
             "b186f3cefb": "automações",
@@ -4836,16 +4821,8 @@
               "f213400800": "mobile",
               "671eb4173c": "Controle terminais e agentes a partir do seu celular.",
               "ffd52a96e4": "Mobile",
-              "1de96ec8a6": "Mostrar Botão do Coding Agent 2 Mobile",
-              "682293cadf": "Mostra o botão do Coding Agent 2 Mobile no topo da barra lateral esquerda.",
               "e4f4daea0e": "relay",
-              "5d5af8e041": "iphone",
-              "74618577c7": "mobile",
-              "5e5b8878bf": "celular",
-              "5bff6a2ef0": "barra lateral",
-              "6cf5f54ce1": "botão",
-              "648eeada79": "ocultar",
-              "ac79fe4a04": "mostrar"
+              "5d5af8e041": "iphone"
             }
           }
         },
@@ -5170,7 +5147,6 @@
           "43b68e10f0": "Você tem alterações não salvas do Autor de IA do Git. Sair vai descartá-las.",
           "17bdee4ff1": "Descartar alterações não salvas do Autor de IA do Git?",
           "084d8fac5b": "Privacidade e Segurança",
-          "23931df7e8": "Hosts Remotos",
           "8bd117d669": "Interface",
           "e1578cd4bc": "Fluxos de Trabalho",
           "9abb9be3bc": "Configurar",
@@ -5549,10 +5525,6 @@
           "3057983501": "Não atribuído",
           "2edf606c46": "Minimizar para a Bandeja ao Fechar",
           "b707773a0d": "Quando ativado, fechar a janela mantém o Coding Agent 2 em execução na bandeja do sistema em vez de encerrá-lo.",
-          "0cd9b8228f": "Escolha o ícone do app exibido no Dock e no alternador de janelas.",
-          "ca1590d42f": "Ícone do App",
-          "61d842eca0": "Mostra o atalho do Coding Agent 2 Mobile na barra lateral. Ele continua disponível na Caixa de Ferramentas.",
-          "9da1020447": "Mostrar Botão do Coding Agent 2 Mobile",
           "511f270ebb": "Mostrar Botão de Automações",
           "cf81907069": "Mostrar Botão de Tarefas",
           "dc29f3cc0d": "Barra Lateral",
@@ -6076,8 +6048,7 @@
           "installFailureConflictRemedy": "Remova {{value0}} e registre novamente se ele não for mais necessário.",
           "6f894ef9c2": "Mostrar no Finder",
           "cbe55e4d48": "Mostrar no Explorer",
-          "9fd4023db0": "Mostrar no Gerenciador de Arquivos",
-          "outsideOrcaDescription": "Os terminais do Coding Agent 2 já têm `coding`. Ative isto para usar `coding` em outros terminais fora do Coding Agent 2."
+          "9fd4023db0": "Mostrar no Gerenciador de Arquivos"
         },
         "GitPane": {
           "895d3f70b8": "gh",
@@ -6229,7 +6200,6 @@
           "reconnectOnLaunch": "Reconectar ao iniciar",
           "reconnectOnLaunchHelp": "Quando desativado, o Coding Agent 2 deixa este host, e qualquer servidor Coding Agent 2 acessado por ele, desconectado ao iniciar até você conectá-lo.",
           "allowRemoteCliControl": "Permitir que este host controle abas do navegador Coding Agent 2 nos espaços de trabalho dele",
-          "allowRemoteCliControlHelp": "Ativado por padrão para novos hosts. Agentes e comandos coding neste host podem abrir, ler e usar abas do navegador Coding Agent 2 neste computador, apenas nos espaços de trabalho deste host e enquanto ele estiver conectado. As abas que ele controla mostram o nome dele. Terminais iniciados neste host por um Coding Agent 2 mais antigo também precisam disto ativado para executar comandos de orquestração do Coding. Ele não pode ler seus arquivos, área de transferência ou cookies.",
           "addHost": "Adicionar host",
           "proxyConnectionReuse": "Reutilizar uma única conexão de proxy",
           "proxyConnectionReuseHelp": "Conexões mais rápidas por hosts ProxyCommand ou ProxyJump lentos. Ative somente se o seu ssh_config não depender de regras Match ou %h específicas de host."
@@ -7562,7 +7532,6 @@
                   "installed": "Instalado",
                   "notInstalled": "Não instalado",
                   "recheck": "Verificar novamente",
-                  "description": "Permita que agentes leiam e editem tarefas do Linear. A configuração guiada completa (conectar + skill + visibilidade) está em Configurações → Origens de Tarefas.",
                   "copyFailed": "Falha ao copiar o comando.",
                   "copyCommand": "Copiar comando",
                   "installedDescription": "Skill de agente instalada. Para atualizá-la, execute:",
@@ -7702,7 +7671,6 @@
               "ebeedb2f6a": "terminal rápido",
               "6f183fa1b9": "terminal flutuante",
               "a08e482f6d": "espaço de trabalho flutuante",
-              "b96b5ee6cf": "Ative o espaço de trabalho flutuante, escolha onde novas abas começam e onde o botão de alternância aparece.",
               "b2b60e7163": "Espaço de Trabalho Flutuante"
             }
           }
@@ -7955,10 +7923,7 @@
           "installOutro": ", depois pareie abaixo.",
           "androidApkLabel": "APK do Android",
           "e7a3ae8c4e": "Mobile",
-          "174f4a3c6d": "Controle terminais e agentes a partir do seu celular.",
-          "1de96ec8a6": "Mostrar Botão do Coding Agent 2 Mobile",
-          "682293cadf": "Mostra o botão do Coding Agent 2 Mobile no topo da barra lateral esquerda.",
-          "d4f2b65f30": "Mostra o atalho do Coding Agent 2 Mobile na barra lateral."
+          "174f4a3c6d": "Controle terminais e agentes a partir do seu celular."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Criar arquivo de diagnóstico",
@@ -8030,10 +7995,6 @@
           "strong": "Forte"
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Barra de Status",
-          "9fb225f2d7": "Botão Flutuante",
-          "3c900e26e5": "O atalho de teclado funciona independentemente de onde o alternador é exibido.",
-          "5e5a8da236": "Local do Botão de Alternância",
           "505001823e": "Escolher diretório do espaço de trabalho flutuante",
           "81afb79785": "Novas abas de terminal flutuante começam aqui. Notas em Markdown são salvas no espaço de trabalho flutuante do próprio Coding Agent 2.",
           "12aa09f10c": "Diretório do Terminal",
@@ -8114,15 +8075,9 @@
           "dd532a01ce": "Falha ao abrir os atalhos no Coding Agent 2."
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Peça a um agente coordenador para usar orquestração em transferências, transferências de worktree e agentes filhos sequenciais ou paralelos.",
-          "ae79504732": "Como usar",
-          "9bedd2a6e5": "Permite que agentes transfiram contexto e coordenem trabalho através do Coding Agent 2.",
-          "07641b9768": "Skill de orquestração",
-          "2aacdb0517": "Coordene agentes de código em transferências, transferências de worktree e trabalho de agentes filhos.",
           "191ac34567": "Orquestração de Agentes",
           "nestedWorkerDepthTitle": "Profundidade de worker aninhado",
           "nestedWorkerDepthDescription": "Quantas gerações de workers despachados podem gerar seus próprios workers. 1 mantém a árvore de agentes plana: um coordenador despacha workers, e esses workers não despacham.",
-          "7bc082f4de": "Copiar comando de instalação",
           "workerAutoReleaseTitle": "Fechar automaticamente workers concluídos",
           "workerAutoReleaseDescription": "Fecha o terminal ou chat de um worker 2 minutos após a conclusão, a menos que você escolha Manter aberto. Se ele voltar a trabalhar, os 2 minutos recomeçam quando terminar.",
           "workerAutoReleaseKeywordClose": "fechar",
@@ -8192,18 +8147,6 @@
           "collapseSetup": "Recolher etapas de configuração de {{provider}}",
           "expandSetup": "Mostrar etapas de configuração de {{provider}}",
           "statusUnverified": "Não é possível verificar"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Cobertura de agentes",
-          "ffe13e36fb": "Faltando",
-          "1e8f8d8fae": "Pronto",
-          "checking": "Verificando agentes instalados e caminhos de skill…",
-          "noAgents": "Nenhuma CLI de agente detectada no PATH. Instale agentes em Configurações → Agentes e depois verifique novamente.",
-          "fullCoverage_one": "O único agente detectado tem a skill.",
-          "fullCoverage_other": "Todos os {{value0}} agentes detectados têm a skill.",
-          "fullCoverage_many": "Todos os {{value0}} agentes detectados têm a skill.",
-          "noCoverage": "Instale a skill acima e depois verifique novamente.",
-          "partialCoverage": "{{value0}} de {{value1}} agentes detectados têm a skill."
         },
         "RepositorySourceControlAiEnablement": {
           "62511a575d": "Usar global",
@@ -8601,11 +8544,6 @@
           "cancel": "Cancelar",
           "confirm": "Reverter",
           "descriptionVersion": "Restaura a versão {{value0}}."
-        },
-        "AppIconSelector": {
-          "d5a112dc9b": "Próximo ícone",
-          "415fa76f64": "Ícone do app selecionado",
-          "5f5142a62a": "Ícone anterior"
         },
         "BrowserDefaultZoomSetting": {
           "265597101f": "Zoom Padrão",
@@ -9276,15 +9214,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Atualize o Coding Agent 2 no servidor para instalar as skills dele.",
           "connectHost": "Conecte-se a este host SSH para instalar as skills dele."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "Falha ao copiar o comando de instalação.",
-          "f08d45293d": "Copiar comando",
-          "b99f375eb2": "Execute este comando em um terminal para instalar a skill de orquestração para seus agentes.",
-          "35550f3b3b": "Concluído",
-          "2914abcfa2": "Instalar skill de orquestração",
-          "1bdce1911e": "Copiar comando de instalação da skill de orquestração",
-          "239bf9132b": "Comando de instalação copiado."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "Instalar para {{value0}}",
@@ -11993,8 +11922,6 @@
         "SidebarNav": {
           "80611a8b10": "Buscar",
           "0c3395fd32": "Buscar worktrees e abas do navegador",
-          "c86d83b5c3": "Novo",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "Automações",
           "e7ad3c540d": "Abrir tarefas do Jira",
           "c39ab10000": "Abrir tarefas do Linear",
@@ -15498,7 +15425,6 @@
             "4795ac2d4a": "Tente perguntar:",
             "53905bd076": "Pré-visualização de desenvolvimento: abrindo o terminal de configuração de skills.",
             "1da82af45b": "A CLI do Coding Agent 2 precisa de atenção",
-            "ce13a742d0": "`coding` registrado no PATH.",
             "d1a86c7eb5": "Abra as Configurações para concluir a configuração da CLI.",
             "cliInstallFailed": "Não foi possível instalar a CLI do Coding Agent 2.",
             "splitPrPrompt": "“Divida este PR em duas <term>worktrees</term> e crie um PR para cada uma.”"
@@ -16866,11 +16792,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Fechar · Esc",
-          "9883b58693": "Fechar o Coding Agent 2 Mobile",
-          "fb5f28330e": "Mostrar na barra lateral",
-          "c669abcf8f": "Ocultar da barra lateral",
-          "e1c7b4a92d": "Configure em Configurações > Mobile.",
-          "f3d8e5b71a": "Adiciona o atalho de volta à barra lateral."
+          "9883b58693": "Fechar o Coding Agent 2 Mobile"
         },
         "CustomNetworkAddressDialog": {
           "title": "Endereço de rede personalizado",
@@ -18577,9 +18499,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Ocultar Espaço de Trabalho Flutuante",
-            "763f5fa2c1": "Mover para Botão Flutuante",
-            "0ee79e0674": "Mover para Barra de Status"
+            "8e7d775287": "Ocultar Espaço de Trabalho Flutuante"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Permite que os agentes transfiram contexto e coordenem trabalho através do Coding Agent 2.",
@@ -18601,12 +18521,6 @@
             "8cf80db43b": "Configure a CLI do Coding Agent 2 e a skill de agente para que os agentes possam se coordenar através do Coding Agent 2.",
             "2a3c5ddf5e": "Ativar orquestração",
             "8b14ba6c17": "Nova Aba do Navegador"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Mostrar espaço de trabalho flutuante",
-            "4cb418b991": "Mostrar espaço de trabalho flutuante, nova atividade",
-            "5785dd9148": "Minimizar espaço de trabalho flutuante",
-            "bfe7809a70": "{{value0}} espaço de trabalho flutuante ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Minimizar",
@@ -19006,24 +18920,15 @@
         }
       },
       "Landing": {
-        "f9eaa9e12d": "Adicionar projeto",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Logo do Coding Agent 2",
-        "c1cf168479": "Ocultar",
         "00cee697c1": "Execute \"gh auth login\" em um terminal para conectar sua conta do GitHub.",
         "9f96d018b7": "A CLI do GitHub não está autenticada",
         "73e1ad4282": "O Coding Agent 2 usa a CLI do GitHub (gh) para mostrar pull requests, issues e verificações.",
         "5beaef5f9e": "A CLI do GitHub não está instalada",
         "b673e7cf1b": "O Git é necessário para projetos Git, controle de código-fonte e gerenciamento de espaços de trabalho.",
         "e5b7296d9d": "O Git não está instalado",
-        "cd21242762": "Adicione um projeto para começar.",
-        "9c00bd4adf": "Selecione um espaço de trabalho na barra lateral para começar.",
-        "0d0ace8861": "Dar estrela no GitHub",
-        "ec43b38ba7": "Com estrela no GitHub",
-        "157bb5ecbb": "Abrir GitHub",
         "preflightDismiss": "Descartar",
-        "moveUpWorkspace": "Selecionar espaço de trabalho anterior",
-        "moveDownWorkspace": "Selecionar próximo espaço de trabalho",
         "installGit": "Instalar Git",
         "installGitHubCli": "Instalar GitHub CLI",
         "learnMore": "Saiba mais"
@@ -23949,29 +23854,11 @@
     "createBranchFailed": "O Coding Agent 2 não conseguiu criar a branch. Verifique este repositório em um terminal e tente novamente."
   },
   "codingOpus": {
-    "group": "Coding Opus",
     "desktopOnly": "Disponível apenas no app para desktop.",
-    "skill": {
-      "title": "Skill Coding Opus",
-      "bundled": "Embutida v{{value0}} · {{value1}}",
-      "version": "v{{value0}}",
-      "missing": "Não instalada",
-      "reinstall": "Reinstalar",
-      "update": "Atualizar para v{{value0}}",
-      "install": "Instalar"
-    },
     "playbooks": {
       "navTitle": "Playbooks",
       "navDescription": "Playbooks de estratégia da Coding Opus e a skill instalada no Claude Code e no Codex.",
       "sectionDescription": "As estratégias com que a Coding Opus planeja e delega. Salvas no arquivo que a skill lê.",
-      "title": "Playbooks",
-      "custom": "Sua cópia",
-      "bundled": "Padrão da skill",
-      "reveal": "Mostrar arquivo",
-      "discard": "Descartar",
-      "save": "Salvar",
-      "saved": "Playbooks salvos.",
-      "invalid": "Não salvo: {{value0}}",
       "outsideChange": "O arquivo de playbooks também mudou fora desta tela; a edição que você está fazendo aqui o substitui ao salvar."
     },
     "brain": {
@@ -24054,7 +23941,6 @@
       "newWorkspace": "Novo workspace",
       "playbooks": "Playbooks",
       "secondBrain": "Second brain",
-      "session": "Sessão",
       "week": "Semana",
       "month": "Mês",
       "nav": "Início",

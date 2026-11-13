@@ -8,6 +8,11 @@ export const i18n = {
   language: navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en'
 }
 
+/** `@/i18n/i18n` getIntlLocale: dates follow the page language. */
+export function getIntlLocale(): string {
+  return i18n.language === 'pt' ? 'pt-BR' : 'en-US'
+}
+
 /** `@/i18n/use-ui-language-revision`: the page language never changes while it is open. */
 export function useUiLanguageRevision(): number {
   return 0

@@ -11,6 +11,7 @@ export function ProviderMark({ id, size = 13 }: { id: string; size?: number }) {
   if (ROUTES[id]) {
     return <img src={router9Logo} alt="" width={size} height={size} draggable={false} />
   }
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: catalog agent ids are terminal agent ids.
   return <AgentIcon agent={(s.catalog[id]?.agent ?? id) as TerminalAgent} size={size} />
 }
 

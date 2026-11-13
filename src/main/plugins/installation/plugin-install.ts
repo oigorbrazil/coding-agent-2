@@ -1,4 +1,4 @@
-import { pluginManifestPath } from '../plugin-manifest-file'
+import { pluginManifestPath, readPluginManifestText } from '../plugin-manifest-file'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -34,7 +34,6 @@ import {
   isSameGitRepository,
   splitQualifiedPluginKey
 } from '../../../shared/plugins/catalog/plugin-marketplace'
-import { readPluginManifestText } from '../plugin-manifest-file'
 import { pluginCatalogTakeoverError } from './plugin-catalog-install-guard'
 
 export type { PluginInstallResult } from './plugin-install-staging'

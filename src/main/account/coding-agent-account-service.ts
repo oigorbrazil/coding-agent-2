@@ -110,7 +110,7 @@ async function authRequest(
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
   })
   const text = await response.text()
-  const data = text ? (JSON.parse(text) as Record<string, unknown>) : {}
+  const data: Record<string, unknown> = text ? JSON.parse(text) : {}
   if (!response.ok) {
     const message = data.msg ?? data.error_description ?? data.message ?? `HTTP ${response.status}`
     throw new Error(String(message))
@@ -150,7 +150,8 @@ export async function verifyEmailCode(code: string): Promise<CodingAgentAccountR
       email: current.email,
       token
     })
-    const user = (data.user ?? {}) as Record<string, unknown>
+    const user: Record<string, unknown> =
+      typeof data.user === 'object' && data.user !== null ? { ...data.user } : {}
     const next: StoredAccount = {
       ...current,
       emailVerified: true,

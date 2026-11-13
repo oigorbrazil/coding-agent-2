@@ -75,6 +75,7 @@ export function UsageBar({ onChange }: { onChange: () => void }) {
       return
     }
     const close = (event: PointerEvent) => {
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the listener sits on an element, so the event target is a DOM node.
       const target = event.target as Element | null
       if (rootRef.current?.contains(target)) {
         return

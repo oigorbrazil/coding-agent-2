@@ -253,7 +253,9 @@ function listProcessHostModules(directory, extension, prefix = '') {
 }
 
 // Resource filters copy dist as-is; assert complete/current process-host emission matching package tsconfig.
-function assertProcessHostOutputBuilt(packageDir = readPackage('@coding-agent/process-host').packageDir) {
+function assertProcessHostOutputBuilt(
+  packageDir = readPackage('@coding-agent/process-host').packageDir
+) {
   const manifest = JSON.parse(readFileSync(join(packageDir, 'package.json'), 'utf8'))
   const publicTargets = [
     manifest.main,

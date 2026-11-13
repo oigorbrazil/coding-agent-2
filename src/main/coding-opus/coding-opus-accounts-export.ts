@@ -82,7 +82,7 @@ export function writeCodingOpusLinkedAccounts(
   payload: CodingOpusLinkedAccounts
 ): boolean {
   try {
-    const previous = JSON.parse(readFileSync(path, 'utf8')) as CodingOpusLinkedAccounts
+    const previous: CodingOpusLinkedAccounts = JSON.parse(readFileSync(path, 'utf8'))
     if (withoutStamp(previous) === withoutStamp(payload)) {
       return false
     }

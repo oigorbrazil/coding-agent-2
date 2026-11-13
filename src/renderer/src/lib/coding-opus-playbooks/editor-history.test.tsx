@@ -61,6 +61,7 @@ const flushSave = () =>
     await vi.advanceTimersByTimeAsync(1000)
   })
 const savedProfile = () =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: test reads a known fixture shape.
   (parsePlaybooksYaml(save.mock.lastCall![0]) as { profile: string }).profile
 
 afterEach(() => {
@@ -96,6 +97,7 @@ it('drops the redo branch when a new edit follows undo', async () => {
   click('playbooks.undo')
   click('aggressive')
   expect(
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: test reads a known fixture shape.
     (screen.getByRole('button', { name: 'playbooks.redo' }) as HTMLButtonElement).disabled
   ).toBe(true)
   await flushSave()

@@ -91,6 +91,7 @@ function quoted(s: string, start: number, line: number): Read<string> {
       }
       const escape = s[i]
       if ('xuU'.includes(escape)) {
+        // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the escape regex only matches x, u or U.
         const count = { x: 2, u: 4, U: 8 }[escape as 'x' | 'u' | 'U']
         const digits = s.slice(i + 1, i + 1 + count)
         if (digits.length !== count || !/^[0-9a-fA-F]+$/.test(digits)) {
@@ -450,6 +451,7 @@ function emit(value: unknown, indent: number): string {
         if (isScalar(item)) {
           return `${pad}- ${yScalar(item)}`
         }
+        // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
         const map = item as Record<string, unknown>
         const entries = Object.entries(map).filter(([, v]) => v !== undefined)
         if (inlinable(map) && inlineMap(map).length < 96) {

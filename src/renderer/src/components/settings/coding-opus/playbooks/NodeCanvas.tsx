@@ -151,6 +151,7 @@ export function NodeCanvas({
   onStructure: () => void
 }) {
   const { s, t, select, selectedId, redraw } = usePlaybooks()
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: flow workflows always carry their flow doc once built.
   const doc = wf.doc as FlowDoc
   const svgRef = useRef<SVGSVGElement>(null)
   const [view, setView] = useState<View | null>(null)
@@ -238,6 +239,7 @@ export function NodeCanvas({
     }
     if (selectedId.startsWith('edge:')) {
       const [from, port, to] = selectedId.slice(5).split('|')
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: data-from/data-port are written by this canvas from node ids and DocPort values.
       removeEdge(doc, { from, port: port as DocPort, to })
     } else {
       const node = doc.nodes.find((n) => n.id === selectedId)
@@ -345,10 +347,13 @@ export function NodeCanvas({
     if (n.kind === 'start') {
       shapes.push(<Start key={n.id} n={n} selected={selectedId === n.id} />)
     } else if (shown?.type === 'role') {
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: narrowed by the node type checked on this branch.
       shapes.push(<Role key={n.id} n={shown as RoleNode} graph={docView} />)
     } else if (shown?.type === 'decision') {
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: narrowed by the node type checked on this branch.
       shapes.push(<Decision key={n.id} n={shown as DecisionNode} graph={docView} />)
     } else if (shown?.type === 'end') {
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: narrowed by the node type checked on this branch.
       shapes.push(<End key={n.id} n={shown as EndNode} graph={docView} />)
     }
   })
@@ -371,11 +376,14 @@ export function NodeCanvas({
         }}
         onPointerDown={(event) => {
           event.currentTarget.setPointerCapture(event.pointerId)
+          // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the listener sits on an element, so the event target is a DOM node.
           const element = event.target as Element
           const portEl = element.closest('[data-port]')
           const point = toWorld(event.clientX, event.clientY)
           if (portEl && point) {
+            // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: data-from/data-port are written by this canvas from node ids and DocPort values.
             const from = portEl.getAttribute('data-from') as string
+            // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: data-from/data-port are written by this canvas from node ids and DocPort values.
             const port = portEl.getAttribute('data-port') as DocPort
             drag.current = { kind: 'link', from, port, x: point[0], y: point[1] }
             setLink({ from, port, x: point[0], y: point[1] })
@@ -566,6 +574,7 @@ export function NodeCanvas({
                           cy={cy}
                           r={6}
                         >
+                          {/* oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines. */}
                           <title>{t(`playbooks.port.${port}` as MessageKey)}</title>
                         </circle>
                       )

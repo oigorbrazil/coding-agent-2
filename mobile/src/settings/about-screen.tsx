@@ -49,7 +49,7 @@ export default function AboutScreen({
     <SettingsScreen title={t('settings.aboutScreen.title', 'About')} onBack={onBack}>
       <View style={styles.brand}>
         <OrcaLogo size={28} />
-        <Text style={styles.brandName}>Orca</Text>
+        <Text style={styles.brandName}>Coding Agent 2</Text>
         <Text style={styles.brandSub}>
           {t('settings.aboutScreen.tagline', 'Open-source agent IDE for 100x builders')}
         </Text>

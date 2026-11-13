@@ -60,19 +60,18 @@ function resolveColor(element: HTMLElement, color: string): string {
   return getComputedStyle(element).getPropertyValue(match[1]).trim() || color
 }
 
+function hexTriple(parts: string[]): [number, number, number] | null {
+  const [r, g, b] = parts.map((part) => Number.parseInt(part, 16))
+  return r === undefined || g === undefined || b === undefined ? null : [r, g, b]
+}
+
 function parseHex(color: string): [number, number, number] | null {
   const short = /^#([\da-f])([\da-f])([\da-f])$/i.exec(color)
   if (short) {
-    return short.slice(1).map((part) => Number.parseInt(`${part}${part}`, 16)) as [
-      number,
-      number,
-      number
-    ]
+    return hexTriple(short.slice(1).map((part) => `${part}${part}`))
   }
   const full = /^#([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(color)
-  return full
-    ? (full.slice(1).map((part) => Number.parseInt(part, 16)) as [number, number, number])
-    : null
+  return full ? hexTriple(full.slice(1)) : null
 }
 
 function gradientColor(colors: string[], amount: number): string {

@@ -20,7 +20,7 @@ describe('readAppEnv', () => {
       ORCA_GITEA_TOKEN: 'old'
     }
     expect(readAppEnv(env, 'GITEA_TOKEN', 'CODING_')).toBe('')
-    delete (env as Partial<typeof env>).CODING_AGENT_GITEA_TOKEN
+    Reflect.deleteProperty(env, 'CODING_AGENT_GITEA_TOKEN')
     expect(readAppEnv(env, 'GITEA_TOKEN', 'CODING_')).toBe('previous')
     env.CODING_GITEA_TOKEN = ' '
     expect(readAppEnv(env, 'GITEA_TOKEN', 'CODING_')).toBe('old')

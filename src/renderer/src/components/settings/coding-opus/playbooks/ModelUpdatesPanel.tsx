@@ -9,6 +9,12 @@ import { providerLabel, toYaml } from '@/lib/coding-opus-playbooks/state'
 import { usePlaybooks } from './context'
 import { Check, Checks, Hint, PanelHead, Section } from './fields'
 import styles from './Playbooks.module.css'
+import { getIntlLocale } from '@/i18n/i18n'
+
+/** Time of the last model check, in the app UI language. */
+function formatCheckedTime(date: Date): string {
+  return date.toLocaleTimeString(getIntlLocale())
+}
 
 export const MODEL_UPDATES_ID = 'model-updates'
 
@@ -109,7 +115,7 @@ export function ModelUpdatesPanel() {
           {checkedAt ? (
             <p className={styles.line}>
               {t('playbooks.modelsUpdateCheckedAt', {
-                time: checkedAt.toLocaleTimeString(),
+                time: formatCheckedTime(checkedAt),
                 count: Object.values(load.catalog.providers).reduce(
                   (total, models) => total + models.length,
                   0

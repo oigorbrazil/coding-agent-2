@@ -16,12 +16,12 @@ import {
   isPreflightIssueDismissed
 } from './landing-preflight-dismissal'
 import { useShortcutKeyDetails } from '@/hooks/useShortcutLabel'
-import { useTranslate } from '@/i18n/use-translate'
+import { useIntlLocale, useTranslate } from '@/i18n/use-translate'
 import type { PreflightIssue } from './landing-preflight-issues'
 import { useLandingPreflightRuntime } from './landing-preflight-runtime'
 import { openAppHttpLink } from '@/lib/browser/navigation/app-http-link-open'
 import { ShortcutKeyCombo } from './ShortcutKeyCombo'
-import { getIntlLocale } from '@/i18n/i18n'
+import { selectWorktreesByRepo } from '@/store/workspaces/catalog/workspace-record-fields'
 import defaultAvatar from '../assets/default-avatar.png'
 import { HomePromptCard } from './home/HomePromptCard'
 import { HomeRecentWorkspaces } from './home/HomeRecentWorkspaces'
@@ -134,17 +134,18 @@ function HomeSectionTitle({ children }: { children: React.ReactNode }): React.JS
 export default function Landing(): React.JSX.Element {
   const t = useTranslate()
   const repos = useAppStore((s) => s.repos)
-  const worktreesByRepo = useAppStore((s) => s.worktreesByRepo)
+  const worktreesByRepo = useAppStore(selectWorktreesByRepo)
   const openModal = useAppStore((s) => s.openModal)
   const openSettingsTarget = useAppStore((s) => s.openSettingsTarget)
   const openSettingsPage = useAppStore((s) => s.openSettingsPage)
   const { preflightIssues } = useLandingPreflightRuntime()
   const now = useMinuteClock()
+  const intlLocale = useIntlLocale()
   const account = useCodingAgentAccount()
   const profileName = account?.name.trim() ?? ''
   const profilePhoto = account?.photo ?? null
   const [greetingId, greetingDefault] = greetingKey(now.getHours())
-  const dateLabel = new Intl.DateTimeFormat(getIntlLocale(), {
+  const dateLabel = new Intl.DateTimeFormat(intlLocale, {
     weekday: 'short',
     day: 'numeric',
     month: 'short',

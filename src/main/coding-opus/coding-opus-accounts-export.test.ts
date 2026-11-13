@@ -135,8 +135,9 @@ describe('startCodingOpusAccountsExport', () => {
     expect(JSON.parse(readFileSync(path, 'utf8')).providers.codex).toHaveLength(1)
 
     current = { ...settings, codexManagedAccounts: [] }
+    const themeOnly: Partial<GlobalSettings> = { theme: 'dark' }
     for (const listener of listeners) {
-      listener({ theme: 'dark' } as Partial<GlobalSettings>)
+      listener(themeOnly)
     }
     expect(JSON.parse(readFileSync(path, 'utf8')).providers.codex).toHaveLength(1)
     for (const listener of listeners) {

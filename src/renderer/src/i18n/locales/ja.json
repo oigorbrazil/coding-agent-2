@@ -575,7 +575,6 @@
     "showStatusBar": "ステータスバーを表示",
     "showTasksButton": "タスクボタンを表示",
     "showAutomationsButton": "オートメーションボタンを表示",
-    "showMobileButton": "Coding Agent 2 Mobile ボタンを表示",
     "showTitlebarAppName": "タイトルバーのアプリ名を表示",
     "view": "表示",
     "reload": "リロード",
@@ -1914,24 +1913,15 @@
         "commentTooLarge": "コメントが大きすぎるため安全に送信できません。"
       },
       "Landing": {
-        "f9eaa9e12d": "プロジェクトを追加",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 のロゴ",
-        "c1cf168479": "非表示",
         "00cee697c1": "ターミナルで「gh auth login」を実行して、GitHub アカウントに接続します。",
         "9f96d018b7": "GitHub CLI が認証されていません",
         "73e1ad4282": "Coding Agent 2 は、GitHub CLI (gh) を使用して、PR、Issue、チェックを表示します。",
         "5beaef5f9e": "GitHub CLIがインストールされていません",
         "b673e7cf1b": "Git は、Git プロジェクト、ソース管理、およびワークスペース管理に必要です。",
         "e5b7296d9d": "Git がインストールされていません",
-        "cd21242762": "プロジェクトを追加して開始します。",
-        "9c00bd4adf": "開始するには、サイドバーからワークスペースを選択します。",
-        "0d0ace8861": "GitHub でスターを付ける",
-        "ec43b38ba7": "GitHub でスター済み",
-        "157bb5ecbb": "GitHub を開く",
         "preflightDismiss": "閉じる",
-        "moveUpWorkspace": "前のワークスペースを選択",
-        "moveDownWorkspace": "次のワークスペースを選択",
         "installGit": "Git をインストール",
         "installGitHubCli": "GitHub CLI をインストール",
         "learnMore": "詳しく見る"
@@ -4061,7 +4051,6 @@
             "remoteServerLabel": "リモートサーバー",
             "antigravityUsage": "Antigravity の使用状況",
             "grokUsageMenu": "Grok の使用状況",
-            "floatingTerminalNewActivity": "{{label}}、新規アクティビティ",
             "4fba7dc1e7": "残高 {{value0}}",
             "codexSignInSuccess": "Codex にサインインしました",
             "codexSignInError": "Codex のサインインに失敗しました。もう一度お試しください。",
@@ -5598,8 +5587,6 @@
         "SidebarNav": {
           "80611a8b10": "検索",
           "0c3395fd32": "ワークツリーとブラウザタブを検索する",
-          "c86d83b5c3": "新機能",
-          "1b5c41caee": "Coding Agent 2 モバイル",
           "f323383e9a": "自動化",
           "e7ad3c540d": "Jira タスクを開く",
           "c39ab10000": "Linear タスクを開く",
@@ -6945,17 +6932,8 @@
           "storedDefaultUndetected": "デフォルトとして保存されていますが、現在は検出されません",
           "noAgentsDetected": "Agent が検出されませんでした。プローブがインストールされている場合、プローブがタイムアウトした可能性があります。"
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "次へのアイコン",
-          "415fa76f64": "選択したアプリのアイコン",
-          "5f5142a62a": "前のアイコン"
-        },
         "AppearancePane": {
           "3057983501": "未割り当て",
-          "0cd9b8228f": "Dock とウィンドウのスイッチャーに表示されるアプリのアイコンを選択します。",
-          "ca1590d42f": "アプリアイコン",
-          "61d842eca0": "Coding Agent 2 Mobile のショートカットをサイドバーに表示します。ツールボックスから引き続き利用できます。",
-          "9da1020447": "Coding Agent 2 Mobile ボタンを表示",
           "511f270ebb": "オートメーションボタンを表示",
           "cf81907069": "タスクボタンを表示",
           "dc29f3cc0d": "サイドバー",
@@ -7146,8 +7124,7 @@
           "cbe55e4d48": "エクスプローラーで表示",
           "9fd4023db0": "ファイルマネージャーで表示",
           "installFailureUnknownReason": "Coding Agent 2 は CLI 登録を完了できず、理由を報告しませんでした。",
-          "installFailureConflictRemedy": "{{value0}} を削除して、不要になった場合は再度登録してください。",
-          "outsideOrcaDescription": "Coding Agent 2 のターミナルでは `coding` がすでに使えます。Coding Agent 2 以外のターミナルから `coding` を使うにはオンにしてください。"
+          "installFailureConflictRemedy": "{{value0}} を削除して、不要になった場合は再度登録してください。"
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL のデフォルト"
@@ -7335,10 +7312,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "ステータスバー",
-          "9fb225f2d7": "フローティングボタン",
-          "3c900e26e5": "キーボードショートカットは、トグルが表示される場所に関係なく機能します。",
-          "5e5a8da236": "トグルボタンの位置",
           "505001823e": "フローティングワークスペースディレクトリを選択",
           "81afb79785": "新規フローティングターミナルタブはここから始まります。 Markdown ノートは、Coding Agent 2 のアプリが所有するフローティングワークスペースに保存されます。",
           "12aa09f10c": "ターミナルディレクトリ",
@@ -7718,9 +7691,6 @@
           "b5a2ed83ff": "アプリストア",
           "e7a3ae8c4e": "モバイル",
           "174f4a3c6d": "スマートフォンからターミナルと Agent を操作します。",
-          "1de96ec8a6": "Coding Agent 2 Mobile ボタンを表示",
-          "682293cadf": "左サイドバー上部に Coding Agent 2 Mobile ボタンを表示します。",
-          "d4f2b65f30": "サイドバーに Coding Agent 2 Mobile ショートカットを表示します。",
           "installIntro": "Coding Agent 2 Mobile は",
           "installOutro": "からインストールし、以下でペアリングしてください。",
           "androidApkLabel": "Android APK"
@@ -7793,15 +7763,9 @@
           "f79084947b": "新規アプリ"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "コーディネーター Agent に、ハンドオフ、ワークツリーハンドオーバー、および順次または並列の子 Agent にオーケストレーションを使用するように依頼します。",
-          "ae79504732": "使い方",
-          "9bedd2a6e5": "Agent がコンテキストを引き継ぎ、Coding Agent 2 を通じて作業を調整できるようにします。",
-          "07641b9768": "オーケストレーションスキル",
-          "2aacdb0517": "ハンドオフ、ワークツリーのハンドオーバー、および子 Agent の作業全体にわたってコーディング Agent を調整します。",
           "191ac34567": "Agent オーケストレーション",
           "nestedWorkerDepthTitle": "ネストされたワーカーの深さ",
           "nestedWorkerDepthDescription": "起動されたワーカーが、さらに自分のワーカーを起動できる世代数です。1 にすると Agent ツリーはフラットになります。コーディネーターがワーカーを起動し、そのワーカーはワーカーを起動しません。",
-          "7bc082f4de": "インストールコマンドのコピー",
           "workerAutoReleaseTitle": "完了したワーカーを自動的に閉じる",
           "workerAutoReleaseDescription": "「開いたままにする」を選ばない限り、ワーカーの終了から2分後にターミナルまたはチャットを閉じます。再び作業を開始した場合、終了時に2分のカウントがやり直されます。",
           "workerAutoReleaseKeywordClose": "閉じる",
@@ -7810,17 +7774,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Agent がコンテキストを引き継ぎ、Coding Agent 2 を通じて作業を調整できるようにします。",
           "2777ff0fdc": "オーケストレーションスキル"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Agent の範囲",
-          "ffe13e36fb": "不足",
-          "1e8f8d8fae": "準備完了",
-          "checking": "インストールされている Agent とスキルパスを確認しています…",
-          "noAgents": "PATH 上に Agent CLI が検出されませんでした。 「設定」→「Agent」で Agent をインストールし、再確認します。",
-          "fullCoverage_one": "検出された 1 人の Agent 全員がスキルを持っています。",
-          "fullCoverage_other": "検出されたすべての {{value0}} Agent がスキルを持っています。",
-          "noCoverage": "上記スキルをインストールして再確認してください。",
-          "partialCoverage": "{{value1}} 件中 {{value0}} 件の Agent がスキルを持っていることが検出されました。"
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "診断ファイルを作成",
@@ -8287,7 +8240,6 @@
           "43b68e10f0": "未保存の AI 設定があります。離れると破棄されます。",
           "17bdee4ff1": "未保存の AI 設定を破棄しますか？",
           "084d8fac5b": "プライバシーとセキュリティ",
-          "23931df7e8": "リモートホスト",
           "8bd117d669": "インターフェース",
           "e1578cd4bc": "ワークフロー",
           "9abb9be3bc": "セットアップ",
@@ -8502,7 +8454,6 @@
           "reconnectOnLaunch": "起動時に再接続",
           "reconnectOnLaunchHelp": "オフにすると、Coding Agent 2 は起動時にこのホストと、それを経由する Coding Agent 2 サーバーを、接続するまで切断したままにします。",
           "allowRemoteCliControl": "このホストにワークスペース内の Coding Agent 2 ブラウザのタブの操作を許可する",
-          "allowRemoteCliControlHelp": "新しいホストではデフォルトでオンです。このホストの Agent と orca コマンドは、このホストのワークスペース内に限り、接続中のみ、このデスクトップの Coding Agent 2 ブラウザのタブを開いて読み取り、操作できます。操作中のタブにはホスト名が表示されます。このホストで古い Coding Agent 2 が起動したターミナルで orca オーケストレーションコマンドを実行する場合も、この設定をオンにする必要があります。ファイル、クリップボード、Cookie は読み取れません。",
           "addHost": "ホストを追加",
           "proxyConnectionReuse": "1 つのプロキシ接続を再利用",
           "proxyConnectionReuseHelp": "低速な ProxyCommand や ProxyJump ホスト経由の接続が速くなります。ssh_config がホスト固有の Match や %h ルールに依存していない場合にのみ有効にしてください。"
@@ -9027,24 +8978,12 @@
         },
         "appearance": {
           "search": {
-            "468448bba4": "水彩",
-            "f586abfa35": "青",
-            "651f35b2c6": "スイッチャー",
             "e5bc35d59e": "ウィンドウ",
-            "d18b54ca90": "ドック",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "アプリアイコン",
-            "e80c2af428": "Dock とウィンドウのスイッチャーに表示されるアプリのアイコンを選択します。",
-            "2b313598c6": "アプリアイコン",
-            "839fb1e3ed": "ツールボックス",
             "ac79fe4a04": "表示",
             "648eeada79": "非表示",
             "6cf5f54ce1": "ボタン",
             "5bff6a2ef0": "サイドバー",
-            "5e5b8878bf": "スマートフォン",
-            "74618577c7": "モバイル",
-            "682293cadf": "左サイドバー上部に Coding Agent 2 Mobile ボタンを表示します。",
-            "1de96ec8a6": "Coding Agent 2 Mobile ボタンを表示",
             "4c920ab2d1": "スケジュール",
             "58f4e22fa2": "オートメーション",
             "b186f3cefb": "自動化",
@@ -9539,7 +9478,6 @@
               "ebeedb2f6a": "クイックターミナル",
               "6f183fa1b9": "フローティングターミナル",
               "a08e482f6d": "フローティングワークスペース",
-              "b96b5ee6cf": "フローティングワークスペースを有効にし、新規タブの開始場所を選択し、トグルボタンが表示される場所を選択します。",
               "b2b60e7163": "フローティングワークスペース"
             }
           }
@@ -9951,16 +9889,8 @@
               "f213400800": "モバイル",
               "671eb4173c": "スマートフォンからターミナルと Agent を操作します。",
               "ffd52a96e4": "モバイル",
-              "1de96ec8a6": "Coding Agent 2 Mobile ボタンを表示",
-              "682293cadf": "左サイドバー上部に Coding Agent 2 Mobile ボタンを表示します。",
               "e4f4daea0e": "リレー",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "モバイル",
-              "5e5b8878bf": "スマートフォン",
-              "5bff6a2ef0": "サイドバー",
-              "6cf5f54ce1": "ボタン",
-              "648eeada79": "非表示",
-              "ac79fe4a04": "表示"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -11125,7 +11055,6 @@
                   "installed": "インストール済み",
                   "notInstalled": "未インストール",
                   "recheck": "再確認",
-                  "description": "Agent が Linear の課題を読み書きできるようにします。接続、スキル、表示設定を含むガイドは、設定 → タスクソースにあります。",
                   "copyFailed": "コマンドのコピーに失敗しました。",
                   "copyCommand": "コマンドをコピー",
                   "installedDescription": "Agent スキルがインストールされました。更新するには以下を実行してください：",
@@ -12408,15 +12337,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "スキルをインストールするには、サーバーの Coding Agent 2 を更新してください。",
           "connectHost": "この SSH ホストに接続すると、スキルをインストールできます。"
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "インストールコマンドのコピーに失敗しました。",
-          "f08d45293d": "コマンドをコピー",
-          "b99f375eb2": "ターミナルでこのコマンドを実行して、Agent のオーケストレーションスキルをインストールします。",
-          "35550f3b3b": "完了",
-          "2914abcfa2": "オーケストレーションスキルをインストールする",
-          "1bdce1911e": "オーケストレーションスキルのインストールコマンドのコピー",
-          "239bf9132b": "インストールコマンドをコピーしました。"
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "{{value0}} にインストール",
@@ -14690,11 +14610,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "閉じる・Esc",
-          "9883b58693": "Coding Agent 2 モバイルを閉じる",
-          "fb5f28330e": "サイドバーに表示",
-          "c669abcf8f": "サイドバーから非表示",
-          "e1c7b4a92d": "[設定] > [モバイル] で設定します。",
-          "f3d8e5b71a": "ショートカットを左サイドバーに再度追加します。"
+          "9883b58693": "Coding Agent 2 モバイルを閉じる"
         },
         "PhoneCarousel": {
           "96d651cb87": "ターミナルセッション",
@@ -14839,9 +14755,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "フローティングワークスペースを非表示にする",
-            "763f5fa2c1": "フローティングボタンに移動",
-            "0ee79e0674": "ステータスバーに移動"
+            "8e7d775287": "フローティングワークスペースを非表示にする"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Agent がコンテキストを引き継ぎ、Coding Agent 2 を通じて作業を調整できるようにします。",
@@ -14863,12 +14777,6 @@
             "8cf80db43b": "Agent が Coding Agent 2 を通じて調整できるように、Coding Agent 2 CLI と Agent スキルをセットアップします。",
             "2a3c5ddf5e": "オーケストレーションを有効にする",
             "8b14ba6c17": "新規ブラウザタブ"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "フローティングワークスペースを表示",
-            "4cb418b991": "フローティングワークスペースを表示、新規アクティビティ",
-            "5785dd9148": "フローティングワークスペースを最小限に抑える",
-            "bfe7809a70": "{{value0}} フローティングワークスペース ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "最小化",
@@ -15257,7 +15165,6 @@
             "4795ac2d4a": "尋ねてみてください:",
             "53905bd076": "開発プレビュー: スキル設定ターミナルを開きます。",
             "1da82af45b": "Coding Agent 2 CLI には注意が必要です",
-            "ce13a742d0": "orcaをPATHに登録しました。",
             "d1a86c7eb5": "[設定] を開いて CLI セットアップを完了します。",
             "cliInstallFailed": "Coding Agent 2 CLI をインストールできませんでした。",
             "splitPrPrompt": "「この PR を 2 つの <term>ワークツリー</term>に分割し、それぞれに PR を作成して。」"
@@ -20427,7 +20334,6 @@
       "continueButton": "CLI なしで続行",
       "title": "Coding Agent 2 CLI を利用できません",
       "message": "Coding Agent 2 はローカルコマンドの通信経路を開始できませんでした。",
-      "detail": "Coding Agent 2 は引き続き使用できますが、このセッションでは coding-agent status や coding-agent terminal などのコマンドとオーケストレーションを利用できません。\n\n{{guidance}}\n\n原因: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 はランタイムファイルを書き込めませんでした。Coding Agent 2 のデータフォルダーの権限を確認してから、再起動してください。",
         "storageUnavailable": "ディスクの空き容量がないか、読み取り専用になっている可能性があります。空き容量を確保してから、Coding Agent 2 を再起動してください。",

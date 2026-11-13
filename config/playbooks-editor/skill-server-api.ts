@@ -14,6 +14,7 @@ async function call<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
     headers: { 'Content-Type': 'application/json', 'X-Coding-Opus-Token': token }
   })
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the skill's local editor server answers with this JSON shape.
   const body = (await response.json()) as T & { error?: string }
   if (!response.ok) {
     throw new Error(body.error ?? `HTTP ${response.status}`)
@@ -48,6 +49,7 @@ export function installSkillServerApi(): void {
         body: JSON.stringify({ provider, names })
       }).catch((error: unknown): CodingOpusAccountsResult => ({ ok: false, error: String(error) }))
   }
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the standalone page installs the desktop api shape the shared editor reads.
   ;(window as unknown as { api: { codingOpus: typeof codingOpus } }).api = { codingOpus }
   // Tell the server the page is still open; it shuts down a while after the last ping.
   window.setInterval(() => void call('/api/ping').catch(() => undefined), 20_000)

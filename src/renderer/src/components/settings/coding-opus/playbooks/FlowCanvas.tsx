@@ -233,6 +233,7 @@ export function ghostParts(
   s: PlaybooksState,
   t: TFunction
 ): [ReactNode, ReactNode] {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: ids come from edges of the same flow, so the node exists.
   const parent = graph.byId[n.parent] as RoleNode
   const reached = graph.sim.reached.has(parent.id)
   const r = parent.resolved
@@ -547,6 +548,7 @@ export function FlowCanvas({
         aria-label={t('playbooks.canvasLabel')}
         onPointerDown={(event) => {
           event.currentTarget.setPointerCapture(event.pointerId)
+          // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the listener sits on an element, so the event target is a DOM node.
           const target = (event.target as Element).closest('[data-node]')
           const id = target?.getAttribute('data-node')
           const node = id ? graph.byId[id] : null

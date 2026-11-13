@@ -91,6 +91,7 @@ function listedModels(doc: Record<string, unknown>): Record<string, string[]> {
 }
 
 export function planModelUpdates(text: string, catalog: CodingOpusModelCatalog): ModelUpdatePlan {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
   const doc = parse(text) as unknown
   if (!isMap(doc)) {
     return { upgrades: [], additions: [] }
@@ -144,6 +145,7 @@ export function applyModelUpdates(
   upgrades: readonly ModelUpgrade[],
   additions: readonly ModelAddition[]
 ): string {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
   const doc = parse(text) as Record<string, unknown>
   const swap = new Map(upgrades.map((upgrade) => [upgrade.from, upgrade.to]))
   const replace = (value: unknown): unknown => {
@@ -165,13 +167,15 @@ export function applyModelUpdates(
   const models: Record<string, unknown> = isMap(next.models) ? { ...next.models } : {}
   for (const upgrade of upgrades) {
     const list = Array.isArray(models[upgrade.provider])
-      ? (models[upgrade.provider] as unknown[])
+      ? // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: guarded by the Array.isArray check on this ternary.
+        (models[upgrade.provider] as unknown[])
       : []
     if (!list.some((entry) => modelId(entry) === upgrade.to)) {
       models[upgrade.provider] = [...list, upgrade.to]
     }
   }
   for (const { provider, model } of additions) {
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with Array.isArray on the same expression.
     const list = Array.isArray(models[provider]) ? (models[provider] as unknown[]) : []
     models[provider] = [...list, model]
   }

@@ -176,6 +176,7 @@ export function Dropdown({
       return
     }
     setActiveIndex(findEnabledIndex(0, 1))
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- visibleOptionsKey stands in for visibleOptions and findEnabledIndex, which change identity every render.
   }, [open, normalizedSearch, showCustomOption, value, visibleOptionsKey])
 
   useEffect(() => {
@@ -200,6 +201,7 @@ export function Dropdown({
       return
     }
     const closeOnOutsidePointer = (event: PointerEvent) => {
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the listener sits on an element, so the event target is a DOM node.
       const target = event.target as Node
       if (!triggerRef.current?.contains(target) && !menuRef.current?.contains(target)) {
         closeMenu()

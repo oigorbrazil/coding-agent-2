@@ -1008,7 +1008,6 @@
     "showStatusBar": "Durum Çubuğunu Göster",
     "showTasksButton": "Görevler Düğmesini Göster",
     "showAutomationsButton": "Otomasyonlar Düğmesini Göster",
-    "showMobileButton": "Coding Agent 2 Mobil Düğmesini Göster",
     "showTitlebarAppName": "Başlık Çubuğunda Uygulama Adını Göster",
     "view": "Görünüm",
     "reload": "Yenile",
@@ -2356,24 +2355,15 @@
         "commentTooLarge": "Yorum, güvenli şekilde gönderilemeyecek kadar büyük."
       },
       "Landing": {
-        "f9eaa9e12d": "Proje ekle",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 logosu",
-        "c1cf168479": "Gizle",
         "00cee697c1": "GitHub hesabınızı bağlamak için bir terminalde \"gh auth login\" komutunu çalıştırın.",
         "9f96d018b7": "GitHub CLI kimlik doğrulaması yapılmamış",
         "73e1ad4282": "Coding Agent 2, pull request'leri, sorunları ve kontrolleri göstermek için GitHub CLI'yi (gh) kullanır.",
         "5beaef5f9e": "GitHub CLI kurulu değil",
         "b673e7cf1b": "Git, Git projeleri, kaynak kontrolü ve çalışma alanı yönetimi için gereklidir.",
         "e5b7296d9d": "Git kurulu değil",
-        "cd21242762": "Başlamak için bir proje ekleyin.",
-        "9c00bd4adf": "Başlamak için kenar çubuğundan bir çalışma alanı seçin.",
-        "0d0ace8861": "GitHub'da yıldızla",
-        "ec43b38ba7": "GitHub'da yıldızlandı",
-        "157bb5ecbb": "GitHub'ı aç",
         "preflightDismiss": "Kapat",
-        "moveUpWorkspace": "Önceki çalışma alanını seç",
-        "moveDownWorkspace": "Sonraki çalışma alanını seç",
         "installGit": "Git'i yükle",
         "installGitHubCli": "GitHub CLI'yi yükle",
         "learnMore": "Daha fazla bilgi"
@@ -4569,7 +4559,6 @@
             "remoteServerLabel": "Uzak sunucu",
             "antigravityUsage": "Antigravity Kullanımı",
             "grokUsageMenu": "Grok Kullanımı",
-            "floatingTerminalNewActivity": "{{label}}, yeni etkinlik",
             "4fba7dc1e7": "{{value0}} bakiye",
             "4025a6f62f": "Sınırsız",
             "a95969101f": "{{value0}} kredi",
@@ -6227,8 +6216,6 @@
         "SidebarNav": {
           "80611a8b10": "Ara",
           "0c3395fd32": "Worktree'lerde ve tarayıcı sekmelerinde ara",
-          "c86d83b5c3": "Yeni",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "Otomasyonlar",
           "e7ad3c540d": "Jira görevlerini aç",
           "c39ab10000": "Linear görevlerini aç",
@@ -7578,19 +7565,10 @@
           "storedDefaultUndetected": "Varsayılanınız olarak kaydedildi ancak şu anda algılanamıyor",
           "noAgentsDetected": "Ajan algılanmadı. Bir tanesi yüklüyse, yoklama zaman aşımına uğramış olabilir."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "Sonraki simge",
-          "415fa76f64": "Seçili uygulama simgesi",
-          "5f5142a62a": "Önceki simge"
-        },
         "AppearancePane": {
           "3057983501": "Atanmamış",
           "2edf606c46": "Kapatınca Tepsiye Küçült",
           "b707773a0d": "Etkinleştirildiğinde, pencereyi kapatmak Coding Agent 2'dan çıkmak yerine onu sistem tepsisinde çalışır durumda tutar.",
-          "0cd9b8228f": "Dock ve pencere değiştiricide gösterilen uygulama simgesini seçin.",
-          "ca1590d42f": "Uygulama Simgesi",
-          "61d842eca0": "Coding Agent 2 Mobile kısayolunu kenar çubuğunda gösterin. Araç kutusundan erişilebilir olmaya devam eder.",
-          "9da1020447": "Coding Agent 2 Mobile Düğmesini Göster",
           "511f270ebb": "Otomasyonlar Düğmesini Göster",
           "cf81907069": "Görevler Düğmesini Göster",
           "dc29f3cc0d": "Kenar Çubuğu",
@@ -7760,7 +7738,6 @@
           "5dae812f50": "Yenile",
           "52e640f3a0": "CLI durumunu yenile",
           "38edbb5721": "Kabuk komutu",
-          "outsideOrcaDescription": "Coding Agent 2 terminallerinde `coding` zaten kullanılabilir. `coding` komutunu Coding Agent 2 dışındaki terminallerde kullanmak için bunu açın.",
           "c5c0f2641d": "Coding Agent 2 CLI",
           "d77352f2df": "`{{value0}}` PATH'ten kaldırılamadı.",
           "af5540930c": "`{{value0}}` PATH'ten kaldırıldı.",
@@ -7968,10 +7945,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Durum Çubuğu",
-          "9fb225f2d7": "Yüzen Düğme",
-          "3c900e26e5": "Klavye kısayolu, aç/kapat düğmesinin nerede gösterildiğinden bağımsız olarak çalışır.",
-          "5e5a8da236": "Aç/Kapat Düğmesi Konumu",
           "505001823e": "Yüzen çalışma alanı dizinini seçin",
           "81afb79785": "Yeni yüzen terminal sekmeleri burada başlar. Markdown notları, Coding Agent 2'nın uygulamaya ait yüzen çalışma alanında kaydedilir.",
           "12aa09f10c": "Terminal Dizini",
@@ -8353,10 +8326,7 @@
           "installOutro": " üzerinden yükleyin, ardından aşağıdan eşleştirin.",
           "androidApkLabel": "Android APK",
           "e7a3ae8c4e": "Mobil",
-          "174f4a3c6d": "Terminalleri ve ajanları telefonunuzdan kontrol edin.",
-          "1de96ec8a6": "Coding Agent 2 Mobile Düğmesini Göster",
-          "682293cadf": "Sol kenar çubuğunun üst kısmında Coding Agent 2 Mobile düğmesini gösterin.",
-          "d4f2b65f30": "Kenar çubuğunda Coding Agent 2 Mobile kısayolunu gösterin."
+          "174f4a3c6d": "Terminalleri ve ajanları telefonunuzdan kontrol edin."
         },
         "NotificationsPane": {
           "906b4afebf": "Test Bildirimi Gönder",
@@ -8426,15 +8396,9 @@
           "f79084947b": "Yeni uygulama"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Devirler, worktree teslimleri ve sıralı ya da paralel alt ajanlar için orkestrasyon kullanmasını bir koordinatör ajandan isteyin.",
-          "ae79504732": "Nasıl kullanılır",
-          "9bedd2a6e5": "Ajanların Coding Agent 2 üzerinden bağlamı devretmesini ve işi koordine etmesini sağlar.",
-          "07641b9768": "Orkestrasyon becerisi",
-          "2aacdb0517": "Devirler, worktree teslimleri ve alt ajan işleri arasında kodlama ajanlarını koordine edin.",
           "191ac34567": "Ajan Orkestrasyonu",
           "nestedWorkerDepthTitle": "İç içe çalışan derinliği",
           "nestedWorkerDepthDescription": "Gönderilen çalışanların kendi çalışanlarını kaç nesil boyunca oluşturabileceği. 1 değeri ajan ağacını düz tutar: bir koordinatör çalışanlar gönderir ve bu çalışanlar kendileri çalışan göndermez.",
-          "7bc082f4de": "Kurulum komutunu kopyala",
           "workerAutoReleaseTitle": "Tamamlanan çalışanları otomatik kapat",
           "workerAutoReleaseDescription": "Açık tut seçilmediği sürece çalışanın terminalini veya sohbetini tamamlandıktan 2 dakika sonra kapatır. Yeniden çalışmaya başlarsa tamamladığında 2 dakika yeniden başlar.",
           "workerAutoReleaseKeywordClose": "kapat",
@@ -8443,17 +8407,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Ajanların Coding Agent 2 üzerinden bağlamı devretmesini ve işi koordine etmesini sağlar.",
           "2777ff0fdc": "Orkestrasyon becerisi"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Ajan kapsamı",
-          "ffe13e36fb": "Eksik",
-          "1e8f8d8fae": "Hazır",
-          "checking": "Yüklü ajanlar ve beceri yolları kontrol ediliyor…",
-          "noAgents": "PATH üzerinde hiçbir ajan CLI'si algılanmadı. Ayarlar → Ajanlar bölümünden ajanları yükleyin, ardından yeniden kontrol edin.",
-          "fullCoverage_one": "Algılanan 1 ajanda bu beceri var.",
-          "fullCoverage_other": "Algılanan {{value0}} ajanın tamamında bu beceri var.",
-          "noCoverage": "Yukarıdaki beceriyi yükleyin, ardından yeniden kontrol edin.",
-          "partialCoverage": "Algılanan {{value1}} ajandan {{value0}} tanesinde bu beceri var."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Tanılama dosyası oluştur",
@@ -8926,7 +8879,6 @@
           "43b68e10f0": "Kaydedilmemiş yapay zekâ ayarlarınız var. Çıkarsanız bunlar atılır.",
           "17bdee4ff1": "Kaydedilmemiş yapay zekâ ayarları atılsın mı?",
           "084d8fac5b": "Gizlilik ve Güvenlik",
-          "23931df7e8": "Uzak Sunucular",
           "8bd117d669": "Arayüz",
           "e1578cd4bc": "İş Akışları",
           "9abb9be3bc": "Kurulum",
@@ -9138,7 +9090,6 @@
           "reconnectOnLaunch": "Açılışta yeniden bağlan",
           "reconnectOnLaunchHelp": "Kapalıyken Coding Agent 2, siz bağlanana kadar bu sunucuya ve onun üzerinden erişilen Coding Agent 2 sunucularına açılışta bağlanmaz.",
           "allowRemoteCliControl": "Bu sunucunun kendi çalışma alanlarındaki Coding Agent 2 tarayıcı sekmelerini kontrol etmesine izin ver",
-          "allowRemoteCliControlHelp": "Yeni sunucular için varsayılan olarak açıktır. Bu sunucudaki ajanlar ve orca komutları, yalnızca bu sunucunun çalışma alanlarında ve yalnızca sunucu bağlıyken bu masaüstündeki Coding Agent 2 tarayıcı sekmelerini açabilir, okuyabilir ve kullanabilir. Kontrol ettiği sekmeler adını gösterir. Bu sunucuda eski bir Coding Agent 2 sürümü tarafından başlatılan terminallerin orca orkestrasyon komutlarını çalıştırması için de bu ayarın açık olması gerekir. Dosyalarınızı, panonuzu veya çerezlerinizi okuyamaz.",
           "editTitle": "SSH sunucusunu düzenle",
           "addTitle": "SSH sunucusu ekle",
           "editDescription": "Bu makine için bağlantı bilgilerini güncelleyin. Değişiklikler bir sonraki bağlantıda uygulanır.",
@@ -9672,24 +9623,12 @@
           "search": {
             "9a115966d3": "Kapatınca Sistem Tepsisine Küçült",
             "4d5b9427b5": "Etkinleştirildiğinde, pencereyi kapatmak Coding Agent 2'nın çıkmak yerine sistem tepsisinde çalışmaya devam etmesini sağlar.",
-            "468448bba4": "suluboya",
-            "f586abfa35": "mavi",
-            "651f35b2c6": "değiştirici",
             "e5bc35d59e": "pencere",
-            "d18b54ca90": "dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "uygulama simgesi",
-            "e80c2af428": "Dock ve pencere değiştiricide gösterilen uygulama simgesini seçin.",
-            "2b313598c6": "Uygulama Simgesi",
-            "839fb1e3ed": "araç kutusu",
             "ac79fe4a04": "göster",
             "648eeada79": "gizle",
             "6cf5f54ce1": "düğme",
             "5bff6a2ef0": "kenar çubuğu",
-            "5e5b8878bf": "telefon",
-            "74618577c7": "mobil",
-            "682293cadf": "Sol kenar çubuğunun üstünde Coding Agent 2 Mobile düğmesini gösterin.",
-            "1de96ec8a6": "Coding Agent 2 Mobile Düğmesini Göster",
             "4c920ab2d1": "zamanlama",
             "58f4e22fa2": "otomasyon",
             "b186f3cefb": "otomasyonlar",
@@ -10182,7 +10121,6 @@
               "ebeedb2f6a": "hızlı terminal",
               "6f183fa1b9": "yüzen terminal",
               "a08e482f6d": "yüzen çalışma alanı",
-              "b96b5ee6cf": "Yüzen çalışma alanını etkinleştirin, yeni sekmelerin nerede başlayacağını ve geçiş düğmesinin nerede görüneceğini seçin.",
               "b2b60e7163": "Yüzen Çalışma Alanı"
             }
           }
@@ -10594,16 +10532,8 @@
               "f213400800": "mobil",
               "671eb4173c": "Terminalleri ve ajanları telefonunuzdan kontrol edin.",
               "ffd52a96e4": "Mobil",
-              "1de96ec8a6": "Coding Agent 2 Mobil Düğmesini Göster",
-              "682293cadf": "Sol kenar çubuğunun üstünde Coding Agent 2 Mobil düğmesini gösterin.",
               "e4f4daea0e": "aktarım",
-              "5d5af8e041": "iphone",
-              "74618577c7": "mobil",
-              "5e5b8878bf": "telefon",
-              "5bff6a2ef0": "kenar çubuğu",
-              "6cf5f54ce1": "düğme",
-              "648eeada79": "gizle",
-              "ac79fe4a04": "göster"
+              "5d5af8e041": "iphone"
             }
           }
         },
@@ -11726,7 +11656,6 @@
                   "installed": "Yüklü",
                   "notInstalled": "Yüklü değil",
                   "recheck": "Yeniden kontrol et",
-                  "description": "Ajanların Linear görevlerini okumasına ve düzenlemesine izin verin. Tam yönlendirmeli kurulum (bağlantı + beceri + görünürlük) Ayarlar → Görev Kaynakları altındadır.",
                   "copyFailed": "Komut kopyalanamadı.",
                   "copyCommand": "Komutu kopyala",
                   "installedDescription": "Ajan becerisi yüklendi. Güncellemek için şunu çalıştırın:",
@@ -12975,15 +12904,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Becerilerini yüklemek için sunucudaki Coding Agent 2'yı güncelleyin.",
           "connectHost": "Becerilerini yüklemek için bu SSH sunucusuna bağlanın."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "Kurulum komutu kopyalanamadı.",
-          "f08d45293d": "Komutu kopyala",
-          "b99f375eb2": "Ajanlarınız için orkestrasyon becerisini yüklemek üzere bu komutu bir terminalde çalıştırın.",
-          "35550f3b3b": "Tamam",
-          "2914abcfa2": "Orkestrasyon becerisini yükle",
-          "1bdce1911e": "Orkestrasyon becerisinin kurulum komutunu kopyala",
-          "239bf9132b": "Kurulum komutu kopyalandı."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "{{value0}} için yükle",
@@ -15337,11 +15257,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Kapat · Esc",
-          "9883b58693": "Coding Agent 2 Mobile'ı kapat",
-          "fb5f28330e": "Kenar çubuğunda göster",
-          "c669abcf8f": "Kenar çubuğundan gizle",
-          "e1c7b4a92d": "Ayarlar > Mobil bölümünden yapılandırın.",
-          "f3d8e5b71a": "Kısayolu kenar çubuğuna geri ekler."
+          "9883b58693": "Coding Agent 2 Mobile'ı kapat"
         },
         "PhoneCarousel": {
           "96d651cb87": "Terminal oturumu",
@@ -15486,9 +15402,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Yüzen Çalışma Alanını Gizle",
-            "763f5fa2c1": "Yüzen Düğmeye Taşı",
-            "0ee79e0674": "Durum Çubuğuna Taşı"
+            "8e7d775287": "Yüzen Çalışma Alanını Gizle"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Ajanların Coding Agent 2 üzerinden bağlam devretmesini ve işi koordine etmesini sağlar.",
@@ -15510,12 +15424,6 @@
             "8cf80db43b": "Ajanların Coding Agent 2 üzerinden koordinasyon sağlayabilmesi için Coding Agent 2 CLI'yi ve ajan becerisini kurun.",
             "2a3c5ddf5e": "Orkestrasyonu etkinleştir",
             "8b14ba6c17": "Yeni Tarayıcı Sekmesi"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Yüzen çalışma alanını göster",
-            "4cb418b991": "Yüzen çalışma alanını göster, yeni etkinlik",
-            "5785dd9148": "Yüzen çalışma alanını küçült",
-            "bfe7809a70": "Yüzen çalışma alanını {{value0}} ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Küçült",
@@ -15904,7 +15812,6 @@
             "4795ac2d4a": "Şunu sormayı deneyin:",
             "53905bd076": "Geliştirme önizlemesi: beceri kurulum terminali açılıyor.",
             "1da82af45b": "Coding Agent 2 CLI dikkat gerektiriyor",
-            "ce13a742d0": "`coding` PATH'e kaydedildi.",
             "d1a86c7eb5": "CLI kurulumunu tamamlamak için Ayarlar'ı açın.",
             "cliInstallFailed": "Coding Agent 2 CLI kurulamadı.",
             "splitPrPrompt": "“Bu PR'ı iki <term>worktree</term>'ye böl ve her biri için bir PR oluştur.”"
@@ -20890,7 +20797,6 @@
       "continueButton": "CLI olmadan devam et",
       "title": "Coding Agent 2 CLI kullanılamıyor",
       "message": "Coding Agent 2, yerel komut taşımasını başlatamadı.",
-      "detail": "Coding Agent 2 çalışmaya devam edecek, ancak coding-agent status, coding-agent terminal ve orchestration gibi komutlar bu oturum için kullanılamıyor.\n\n{{guidance}}\n\nNeden: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2, çalışma zamanı dosyasına yazamadı. Coding Agent 2'nın veri klasöründeki izinleri kontrol edin, ardından yeniden başlatın.",
         "storageUnavailable": "Diskiniz dolu veya salt okunur olabilir. Yer açın, ardından Coding Agent 2'yı yeniden başlatın.",

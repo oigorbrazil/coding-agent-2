@@ -21,6 +21,7 @@ export function Problems({ wf, node }: { wf: PlaybookWorkflow; node?: string }) 
     <div className={styles.problems} role="alert">
       {problems.map((p) => (
         <button key={`${p.node}:${p.code}`} type="button" onClick={() => select(p.node)}>
+          {/* oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines. */}
           {t(`playbooks.problem.${p.code}` as MessageKey)}
         </button>
       ))}
@@ -64,6 +65,7 @@ export function DocNodePanel({
         <Problems wf={wf} node={node.id} />
         <PhaseEditor
           p={node.phase}
+          // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: narrowed by the node type checked on this branch.
           node={shown?.type === 'role' ? (shown as RoleNode) : null}
           allowIf={fromKind('no') || fromKind('fail')}
         />
@@ -162,6 +164,7 @@ export function EdgePanel({
   return (
     <>
       <PanelHead kind={t('playbooks.kindConnection')} title={`${name(from)} → ${name(to)}`} />
+      {/* oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: data-from/data-port are written by this canvas from node ids and DocPort values. */}
       <Hint>{t(PORT_KEYS[port as DocPort] ?? 'playbooks.port.out')}</Hint>
       <DeleteButton label={t('playbooks.deleteConnection')} onDelete={onDelete} />
     </>
@@ -187,10 +190,12 @@ export function PlaybookManager({ wf }: { wf: PlaybookWorkflow }) {
           <TextField
             multiline={key !== 'name' && key !== 'next'}
             allowEmpty={optional}
+            // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with typeof on the same field.
             value={typeof wf.pb[key] === 'string' ? (wf.pb[key] as string) : ''}
             ariaLabel={t(label)}
             onCommit={(value) => {
               if (value) {
+                // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the setter writes the field the caller picked by key, with that field's value type.
                 wf.pb[key] = value as never
               } else {
                 delete wf.pb[key]

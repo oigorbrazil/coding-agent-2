@@ -2,7 +2,6 @@
 import { Plus, RefreshCw } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { getCachedCodexUsage } from '@/lib/coding-opus-playbooks/host'
 import { type MessageKey, useT } from '@/lib/coding-opus-playbooks/i18n'
 import {
   BUDGETS,
@@ -39,12 +38,14 @@ import {
   workflowNow
 } from '@/lib/coding-opus-playbooks/state'
 import {
+  getCachedCodexUsage,
   getClaudeUsage,
+  isLightTheme,
   orchestratorSavePlaybooks,
   pushToast,
-  type SkillPlaybooks
+  type SkillPlaybooks,
+  useAppliedTheme
 } from '@/lib/coding-opus-playbooks/host'
-import { isLightTheme, useAppliedTheme } from '@/lib/coding-opus-playbooks/host'
 import { PlaybooksContext } from './context'
 import { Select } from './fields'
 import { FlowCanvas } from './FlowCanvas'
@@ -254,6 +255,7 @@ export function PlaybooksEditor({
     }
     if (selectedId.startsWith('edge:')) {
       const [from, port, to] = selectedId.slice(5).split('|')
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: data-from/data-port are written by this canvas from node ids and DocPort values.
       removeEdge(wf.doc, { from, port: port as DocPort, to })
     } else {
       const node = wf.doc.nodes.find((n) => n.id === selectedId)
@@ -627,12 +629,14 @@ export function PlaybooksEditor({
                 className={styles.scenarioSelect}
                 value={s.task}
                 ariaLabel={t('playbooks.scenarioTask')}
+                // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: Object.keys of a literal record returns exactly its own keys.
                 options={(Object.keys(TASKS) as TaskId[]).map((task) => ({
                   value: task,
                   label: taskLabel(t, task)
                 }))}
                 onChange={(value) =>
                   scenario(() => {
+                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
                     s.task = value as TaskId
                   })
                 }
@@ -648,6 +652,7 @@ export function PlaybooksEditor({
                 options={CHECKS.map((check) => ({ value: check, label: t(CHECK_KEYS[check]) }))}
                 onChange={(value) =>
                   scenario(() => {
+                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
                     s.checks = value as PlaybooksState['checks']
                   })
                 }
@@ -666,6 +671,7 @@ export function PlaybooksEditor({
                 }))}
                 onChange={(value) =>
                   scenario(() => {
+                    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the Select only offers options built from this union.
                     s.budget = value as PlaybooksState['budget']
                   })
                 }

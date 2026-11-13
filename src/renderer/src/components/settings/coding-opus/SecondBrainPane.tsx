@@ -11,6 +11,7 @@ import { Input } from '../../ui/input'
 import { Textarea } from '../../ui/textarea'
 import { useTranslate } from '@/i18n/use-translate'
 import { cn } from '@/lib/utils'
+import { runWithBusyFlag } from '@/lib/busy-flag-task'
 
 type NoteRow = {
   path: string
@@ -79,9 +80,8 @@ function RecordNoteForm({
     if (!api || !title.trim()) {
       return
     }
-    setBusy(true)
     setError(null)
-    try {
+    await runWithBusyFlag(setBusy, async () => {
       const result = await api.secondBrainRecord({
         title,
         folder,
@@ -100,9 +100,7 @@ function RecordNoteForm({
       } else {
         setError(result.error)
       }
-    } finally {
-      setBusy(false)
-    }
+    })
   }
 
   return (
@@ -205,8 +203,7 @@ export function SecondBrainPane(): React.JSX.Element {
       setHits(null)
       return
     }
-    setBusy(true)
-    try {
+    await runWithBusyFlag(setBusy, async () => {
       const result = await api.secondBrainFind(query, route)
       if (result.ok) {
         setHits(result.value)
@@ -214,9 +211,7 @@ export function SecondBrainPane(): React.JSX.Element {
       } else {
         setError(result.error)
       }
-    } finally {
-      setBusy(false)
-    }
+    })
   }
 
   const open = async (path: string): Promise<void> => {
@@ -229,8 +224,7 @@ export function SecondBrainPane(): React.JSX.Element {
   }
 
   const install = async (): Promise<void> => {
-    setBusy(true)
-    try {
+    await runWithBusyFlag(setBusy, async () => {
       const result = await api.secondBrainInstall()
       if (result.ok) {
         setInfo(result.value)
@@ -238,9 +232,7 @@ export function SecondBrainPane(): React.JSX.Element {
       } else {
         setError(result.error)
       }
-    } finally {
-      setBusy(false)
-    }
+    })
   }
 
   const where = overview?.where

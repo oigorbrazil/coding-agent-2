@@ -1,4 +1,4 @@
-import { execFile } from 'node:child_process'
+import { runProcess } from '@coding-agent/process-host'
 import { readdir, readFile, stat } from 'node:fs/promises'
 import { join, relative, resolve, sep } from 'node:path'
 import { parse } from 'yaml'
@@ -43,31 +43,19 @@ function pythonCandidates(): PythonCommand[] {
   return list
 }
 
-function run(
+// A missing interpreter rejects (ENOENT), so the caller can try the next one.
+async function run(
   command: PythonCommand,
   args: string[]
 ): Promise<{ code: number; stdout: string; stderr: string }> {
-  return new Promise((resolvePromise, reject) => {
-    execFile(
-      command.file,
-      [...command.prefix, ...args],
-      {
-        timeout: BRAIN_TIMEOUT_MS,
-        windowsHide: true,
-        maxBuffer: 8 * 1024 * 1024,
-        env: { ...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8' }
-      },
-      (error, stdout, stderr) => {
-        const code = (error as NodeJS.ErrnoException | null)?.code
-        if (code === 'ENOENT') {
-          reject(error)
-          return
-        }
-        const exitCode = typeof error?.code === 'number' ? error.code : error ? 1 : 0
-        resolvePromise({ code: exitCode, stdout: String(stdout), stderr: String(stderr) })
-      }
-    )
+  const result = await runProcess({
+    program: command.file,
+    args: [...command.prefix, ...args],
+    timeoutMs: BRAIN_TIMEOUT_MS,
+    maxOutputBytes: 8 * 1024 * 1024,
+    env: { ...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8' }
   })
+  return { code: result.code ?? 1, stdout: result.stdout, stderr: result.stderr }
 }
 
 /** Runs the skill's own `scripts/brain.py`, the single owner of the second brain rules. */

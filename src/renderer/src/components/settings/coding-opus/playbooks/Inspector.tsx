@@ -111,8 +111,8 @@ function SetupSection() {
               date: date ?? ''
             })}
           </Hint>
-          {notes.map((note, i) => (
-            <p key={i} className={styles.line}>
+          {notes.map((note) => (
+            <p key={note} className={styles.line}>
               {note}
             </p>
           ))}

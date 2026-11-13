@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react'
 import type { GlobalSettings } from '../../../../../shared/global-settings-types'
-import { UI_LANGUAGE_NATIVE_NAMES, type UiLanguage } from '../../../../../shared/ui-language'
+import { UI_LANGUAGE_NATIVE_NAMES } from '../../../../../shared/ui-language'
 import { UI_LANGUAGE_CHOICES } from '@/i18n/supported-languages'
 import { useTranslate } from '@/i18n/use-translate'
 import { cn } from '@/lib/utils'
@@ -24,7 +24,7 @@ export function LanguagePane({ settings, updateSettings }: LanguagePaneProps): R
             key={choice.value}
             type="button"
             aria-pressed={selected}
-            onClick={() => updateSettings({ uiLanguage: choice.value as UiLanguage })}
+            onClick={() => updateSettings({ uiLanguage: choice.value })}
             className={cn(
               'flex w-full items-center gap-3 px-3 py-2 text-left hover:bg-accent',
               selected && 'bg-accent'

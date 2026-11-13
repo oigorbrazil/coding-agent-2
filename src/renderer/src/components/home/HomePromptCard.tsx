@@ -8,6 +8,7 @@ import { isImeOwnedKeyboardEvent } from '@/lib/ime-composition-keyboard-event'
 import { useAppStore } from '../../store'
 import { useTranslate } from '@/i18n/use-translate'
 import { Textarea } from '../ui/textarea'
+import { runWithBusyFlag } from '@/lib/busy-flag-task'
 
 // The agents the home box offers; the composer behind it still lists every installed one.
 const HOME_AGENT_IDS = ['claude', 'codex', 'gemini', 'opencode', 'copilot', 'cursor']
@@ -30,7 +31,7 @@ export function HomePromptCard({
     []
   )
   const [prompt, setPrompt] = useState('')
-  const [agent, setAgent] = useState<TuiAgent>(agents[0]?.id ?? ('claude' as TuiAgent))
+  const [agent, setAgent] = useState<TuiAgent>(agents[0]?.id ?? 'claude')
   const [repoId, setRepoId] = useState<string | null>(null)
   const [sending, setSending] = useState(false)
   const selectedRepoId = repoId ?? defaultRepoId ?? repos[0]?.id ?? null
@@ -50,8 +51,7 @@ export function HomePromptCard({
         recovery: { note: text, agent },
         telemetrySource: 'unknown'
       })
-    setSending(true)
-    try {
+    await runWithBusyFlag(setSending, async () => {
       // Same path as "fix checks": a new workspace whose agent gets the prompt once it is ready.
       const result = await launchWorkItemDirect({
         item: {
@@ -71,9 +71,7 @@ export function HomePromptCard({
       if (result === true) {
         setPrompt('')
       }
-    } finally {
-      setSending(false)
-    }
+    })
   }
 
   return (
@@ -110,7 +108,12 @@ export function HomePromptCard({
           <select
             className={SELECT_CLASS}
             value={agent}
-            onChange={(event) => setAgent(event.target.value as TuiAgent)}
+            onChange={(event) => {
+              const next = agents.find((entry) => entry.id === event.target.value)
+              if (next) {
+                setAgent(next.id)
+              }
+            }}
           >
             {agents.map((entry) => (
               <option key={entry.id} value={entry.id}>

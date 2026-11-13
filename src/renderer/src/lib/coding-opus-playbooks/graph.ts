@@ -556,6 +556,7 @@ function simulate(
   const queue = ['start']
   const openOf: Record<string, Set<number> | null> = {}
   while (queue.length) {
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the loop only runs while the queue is non-empty.
     const id = queue.shift() as string
     const n = byId[id]
     let open: Set<number> | null = null

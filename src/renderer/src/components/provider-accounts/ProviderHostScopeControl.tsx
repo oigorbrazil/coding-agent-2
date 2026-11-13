@@ -54,9 +54,11 @@ export function ProviderHostScopeControl({
             <ChevronDown className="size-3.5 shrink-0 group-data-[state=open]:rotate-180" />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-2 pt-2">
-          <p className="text-muted-foreground">{scope.description}</p>
-          {openHostsButton}
+        <CollapsibleContent>
+          <div className="space-y-2 pt-2">
+            <p className="text-muted-foreground">{scope.description}</p>
+            {openHostsButton}
+          </div>
         </CollapsibleContent>
       </Collapsible>
     )

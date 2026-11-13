@@ -4,7 +4,7 @@ import type {
   RateLimitState,
   RateLimitWindow
 } from '../../../../shared/rate-limit-types'
-import type { TerminalAgent } from '../../../../shared/agent-status/identity/terminal-agent'
+import { isTuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent-config'
 import { AgentIcon } from '@/lib/agent-catalog'
 import { useResetCountdownClock } from '@/hooks/useResetCountdownClock'
 import { useAppStore } from '../../store'
@@ -105,7 +105,7 @@ function ProviderCard({ entry }: { entry: ProviderRateLimits }): React.JSX.Eleme
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border bg-card p-4">
       <div className="flex items-center gap-2">
-        <AgentIcon agent={entry.provider as TerminalAgent} size={16} />
+        <AgentIcon agent={isTuiAgent(entry.provider) ? entry.provider : null} size={16} />
         <span className="truncate text-sm font-medium text-foreground">
           {PROVIDER_LABELS[entry.provider]}
         </span>

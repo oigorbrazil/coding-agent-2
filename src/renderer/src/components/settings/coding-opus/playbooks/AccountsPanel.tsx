@@ -9,6 +9,7 @@ import { usePlaybooks } from './context'
 import { Hint, PanelHead, Section } from './fields'
 import { ProviderMark } from './ProviderMark'
 import styles from './Playbooks.module.css'
+import { getIntlLocale } from '@/i18n/i18n'
 
 export const ACCOUNT_PROVIDERS: readonly CodingOpusAccountProvider[] = ['codex', 'claude']
 
@@ -29,7 +30,7 @@ function resetText(value: string): string {
   const date = new Date(value)
   return Number.isNaN(date.getTime())
     ? value
-    : date.toLocaleString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })
+    : date.toLocaleString(getIntlLocale(), { weekday: 'short', hour: '2-digit', minute: '2-digit' })
 }
 
 function QuotaLine({ row }: { row: CodingOpusAccountRow }) {

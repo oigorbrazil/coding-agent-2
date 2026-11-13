@@ -39,6 +39,7 @@ import {
 import styles from './Playbooks.module.css'
 
 export const runnerLabel = (t: ReturnType<typeof usePlaybooks>['t'], runner: string) =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
   RUNNERS.includes(runner) ? t(`prefs.orchestrationSkillStrategy.${runner}` as MessageKey) : runner
 
 export function CondEditor({

@@ -4,6 +4,7 @@ import { PlaybooksPage } from '../../src/renderer/src/components/settings/coding
 const STAMP_POLL_MS = 3000
 
 const stampApi = () =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the standalone page installs the desktop api shape the shared editor reads.
   (window as unknown as { api: { codingOpus: { playbooksStamp: () => Promise<number> } } }).api
     .codingOpus
 

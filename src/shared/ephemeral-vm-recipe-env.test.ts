@@ -34,6 +34,7 @@ it('exports matching new and legacy recipe context to the script', async () => {
       expectedRefHead: 'abc',
       orcaVersion: '1.2.3'
     },
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: a test double for spawn; the code under test only uses pid, stdio, kill, unref and close.
     spawnCommand: spawnCommand as never
   })
   expect(spawnCommand.mock.calls[0]).toEqual(

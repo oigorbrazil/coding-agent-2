@@ -239,8 +239,7 @@ export function LinearIntegrationCard(): React.JSX.Element {
         {presentation === 'settings' ? (
           <Button
             variant="link"
-            size="sm"
-            className="h-auto p-0 text-xs"
+            size="inline"
             onClick={() =>
               openSettingsTarget({ pane: 'skills', repoId: null, sectionId: 'linear-agent-skill' })
             }

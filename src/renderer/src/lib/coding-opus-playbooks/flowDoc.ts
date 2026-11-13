@@ -196,7 +196,9 @@ export function compileDoc(doc: FlowDoc): Compiled {
   visited.add(start.id)
   const isPhase = (id: string | undefined) => Boolean(id && byId.get(id)?.kind === 'phase')
   const emit = (node: DocNode, fields: Partial<Phase>): Phase => {
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: role nodes always carry a phase.
     const phase = { ...strip(node.phase as Phase), ...fields } as Phase
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: Object.keys of a literal record returns exactly its own keys.
     ;(Object.keys(fields) as (keyof Phase)[]).forEach((key) => {
       if (phase[key] === undefined) {
         delete phase[key]
@@ -208,7 +210,6 @@ export function compileDoc(doc: FlowDoc): Compiled {
     return phase
   }
   const keptThen = (node: DocNode) =>
-    // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
     node.phase?.then && node.phase.then !== 'done' ? node.phase.then : undefined
 
   let entry = outs(start.id)
@@ -256,6 +257,7 @@ export function compileDoc(doc: FlowDoc): Compiled {
           broken = true
         } else {
           step.push({
+            // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: ids come from edges of the same flow, so the node exists.
             node: byId.get(yes) as DocNode,
             role: 'branch',
             cond: d.cond,
@@ -272,6 +274,7 @@ export function compileDoc(doc: FlowDoc): Compiled {
           broken = true
           break
         }
+        // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: ids come from edges of the same flow, so the node exists.
         const next = byId.get(no) as DocNode
         if (next.kind === 'decision') {
           d = next
@@ -293,6 +296,7 @@ export function compileDoc(doc: FlowDoc): Compiled {
       }
     } else {
       entry.forEach((id) => {
+        // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: ids come from edges of the same flow, so the node exists.
         const node = byId.get(id) as DocNode
         if (node.kind !== 'phase') {
           problem(id, 'mixedStep')
@@ -306,6 +310,7 @@ export function compileDoc(doc: FlowDoc): Compiled {
       break
     }
 
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: role nodes always carry a phase.
     const first = step[0].node.phase as Phase
     const emitted = step.map((item, i) => {
       const fields: Partial<Phase> = { with: i ? first.id : undefined }
@@ -347,14 +352,12 @@ export function compileDoc(doc: FlowDoc): Compiled {
       if (!ending(targets)) {
         return
       }
-      // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
       if (continuing.length || item.node.phase?.then === 'done') {
         // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
         phase.then = 'done'
       }
     })
     continuing.forEach(({ item, phase, targets }) => {
-      // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
       const then = keptThen(item.node)
       if (then) {
         // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
@@ -432,7 +435,6 @@ export function compileDoc(doc: FlowDoc): Compiled {
         break
       }
       if (nx === gate.id) {
-        // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
         const then = keptThen(qn)
         if (then) {
           // oxlint-disable-next-line unicorn/no-thenable -- `then` is the playbook YAML's next-step field, never awaited.
@@ -440,6 +442,7 @@ export function compileDoc(doc: FlowDoc): Compiled {
         }
         break
       }
+      // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: ids come from edges of the same flow, so the node exists.
       const nxNode = byId.get(nx) as DocNode
       if (nxNode.kind === 'gate' && !visited.has(nx)) {
         visited.add(nx)

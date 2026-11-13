@@ -62,14 +62,17 @@ export const tierLabel = (t: TFunction, tier: string | null | undefined) =>
   tier ? (TIER_KEYS[tier] ? t(TIER_KEYS[tier]) : tier) : ''
 
 export const windowLabel = (t: TFunction, w: QuotaWindow) =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
   t(`playbooks.window.${w.label}` as MessageKey)
 
 export const cycleLabel = (t: TFunction, w: QuotaWindow) =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
   w.cycle ? t(`playbooks.cycle.${w.cycle}` as MessageKey) : windowLabel(t, w)
 
 export const gateWindowLabel = (t: TFunction, window: string) =>
   ['short', 'week', 'opus'].includes(window)
-    ? t(`playbooks.gateWindow.${window}` as MessageKey)
+    ? // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
+      t(`playbooks.gateWindow.${window}` as MessageKey)
     : window
 
 export const hoursText = (t: TFunction, hours: number) =>
@@ -104,7 +107,8 @@ function splitToken(token: string): [boolean, string] {
 export function condLabel(s: PlaybooksState, t: TFunction, token: string): string {
   const [negated, bare] = splitToken(token)
   let text: string | null = COND_NAMES[bare]
-    ? t(`playbooks.cond.${COND_NAMES[bare]}` as MessageKey)
+    ? // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
+      t(`playbooks.cond.${COND_NAMES[bare]}` as MessageKey)
     : null
   let m: RegExpMatchArray | null
   if (!text && bare.startsWith('kind:')) {
@@ -133,7 +137,8 @@ export function condLabel(s: PlaybooksState, t: TFunction, token: string): strin
 export function condShort(s: PlaybooksState, t: TFunction, token: string): string {
   const [negated, bare] = splitToken(token)
   let text: string | null = COND_NAMES[bare]
-    ? t(`playbooks.condShort.${COND_NAMES[bare]}` as MessageKey)
+    ? // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the key is built from an id family that messages.*.json defines.
+      t(`playbooks.condShort.${COND_NAMES[bare]}` as MessageKey)
     : null
   let m: RegExpMatchArray | null
   if (!text && bare.startsWith('kind:')) {

@@ -744,23 +744,6 @@
           "remote": "remote",
           "gpu": "gpu"
         }
-      },
-      "appIcon": {
-        "importCustom": "Custom…",
-        "replaceCustom": "Replace custom icon…",
-        "removeCustom": "Remove custom icon",
-        "customKeyword": "custom",
-        "importKeyword": "import",
-        "importErrors": {
-          "unsupportedFormat": "Unsupported image. Pick a PNG or JPEG file.",
-          "unreadable": "Could not read the selected file.",
-          "tooLarge": "Image is larger than {{max}} MB.",
-          "notSquare": "App icons must be square.",
-          "tooSmall": "Image must be at least {{min}}×{{min}} pixels.",
-          "tooBig": "Image must be at most {{max}}×{{max}} pixels.",
-          "undecodable": "Could not decode the selected image.",
-          "saveFailed": "Could not save the custom icon."
-        }
       }
     },
     "browser": {
@@ -1265,7 +1248,6 @@
     "showStatusBar": "Show Status Bar",
     "showTasksButton": "Show Tasks Button",
     "showAutomationsButton": "Show Automations Button",
-    "showMobileButton": "Show Coding Agent 2 Mobile Button",
     "showTitlebarAppName": "Show Titlebar App Name",
     "view": "View",
     "reload": "Reload",
@@ -2621,24 +2603,15 @@
         "commentTooLarge": "Comment is too large to submit safely."
       },
       "Landing": {
-        "f9eaa9e12d": "Add project",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 logo",
-        "c1cf168479": "Hide",
         "00cee697c1": "Run \"gh auth login\" in a terminal to connect your GitHub account.",
         "9f96d018b7": "GitHub CLI is not authenticated",
         "73e1ad4282": "Coding Agent 2 uses the GitHub CLI (gh) to show pull requests, issues, and checks.",
         "5beaef5f9e": "GitHub CLI is not installed",
         "b673e7cf1b": "Git is required for Git projects, source control, and workspace management.",
         "e5b7296d9d": "Git is not installed",
-        "cd21242762": "Add a project to get started.",
-        "9c00bd4adf": "Select a workspace from the sidebar to begin.",
-        "0d0ace8861": "Star on GitHub",
-        "ec43b38ba7": "Starred on GitHub",
-        "157bb5ecbb": "Open GitHub",
         "preflightDismiss": "Dismiss",
-        "moveUpWorkspace": "Move up workspace",
-        "moveDownWorkspace": "Move down workspace",
         "installGit": "Install Git",
         "installGitHubCli": "Install GitHub CLI",
         "learnMore": "Learn more"
@@ -4852,7 +4825,6 @@
             "remoteServerLabel": "Remote server",
             "antigravityUsage": "Antigravity Usage",
             "grokUsageMenu": "Grok Usage",
-            "floatingTerminalNewActivity": "{{label}}, new activity",
             "4fba7dc1e7": "{{value0}} bal",
             "4025a6f62f": "Unlimited",
             "a95969101f": "{{value0}} credits",
@@ -6525,8 +6497,6 @@
         "SidebarNav": {
           "80611a8b10": "Search",
           "0c3395fd32": "Search worktrees and browser tabs",
-          "c86d83b5c3": "New",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "Automations",
           "e7ad3c540d": "Open Jira tasks",
           "c39ab10000": "Open Linear tasks",
@@ -7890,19 +7860,10 @@
           "storedDefaultUndetected": "Saved as your default, but not detected right now",
           "noAgentsDetected": "No agents detected. If one is installed, the probe may have timed out."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "Next icon",
-          "415fa76f64": "Selected app icon",
-          "5f5142a62a": "Previous icon"
-        },
         "AppearancePane": {
           "3057983501": "Unassigned",
           "2edf606c46": "Minimize to Tray on Close",
           "b707773a0d": "When enabled, closing the window keeps Coding Agent 2 running in the system tray instead of quitting.",
-          "0cd9b8228f": "Choose the app icon shown in the Dock and window switcher.",
-          "ca1590d42f": "App Icon",
-          "61d842eca0": "Show the Coding Agent 2 Mobile shortcut in the sidebar. It remains available from Toolbox.",
-          "9da1020447": "Show Coding Agent 2 Mobile Button",
           "511f270ebb": "Show Automations Button",
           "cf81907069": "Show Tasks Button",
           "dc29f3cc0d": "Sidebar",
@@ -8072,7 +8033,7 @@
           "5dae812f50": "Refresh",
           "52e640f3a0": "Refresh CLI status",
           "38edbb5721": "Shell command",
-          "outsideOrcaDescription": "Coding Agent 2 terminals already have `coding`. Turn this on to use `coding` from other terminals outside Coding Agent 2.",
+          "outsideOrcaDescription": "Coding Agent 2 terminals already have `coding`. Turn this on to register the CLI for other terminals.",
           "c5c0f2641d": "Coding Agent 2 CLI",
           "d77352f2df": "Failed to remove `{{value0}}` from PATH.",
           "af5540930c": "Removed `{{value0}}` from PATH.",
@@ -8280,10 +8241,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Status Bar",
-          "9fb225f2d7": "Floating Button",
-          "3c900e26e5": "The keyboard shortcut works regardless of where the toggle is shown.",
-          "5e5a8da236": "Toggle Button Location",
           "505001823e": "Choose floating workspace directory",
           "81afb79785": "New floating terminal tabs start here. Markdown notes are saved in Coding Agent 2's app-owned floating workspace.",
           "12aa09f10c": "Terminal Directory",
@@ -8670,10 +8627,7 @@
           "installOutro": ", then pair below.",
           "androidApkLabel": "Android APK",
           "e7a3ae8c4e": "Mobile",
-          "174f4a3c6d": "Control terminals and agents from your phone.",
-          "1de96ec8a6": "Show Coding Agent 2 Mobile Button",
-          "682293cadf": "Show the Coding Agent 2 Mobile button at the top of the left sidebar.",
-          "d4f2b65f30": "Show the Coding Agent 2 Mobile shortcut in the sidebar."
+          "174f4a3c6d": "Control terminals and agents from your phone."
         },
         "NotificationsPane": {
           "906b4afebf": "Send Test Notification",
@@ -8745,34 +8699,17 @@
           "f79084947b": "New app"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Ask a coordinator agent to use orchestration for handoffs, worktree handovers, and sequential or parallel child agents.",
-          "ae79504732": "How to use it",
-          "9bedd2a6e5": "Enables agents to hand off context and coordinate work through Coding Agent 2.",
-          "07641b9768": "Orchestration skill",
-          "2aacdb0517": "Coordinate coding agents across handoffs, worktree handovers, and child-agent work.",
           "191ac34567": "Agent Orchestration",
           "nestedWorkerDepthTitle": "Nested worker depth",
           "nestedWorkerDepthDescription": "How many generations of dispatched workers may spawn their own workers. 1 keeps the agent tree flat: a coordinator dispatches workers, and those workers do not dispatch.",
           "workerAutoReleaseTitle": "Auto-close finished workers",
           "workerAutoReleaseDescription": "Closes a worker's terminal or chat 2 minutes after it finishes, unless you choose Keep open. If it starts working again, the 2 minutes start over when it finishes.",
           "workerAutoReleaseKeywordClose": "close",
-          "workerAutoReleaseKeywordRelease": "release",
-          "7bc082f4de": "Copy install command"
+          "workerAutoReleaseKeywordRelease": "release"
         },
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Enables agents to hand off context and coordinate work through Coding Agent 2.",
           "2777ff0fdc": "Orchestration skill"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Agent coverage",
-          "ffe13e36fb": "Missing",
-          "1e8f8d8fae": "Ready",
-          "checking": "Checking installed agents and skill paths…",
-          "noAgents": "No agent CLIs detected on PATH. Install agents in Settings → Agents, then re-check.",
-          "fullCoverage_one": "All 1 detected agent has the skill.",
-          "fullCoverage_other": "All {{value0}} detected agents have the skill.",
-          "noCoverage": "Install the skill above, then re-check.",
-          "partialCoverage": "{{value0}} of {{value1}} detected agents have the skill."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Create diagnostic file",
@@ -9245,7 +9182,6 @@
           "43b68e10f0": "You have unsaved AI settings. Leaving will discard them.",
           "17bdee4ff1": "Discard unsaved AI settings?",
           "084d8fac5b": "Privacy & Security",
-          "23931df7e8": "Remote Hosts",
           "8bd117d669": "Interface",
           "e1578cd4bc": "Workflows",
           "9abb9be3bc": "Set Up",
@@ -9458,7 +9394,7 @@
           "reconnectOnLaunch": "Reconnect on launch",
           "reconnectOnLaunchHelp": "When off, Coding Agent 2 leaves this host, and any Coding Agent 2 server reached through it, disconnected at launch until you connect it.",
           "allowRemoteCliControl": "Allow this host to control Coding Agent 2 browser tabs in its workspaces",
-          "allowRemoteCliControlHelp": "On by default for new hosts. Agents and orca commands on this host can open, read and use Coding Agent 2 browser tabs on this desktop, only in this host's workspaces and only while it is connected. Tabs it controls show its name. Terminals started on this host by an older Coding Agent 2 also need this on to run coding orchestration commands. It cannot read your files, clipboard or cookies.",
+          "allowRemoteCliControlHelp": "On by default for new hosts. Agents and coding commands on this host can open, read and use Coding Agent 2 browser tabs on this desktop, only in this host's workspaces and only while it is connected. Tabs it controls show its name. Terminals started on this host by an older Coding Agent 2 also need this on to run coding orchestration commands. It cannot read your files, clipboard or cookies.",
           "editTitle": "Edit SSH host",
           "addTitle": "Add SSH host",
           "editDescription": "Update connection details for this machine. Changes apply on next connect.",
@@ -9995,24 +9931,12 @@
           "search": {
             "9a115966d3": "Minimize to Tray on Close",
             "4d5b9427b5": "When enabled, closing the window keeps Coding Agent 2 running in the system tray instead of quitting.",
-            "468448bba4": "watercolor",
-            "f586abfa35": "blue",
-            "651f35b2c6": "switcher",
             "e5bc35d59e": "window",
-            "d18b54ca90": "dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "app icon",
-            "e80c2af428": "Choose the app icon shown in the Dock and window switcher.",
-            "2b313598c6": "App Icon",
-            "839fb1e3ed": "toolbox",
             "ac79fe4a04": "show",
             "648eeada79": "hide",
             "6cf5f54ce1": "button",
             "5bff6a2ef0": "sidebar",
-            "5e5b8878bf": "phone",
-            "74618577c7": "mobile",
-            "682293cadf": "Show the Coding Agent 2 Mobile button at the top of the left sidebar.",
-            "1de96ec8a6": "Show Coding Agent 2 Mobile Button",
             "4c920ab2d1": "schedule",
             "58f4e22fa2": "automation",
             "b186f3cefb": "automations",
@@ -10509,7 +10433,6 @@
               "ebeedb2f6a": "quick terminal",
               "6f183fa1b9": "floating terminal",
               "a08e482f6d": "floating workspace",
-              "b96b5ee6cf": "Enable the floating workspace, choose where new tabs start, and choose where the toggle button appears.",
               "b2b60e7163": "Floating Workspace"
             }
           }
@@ -10925,16 +10848,8 @@
               "f213400800": "mobile",
               "671eb4173c": "Control terminals and agents from your phone.",
               "ffd52a96e4": "Mobile",
-              "1de96ec8a6": "Show Coding Agent 2 Mobile Button",
-              "682293cadf": "Show the Coding Agent 2 Mobile button at the top of the left sidebar.",
               "e4f4daea0e": "relay",
-              "5d5af8e041": "iphone",
-              "74618577c7": "mobile",
-              "5e5b8878bf": "phone",
-              "5bff6a2ef0": "sidebar",
-              "6cf5f54ce1": "button",
-              "648eeada79": "hide",
-              "ac79fe4a04": "show"
+              "5d5af8e041": "iphone"
             }
           }
         },
@@ -12064,7 +11979,6 @@
                   "installed": "Installed",
                   "notInstalled": "Not installed",
                   "recheck": "Re-check",
-                  "description": "Let agents read and edit Linear tasks. Full guided setup (connect + skill + visibility) is under Settings → Task Sources.",
                   "copyFailed": "Failed to copy command.",
                   "copyCommand": "Copy command",
                   "installedDescription": "Agent skill installed. To update it, run:",
@@ -13321,15 +13235,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Update Coding Agent 2 on the server to install its skills.",
           "connectHost": "Connect to this SSH host to install its skills."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "Failed to copy install command.",
-          "f08d45293d": "Copy command",
-          "b99f375eb2": "Run this command in a terminal to install the orchestration skill for your agents.",
-          "35550f3b3b": "Done",
-          "2914abcfa2": "Install orchestration skill",
-          "1bdce1911e": "Copy orchestration skill install command",
-          "239bf9132b": "Copied install command."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "Install for {{value0}}",
@@ -15750,11 +15655,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Close · Esc",
-          "9883b58693": "Close Coding Agent 2 Mobile",
-          "fb5f28330e": "Show in sidebar",
-          "c669abcf8f": "Hide from sidebar",
-          "e1c7b4a92d": "Configure in Settings > Mobile.",
-          "f3d8e5b71a": "Adds the shortcut back to the sidebar."
+          "9883b58693": "Close Coding Agent 2 Mobile"
         },
         "PhoneCarousel": {
           "96d651cb87": "Terminal session",
@@ -15911,9 +15812,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Hide Floating Workspace",
-            "763f5fa2c1": "Move to Floating Button",
-            "0ee79e0674": "Move to Status Bar"
+            "8e7d775287": "Hide Floating Workspace"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Enables agents to hand off context and coordinate work through Coding Agent 2.",
@@ -15935,12 +15834,6 @@
             "8cf80db43b": "Set up the Coding Agent 2 CLI and agent skill so agents can coordinate through Coding Agent 2.",
             "2a3c5ddf5e": "Enable orchestration",
             "8b14ba6c17": "New Browser Tab"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Show floating workspace",
-            "4cb418b991": "Show floating workspace, new activity",
-            "5785dd9148": "Minimize floating workspace",
-            "bfe7809a70": "{{value0}} floating workspace ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Minimize",
@@ -16329,7 +16222,7 @@
             "4795ac2d4a": "Try asking:",
             "53905bd076": "Development preview: opening skills setup terminal.",
             "1da82af45b": "Coding Agent 2 CLI needs attention",
-            "ce13a742d0": "Registered `coding` in PATH.",
+            "ce13a742d0": "Registered `coding-agent` in PATH.",
             "d1a86c7eb5": "Open Settings to finish CLI setup.",
             "cliInstallFailed": "Failed to install Coding Agent 2 CLI.",
             "splitPrPrompt": "“Split this PR into two <term>worktrees</term> and create PRs for each.”"
@@ -21617,7 +21510,7 @@
       "continueButton": "Continue without CLI",
       "title": "Coding Agent 2 CLI unavailable",
       "message": "Coding Agent 2 couldn't start its local command transport.",
-      "detail": "Coding Agent 2 will continue to work, but commands such as coding-agent status, coding-agent terminal, and orchestration are unavailable for this session.\n\n{{guidance}}\n\nCause: {{cause}}",
+      "detail": "Coding Agent 2 will continue to work, but commands such as orca status, orca terminal, and orchestration are unavailable for this session.\n\n{{guidance}}\n\nCause: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 couldn't write its runtime file. Check permissions on Coding Agent 2's data folder, then restart.",
         "storageUnavailable": "Your disk may be full or read-only. Free up space, then restart Coding Agent 2.",
@@ -24390,29 +24283,11 @@
     "failed": "Couldn’t stop {{host}}. Turn off its browser control in Settings > SSH."
   },
   "codingOpus": {
-    "group": "Coding Opus",
     "desktopOnly": "Available in the desktop app only.",
-    "skill": {
-      "title": "Coding Opus skill",
-      "bundled": "Bundled v{{value0}} · {{value1}}",
-      "version": "v{{value0}}",
-      "missing": "Not installed",
-      "reinstall": "Reinstall",
-      "update": "Update to v{{value0}}",
-      "install": "Install"
-    },
     "playbooks": {
       "navTitle": "Playbooks",
       "navDescription": "Coding Opus strategy playbooks and the skill installed in Claude Code and Codex.",
       "sectionDescription": "The strategies Coding Opus plans and delegates with. Saved to the file the skill reads.",
-      "title": "Playbooks",
-      "custom": "Your copy",
-      "bundled": "Skill default",
-      "reveal": "Show file",
-      "discard": "Discard",
-      "save": "Save",
-      "saved": "Playbooks saved.",
-      "invalid": "Not saved: {{value0}}",
       "outsideChange": "The playbooks file also changed outside this screen; the edit you are making here replaces it when it saves."
     },
     "brain": {
@@ -24495,7 +24370,6 @@
       "newWorkspace": "New workspace",
       "playbooks": "Playbooks",
       "secondBrain": "Second brain",
-      "session": "Session",
       "week": "Week",
       "month": "Month",
       "nav": "Home",
@@ -24560,7 +24434,28 @@
       "openLanguage": "Change language",
       "unnamed": "Set up your profile",
       "localAccount": "local account",
-      "openAccount": "Open account settings"
+      "openAccount": "Open account settings",
+      "emailPlaceholder": "you@example.com"
+    },
+    "search": {
+      "claude": "Claude",
+      "codex": "Codex",
+      "codingOpus": "Coding Opus",
+      "email": "email",
+      "install": "install",
+      "locale": "locale",
+      "login": "sign in",
+      "memory": "memory",
+      "notes": "notes",
+      "obsidian": "Obsidian",
+      "orchestration": "orchestration",
+      "photo": "photo",
+      "portuguese": "Portuguese",
+      "profile": "profile",
+      "profiles": "profiles",
+      "project": "project",
+      "tiers": "tiers",
+      "yaml": "YAML"
     }
   }
 }

@@ -212,6 +212,7 @@ type Base = { provider: string; tier: string | null; model: string | null; effor
 export const isMap = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value)
 
+// oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: a JSON round-trip deep clone keeps the value's own type.
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T
 
 export const condList = (cond: Cond | undefined | null): string[] =>
@@ -326,6 +327,7 @@ function buildWorkflows(data: Record<string, unknown>): Record<string, Workflow>
     return index === -1 ? 99 : index
   }
   const workflows: Record<string, Workflow> = {}
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
   Object.entries(data.playbooks as Record<string, Playbook>)
     .sort((a, b) => pickRank(a[0]) - pickRank(b[0]))
     .forEach(([key, pb]) => {
@@ -360,7 +362,8 @@ export function createPlaybooksState(text: string, today = new Date()): Playbook
   const workflows = buildWorkflows(data)
   const profiles = clone(
     isMap(data.profiles)
-      ? (data.profiles as Record<string, Profile>)
+      ? // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: YAML from the user's playbooks file; the skill validates its shape.
+        (data.profiles as Record<string, Profile>)
       : { base: { name: 'Base', summary: 'The tiers as written.' } }
   )
   const routingBase = loadedRouting(data)?.key ?? 'balanced'
@@ -377,6 +380,7 @@ export function createPlaybooksState(text: string, today = new Date()): Playbook
     budget: 'ok',
     spent: 0,
     providers: [],
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with isMap on the same value; the skill validates the rest of the file.
     routes: clone(isMap(data.routes) ? (data.routes as Record<string, RouteState>) : {}),
     profiles,
     profile:
@@ -399,6 +403,7 @@ export function createPlaybooksState(text: string, today = new Date()): Playbook
       whenLow: 'finish-and-report',
       ...clone(isMap(data.budget) ? data.budget : {})
     },
+    // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with isMap on the same value; the skill validates the rest of the file.
     tiers: clone(isMap(data.tiers) ? (data.tiers as Tiers) : {}),
     globalEdited: false,
     routingWf: `routing:${routingBase}`
@@ -425,6 +430,7 @@ export function inventory(s: PlaybooksState): string[] {
 export const providerLabel = (s: PlaybooksState, id: string) => s.catalog[id]?.label ?? id
 
 const modelIdOf = (model: unknown) =>
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: checked with isMap on the same value; the skill validates the rest of the file.
   isMap(model) ? (model.id as string | undefined) : (model as string | undefined)
 
 function recordedModels(s: PlaybooksState, id: string): unknown[] {
@@ -533,6 +539,7 @@ export function daysUntil(date: string, today = new Date()): number | null {
 }
 
 export function usagePresetIds(s: PlaybooksState): UsagePresetId[] {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: Object.keys of a literal record returns exactly its own keys.
   const simulated = (Object.keys(SIMULATED_USAGE) as (keyof typeof SIMULATED_USAGE)[]).filter(
     (key) => {
       const patch = SIMULATED_USAGE[key]
@@ -760,6 +767,7 @@ export function resolvePhase(s: PlaybooksState, p: Phase, c: Context): Resolutio
     picked = applyUse(base, rule.use ?? {})
     return true
   })
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: the search above only stores Chosen values.
   const found = chosen as Chosen | null
   const q = quotaNow(s)
   let switched = false
@@ -991,6 +999,7 @@ function ordered(obj: Record<string, unknown>, keys: string[]): Record<string, u
 }
 
 export function exportData(s: PlaybooksState): Record<string, unknown> {
+  // oxlint-disable-next-line typescript/consistent-type-assertions -- SAFETY: routingWf always names a routing workflow.
   const routing = s.workflows[s.routingWf] as RoutingWorkflow
   const playbooks: Record<string, unknown> = {}
   Object.values(s.workflows).forEach((w) => {

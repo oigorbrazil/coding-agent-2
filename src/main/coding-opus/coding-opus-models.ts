@@ -14,7 +14,7 @@ const SAFE_NAME = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}$/
 
 function readJson(path: string): unknown {
   try {
-    return JSON.parse(readFileSync(path, 'utf8')) as unknown
+    return JSON.parse(readFileSync(path, 'utf8'))
   } catch {
     return null
   }

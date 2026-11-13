@@ -575,7 +575,6 @@
     "showStatusBar": "상태 표시줄 표시",
     "showTasksButton": "작업 버튼 표시",
     "showAutomationsButton": "자동화 버튼 표시",
-    "showMobileButton": "Coding Agent 2 모바일 버튼 표시",
     "showTitlebarAppName": "제목 표시줄 앱 이름 표시",
     "view": "보기",
     "reload": "새로고침",
@@ -1914,24 +1913,15 @@
         "commentTooLarge": "댓글이 너무 길어 안전하게 제출할 수 없습니다."
       },
       "Landing": {
-        "f9eaa9e12d": "프로젝트 추가",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 로고",
-        "c1cf168479": "숨기기",
         "00cee697c1": "GitHub 계정을 연결하려면 terminal에서 \"gh auth login\"을 실행하세요.",
         "9f96d018b7": "GitHub CLI가 인증되지 않았습니다.",
         "73e1ad4282": "Coding Agent 2는 GitHub CLI(gh)를 사용하여 PR, 이슈 및 검사를 표시합니다.",
         "5beaef5f9e": "GitHub CLI가 설치되지 않았습니다.",
         "b673e7cf1b": "Git 프로젝트, 소스 제어 및 워크스페이스 관리에는 Git이 필요합니다.",
         "e5b7296d9d": "Git이 설치되지 않았습니다.",
-        "cd21242762": "시작하려면 프로젝트를 추가하세요.",
-        "9c00bd4adf": "시작하려면 사이드바에서 워크스페이스를 선택하세요.",
-        "0d0ace8861": "GitHub에서 별표 주기",
-        "ec43b38ba7": "GitHub에 별표 표시됨",
-        "157bb5ecbb": "GitHub 열기",
         "preflightDismiss": "닫기",
-        "moveUpWorkspace": "이전 워크스페이스 선택",
-        "moveDownWorkspace": "다음 워크스페이스 선택",
         "installGit": "Git 설치",
         "installGitHubCli": "GitHub CLI 설치",
         "learnMore": "자세히 알아보기"
@@ -4061,7 +4051,6 @@
             "remoteServerLabel": "원격 서버",
             "antigravityUsage": "Antigravity 사용량",
             "grokUsageMenu": "Grok 사용량",
-            "floatingTerminalNewActivity": "{{label}}, 새 활동",
             "4fba7dc1e7": "잔액 {{value0}}",
             "codexSignInSuccess": "Codex에 로그인했습니다",
             "codexSignInError": "Codex 로그인에 실패했습니다. 다시 시도해 주세요.",
@@ -5598,8 +5587,6 @@
         "SidebarNav": {
           "80611a8b10": "검색",
           "0c3395fd32": "작업 트리 및 브라우저 탭 검색",
-          "c86d83b5c3": "신규",
-          "1b5c41caee": "Coding Agent 2 모바일",
           "f323383e9a": "자동화",
           "e7ad3c540d": "Jira 작업 열기",
           "c39ab10000": "Linear 작업 열기",
@@ -6945,19 +6932,10 @@
           "storedDefaultUndetected": "기본값으로 저장되었지만 지금은 감지되지 않습니다.",
           "noAgentsDetected": "감지된 에이전트가 없습니다. 에이전트가 설치되어 있다면 감지 시간이 초과되었을 수 있습니다."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "다음 아이콘",
-          "415fa76f64": "선택한 앱 아이콘",
-          "5f5142a62a": "이전 아이콘"
-        },
         "AppearancePane": {
           "3057983501": "할당되지 않음",
           "2edf606c46": "닫을 때 트레이로 최소화",
           "b707773a0d": "활성화하면 창을 닫아도 Coding Agent 2가 종료되지 않고 시스템 트레이에서 계속 실행됩니다.",
-          "0cd9b8228f": "Dock 및 창 전환기에 표시된 앱 아이콘을 선택합니다.",
-          "ca1590d42f": "앱 아이콘",
-          "61d842eca0": "사이드바에 Coding Agent 2 Mobile 바로가기를 표시합니다. 도구 상자에서는 계속 사용할 수 있습니다.",
-          "9da1020447": "Coding Agent 2 모바일 버튼 표시",
           "511f270ebb": "자동화 버튼 표시",
           "cf81907069": "작업 버튼 표시",
           "dc29f3cc0d": "사이드바",
@@ -7146,8 +7124,7 @@
           "cbe55e4d48": "탐색기에서 보기",
           "9fd4023db0": "파일 관리자에서 보기",
           "installFailureUnknownReason": "Coding Agent 2가 CLI 등록을 완료하지 못했고 이유를 보고하지 않았습니다.",
-          "installFailureConflictRemedy": "{{value0}}이(가) 더 이상 필요하지 않다면 제거한 뒤 다시 등록하세요.",
-          "outsideOrcaDescription": "Coding Agent 2 터미널에서는 이미 `coding`를 쓸 수 있습니다. Coding Agent 2 밖의 다른 터미널에서 `coding`를 쓰려면 켜세요."
+          "installFailureConflictRemedy": "{{value0}}이(가) 더 이상 필요하지 않다면 제거한 뒤 다시 등록하세요."
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL 기본값"
@@ -7335,10 +7312,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "상태 표시줄",
-          "9fb225f2d7": "플로팅 버튼",
-          "3c900e26e5": "키보드 단축키는 토글이 표시되는 위치에 관계없이 작동합니다.",
-          "5e5a8da236": "토글 버튼 위치",
           "505001823e": "플로팅 워크스페이스 디렉터리 선택",
           "81afb79785": "새로운 플로팅 터미널 탭이 여기에서 시작됩니다. Markdown 메모는 Coding Agent 2의 앱 소유 플로팅 워크스페이스에 저장됩니다.",
           "12aa09f10c": "터미널 디렉터리",
@@ -7681,9 +7654,6 @@
           "b5a2ed83ff": "앱스토어",
           "e7a3ae8c4e": "모바일",
           "174f4a3c6d": "휴대폰에서 terminals과 agents를 제어하세요.",
-          "1de96ec8a6": "Coding Agent 2 Mobile 버튼 표시",
-          "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
-          "d4f2b65f30": "사이드바에 Coding Agent 2 Mobile 바로가기를 표시합니다.",
           "installIntro": "다음 스토어에서 Coding Agent 2 Mobile 설치",
           "installOutro": "하고 아래에서 페어링하세요.",
           "androidApkLabel": "Android APK"
@@ -7756,15 +7726,9 @@
           "f79084947b": "새로운 앱"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "핸드오프, 작업 트리 핸드오버, 순차 또는 병렬 하위 에이전트 작업에 오케스트레이션을 사용하도록 조율 에이전트에게 요청하세요.",
-          "ae79504732": "사용 방법",
-          "9bedd2a6e5": "에이전트가 Coding Agent 2를 통해 컨텍스트를 인계하고 작업을 조율할 수 있습니다.",
-          "07641b9768": "오케스트레이션 스킬",
-          "2aacdb0517": "핸드오프, 작업 트리 핸드오버, 하위 에이전트 작업 전반에 걸쳐 코딩 에이전트를 조율합니다.",
           "191ac34567": "에이전트 오케스트레이션",
           "nestedWorkerDepthTitle": "하위 에이전트 최대 생성 단계",
           "nestedWorkerDepthDescription": "하위 에이전트를 몇 단계까지 생성할 수 있는지 설정합니다. 1이면 조율 에이전트만 하위 에이전트를 생성할 수 있고, 생성된 하위 에이전트는 자신의 하위 에이전트를 생성할 수 없습니다.",
-          "7bc082f4de": "설치 명령 복사",
           "workerAutoReleaseTitle": "완료된 워커 자동 닫기",
           "workerAutoReleaseDescription": "열어 두기를 선택하지 않으면 워커가 완료된 지 2분 후 터미널 또는 채팅을 닫습니다. 다시 작업을 시작하면 완료 시 2분이 다시 시작됩니다.",
           "workerAutoReleaseKeywordClose": "닫기",
@@ -7773,17 +7737,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "에이전트가 Coding Agent 2를 통해 컨텍스트를 인계하고 작업을 조율할 수 있습니다.",
           "2777ff0fdc": "오케스트레이션 스킬"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "에이전트별 스킬 설치 상태",
-          "ffe13e36fb": "미설치",
-          "1e8f8d8fae": "준비됨",
-          "checking": "설치된 에이전트와 스킬 경로를 확인하는 중…",
-          "noAgents": "PATH에서 에이전트 CLI가 감지되지 않습니다. 설정 → 에이전트에서 에이전트를 설치한 후 다시 확인하세요.",
-          "fullCoverage_one": "감지된 에이전트 1개에 스킬이 설치되어 있습니다.",
-          "fullCoverage_other": "감지된 {{value0}}개 에이전트 모두에 스킬이 설치되어 있습니다.",
-          "noCoverage": "위의 스킬을 설치한 후 다시 확인해 보세요.",
-          "partialCoverage": "감지된 {{value1}}개 에이전트 중 {{value0}}개에 스킬이 설치되어 있습니다."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "진단 파일 만들기",
@@ -8250,7 +8203,6 @@
           "43b68e10f0": "저장하지 않은 AI 설정이 있습니다. 나가면 해당 설정이 버려집니다.",
           "17bdee4ff1": "저장하지 않은 AI 설정을 버리시겠습니까?",
           "084d8fac5b": "개인 정보 보호 및 보안",
-          "23931df7e8": "원격 호스트",
           "8bd117d669": "인터페이스",
           "e1578cd4bc": "워크플로",
           "9abb9be3bc": "설정 시작",
@@ -8465,7 +8417,6 @@
           "reconnectOnLaunch": "시작 시 다시 연결",
           "reconnectOnLaunchHelp": "끄면 Coding Agent 2가 시작될 때 이 호스트와 이 호스트를 통해 연결되는 Coding Agent 2 서버를 직접 연결할 때까지 연결하지 않습니다.",
           "allowRemoteCliControl": "이 호스트가 작업 공간의 Coding Agent 2 브라우저 탭을 제어하도록 허용",
-          "allowRemoteCliControlHelp": "새 호스트에서는 기본적으로 켜져 있습니다. 이 호스트의 에이전트와 orca 명령은 이 호스트의 작업 공간에서만, 연결되어 있는 동안에만 이 데스크톱의 Coding Agent 2 브라우저 탭을 열고 읽고 사용할 수 있습니다. 제어 중인 탭에는 호스트 이름이 표시됩니다. 이 호스트에서 이전 버전의 Coding Agent 2가 시작한 터미널에서 orca 오케스트레이션 명령을 실행하려면 이 설정도 켜져 있어야 합니다. 파일, 클립보드, 쿠키는 읽을 수 없습니다.",
           "addHost": "호스트 추가",
           "proxyConnectionReuse": "프록시 연결 하나를 재사용",
           "proxyConnectionReuseHelp": "느린 ProxyCommand 또는 ProxyJump 호스트를 통한 연결이 빨라집니다. ssh_config가 호스트별 Match 또는 %h 규칙에 의존하지 않는 경우에만 사용하세요."
@@ -8990,24 +8941,12 @@
         },
         "appearance": {
           "search": {
-            "468448bba4": "수채화",
-            "f586abfa35": "파란색",
-            "651f35b2c6": "스위처",
             "e5bc35d59e": "창",
-            "d18b54ca90": "Dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "앱 아이콘",
-            "e80c2af428": "Dock 및 창 전환기에 표시된 앱 아이콘을 선택합니다.",
-            "2b313598c6": "앱 아이콘",
-            "839fb1e3ed": "도구 상자",
             "ac79fe4a04": "표시",
             "648eeada79": "숨기기",
             "6cf5f54ce1": "버튼",
             "5bff6a2ef0": "사이드바",
-            "5e5b8878bf": "핸드폰",
-            "74618577c7": "모바일",
-            "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
-            "1de96ec8a6": "Coding Agent 2 모바일 버튼 표시",
             "4c920ab2d1": "일정",
             "58f4e22fa2": "오토메이션",
             "b186f3cefb": "자동화",
@@ -9502,7 +9441,6 @@
               "ebeedb2f6a": "빠른 터미널",
               "6f183fa1b9": "플로팅 터미널",
               "a08e482f6d": "플로팅 워크스페이스",
-              "b96b5ee6cf": "플로팅 워크스페이스를 활성화하고, 새 탭이 시작되는 위치를 선택하고, 토글 버튼이 나타나는 위치를 선택하세요.",
               "b2b60e7163": "플로팅 워크스페이스"
             }
           }
@@ -9914,16 +9852,8 @@
               "f213400800": "모바일",
               "671eb4173c": "휴대폰에서 terminals과 agents를 제어하세요.",
               "ffd52a96e4": "모바일",
-              "1de96ec8a6": "Coding Agent 2 Mobile 버튼 표시",
-              "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
               "e4f4daea0e": "릴레이",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "모바일",
-              "5e5b8878bf": "핸드폰",
-              "5bff6a2ef0": "사이드바",
-              "6cf5f54ce1": "단추",
-              "648eeada79": "숨기기",
-              "ac79fe4a04": "표시"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -11125,7 +11055,6 @@
                   "installed": "설치됨",
                   "notInstalled": "설치되지 않음",
                   "recheck": "다시 확인",
-                  "description": "에이전트가 Linear 작업을 읽고 편집할 수 있도록 합니다. 전체 가이드 설정(연결 + 스킬 + 표시)은 설정 → 작업 소스에 있습니다.",
                   "copyFailed": "명령 복사 실패.",
                   "copyCommand": "명령 복사",
                   "installedDescription": "에이전트 스킬이 설치되었습니다. 업데이트하려면 다음을 실행하세요:",
@@ -12408,15 +12337,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "스킬을 설치하려면 서버의 Coding Agent 2를 업데이트하세요.",
           "connectHost": "이 SSH 호스트에 연결하면 스킬을 설치할 수 있습니다."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "설치 명령을 복사하지 못했습니다.",
-          "f08d45293d": "명령 복사",
-          "b99f375eb2": "에이전트용 오케스트레이션 스킬을 설치하려면 터미널에서 이 명령을 실행하세요.",
-          "35550f3b3b": "완료",
-          "2914abcfa2": "오케스트레이션 스킬 설치",
-          "1bdce1911e": "오케스트레이션 스킬 설치 명령 복사",
-          "239bf9132b": "설치 명령을 복사했습니다."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "{{value0}}에 설치",
@@ -14690,11 +14610,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "닫기 · Esc",
-          "9883b58693": "Coding Agent 2 모바일 닫기",
-          "fb5f28330e": "사이드바에 표시",
-          "c669abcf8f": "사이드바에서 숨기기",
-          "e1c7b4a92d": "설정 > 모바일에서 구성하세요.",
-          "f3d8e5b71a": "단축키를 왼쪽 사이드바에 다시 추가합니다."
+          "9883b58693": "Coding Agent 2 모바일 닫기"
         },
         "PhoneCarousel": {
           "96d651cb87": "Terminal 세션",
@@ -14839,9 +14755,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "플로팅 워크스페이스 숨기기",
-            "763f5fa2c1": "플로팅 버튼으로 이동",
-            "0ee79e0674": "상태 표시줄로 이동"
+            "8e7d775287": "플로팅 워크스페이스 숨기기"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "agents가 Coding Agent 2를 통해 컨텍스트를 넘기고 작업을 조정할 수 있습니다.",
@@ -14863,12 +14777,6 @@
             "8cf80db43b": "agents가 Coding Agent 2를 통해 조정할 수 있도록 Coding Agent 2 CLI 및 agents 스킬을 설정합니다.",
             "2a3c5ddf5e": "오케스트레이션 활성화",
             "8b14ba6c17": "새 브라우저 탭"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "플로팅 워크스페이스 표시",
-            "4cb418b991": "플로팅 워크스페이스 표시, 새 활동",
-            "5785dd9148": "플로팅 워크스페이스 최소화",
-            "bfe7809a70": "{{value0}} 플로팅 워크스페이스({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "최소화",
@@ -15257,7 +15165,6 @@
             "4795ac2d4a": "다음과 같이 질문해 보세요.",
             "53905bd076": "개발 미리보기: 스킬 설정 terminal 열기.",
             "1da82af45b": "Coding Agent 2 CLI에 주의가 필요합니다",
-            "ce13a742d0": "PATH에 'orca'를 등록했습니다.",
             "d1a86c7eb5": "설정을 열어 CLI 설정을 완료하세요.",
             "cliInstallFailed": "Coding Agent 2 CLI를 설치하지 못했습니다.",
             "splitPrPrompt": "“이 PR을 두 개의 <term>작업 트리</term>로 나누고 각각 PR을 만들어 줘.”"
@@ -20427,7 +20334,6 @@
       "continueButton": "CLI 없이 계속",
       "title": "Coding Agent 2 CLI를 사용할 수 없습니다",
       "message": "Coding Agent 2가 로컬 명령 전송 기능을 시작하지 못했습니다.",
-      "detail": "Coding Agent 2는 계속 작동하지만 이번 세션에서는 coding-agent status, coding-agent terminal 등의 명령과 오케스트레이션 기능을 사용할 수 없습니다.\n\n{{guidance}}\n\n원인: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2가 런타임 파일을 쓸 수 없습니다. Coding Agent 2 데이터 폴더의 권한을 확인한 후 다시 시작하세요.",
         "storageUnavailable": "디스크가 가득 찼거나 읽기 전용일 수 있습니다. 공간을 확보한 후 Coding Agent 2를 다시 시작하세요.",

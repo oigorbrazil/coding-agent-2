@@ -11,6 +11,7 @@ import { useTranslate } from '@/i18n/use-translate'
 import { useAppStore } from '../../../store/index'
 import { ACCOUNT_CHANGED_EVENT } from '../../sidebar/SidebarProfileRow'
 import defaultAvatar from '../../../assets/default-avatar.png'
+import { runWithBusyFlag } from '@/lib/busy-flag-task'
 
 type Api = NonNullable<typeof window.api.codingAgentAccount>
 
@@ -104,15 +105,12 @@ export function AccountPane(): React.JSX.Element {
   }
 
   const run = async (task: () => Promise<boolean>, success?: string): Promise<void> => {
-    setBusy(true)
     setNotice(null)
-    try {
+    await runWithBusyFlag(setBusy, async () => {
       if ((await task()) && success) {
         setNotice(success)
       }
-    } finally {
-      setBusy(false)
-    }
+    })
   }
   const profileDirty = name !== account.name || email !== account.email || photo !== account.photo
   const saveProfile = (): Promise<void> =>
@@ -203,7 +201,7 @@ export function AccountPane(): React.JSX.Element {
           <Input
             type="email"
             value={email}
-            placeholder="voce@exemplo.com"
+            placeholder={t('codingOpus.account.emailPlaceholder', 'you@example.com')}
             onChange={(event) => setEmail(event.target.value)}
           />
           {account.email && email === account.email ? (
@@ -265,7 +263,8 @@ export function AccountPane(): React.JSX.Element {
               {codeSent ? (
                 <>
                   <Input
-                    className="w-36 font-mono"
+                    variant="code"
+                    className="w-36"
                     inputMode="numeric"
                     value={code}
                     placeholder="000000"

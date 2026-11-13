@@ -16,6 +16,7 @@ import { Badge } from '../../ui/badge'
 import { Button } from '../../ui/button'
 import { useTranslate } from '@/i18n/use-translate'
 import { LinearAgentSkillInstallCta } from '../../skills/setup/linear-agent-skill-install-cta'
+import { runWithBusyFlag } from '@/lib/busy-flag-task'
 
 const TARGET_LABELS: Record<CodingOpusSkillTarget, string> = {
   claude: 'Claude Code',
@@ -94,15 +95,14 @@ function SkillRow({
   const scope = useMemo(() => scopeFor(scopeValue, projects), [scopeValue, projects])
 
   const run = useCallback(async (action: () => Promise<SkillCatalogStatus>) => {
-    setBusy(true)
     setError(null)
-    try {
-      setStatus(await action())
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : String(caught))
-    } finally {
-      setBusy(false)
-    }
+    await runWithBusyFlag(setBusy, async () => {
+      try {
+        setStatus(await action())
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : String(caught))
+      }
+    })
   }, [])
 
   useEffect(() => {
@@ -230,9 +230,8 @@ export function SkillsPane(): React.JSX.Element {
   }
 
   const load = async (): Promise<void> => {
-    setLoading(true)
     setMessage(null)
-    try {
+    await runWithBusyFlag(setLoading, async () => {
       const result = await api.loadSkillFolder()
       if (!result.ok) {
         setMessage({ kind: 'error', text: result.error })
@@ -249,9 +248,7 @@ export function SkillsPane(): React.JSX.Element {
         })
         await refresh()
       }
-    } finally {
-      setLoading(false)
-    }
+    })
   }
 
   return (

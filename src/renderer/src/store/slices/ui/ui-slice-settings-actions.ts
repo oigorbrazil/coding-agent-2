@@ -26,8 +26,12 @@ export function createUiSettingsActions(set: UISliceSet, get: UISliceGet): Parti
         return
       }
       // Coding Agent 2 folded these panes into General and Terminal.
-      const folded = { input: 'general', 'quick-commands': 'terminal' } as const
-      const pane = folded[target.pane as keyof typeof folded] ?? target.pane
+      const pane =
+        target.pane === 'input'
+          ? 'general'
+          : target.pane === 'quick-commands'
+            ? 'terminal'
+            : target.pane
       set({ settingsNavigationTarget: { ...target, pane } })
     },
     clearSettingsTarget: () => set({ settingsNavigationTarget: null }),
