@@ -354,8 +354,15 @@ describe.concurrent('codex wrapper --no-daemon rule', () => {
       ORCA_TERMINAL_HANDLE: 'term_abc',
       ORCA_USER_DATA_PATH: '/Users/a b/Library/Application Support/orca $HOME \\x "q"'
     }
+    // The wrapper mirrors each legacy ORCA_ key to its CODING_AGENT_ name, so Codex sees both.
+    const handleOverrides = [
+      "shell_environment_policy.set.CODING_AGENT_TERMINAL_HANDLE='term_abc'",
+      "shell_environment_policy.set.ORCA_TERMINAL_HANDLE='term_abc'"
+    ]
     const identityOverrides = [
-      "shell_environment_policy.set.ORCA_TERMINAL_HANDLE='term_abc'",
+      handleOverrides[0],
+      `shell_environment_policy.set.CODING_AGENT_USER_DATA_PATH='${identity.ORCA_USER_DATA_PATH}'`,
+      handleOverrides[1],
       `shell_environment_policy.set.ORCA_USER_DATA_PATH='${identity.ORCA_USER_DATA_PATH}'`
     ]
     const splitOverrides = (line: string): { overrides: string[]; rest: string[] } => {
@@ -407,7 +414,7 @@ describe.concurrent('codex wrapper --no-daemon rule', () => {
         })
 
         expect(lines(result.stdout).map(splitOverrides)).toEqual([
-          { overrides: [identityOverrides[0]], rest: ['x'] }
+          { overrides: handleOverrides, rest: ['x'] }
         ])
       })
     }

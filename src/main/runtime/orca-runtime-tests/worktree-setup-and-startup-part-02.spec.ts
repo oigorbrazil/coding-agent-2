@@ -128,7 +128,8 @@ describe('OrcaRuntimeService', () => {
     expect(startupScript).toContain('exec claude')
     expect(startupScript).toContain('/mnt/c/tmp/repo/.git/orca/setup-runner.sh')
     expect(spawn.mock.calls[1]![0]).toMatchObject({
-      command: `bash -lc 'eval "\${${SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV}:?missing}"'`
+      // The new CODING_AGENT_ name is read first, falling back to the legacy one.
+      command: `bash -lc 'eval "\${CODING_AGENT_SEQUENCED_SETUP_SCRIPT-\${${SETUP_AGENT_SEQUENCE_SETUP_SCRIPT_ENV}:?missing}}"'`
     })
     expect(setupScript).toContain('bash /mnt/c/tmp/repo/.git/orca/setup-runner.sh')
     expect(setupScript).toContain(`${nonceMatch![1]} "$status"`)
