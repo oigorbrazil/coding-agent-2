@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { writeStartupDiagnosticLine } from '../startup/startup-diagnostics'
 
 export const MAIN_THREAD_DIAGNOSTICS_ENV = 'ORCA_MAIN_THREAD_DIAGNOSTICS'
@@ -7,7 +8,7 @@ const TICK_MS = 25
 const REPORT_EVERY_MS = 5_000
 
 export function isMainThreadDiagnosticsEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env[MAIN_THREAD_DIAGNOSTICS_ENV] === '1'
+  return readAppEnv(env, 'MAIN_THREAD_DIAGNOSTICS') === '1'
 }
 
 // Skip Git global options together with their separate values.

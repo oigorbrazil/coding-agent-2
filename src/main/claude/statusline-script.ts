@@ -1,9 +1,14 @@
+import { windowsAppEnvRestore } from '../../shared/app-env-script'
 import {
   WINDOWS_CLAUDE_BACKGROUND_JOB_GUARD,
   buildPosixClaudeBackgroundJobGuardLines
 } from '../agent-hooks/claude-background-job-guard'
 import { posixCurlCommand } from '../agent-hooks/hook-post-command'
-import { WINDOWS_HOOK_STDIN_READER } from '../agent-hooks/hook-stdin-contract'
+import {
+  buildPosixHookEndpointReloadLines,
+  buildWindowsHookEndpointReloadLines,
+  WINDOWS_HOOK_STDIN_READER
+} from '../agent-hooks/hook-stdin-contract'
 import {
   CLAUDE_STATUSLINE_MIN_POST_INTERVAL_SECONDS,
   CLAUDE_STATUSLINE_PATHNAME
@@ -28,6 +33,14 @@ export function getManagedStatusLineScript(target: 'local' | 'posix' = 'local'):
     return [
       '@echo off',
       'setlocal',
+      ...windowsAppEnvRestore([
+        'PANE_KEY',
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN',
+        'AGENT_HOOK_ENV',
+        'AGENT_HOOK_VERSION'
+      ]),
       WINDOWS_CLAUDE_BACKGROUND_JOB_GUARD,
       // Endpoint refresh never sets the pane key, so this guard can precede stdin capture.
       'if "%ORCA_PANE_KEY%"=="" exit /b 0',
@@ -55,7 +68,7 @@ export function getManagedStatusLineScript(target: 'local' | 'posix' = 'local'):
       '"%SystemRoot%\\System32\\findstr.exe" /c:\\"rate_limits\\" "%ORCA_STATUSLINE_PAYLOAD_FILE%" >nul 2>nul',
       `if errorlevel 1 goto :${STATUSLINE_CLEANUP_LABEL}`,
       // Refresh stale endpoint coordinates after Coding Agent 2 restarts, falling back to PTY env.
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       `if "%ORCA_AGENT_HOOK_PORT%"=="" goto :${STATUSLINE_CLEANUP_LABEL}`,
       `if "%ORCA_AGENT_HOOK_TOKEN%"=="" goto :${STATUSLINE_CLEANUP_LABEL}`,
       // Stamp only eligible posts so skipped ticks never postpone the next post.
@@ -100,19 +113,18 @@ export function getManagedStatusLineScript(target: 'local' | 'posix' = 'local'):
     '  *\'"rate_limits"\'*) ;;',
     '  *) exit 0 ;;',
     'esac',
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  . "$ORCA_AGENT_HOOK_ENDPOINT" 2>/dev/null || :',
-    'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    ...buildPosixHookEndpointReloadLines(),
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  exit 0',
     'fi',
     // The stable leaf UUID excludes path-unsafe and overlong tab IDs.
-    'orca_statusline_pane_id=${ORCA_PANE_KEY##*:}',
+    'orca_statusline_pane_key=${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}',
+    'orca_statusline_pane_id=${orca_statusline_pane_key##*:}',
     // Legacy numeric leaf IDs were tab-local; include a safe tab ID to isolate their stamps.
     'case "$orca_statusline_pane_id" in',
     "  ''|*[!0-9]*) ;;",
     '  *)',
-    '    orca_statusline_tab_id=${ORCA_PANE_KEY%:*}',
+    '    orca_statusline_tab_id=${orca_statusline_pane_key%:*}',
     '    case "$orca_statusline_tab_id" in',
     "      ''|*[!A-Za-z0-9._-]*) ;;",
     '      *) orca_statusline_pane_id="${orca_statusline_tab_id}_${orca_statusline_pane_id}" ;;',
@@ -157,14 +169,14 @@ export function getManagedStatusLineScript(target: 'local' | 'posix' = 'local'):
     'if [ -n "$orca_statusline_now" ]; then',
     '  printf \'%s\' "$orca_statusline_now" >"$orca_statusline_stamp" 2>/dev/null || :',
     'fi',
-    `printf '%s' "$payload" | ${posixCurlCommand()} -sS -X POST "http://127.0.0.1:\${ORCA_AGENT_HOOK_PORT}${CLAUDE_STATUSLINE_PATHNAME}" \\`,
+    `printf '%s' "$payload" | ${posixCurlCommand()} -sS -X POST "http://127.0.0.1:\${CODING_AGENT_AGENT_HOOK_PORT-\${ORCA_AGENT_HOOK_PORT}}${CLAUDE_STATUSLINE_PATHNAME}" \\`,
     '  --connect-timeout 0.5 --max-time 1.5 \\',
     '  -H "Content-Type: application/x-www-form-urlencoded" \\',
-    '  -H "X-Orca-Agent-Hook-Token: ${ORCA_AGENT_HOOK_TOKEN}" \\',
-    '  --data-urlencode "paneKey=${ORCA_PANE_KEY}" \\',
+    '  -H "X-Orca-Agent-Hook-Token: ${CODING_AGENT_AGENT_HOOK_TOKEN-${ORCA_AGENT_HOOK_TOKEN}}" \\',
+    '  --data-urlencode "paneKey=${CODING_AGENT_PANE_KEY-${ORCA_PANE_KEY}}" \\',
     '  --data-urlencode "configDir=${CLAUDE_CONFIG_DIR}" \\',
-    '  --data-urlencode "env=${ORCA_AGENT_HOOK_ENV}" \\',
-    '  --data-urlencode "version=${ORCA_AGENT_HOOK_VERSION}" \\',
+    '  --data-urlencode "env=${CODING_AGENT_AGENT_HOOK_ENV-${ORCA_AGENT_HOOK_ENV}}" \\',
+    '  --data-urlencode "version=${CODING_AGENT_AGENT_HOOK_VERSION-${ORCA_AGENT_HOOK_VERSION}}" \\',
     '  --data-urlencode "payload@-" >/dev/null 2>&1 || true',
     'exit 0',
     ''

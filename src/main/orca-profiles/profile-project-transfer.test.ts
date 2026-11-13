@@ -84,11 +84,11 @@ function writeIndex(activeProfileId = 'personal'): void {
     activeProfileId,
     profiles: [profile('personal', 'Personal'), profile('work', 'Work')]
   }
-  writeFileSync(join(testState.dir, 'orca-profile-index.json'), JSON.stringify(index), 'utf-8')
+  writeFileSync(join(testState.dir, 'coding-profile-index.json'), JSON.stringify(index), 'utf-8')
 }
 
 function profileDataPath(profileId: string): string {
-  return join(testState.dir, 'profiles', profileId, 'orca-data.json')
+  return join(testState.dir, 'profiles', profileId, 'coding-data.json')
 }
 
 function profileDatabasePath(profileId: string): string {
@@ -179,7 +179,7 @@ describe('profile project transfer', () => {
     writeProfileState(
       'personal',
       makeState({
-        repos: [makeRepo({ path: 'C:\\Work\\Coding Agent 2\\' })]
+        repos: [makeRepo({ path: 'C:\\Work\\Orca\\' })]
       })
     )
     writeProfileState(

@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../app-env'
 // Build history resume lines for the execution platform and actual shell.
 import { quoteCmdDoubleQuoted } from '../../shell/launch/shell-argument-quoting'
 import {
@@ -157,7 +158,7 @@ export function realHomeCodexResumeEnvDeletion(
   if (session.agent !== 'codex' || session.codexHome !== null) {
     return {}
   }
-  return { envToDelete: ['CODEX_HOME', 'ORCA_CODEX_HOME'] }
+  return { envToDelete: appEnvKeys(['CODEX_HOME', 'ORCA_CODEX_HOME']) }
 }
 
 function defaultAiVaultResumeCommandBase(agent: AiVaultAgent): string {

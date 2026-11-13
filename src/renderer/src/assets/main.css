@@ -12,6 +12,14 @@
 @import '../../../shared/styles/scrollbar-sleek.css';
 
 @font-face {
+  font-family: 'Inter';
+  src: url('./fonts/InterVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Geist';
   src: url('./fonts/Geist-Variable.woff2') format('woff2');
   font-weight: 100 900;
@@ -170,7 +178,12 @@
   --color-git-graph-lane-4: var(--git-graph-lane-4);
   --color-git-graph-lane-5: var(--git-graph-lane-5);
   --color-annotation-highlight: var(--annotation-highlight);
-  --shadow-floating: 0 10px 24px rgb(0 0 0 / 0.18);
+  --font-code: var(--code-font-family);
+  --color-glass-edge: var(--glass-edge);
+  --color-switch-on: var(--switch-on);
+  --color-switch-track: var(--switch-track);
+  --color-control-fill: var(--control-fill);
+  --shadow-floating: var(--glass-shadow);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -187,34 +200,38 @@
 }
 
 :root {
-  --app-font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --app-font-family:
+    'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
   --font-sans: var(--app-font-family);
-  --font-mono:
+  /* Real code (blocks, diffs, logs, <code>/<pre>) uses `font-code`; `font-mono` in UI chrome reads as Inter. */
+  --code-font-family:
     'SF Mono', SFMono-Regular, ui-monospace, 'Cascadia Code', Menlo, Consolas, 'Liberation Mono',
     monospace;
-  --radius: 0.625rem;
-  --orca-security-background: #fff;
-  --orca-security-foreground: #0a0a0a;
-  --orca-security-card: #fff;
-  --orca-security-card-foreground: #0a0a0a;
-  --orca-security-popover: #fff;
-  --orca-security-popover-foreground: #0a0a0a;
-  --orca-security-primary: #171717;
-  --orca-security-primary-foreground: #fafafa;
-  --orca-security-secondary: #f5f5f5;
-  --orca-security-secondary-foreground: #171717;
-  --orca-security-muted: #f5f5f5;
-  --orca-security-muted-foreground: #696969;
-  --orca-security-accent: #f5f5f5;
-  --orca-security-accent-foreground: #171717;
-  --orca-security-border: #e5e5e5;
-  --orca-security-input: #e5e5e5;
-  --orca-security-ring: #a1a1a1;
-  --orca-security-floating-surface: rgba(255, 255, 255, 0.82);
-  --orca-security-dialog-surface: rgba(255, 255, 255, 0.96);
-  --background: #fff;
+  --font-mono: var(--app-font-family);
+  --default-mono-font-family: var(--code-font-family);
+  --radius: 0.75rem;
+  --orca-security-background: #ffffff;
+  --orca-security-foreground: #1f1f1f;
+  --orca-security-card: #ffffff;
+  --orca-security-card-foreground: #1f1f1f;
+  --orca-security-popover: #fafafc;
+  --orca-security-popover-foreground: #1f1f1f;
+  --orca-security-primary: #0071e3;
+  --orca-security-primary-foreground: #ffffff;
+  --orca-security-secondary: #efeff0;
+  --orca-security-secondary-foreground: #1f1f1f;
+  --orca-security-muted: #efeff0;
+  --orca-security-muted-foreground: #6d6d72;
+  --orca-security-accent: #ededee;
+  --orca-security-accent-foreground: #1f1f1f;
+  --orca-security-border: #e2e2e3;
+  --orca-security-input: #e2e2e3;
+  --orca-security-ring: #8e8e93;
+  --orca-security-floating-surface: rgb(250 250 252 / 0.9);
+  --orca-security-dialog-surface: rgb(250 250 252 / 0.96);
+  --background: #ffffff;
   --editor-surface: #ffffff;
-  --foreground: #0a0a0a;
+  --foreground: #1f1f1f;
   --chat-canvas-mix: 0%;
   --chat-foreground-mix: 82%;
   --chat-strong-mix: 92%;
@@ -231,24 +248,31 @@
   --chat-composer-border-mix: 11%;
   --chat-selection-mix: 30%;
   --chat-content-max-width: 46rem;
-  --card: #fff;
-  --card-foreground: #0a0a0a;
-  --popover: #fff;
-  --popover-foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #1f1f1f;
+  --popover: #fafafc;
+  --popover-foreground: #1f1f1f;
   /* Glass tints for menus and dialogs; a plugin theme replaces both with its --popover. */
-  --floating-surface: rgba(255, 255, 255, 0.82);
-  --dialog-surface: color-mix(in srgb, var(--background) 96%, transparent);
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #696969;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #a1a1a1;
+  --floating-surface: rgb(250 250 252 / 0.72);
+  --dialog-surface: rgb(250 250 252 / 0.9);
+  --primary: #0071e3;
+  --primary-foreground: #ffffff;
+  --secondary: #efeff0;
+  --secondary-foreground: #1f1f1f;
+  --muted: #efeff0;
+  --muted-foreground: #636366;
+  --accent: #ededee;
+  --accent-foreground: #1f1f1f;
+  --border: #e2e2e3;
+  --input: #e2e2e3;
+  --ring: #8e8e93;
+  /* Liquid glass material (glisse): hairline edge, lit top rim, soft lift. */
+  --glass-edge: rgb(0 0 0 / 0.08);
+  --glass-rim: rgb(255 255 255 / 0.7);
+  --glass-shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 12px 32px rgb(25 25 35 / 0.12);
+  --switch-on: #34c759;
+  --switch-track: rgb(120 120 128 / 0.2);
+  --control-fill: #0088ff;
   --terminal-pane-locate: var(--color-blue-600);
   --ai-action-accent: var(--color-violet-500);
   /* Use one question hue across surfaces, distinct from working-yellow. */
@@ -266,20 +290,20 @@
   --chart-3: var(--color-blue-600);
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
-  --worktree-sidebar: #f5f5f5;
-  --worktree-sidebar-foreground: #0a0a0a;
-  --worktree-sidebar-accent: #eaeaea;
-  --worktree-sidebar-accent-foreground: #171717;
-  --worktree-sidebar-border: #e5e5e5;
-  --worktree-sidebar-ring: #a1a1a1;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #0a0a0a;
-  --sidebar-primary: #171717;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f5f5f5;
-  --sidebar-accent-foreground: #171717;
-  --sidebar-border: #e5e5e5;
-  --sidebar-ring: #a1a1a1;
+  --worktree-sidebar: #f2f2f7;
+  --worktree-sidebar-foreground: #1f1f1f;
+  --worktree-sidebar-accent: #e5e5ea;
+  --worktree-sidebar-accent-foreground: #1f1f1f;
+  --worktree-sidebar-border: #e2e2e3;
+  --worktree-sidebar-ring: #8e8e93;
+  --sidebar: #f9f9fb;
+  --sidebar-foreground: #1f1f1f;
+  --sidebar-primary: #0071e3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ededee;
+  --sidebar-accent-foreground: #1f1f1f;
+  --sidebar-border: #e2e2e3;
+  --sidebar-ring: #8e8e93;
   --terminal-pane-title-on-dark-fg: rgb(255 255 255 / 0.52);
   --terminal-pane-title-on-dark-input-fg: rgb(255 255 255 / 0.7);
   --terminal-pane-title-on-dark-placeholder: rgb(255 255 255 / 0.38);
@@ -315,28 +339,28 @@
 }
 
 .dark {
-  --orca-security-background: #0a0a0a;
-  --orca-security-foreground: #f0f0f0;
-  --orca-security-card: #171717;
-  --orca-security-card-foreground: #f0f0f0;
-  --orca-security-popover: #171717;
-  --orca-security-popover-foreground: #f0f0f0;
-  --orca-security-primary: #e5e5e5;
-  --orca-security-primary-foreground: #171717;
-  --orca-security-secondary: #262626;
-  --orca-security-secondary-foreground: #f0f0f0;
-  --orca-security-muted: #262626;
-  --orca-security-muted-foreground: #acacac;
-  --orca-security-accent: #404040;
-  --orca-security-accent-foreground: #f0f0f0;
-  --orca-security-border: rgb(255 255 255 / 0.07);
+  --orca-security-background: #121214;
+  --orca-security-foreground: #f5f5f7;
+  --orca-security-card: #1c1c1f;
+  --orca-security-card-foreground: #f5f5f7;
+  --orca-security-popover: #1c1c1f;
+  --orca-security-popover-foreground: #f5f5f7;
+  --orca-security-primary: #0071e3;
+  --orca-security-primary-foreground: #ffffff;
+  --orca-security-secondary: #2c2c2e;
+  --orca-security-secondary-foreground: #f5f5f7;
+  --orca-security-muted: #2c2c2e;
+  --orca-security-muted-foreground: #98989f;
+  --orca-security-accent: #3a3a3c;
+  --orca-security-accent-foreground: #f5f5f7;
+  --orca-security-border: rgb(255 255 255 / 0.08);
   --orca-security-input: rgb(255 255 255 / 0.15);
-  --orca-security-ring: #737373;
-  --orca-security-floating-surface: rgba(0, 0, 0, 0.72);
-  --orca-security-dialog-surface: rgba(23, 23, 23, 0.96);
-  --background: #0a0a0a;
+  --orca-security-ring: #8e8e93;
+  --orca-security-floating-surface: rgb(28 28 31 / 0.9);
+  --orca-security-dialog-surface: rgb(28 28 31 / 0.96);
+  --background: #121214;
   --editor-surface: #1e1e1e;
-  --foreground: #f0f0f0;
+  --foreground: #f5f5f7;
   --chat-canvas-mix: 5%;
   --chat-foreground-mix: 78%;
   --chat-strong-mix: 90%;
@@ -353,23 +377,29 @@
   --chat-composer-border-mix: 9%;
   --chat-selection-mix: 40%;
   --chat-content-max-width: 46rem;
-  --card: #171717;
-  --card-foreground: #f0f0f0;
-  --popover: #171717;
-  --popover-foreground: #f0f0f0;
-  --floating-surface: rgba(0, 0, 0, 0.72);
-  --dialog-surface: rgba(23, 23, 23, 0.96);
-  --primary: #e5e5e5;
-  --primary-foreground: #171717;
-  --secondary: #262626;
-  --secondary-foreground: #f0f0f0;
-  --muted: #262626;
-  --muted-foreground: #acacac;
-  --accent: #404040;
-  --accent-foreground: #f0f0f0;
-  --border: rgb(255 255 255 / 0.07);
+  --card: #1c1c1f;
+  --card-foreground: #f5f5f7;
+  --popover: #1c1c1f;
+  --popover-foreground: #f5f5f7;
+  --floating-surface: rgb(36 36 38 / 0.68);
+  --dialog-surface: rgb(28 28 31 / 0.9);
+  --primary: #0071e3;
+  --primary-foreground: #ffffff;
+  --secondary: #2c2c2e;
+  --secondary-foreground: #f5f5f7;
+  --muted: #2c2c2e;
+  --muted-foreground: #a7a7ad;
+  --accent: #3a3a3c;
+  --accent-foreground: #f5f5f7;
+  --border: rgb(255 255 255 / 0.08);
   --input: rgb(255 255 255 / 0.15);
-  --ring: #737373;
+  --ring: #8e8e93;
+  --glass-edge: rgb(255 255 255 / 0.13);
+  --glass-rim: rgb(255 255 255 / 0.13);
+  --glass-shadow: 0 16px 40px rgb(0 0 0 / 0.38);
+  --switch-on: #30d158;
+  --switch-track: rgb(235 235 245 / 0.3);
+  --control-fill: #0091ff;
   --terminal-pane-locate: var(--color-blue-400);
   --ai-action-accent: var(--color-violet-400);
   --agent-question: var(--color-orange-500);
@@ -383,22 +413,22 @@
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
   /* Mirror light mode’s lifted worktree sidebar above the dark canvas. */
-  --worktree-sidebar: #2a2a2a;
-  --worktree-sidebar-foreground: #f0f0f0;
-  --worktree-sidebar-accent: #353535;
-  --worktree-sidebar-accent-foreground: #f0f0f0;
+  --worktree-sidebar: #1c1c1e;
+  --worktree-sidebar-foreground: #f5f5f7;
+  --worktree-sidebar-accent: #2c2c2e;
+  --worktree-sidebar-accent-foreground: #f5f5f7;
   /* Match --border / --sidebar-border (7%) so the left sidebar's divider lines
      aren't brighter than the rest of the UI in dark mode (#5906). */
-  --worktree-sidebar-border: rgb(255 255 255 / 0.07);
-  --worktree-sidebar-ring: #737373;
-  --sidebar: #171717;
-  --sidebar-foreground: #f0f0f0;
-  --sidebar-primary: #1447e6;
-  --sidebar-primary-foreground: #f0f0f0;
-  --sidebar-accent: #262626;
-  --sidebar-accent-foreground: #f0f0f0;
-  --sidebar-border: rgb(255 255 255 / 0.07);
-  --sidebar-ring: #525252;
+  --worktree-sidebar-border: rgb(255 255 255 / 0.08);
+  --worktree-sidebar-ring: #8e8e93;
+  --sidebar: #1c1c1f;
+  --sidebar-foreground: #f5f5f7;
+  --sidebar-primary: #0071e3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c2c2e;
+  --sidebar-accent-foreground: #f5f5f7;
+  --sidebar-border: rgb(255 255 255 / 0.08);
+  --sidebar-ring: #8e8e93;
   --terminal-pane-title-on-dark-fg: rgb(255 255 255 / 0.52);
   --terminal-pane-title-on-dark-input-fg: rgb(255 255 255 / 0.7);
   --terminal-pane-title-on-dark-placeholder: rgb(255 255 255 / 0.38);
@@ -438,7 +468,7 @@
   color-scheme: light;
   --destructive: #e40014;
   --destructive-foreground: #fff;
-  --status-success: #147638;
+  --status-success: #116a32;
   --status-success-background: color-mix(in srgb, var(--status-success) 10%, transparent);
   --status-success-border: color-mix(in srgb, var(--status-success) 25%, transparent);
   /* Needs-attention states use yellow, separate from errors and working states. */
@@ -494,7 +524,7 @@
   --git-decoration-renamed: #73c991;
   --git-decoration-untracked: #73c991;
   --git-decoration-copied: #73c991;
-  --git-decoration-ignored: #808080;
+  --git-decoration-ignored: #8a8a8a;
   --diff-added: var(--git-decoration-added);
   --diff-removed: var(--git-decoration-deleted);
   --diff-added-background: color-mix(in srgb, var(--diff-added) 16%, transparent);
@@ -739,13 +769,14 @@ body[data-modal-overlay-open]
     height: 100dvh;
     font-family: var(
       --app-font-family,
-      'Geist',
+      'Inter',
       -apple-system,
       BlinkMacSystemFont,
+      'SF Pro Text',
       'Segoe UI',
       sans-serif
     );
-    letter-spacing: 0.01em;
+    letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -946,6 +977,102 @@ body[data-modal-overlay-open]
   overflow: hidden;
 }
 
+/* Liquid glass environment (DESIGN.md): a plain neutral backdrop behind floating glass panels.
+   Panels re-tint the surface tokens from these opaque bases, so the backdrop shows through. */
+:root,
+.dark {
+  --panel-base: var(--background);
+  --panel-sidebar-base: var(--worktree-sidebar);
+  --panel-card-base: var(--card);
+}
+
+:root {
+  --environment: #e5e5ea;
+  /* Strong enough that secondary text keeps contrast over a dark wallpaper. */
+  --environment-veil: rgb(255 255 255 / 0.62);
+  --panel-alpha: 40%;
+  --panel-sidebar-alpha: 28%;
+  --panel-card-alpha: 55%;
+  --panel-gap: 8px;
+  --panel-radius: 22px;
+}
+
+.dark {
+  --environment: #0b0b0d;
+  --environment-veil: rgb(0 0 0 / 0.5);
+  --panel-card-base: color-mix(in srgb, var(--card) 78%, #8e8e93);
+  --panel-alpha: 22%;
+  --panel-sidebar-alpha: 18%;
+  --panel-card-alpha: 30%;
+}
+
+/* Selection inside dark glass is a lift of light, not a darker slab. */
+.dark [data-glass-panel] {
+  --accent: rgb(255 255 255 / 0.12);
+  --worktree-sidebar-accent: rgb(255 255 255 / 0.14);
+  --secondary: rgb(255 255 255 / 0.1);
+  --muted: rgb(255 255 255 / 0.08);
+}
+
+body {
+  background-color: var(--environment);
+}
+
+/* The OS desktop wallpaper, out of focus, is the room behind the glass (use-desktop-wallpaper-backdrop.ts).
+   A theme image or the window material already provides one. */
+:root[data-desktop-wallpaper]:not([data-theme-background], [data-window-material]) body::before {
+  content: '';
+  position: fixed;
+  inset: -64px;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--environment-veil) 0 0),
+    var(--environment-image) center / cover no-repeat;
+  filter: blur(40px) saturate(1.3);
+}
+
+[data-glass-stage] {
+  gap: var(--panel-gap);
+  padding: 4px var(--panel-gap) var(--panel-gap);
+}
+
+[data-glass-row] {
+  gap: var(--panel-gap);
+}
+
+[data-glass-panel] {
+  --background: color-mix(in srgb, var(--panel-base) var(--panel-alpha), transparent);
+  --worktree-sidebar: color-mix(
+    in srgb,
+    var(--panel-sidebar-base) var(--panel-sidebar-alpha),
+    transparent
+  );
+  --card: color-mix(in srgb, var(--panel-card-base) var(--panel-card-alpha), transparent);
+  position: relative;
+  border-radius: var(--panel-radius);
+  overflow: clip;
+  box-shadow: var(--glass-shadow);
+}
+
+/* xterm already paints the terminal background; its pane host painting it again would double the tint. */
+[data-glass-panel] [data-terminal-tab-id] {
+  background-color: transparent !important;
+}
+
+/* Edge and lit rim sit above the panel's own content, which would cover an inset shadow. */
+[data-glass-panel]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px var(--glass-edge),
+    inset 0 1px 0 var(--glass-rim);
+}
+
 /* An app theme's image (lib/theme-background.ts): one static layer, veiled toward --background by its opacity. */
 :root[data-theme-background] body {
   --orca-theme-background-veil: color-mix(
@@ -1022,6 +1149,24 @@ body[data-modal-overlay-open]
     [data-onboarding-overlay]
   ):has(~ [data-slot='dialog-overlay'], ~ [data-slot='sheet-overlay']) {
   filter: blur(2px);
+}
+
+/* Floating layers (menus, popovers, dialogs, toasts) are liquid glass; utilities passed beside it still win. */
+@layer components {
+  .glass-material {
+    border-color: var(--glass-edge);
+    background-color: var(--floating-surface);
+    backdrop-filter: blur(24px) saturate(1.8);
+    box-shadow:
+      inset 0 1px 0 var(--glass-rim),
+      var(--glass-shadow);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-material {
+      background-color: var(--popover);
+    }
+  }
 }
 
 /* Reduce visual effects (#20936): no blur passes over the workspace, and solid floating surfaces. */
@@ -1175,7 +1320,7 @@ html.native-shell .app-layout {
   z-index: 9999;
   display: flex;
   flex-direction: row;
-  height: 36px;
+  height: 24px;
   -webkit-app-region: no-drag;
 }
 
@@ -1183,8 +1328,8 @@ html.native-shell .app-layout {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 36px;
+  width: 36px;
+  height: 24px;
   background: transparent;
   border: none;
   color: var(--muted-foreground);
@@ -1205,11 +1350,6 @@ html.native-shell .app-layout {
 }
 
 /* Reserve 3 × 46px so the fixed window controls cannot obscure preceding titlebar content. */
-.window-controls-titlebar-spacer {
-  flex-shrink: 0;
-  width: var(--window-controls-width, 0px);
-}
-
 .right-sidebar-header-drag {
   -webkit-app-region: drag;
   user-select: none;
@@ -1222,7 +1362,6 @@ html.native-shell .app-layout {
 /* Temporarily disable Electron drag regions while xterm owns focus so chrome clicks can release terminal zoom. */
 :root[data-regular-terminal-input-focused] .titlebar,
 :root[data-regular-terminal-input-focused] .titlebar-left,
-:root[data-regular-terminal-input-focused] .window-controls-titlebar-spacer,
 :root[data-regular-terminal-input-focused] .right-sidebar-header-drag,
 :root[data-regular-terminal-input-focused] [data-terminal-focus-release-surface='true'] {
   -webkit-app-region: no-drag;

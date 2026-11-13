@@ -1,8 +1,10 @@
 import {
+  type HookDefinition,
   wrapPosixHookCommand,
-  wrapWindowsHookCommand,
-  type HookDefinition
+  wrapWindowsHookCommand
 } from '../agent-hooks/installer-utils'
+import { appEnvPairs } from '../../shared/app-env'
+
 import { wrapWindowsDirectCmdHookCommand } from '../agent-hooks/windows-direct-cmd-hook-command'
 import { getWindowsSystem32Path } from '../agent-hooks/windows-powershell-hook-launcher'
 
@@ -26,14 +28,14 @@ export const COPILOT_EVENTS = [
 
 export function getManagedCommand(scriptPath: string, eventName: string): string {
   if (process.platform !== 'win32') {
-    return wrapPosixHookCommand(scriptPath, { ORCA_COPILOT_HOOK_EVENT: eventName })
+    return wrapPosixHookCommand(scriptPath, { ...appEnvPairs('COPILOT_HOOK_EVENT', eventName) })
   }
   // Arguments survive runners that ignore hook env maps and keep managed commands distinct per event.
   const direct = wrapWindowsDirectCmdHookCommand(scriptPath)
   // /d suppresses cmd AutoRun output that would corrupt the {} response Copilot parses.
   return direct
     ? `${getWindowsSystem32Path('cmd.exe')} /d /c ${direct} ${eventName}`
-    : wrapWindowsHookCommand(scriptPath, { ORCA_COPILOT_HOOK_EVENT: eventName })
+    : wrapWindowsHookCommand(scriptPath, { ...appEnvPairs('COPILOT_HOOK_EVENT', eventName) })
 }
 
 export function getManagedHookDefinition(command: string): HookDefinition {

@@ -1,3 +1,11 @@
+import type { BuildPtyHostEnvOptions } from './types'
+import {
+  deleteAppEnv,
+  setAppEnv,
+  readAppEnvKey,
+  deleteAppEnvKey,
+  setAppEnvKey
+} from '../../../../shared/app-env'
 import {
   OPENCODE_CONFIG_DIR_ENV_KEYS,
   isOpenCodeLegacySharedConfigDir
@@ -9,7 +17,6 @@ import { selectOpenCodeHookAgent } from '../../../../shared/opencode-launch-comm
 import { isTuiAgentEnabled } from '../../../../shared/agent-launch/catalog/tui-agent-selection'
 import { resolveOpenCodeConfigDirectory } from '../../../../shared/opencode-config-directory'
 import { readSessionShellStartupEnvVar } from '../../../pty/shell-startup/shell-startup-env'
-import type { BuildPtyHostEnvOptions } from './types'
 
 type OpenCodeSourceConfig = {
   inheritedEnv: NodeJS.ProcessEnv
@@ -24,11 +31,11 @@ export function captureOpenCodeSourceConfig(
     isOpenCodeLegacySharedConfigDir(dir, userDataPath)
   const inheritedEnv: NodeJS.ProcessEnv = {}
   for (const key of OPENCODE_CONFIG_DIR_ENV_KEYS) {
-    if (isLegacyDirectory(env[key])) {
-      delete env[key]
+    if (isLegacyDirectory(readAppEnvKey(env, key))) {
+      deleteAppEnvKey(env, key)
     }
-    if (!isLegacyDirectory(process.env[key])) {
-      inheritedEnv[key] = process.env[key]
+    if (!isLegacyDirectory(readAppEnvKey(process.env, key))) {
+      setAppEnvKey(inheritedEnv, key, readAppEnvKey(process.env, key))
     }
   }
   // A daemon or sibling shell can retain a retired path that main no longer sees.
@@ -64,12 +71,12 @@ export function applyOpenCodeStatusPluginEnv(
     },
     config.inheritedEnv
   )
-  delete env.ORCA_OPENCODE_AGENT
+  deleteAppEnv(env, 'OPENCODE_AGENT')
   if (!agent) {
     return null
   }
   const service = agent === 'opencode2' ? openCode2HookService : openCodeHookService
-  env.ORCA_OPENCODE_AGENT = agent
+  setAppEnv(env, 'OPENCODE_AGENT', agent)
   // WSL owns its config writes; only the guest overlay may enter a WSL pane.
   if (!options.isWsl) {
     const executionEnv = { ...process.env, ...env }
@@ -82,11 +89,11 @@ export function applyOpenCodeStatusPluginEnv(
   }
   if (env.OPENCODE_CONFIG_DIR) {
     // Shell startup can re-export the default; preserve this pane's overlay and original source.
-    env.ORCA_OPENCODE_CONFIG_DIR = env.OPENCODE_CONFIG_DIR
+    setAppEnv(env, 'OPENCODE_CONFIG_DIR', env.OPENCODE_CONFIG_DIR)
     if (config.directory) {
-      env.ORCA_OPENCODE_SOURCE_CONFIG_DIR = config.directory
+      setAppEnv(env, 'OPENCODE_SOURCE_CONFIG_DIR', config.directory)
     } else {
-      delete env.ORCA_OPENCODE_SOURCE_CONFIG_DIR
+      deleteAppEnv(env, 'OPENCODE_SOURCE_CONFIG_DIR')
     }
   }
   return agent

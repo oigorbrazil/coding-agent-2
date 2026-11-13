@@ -61,7 +61,7 @@ describe('main sync-spawn ratchet', () => {
       ['execSync']
     ],
     [
-      "import { runProcessSync } from '@orca/process-host'\nconst run = options.run ?? runProcessSync\nrun(a)\nrun(b)",
+      "import { runProcessSync } from '@coding-agent/process-host'\nconst run = options.run ?? runProcessSync\nrun(a)\nrun(b)",
       3,
       ['runProcessSync']
     ],
@@ -91,7 +91,7 @@ describe('main sync-spawn ratchet', () => {
       ['execFileSync']
     ],
     [
-      "import { runProcessSync } from '@orca/process-host'\nconst run = runProcessSync<string>",
+      "import { runProcessSync } from '@coding-agent/process-host'\nconst run = runProcessSync<string>",
       1,
       ['runProcessSync']
     ]
@@ -105,9 +105,9 @@ describe('main sync-spawn ratchet', () => {
     "import type { execFileSync } from 'node:child_process'\nexecFileSync('x')",
     "import { type spawnSync } from 'child_process'\nspawnSync('x')",
     "import * as cp from 'child_process'\ntype Run = typeof cp.execFileSync",
-    "import { runProcessSync } from '@orca/process-host'\ntype O = { run?: typeof runProcessSync }",
-    "import { runProcess } from '@orca/process-host'\nrunProcess(spec)",
-    "import { runProcessSync } from '@orca/process-host/process-spec'\nrunProcessSync(spec)",
+    "import { runProcessSync } from '@coding-agent/process-host'\ntype O = { run?: typeof runProcessSync }",
+    "import { runProcess } from '@coding-agent/process-host'\nrunProcess(spec)",
+    "import { runProcessSync } from '@coding-agent/process-host/process-spec'\nrunProcessSync(spec)",
     "import { writeSecureFile } from './secure-file'\nwriteSecureFile(p, v)",
     "import { execFileSync } from 'child_process'\nconst o = { execFileSync: 1 }\no.execFileSync",
     'const other = { spawnSync() {} }\nother.spawnSync()',
@@ -136,7 +136,7 @@ describe('main sync-spawn ratchet', () => {
     const error = captureErrors()
     expect(main(root)).toBe(1)
     expect(error.mock.calls.map(([line]) => line)).toEqual([
-      '::error file=src/main/launch.ts::1 synchronous launch use(s), baseline allows 0. They block the main thread. spawnSync: use runProcess or spawnProcess from @orca/process-host.'
+      '::error file=src/main/launch.ts::1 synchronous launch use(s), baseline allows 0. They block the main thread. spawnSync: use runProcess or spawnProcess from @coding-agent/process-host.'
     ])
     writeFileSync(path.join(root, BASELINE), '1 src/main/launch.ts\n')
     expect(main(root)).toBe(0)

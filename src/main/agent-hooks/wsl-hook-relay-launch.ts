@@ -1,17 +1,20 @@
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
+import type { MultiplexerTransport } from '../ssh/ssh-channel-multiplexer'
+import {
+  type waitForWslRelaySentinel,
+  type WslRelayStartupFailure,
+  MAX_STARTUP_BUFFER_BYTES
+} from './wsl-hook-relay-sentinel'
+
+import { appEnvPairs, deleteAppEnv, readAppEnv } from '../../shared/app-env'
+
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { relayBundleCandidates } from '../ssh/relay-bundle-paths'
 import { withWslGuestLauncherRevision } from '../wsl/execution/wsl-guest-launcher-revision'
 import { orcadPosixNodeRuntimeGlobs } from '../managed-server/install/orcad-node-runtime-globs'
 
-import type { MultiplexerTransport } from '../ssh/ssh-channel-multiplexer'
-import {
-  MAX_STARTUP_BUFFER_BYTES,
-  type waitForWslRelaySentinel,
-  type WslRelayStartupFailure
-} from './wsl-hook-relay-sentinel'
 import { addOrcaWslInteropEnv } from '../pty/shell-startup/wsl-orca-env'
 import { runWslProcess } from '../wsl/execution/wsl-runner'
 import { resolveWslExecutablePath } from '../wsl/execution/wsl-executable-path'
@@ -20,10 +23,8 @@ import { resolveWslInteropSpawnCwd } from '../wsl/execution/wsl-interop-spawn-di
 import {
   WSL_HOOK_RELAY_BUNDLE_NAME,
   WSL_HOOK_RELAY_DIR,
-  WSL_HOOK_RELAY_INSTANCE_ENV,
   WSL_HOOK_RELAY_NO_NODE_EXIT_CODE,
   WSL_HOOK_RELAY_STALE_EXIT_CODE,
-  WSL_HOOK_RELAY_VERSION_ENV,
   WSL_HOOK_RELAY_VERSION_FILE
 } from '../../shared/wsl-hook-relay-contract'
 
@@ -60,7 +61,7 @@ export function buildGuestLaunchScript(version: string): string {
     '#!/bin/sh',
     `d="${dir}"`,
     `v="$(cat "$d/${WSL_HOOK_RELAY_VERSION_FILE}" 2>/dev/null || true)"`,
-    `[ -n "$${WSL_HOOK_RELAY_VERSION_ENV}" ] && [ "$v" = "$${WSL_HOOK_RELAY_VERSION_ENV}" ] || exit ${WSL_HOOK_RELAY_STALE_EXIT_CODE}`,
+    `[ -n "\${CODING_AGENT_WSL_HOOK_RELAY_VERSION-$ORCA_WSL_HOOK_RELAY_VERSION}" ] && [ "$v" = "\${CODING_AGENT_WSL_HOOK_RELAY_VERSION-$ORCA_WSL_HOOK_RELAY_VERSION}" ] || exit ${WSL_HOOK_RELAY_STALE_EXIT_CODE}`,
     'n=""',
     `for c in "$(command -v node 2>/dev/null || true)" "$HOME/.nvm/versions/node"/*/bin/node /usr/local/bin/node /usr/bin/node "$HOME/.local/bin/node" ${orcadRuntime} ${orcadMachineRuntimes}; do`,
     '  [ -n "$c" ] && [ -x "$c" ] || continue',
@@ -224,15 +225,15 @@ export function buildWslRelaySpawnEnv(
   const env: NodeJS.ProcessEnv = {
     ...process.env,
     WSL_UTF8: '1',
-    ORCA_AGENT_HOOK_PORT: coords.ORCA_AGENT_HOOK_PORT,
-    ORCA_AGENT_HOOK_TOKEN: coords.ORCA_AGENT_HOOK_TOKEN,
-    ORCA_AGENT_HOOK_ENV: coords.ORCA_AGENT_HOOK_ENV,
-    ORCA_AGENT_HOOK_VERSION: coords.ORCA_AGENT_HOOK_VERSION,
-    [WSL_HOOK_RELAY_VERSION_ENV]: bundleVersion,
-    [WSL_HOOK_RELAY_INSTANCE_ENV]: instanceKey
+    ...appEnvPairs('AGENT_HOOK_PORT', readAppEnv(coords, 'AGENT_HOOK_PORT')),
+    ...appEnvPairs('AGENT_HOOK_TOKEN', readAppEnv(coords, 'AGENT_HOOK_TOKEN')),
+    ...appEnvPairs('AGENT_HOOK_ENV', readAppEnv(coords, 'AGENT_HOOK_ENV')),
+    ...appEnvPairs('AGENT_HOOK_VERSION', readAppEnv(coords, 'AGENT_HOOK_VERSION')),
+    ...appEnvPairs('WSL_HOOK_RELAY_VERSION', bundleVersion),
+    ...appEnvPairs('WSL_HOOK_INSTANCE', instanceKey)
   }
   // The guest derives its endpoint path; do not translate the Windows endpoint through WSLENV.
-  delete env.ORCA_AGENT_HOOK_ENDPOINT
+  deleteAppEnv(env, 'AGENT_HOOK_ENDPOINT')
   addOrcaWslInteropEnv(env as Record<string, string>)
   return env
 }

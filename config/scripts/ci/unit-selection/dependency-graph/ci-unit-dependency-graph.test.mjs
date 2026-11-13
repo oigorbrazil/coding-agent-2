@@ -25,18 +25,21 @@ function fixture(extra = {}) {
   const files = {
     'pnpm-workspace.yaml': 'packages:\n  - src/packages/*\n',
     'src/packages/process-host/package.json': manifest(
-      '@orca/process-host',
+      '@coding-agent/process-host',
       './src/run-process.ts'
     ),
     'src/packages/process-host/src/run-process.ts':
-      "import { value } from '@orca/byte-buffer'; export { value }; throw Error('source must not execute')",
+      "import { value } from '@coding-agent/byte-buffer'; export { value }; throw Error('source must not execute')",
     'src/packages/process-host/dist/index.js': 'throw Error("stale output")',
-    'src/packages/byte-buffer/package.json': manifest('@orca/byte-buffer', './src/byte-buffer.ts'),
+    'src/packages/byte-buffer/package.json': manifest(
+      '@coding-agent/byte-buffer',
+      './src/byte-buffer.ts'
+    ),
     'src/packages/byte-buffer/src/byte-buffer.ts': 'export const value = 1',
-    'src/consumer.test.ts': "import '@orca/process-host'",
-    'src/dynamic.test.ts': "import('@orca/process-host')",
-    'src/require.test.ts': "require('@orca/process-host')",
-    'src/type.test.ts': "import type { value } from '@orca/process-host'",
+    'src/consumer.test.ts': "import '@coding-agent/process-host'",
+    'src/dynamic.test.ts': "import('@coding-agent/process-host')",
+    'src/require.test.ts': "require('@coding-agent/process-host')",
+    'src/type.test.ts': "import type { value } from '@coding-agent/process-host'",
     'src/unrelated.test.ts': 'export const unrelated = true',
     ...extra
   }
@@ -78,7 +81,7 @@ it('tracks package manifests as inputs to all public consumers', () => {
   }
 })
 
-it.each(['@orca/unknown', '@orca/process-host/private'])(
+it.each(['@coding-agent/unknown', '@coding-agent/process-host/private'])(
   'does not silently drop unresolved internal imports: %s',
   (specifier) => {
     expect(() =>

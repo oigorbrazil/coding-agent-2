@@ -28,7 +28,8 @@ describe('prependOrcaCliDirToChildPath', () => {
         PATH: `/usr/bin:${join(USER_DATA, 'cli', 'bin')}::/bin`,
         ORCA_USER_DATA_PATH: '/parent/profile',
         ORCA_CLI_COMMAND: '/parent/orca',
-        ORCA_CLI_BIN_DIR: '/parent/bin'
+        ORCA_CLI_BIN_DIR: '/parent/bin',
+        CODING_AGENT_CLI_BIN_DIR: '/new-parent/bin'
       }
       expect(
         prependOrcaCliDirToChildPath(env, {
@@ -83,7 +84,9 @@ describe('prependOrcaCliDirToChildPath', () => {
     ).toBe(launcher)
     expect(env).toEqual({
       Path: `${binDir};C:\\Windows;C:\\Tools`,
+      CODING_AGENT_USER_DATA_PATH: USER_DATA,
       ORCA_USER_DATA_PATH: USER_DATA,
+      CODING_AGENT_CLI_COMMAND: launcher,
       ORCA_CLI_COMMAND: launcher
     })
   })

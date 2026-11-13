@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../../shared/app-env'
 // Redirect detached candidate stdout to its version directory so readiness does not hold SSH open.
 import type { OrcadLaunchEnvEntry } from '../../ssh/orcad-host-transport'
 import {
@@ -101,9 +102,13 @@ export function orcadLaunchCommand(
   // Capture in the launching shell; detached subshell variables do not return here.
   const recordSession = detach === 'nohup' && recordsOrcadLaunchSshSession(host)
   const launchEnv = [
+    `CODING_AGENT_VERSION=${quotePosixShell(spec.fullVersion)}`,
     `ORCA_VERSION=${quotePosixShell(spec.fullVersion)}`,
+    `CODING_AGENT_USER_DATA=${quotePosixShell(spec.userDataDir)}`,
     `ORCA_USER_DATA=${quotePosixShell(spec.userDataDir)}`,
-    ...orcadManagedLaunchEnv(spec).map(([name, value]) => `${name}=${quotePosixShell(value)}`)
+    ...orcadManagedLaunchEnv(spec).flatMap(([name, value]) =>
+      appEnvKeys([name]).map((key) => `${key}=${quotePosixShell(value)}`)
+    )
   ]
   return [
     `orcad_pid=${quotePosixShell(joinRemotePath(host, spec.remoteInstallDir, ORCAD_PID_FILENAME))};`,

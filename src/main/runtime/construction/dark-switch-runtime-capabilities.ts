@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import type { RuntimeCapability } from '../../../shared/protocol-version'
 import { ORCA_LAYOUT_OWNER_IS_MAIN } from '../../../shared/layout-owner-switch'
 import { ORCA_SIDEBAR_INPUTS_IS_MAIN } from '../../../shared/sidebar-inputs-switch'
@@ -10,7 +11,7 @@ import { WORKSPACE_UNREAD_HOST_RAISES_CAPABILITY } from '../../../shared/workspa
 export function darkSwitchRuntimeCapabilities(): RuntimeCapability[] {
   const capabilities: RuntimeCapability[] = []
   // Switch point: e2e simulates older unread hosts without retaining an old binary.
-  if (ORCA_SIDEBAR_INPUTS_IS_MAIN && process.env.ORCA_E2E_OLDER_UNREAD_HOST !== '1') {
+  if (ORCA_SIDEBAR_INPUTS_IS_MAIN && readAppEnv(process.env, 'E2E_OLDER_UNREAD_HOST') !== '1') {
     capabilities.push(WORKSPACE_UNREAD_HOST_RAISES_CAPABILITY)
   }
   // Switch point: paired desktops may submit layout intents (layout-intents-capability.ts).

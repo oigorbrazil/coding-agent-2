@@ -1,10 +1,11 @@
+import { appEnvKeys } from '../../shared/app-env'
 import { readFileSync } from 'node:fs'
 import { isDefinitiveAbsence } from '../../shared/definitive-filesystem-absence'
 import { applyEdits, modify, parse as parseJsonc, type ParseError } from 'jsonc-parser'
 import { isPlainObject } from '../agent-hooks/installer-utils'
 
 // Muse strips nonstandard environment variables from managed hooks unless allowlisted.
-export const MUSE_MANAGED_HOOK_ENV_VARS = [
+export const MUSE_MANAGED_HOOK_ENV_VARS = appEnvKeys([
   'ORCA_AGENT_HOOK_PORT',
   'ORCA_AGENT_HOOK_TOKEN',
   'ORCA_AGENT_HOOK_ENV',
@@ -17,7 +18,7 @@ export const MUSE_MANAGED_HOOK_ENV_VARS = [
   'ORCA_AGENT_LAUNCH_TOKEN',
   // Windows cmd AutoRun may need USERPROFILE or every hook exits 1.
   'USERPROFILE'
-] as const
+])
 
 export type MuseSettingsSource = {
   text: string | null

@@ -8,7 +8,7 @@ import {
   writeFileSync
 } from 'node:fs'
 import { buildSync } from 'esbuild'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

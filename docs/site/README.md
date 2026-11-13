@@ -1,4 +1,4 @@
-# @orca/docs
+# @coding-agent/docs
 
 This package contains the product documentation and public media intended to
 ship alongside Coding Agent 2's source code.

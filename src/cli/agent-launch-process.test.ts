@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import { createServer } from 'node:net'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { expect, it } from 'vitest'
 import { z } from 'zod'
 import {

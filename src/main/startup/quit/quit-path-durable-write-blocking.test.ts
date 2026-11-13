@@ -163,7 +163,7 @@ async function createStatsCollector(dir: string): Promise<TestStatsCollector> {
 }
 
 const dataFile = (dir: string): string => join(dir, 'orca-data.json')
-const statsFile = (dir: string): string => join(dir, 'orca-stats.json')
+const statsFile = (dir: string): string => join(dir, 'coding-stats.json')
 const activeViewFile = (dir: string): string => join(dir, 'active-view.json')
 
 describe('quit-path durable writes never park the main thread', () => {
@@ -302,7 +302,7 @@ describe('quit-path durable writes never park the main thread', () => {
     fsCalls.dirPrefix = dir
     fsCalls.recording = true
     fsCalls.waitAsync = (fn, target) => {
-      if (held || fn !== 'writeFile' || !target.includes('orca-github-cache.json')) {
+      if (held || fn !== 'writeFile' || !target.includes('coding-github-cache.json')) {
         return null
       }
       held = true
@@ -319,7 +319,7 @@ describe('quit-path durable writes never park the main thread', () => {
     await finalFlush
     fsCalls.recording = false
 
-    expect(JSON.parse(readFileSync(join(dir, 'orca-github-cache.json'), 'utf-8'))).toEqual({
+    expect(JSON.parse(readFileSync(join(dir, 'coding-github-cache.json'), 'utf-8'))).toEqual({
       pr: { test: { data: null, fetchedAt: 2 } },
       issue: {}
     })

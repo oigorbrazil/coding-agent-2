@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 
 const buildScript = fileURLToPath(new URL('./build-native-for-platform.mjs', import.meta.url))
 const BUILD_COUNT = 4

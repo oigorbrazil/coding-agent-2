@@ -1,22 +1,26 @@
+import type { HandlerContext } from '../dispatch'
+import {
+  type PluginManifest,
+  isQualifiedPluginKey,
+  parsePluginManifest,
+  qualifiedPluginKey
+} from '../../shared/plugins/manifest/plugin-manifest'
+import type { PluginShotSaved, PluginShotReply } from './plugin-view'
+import { readAppEnv } from '../../shared/app-env'
+import { pluginManifestPath } from '../../shared/plugins/manifest/plugin-manifest-path'
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join, resolve } from 'node:path'
-import type { HandlerContext } from '../dispatch'
+
 import { RuntimeClientError } from '../runtime/types'
 import type { PluginHostListEntry } from '../../shared/plugins/plugin-list-entry'
-import {
-  isQualifiedPluginKey,
-  parsePluginManifest,
-  qualifiedPluginKey,
-  type PluginManifest
-} from '../../shared/plugins/manifest/plugin-manifest'
+
 import {
   localPluginPublisher,
   withPluginPublisher
 } from '../../shared/plugins/installation/plugin-publisher-derivation'
 import { callPlugins } from './plugin-runtime'
 import { enclosingPluginFolder } from './plugin-shot-default-dir'
-import type { PluginShotReply, PluginShotSaved } from './plugin-view'
 
 /** What `plugins.shotReplay` answers: a shot of the drawn scenario tree. */
 type PluginShotReplayReply = PluginShotReply & { replay?: true; scenario?: string }
@@ -42,7 +46,7 @@ function refuse(code: string, message: string, nextSteps: string[] = []): Runtim
 
 /** Why local only: the scenario runs the plugin's code here, then Coding Agent 2 on this machine draws it. */
 function requireLocal(ctx: HandlerContext): void {
-  if (process.env.ORCA_CLI_CWD || ctx.client.isRemote) {
+  if (readAppEnv(process.env, 'CLI_CWD') || ctx.client.isRemote) {
     throw refuse(
       'invalid_environment',
       "shot --scenario runs the plugin's code on this machine and shows it in the Coding Agent 2 on this machine, so it does not reach another host. Run it where Coding Agent 2 and the plugin folder are, without --environment."
@@ -53,17 +57,17 @@ function requireLocal(ctx: HandlerContext): void {
 async function readManifest(dir: string): Promise<PluginManifest> {
   let raw: unknown
   try {
-    raw = JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
+    raw = JSON.parse(await readFile(pluginManifestPath(dir), 'utf8'))
   } catch (error) {
     throw refuse(
       'invalid_argument',
-      `${dir} has no readable orca-plugin.json: ${error instanceof Error ? error.message : String(error)}`
+      `${dir} has no readable coding-plugin.json: ${error instanceof Error ? error.message : String(error)}`
     )
   }
   const parsed = parsePluginManifest(raw)
   if (!parsed.ok) {
     throw refuse('plugin_invalid', `${dir}: ${parsed.error}`, [
-      `\`orca plugin validate ${dir}\` lists every problem.`
+      `\`coding plugin validate ${dir}\` lists every problem.`
     ])
   }
   return parsed.manifest
@@ -95,14 +99,14 @@ async function resolveFolder(
   const entry = plugins.find((plugin) => plugin.pluginKey === target)
   if (!entry) {
     throw refuse('plugin_not_found', `Coding Agent 2 has no plugin ${target}.`, [
-      'Pass the plugin folder instead: `orca plugin shot <dir> --scenario <name>`.'
+      'Pass the plugin folder instead: `coding plugin shot <dir> --scenario <name>`.'
     ])
   }
   if (!entry.isDev) {
     throw refuse(
       'invalid_argument',
       `${target} is installed, not a development folder; --scenario renders a plugin's own source folder.`,
-      ['Pass the plugin folder: `orca plugin shot <dir> --scenario <name>`.']
+      ['Pass the plugin folder: `coding plugin shot <dir> --scenario <name>`.']
     )
   }
   const enclosing = enclosingPluginFolder(ctx.cwd)
@@ -111,7 +115,7 @@ async function resolveFolder(
     throw refuse(
       'invalid_argument',
       `Run this inside ${target}'s folder, or pass the folder; Coding Agent 2 does not share where a development folder is.`,
-      [`orca plugin shot <dir> --scenario <name>`]
+      [`coding plugin shot <dir> --scenario <name>`]
     )
   }
   return { dir: enclosing, manifest, pluginKey: target }
@@ -150,8 +154,8 @@ export function pluginScenarioFileStem(scenario: string): string {
 }
 
 /**
- * `orca plugin shot --scenario`: renders the panel in the named `.check.ts` scenario on this
- * machine (as `orca plugin check` does, against a stand-in host and the plugin's worker mounted
+ * `coding plugin shot --scenario`: renders the panel in the named `.check.ts` scenario on this
+ * machine (as `coding plugin check` does, against a stand-in host and the plugin's worker mounted
  * here), then has Coding Agent 2 draw that tree apart from the plugin and capture it.
  */
 export async function takePluginScenarioShot(

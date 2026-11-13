@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 // Bundled helper reads phys_footprint via proc_pid_rusage in a few ms, so every 2 s resource poll can use it.
 const HELPER_EXECUTABLE = 'orca-process-footprint'

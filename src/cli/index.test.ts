@@ -493,7 +493,7 @@ describe('nested command group help', () => {
 
         expect(process.exitCode).toBe(0)
         const output = logSpy.mock.calls.flat().join('\n')
-        expect(output).toContain(`orca ${path}`)
+        expect(output).toContain(`coding ${path}`)
         for (const command of commands) {
           expect(output).toContain(command)
         }
@@ -518,8 +518,8 @@ describe('nested command group help', () => {
 
       expect(process.exitCode).toBe(1)
       const stderr = errorSpy.mock.calls.flat().join('\n')
-      expect(stderr).toContain('Missing subcommand for: orca skills')
-      expect(stderr).toContain('orca skills --help')
+      expect(stderr).toContain('Missing subcommand for: coding skills')
+      expect(stderr).toContain('coding skills --help')
       expect(stderr).not.toContain('Did you mean')
       expect(runtimeClientConstructorMock).not.toHaveBeenCalled()
     } finally {

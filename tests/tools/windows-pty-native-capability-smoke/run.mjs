@@ -18,7 +18,7 @@ function executableArgument(argv) {
 }
 
 export function checkoutRunProcessPath() {
-  return createRequire(import.meta.url).resolve('@orca/process-host')
+  return createRequire(import.meta.url).resolve('@coding-agent/process-host')
 }
 
 export function packagedProbeInvocation(executable, environment = process.env) {

@@ -1,3 +1,8 @@
+import {
+  type ShellStartupFeature,
+  encodeShellStartupFeatures
+} from '../../pty/shell-startup/shell-startup-features'
+import { appEnvPairs } from '../../../shared/app-env'
 import { basename, win32 as pathWin32 } from 'node:path'
 import { encodePowerShellCommand } from '../../../shared/powershell-command-encoding'
 import {
@@ -7,13 +12,9 @@ import {
 import { getFishCodexShellLaunchPreflight } from '../../../shared/codex-shell-function'
 import { getFishClaudeShellFunction } from '../../../shared/claude-shell-function'
 import { getFishXdgDataDirsLaunchEnv } from '../../pty/shell-startup/fish-xdg-data-dirs-handoff'
-import { POSIX_SHELL_STARTUP_COMMAND_ENV } from '../../pty/shell-startup/posix-shell-startup-command'
+
 import { getFishShellReadyInitCommand } from '../../pty/shell-startup/shell-templates'
-import {
-  encodeShellStartupFeatures,
-  SHELL_STARTUP_FEATURE_ENV,
-  type ShellStartupFeature
-} from '../../pty/shell-startup/shell-startup-features'
+
 import {
   inheritedZdotdirEnv,
   resolveInheritedZdotdir
@@ -76,9 +77,9 @@ export function getShellLaunchConfig(
       env: {
         ...inheritedZdotdirEnv(resolveInheritedZdotdir(process.env)),
         ZDOTDIR: `${getShellReadyWrapperRoot()}/zsh`,
-        [SHELL_STARTUP_FEATURE_ENV]: encodeShellStartupFeatures(wrapperFeatures),
+        ...appEnvPairs('SHELL_FEATURES', encodeShellStartupFeatures(wrapperFeatures)),
         ...(startupCommand !== undefined
-          ? { [POSIX_SHELL_STARTUP_COMMAND_ENV]: startupCommand }
+          ? { ...appEnvPairs('POSIX_SHELL_STARTUP_COMMAND', startupCommand) }
           : {})
       },
       supportsReadyMarker: features.includes('ready')
@@ -97,9 +98,9 @@ export function getShellLaunchConfig(
     return {
       args,
       env: {
-        [SHELL_STARTUP_FEATURE_ENV]: encodeShellStartupFeatures(wrapperFeatures),
+        ...appEnvPairs('SHELL_FEATURES', encodeShellStartupFeatures(wrapperFeatures)),
         ...(startupCommand !== undefined
-          ? { [POSIX_SHELL_STARTUP_COMMAND_ENV]: startupCommand }
+          ? { ...appEnvPairs('POSIX_SHELL_STARTUP_COMMAND', startupCommand) }
           : {})
       },
       supportsReadyMarker: features.includes('ready')
@@ -133,7 +134,9 @@ export function getShellLaunchConfig(
         )}\n${getFishCodexShellLaunchPreflight() + getFishClaudeShellFunction()}`
       ],
       env:
-        startupCommand !== undefined ? { [POSIX_SHELL_STARTUP_COMMAND_ENV]: startupCommand } : {},
+        startupCommand !== undefined
+          ? { ...appEnvPairs('POSIX_SHELL_STARTUP_COMMAND', startupCommand) }
+          : {},
       supportsReadyMarker: features.includes('ready')
     }
   }

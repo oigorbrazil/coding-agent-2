@@ -6,7 +6,7 @@ import { createDaemonPtySubprocessHandle } from '../../src/main/daemon/pty-subpr
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   captureDescendantSnapshot,
   readProcessTable

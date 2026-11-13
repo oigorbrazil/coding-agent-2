@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { randomUUID } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { chmod, copyFile, mkdir, readFile, rename, rm, utimes, writeFile } from 'node:fs/promises'
@@ -284,8 +285,9 @@ async function verifyTemplateMarkers(
 
 export function getOrcadTemplateCandidates(): string[] {
   const candidates: string[] = []
-  if (process.env.ORCA_ORCAD_TEMPLATE_PATH) {
-    candidates.push(process.env.ORCA_ORCAD_TEMPLATE_PATH)
+  const configuredEnv = readAppEnv(process.env, 'ORCAD_TEMPLATE_PATH')
+  if (configuredEnv) {
+    candidates.push(configuredEnv)
   }
   if (process.resourcesPath) {
     candidates.push(join(process.resourcesPath, 'orcad-template'))

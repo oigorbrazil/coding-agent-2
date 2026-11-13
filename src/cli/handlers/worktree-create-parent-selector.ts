@@ -1,8 +1,10 @@
+import { type RuntimeClient, RuntimeClientError } from '../runtime-client'
+import { type ParentEnvironment, resolveParentEnvironment } from './worktree-parent-environment'
+import { readAppEnv } from '../../shared/app-env'
 import { isWorkspaceKey, worktreeWorkspaceKey } from '../../shared/workspace-scope'
 import { getOptionalStringFlag } from '../flags'
-import { RuntimeClientError, type RuntimeClient } from '../runtime-client'
+
 import { getOptionalParentSelector } from '../caller-folder-workspace'
-import { resolveParentEnvironment, type ParentEnvironment } from './worktree-parent-environment'
 
 export type CreateParentSelector = {
   parentWorktree?: string
@@ -69,11 +71,11 @@ export async function resolveCreateParentSelector(
 }
 
 export function getEnvParentWorkspace(): string | undefined {
-  const workspaceId = process.env.ORCA_WORKSPACE_ID
+  const workspaceId = readAppEnv(process.env, 'WORKSPACE_ID')
   if (typeof workspaceId === 'string' && isWorkspaceKey(workspaceId)) {
     return workspaceId
   }
-  const worktreeId = process.env.ORCA_WORKTREE_ID
+  const worktreeId = readAppEnv(process.env, 'WORKTREE_ID')
   if (typeof worktreeId === 'string' && worktreeId.length > 0) {
     return isWorkspaceKey(worktreeId) ? worktreeId : worktreeWorkspaceKey(worktreeId)
   }

@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   getTarProgram,
   getZipExtractorCommand

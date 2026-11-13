@@ -100,7 +100,7 @@ function DiffCardRows({
     <div
       data-native-chat-code-content
       tabIndex={0}
-      className="ml-6 mt-1 max-h-72 overflow-auto rounded-lg border border-chat-code-border bg-chat-code-surface py-1 font-mono text-chat-code leading-relaxed text-chat-foreground scrollbar-sleek focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+      className="ml-6 mt-1 max-h-72 overflow-auto rounded-lg border border-chat-code-border bg-chat-code-surface py-1 font-code text-chat-code leading-relaxed text-chat-foreground scrollbar-sleek focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
     >
       {lines.map((line) => {
         const signature = `${line.kind}:${line.oldLineNumber}:${line.newLineNumber}:${line.text}`

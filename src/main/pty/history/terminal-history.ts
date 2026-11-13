@@ -1,3 +1,4 @@
+import { deleteAppEnv, setAppEnv } from '../../../shared/app-env'
 import { join, basename } from 'node:path'
 import { mkdirSync, existsSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { readFile, stat } from 'node:fs/promises'
@@ -206,7 +207,7 @@ export function injectHistoryEnv(
   options: { wslDistro?: string | null } = {}
 ): HistoryInjectionResult {
   // Nested Coding Agent 2 launches inherit this value; clear it before any early return to prevent history leaks.
-  delete spawnEnv.ORCA_HISTFILE
+  deleteAppEnv(spawnEnv, 'HISTFILE')
   dropInheritedOrcaFishHistory(spawnEnv)
   dropInheritedOrcaHistFile(spawnEnv)
 
@@ -254,7 +255,7 @@ export function injectHistoryEnv(
 
   spawnEnv.HISTFILE = wslDistro ? toLinuxPath(histFilePath) : histFilePath
   // Preserve the injected path across system zshrc's unconditional HISTFILE assignment.
-  spawnEnv.ORCA_HISTFILE = spawnEnv.HISTFILE
+  setAppEnv(spawnEnv, 'HISTFILE', spawnEnv.HISTFILE)
 
   result.histFile = spawnEnv.HISTFILE
   result.historyDir = spawnEnv.HISTFILE.replace(/[/\\][^/\\]+$/, '')
@@ -299,11 +300,11 @@ export function updateHistoryEnvForFallback(
   const newFilename = historyFilename(resolveShellKind(fallbackShellPath))
   if (!newFilename) {
     delete spawnEnv.HISTFILE
-    delete spawnEnv.ORCA_HISTFILE
+    deleteAppEnv(spawnEnv, 'HISTFILE')
     return
   }
   spawnEnv.HISTFILE = `${injected.historyDir}/${newFilename}`
-  spawnEnv.ORCA_HISTFILE = spawnEnv.HISTFILE
+  setAppEnv(spawnEnv, 'HISTFILE', spawnEnv.HISTFILE)
 }
 
 export function logHistoryInjection(worktreeId: string, result: HistoryInjectionResult): void {

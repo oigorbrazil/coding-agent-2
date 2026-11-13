@@ -1,4 +1,5 @@
-import { spawnProcess } from '@orca/process-host'
+import { appEnvPairs } from '../../../../shared/app-env'
+import { spawnProcess } from '@coding-agent/process-host'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { createServer } from 'node:net'
 import { createRequire } from 'node:module'
@@ -76,7 +77,7 @@ export async function launchPopupIdentityProbe(root: string, electronArgs: reado
   const child = spawnProcess({
     program: executable,
     args,
-    env: { ...env, ORCA_BACKGROUND_LAUNCH: '1', ORCA_POPUP_IDENTITY_ROOT: root },
+    env: { ...env, ...appEnvPairs('BACKGROUND_LAUNCH', '1'), ORCA_POPUP_IDENTITY_ROOT: root },
     stdio: ['ignore', 'pipe', 'pipe']
   })
   const diagnostics: string[] = []

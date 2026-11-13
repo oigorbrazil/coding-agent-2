@@ -1,8 +1,8 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   forceTerminateProcessTree,
   signalProcessTree
-} from '@orca/process-host/process-tree-termination'
+} from '@coding-agent/process-host/process-tree-termination'
 import { mkdtempSync, mkdirSync, realpathSync, rmSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { availableParallelism, tmpdir } from 'node:os'

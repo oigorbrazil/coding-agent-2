@@ -1,9 +1,11 @@
+import { windowsAppEnvRestore } from '../../../../shared/app-env-script'
 import {
   WINDOWS_CLAUDE_BACKGROUND_JOB_GUARD,
   buildPosixClaudeBackgroundJobGuardLines
 } from '../../../agent-hooks/claude-background-job-guard'
 import { buildPosixAgentHookPostCommand } from '../../../agent-hooks/hook-post-command'
 import {
+  buildWindowsHookEndpointReloadLines,
   buildPosixHookPayloadCapture,
   buildPosixHookSpoolLines,
   buildWindowsHookEnvironmentGuardLines
@@ -15,8 +17,17 @@ export function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     return [
       '@echo off',
       'setlocal',
+      ...windowsAppEnvRestore([
+        'AGENT_HOOK_ENDPOINT',
+        'AGENT_HOOK_TRANSPORT',
+        'AGENT_HOOK_PORT',
+        'AGENT_HOOK_TOKEN',
+        'AGENT_HOOK_ENV',
+        'AGENT_HOOK_VERSION',
+        'PANE_KEY'
+      ]),
       // Reload the endpoint so surviving PTYs reach the current server after restart.
-      'if defined ORCA_AGENT_HOOK_ENDPOINT if exist "%ORCA_AGENT_HOOK_ENDPOINT%" call "%ORCA_AGENT_HOOK_ENDPOINT%" 2>nul',
+      ...buildWindowsHookEndpointReloadLines(),
       ...buildWindowsHookEnvironmentGuardLines(),
       WINDOWS_CLAUDE_BACKGROUND_JOB_GUARD,
       buildWindowsAgentHookCurlPostCommand('codex'),
@@ -33,7 +44,7 @@ export function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     // Reload endpoint state so surviving PTYs keep reporting after restart.
     'load_hook_endpoint() {',
     '  endpoint_path="$1"',
-    '  unset ORCA_AGENT_HOOK_TRANSPORT',
+    '  unset ORCA_AGENT_HOOK_TRANSPORT CODING_AGENT_AGENT_HOOK_PORT CODING_AGENT_AGENT_HOOK_TOKEN CODING_AGENT_AGENT_HOOK_ENV CODING_AGENT_AGENT_HOOK_VERSION CODING_AGENT_AGENT_HOOK_TRANSPORT',
     '  case "$endpoint_path" in',
     '    *.cmd)',
     // WSLENV passes endpoint.cmd; parse known assignments because cmd set lines are not POSIX syntax.
@@ -42,10 +53,15 @@ export function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     '        endpoint_line=${endpoint_line%"$endpoint_cr"}',
     '        case "$endpoint_line" in',
     '          "set ORCA_AGENT_HOOK_PORT="*) ORCA_AGENT_HOOK_PORT=${endpoint_line#*=} ;;',
+    '          "set CODING_AGENT_AGENT_HOOK_PORT="*) CODING_AGENT_AGENT_HOOK_PORT=${endpoint_line#*=} ;;',
     '          "set ORCA_AGENT_HOOK_TOKEN="*) ORCA_AGENT_HOOK_TOKEN=${endpoint_line#*=} ;;',
+    '          "set CODING_AGENT_AGENT_HOOK_TOKEN="*) CODING_AGENT_AGENT_HOOK_TOKEN=${endpoint_line#*=} ;;',
     '          "set ORCA_AGENT_HOOK_ENV="*) ORCA_AGENT_HOOK_ENV=${endpoint_line#*=} ;;',
+    '          "set CODING_AGENT_AGENT_HOOK_ENV="*) CODING_AGENT_AGENT_HOOK_ENV=${endpoint_line#*=} ;;',
     '          "set ORCA_AGENT_HOOK_VERSION="*) ORCA_AGENT_HOOK_VERSION=${endpoint_line#*=} ;;',
+    '          "set CODING_AGENT_AGENT_HOOK_VERSION="*) CODING_AGENT_AGENT_HOOK_VERSION=${endpoint_line#*=} ;;',
     '          "set ORCA_AGENT_HOOK_TRANSPORT="*) ORCA_AGENT_HOOK_TRANSPORT=${endpoint_line#*=} ;;',
+    '          "set CODING_AGENT_AGENT_HOOK_TRANSPORT="*) CODING_AGENT_AGENT_HOOK_TRANSPORT=${endpoint_line#*=} ;;',
     '        esac',
     '      done < "$endpoint_path"',
     '      ;;',
@@ -54,10 +70,10 @@ export function getManagedScript(target: 'local' | 'posix' = 'local'): string {
     '      ;;',
     '  esac',
     '}',
-    'if [ -n "$ORCA_AGENT_HOOK_ENDPOINT" ] && [ -r "$ORCA_AGENT_HOOK_ENDPOINT" ]; then',
-    '  load_hook_endpoint "$ORCA_AGENT_HOOK_ENDPOINT"',
+    'if [ -n "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ] && [ -r "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}" ]; then',
+    '  load_hook_endpoint "${CODING_AGENT_AGENT_HOOK_ENDPOINT-$ORCA_AGENT_HOOK_ENDPOINT}"',
     'fi',
-    'if [ -z "$ORCA_AGENT_HOOK_PORT" ] || [ -z "$ORCA_AGENT_HOOK_TOKEN" ] || [ -z "$ORCA_PANE_KEY" ]; then',
+    'if [ -z "${CODING_AGENT_AGENT_HOOK_PORT-$ORCA_AGENT_HOOK_PORT}" ] || [ -z "${CODING_AGENT_AGENT_HOOK_TOKEN-$ORCA_AGENT_HOOK_TOKEN}" ] || [ -z "${CODING_AGENT_PANE_KEY-$ORCA_PANE_KEY}" ]; then',
     '  spool_hook_event',
     '  exit 0',
     'fi',

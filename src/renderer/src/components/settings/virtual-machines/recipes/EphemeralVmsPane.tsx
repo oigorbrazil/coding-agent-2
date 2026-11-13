@@ -219,7 +219,7 @@ export function EphemeralVmsPane(): React.JSX.Element {
             <p className="text-xs text-muted-foreground">
               {t(
                 'auto.components.settings.EphemeralVmsPane.recipesHelp',
-                'Recipes from orca.yaml and enabled plugins show up here, ready to launch a workspace on.'
+                'Recipes from coding.yaml and enabled plugins show up here, ready to launch a workspace on.'
               )}
             </p>
           </div>

@@ -1,3 +1,4 @@
+import { resolveLegacyRenamedFile } from '../../shared/legacy-renamed-file'
 import { readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseOrcaYaml } from '../../shared/orca-yaml'
@@ -19,8 +20,8 @@ import { spawn } from 'node:child_process'
 import {
   forceTerminateProcessTree,
   signalProcessTree
-} from '@orca/process-host/process-tree-termination'
-import { createOutputSink } from '@orca/process-host/bounded-output-sink'
+} from '@coding-agent/process-host/process-tree-termination'
+import { createOutputSink } from '@coding-agent/process-host/bounded-output-sink'
 
 const HOOK_TIMEOUT = 120_000
 
@@ -99,7 +100,18 @@ function getHookShell(): string | undefined {
 
 // A UNC drive-mount repo's file opens only through its drive path.
 function orcaYamlPath(repoPath: string): string {
-  return windowsFsPath(join(repoPath, 'orca.yaml'))
+  return resolveLegacyRenamedFile(
+    windowsFsPath(join(repoPath, 'coding.yaml')),
+    windowsFsPath(join(repoPath, 'orca.yaml')),
+    { copy: false }
+  )
+}
+
+export function hookConfigWarning(repoPath: string): string | undefined {
+  return existsSync(windowsFsPath(join(repoPath, 'coding.yaml'))) &&
+    existsSync(windowsFsPath(join(repoPath, 'orca.yaml')))
+    ? 'Both coding.yaml and orca.yaml exist; using coding.yaml.'
+    : undefined
 }
 
 export function loadHooks(repoPath: string): OrcaHooks | null {

@@ -1,7 +1,7 @@
 import { createHash, createHmac } from 'node:crypto'
 import { createServer, type Server } from 'node:http'
 import { createServer as createNetServer } from 'node:net'
-import { buildHostProofMacInput, HOST_CHALLENGE_PLAINTEXT_DOMAIN } from '@orca-cloud/relay-contract/host-proof-transcript'
+import { buildHostProofMacInput, HOST_CHALLENGE_PLAINTEXT_DOMAIN } from '@coding-agent-cloud/relay-contract/host-proof-transcript'
 import { exportJWK, generateKeyPair, SignJWT } from 'jose'
 import nacl from 'tweetnacl'
 import { afterEach, describe, expect, it, vi } from 'vitest'

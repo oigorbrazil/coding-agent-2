@@ -77,8 +77,8 @@ export const ENVIRONMENT_HANDLERS: Record<string, CommandHandler> = {
   'host list': async ({ client, flags, json }) => {
     rejectLocalPairingStoreRetargeting(
       flags,
-      '`orca host list`. It answers from this machine\u2019s own pairing store, so a routed answer would name servers paired with a different machine.',
-      'Run `orca host list` on that machine to see the SSH targets registered there.'
+      '`coding host list`. It answers from this machine\u2019s own pairing store, so a routed answer would name servers paired with a different machine.',
+      'Run `coding host list` on that machine to see the SSH targets registered there.'
     )
     const sshTargets = (await listSshTargets(client)).map((target) => ({
       kind: 'ssh' as const,
@@ -114,8 +114,8 @@ export const ENVIRONMENT_HANDLERS: Record<string, CommandHandler> = {
   'host rm': async ({ client, flags, json }) => {
     rejectLocalPairingStoreRetargeting(
       flags,
-      '`orca host rm`. It removes an SSH target from this machine\u2019s own Coding Agent 2 runtime, the same one `orca host list` reads.',
-      'Run `orca host rm` on that machine to remove an SSH target registered there.'
+      '`coding host rm`. It removes an SSH target from this machine\u2019s own Coding Agent 2 runtime, the same one `coding host list` reads.',
+      'Run `coding host rm` on that machine to remove an SSH target registered there.'
     )
     const targetId = requireSshHostFlag(flags)
     // Unlike listSshTargets, this keeps runtime_unavailable instead of reporting an unknown target.
@@ -127,7 +127,7 @@ export const ENVIRONMENT_HANDLERS: Record<string, CommandHandler> = {
         `Unknown SSH target in --host ssh:${targetId}: this Coding Agent 2 host has no SSH target with that id.`,
         {
           knownSshTargets: targets,
-          nextSteps: ['Run `orca host list` to see each SSH target and its --host ssh:<id> flag.']
+          nextSteps: ['Run `coding host list` to see each SSH target and its --host ssh:<id> flag.']
         }
       )
     }
@@ -144,8 +144,8 @@ export const ENVIRONMENT_HANDLERS: Record<string, CommandHandler> = {
   'environment list': async ({ flags, json }) => {
     rejectLocalPairingStoreRetargeting(
       flags,
-      '`orca environment list`. Paired servers are stored on this machine, so there is no other host to ask.',
-      'Run `orca environment list` on that machine to see the servers paired with it.'
+      '`coding environment list`. Paired servers are stored on this machine, so there is no other host to ask.',
+      'Run `coding environment list` on that machine to see the servers paired with it.'
     )
     const environments = listEnvironments(getDefaultUserDataPath()).map(redactRuntimeEnvironment)
     printResult(localSuccess({ environments }), json, formatEnvironmentList)
@@ -209,14 +209,14 @@ function requireSshHostFlag(flags: Map<string, string | boolean>): string {
   const named = host.kind === 'alias' ? host.alias : host.id
   const nextStep =
     host.kind === 'runtime'
-      ? 'A paired Coding Agent 2 server is removed with `orca environment rm --environment <name>`.'
+      ? 'A paired Coding Agent 2 server is removed with `coding environment rm --environment <name>`.'
       : host.kind === 'local' || normalizeTypedName(named) === LOCAL_HOST_LIST_NAME
         ? 'This machine is always listed and cannot be removed.'
-        : 'Pass the SSH target id as --host ssh:<target-id>; `orca host list` prints it.'
+        : 'Pass the SSH target id as --host ssh:<target-id>; `coding host list` prints it.'
   throw new RuntimeClientError(
     'invalid_argument',
-    `\`orca host rm\` removes saved SSH targets only, and --host ${named} is not one.`,
-    { nextSteps: [nextStep, 'Run `orca host list` to see each SSH target and its --host flag.'] }
+    `\`coding host rm\` removes saved SSH targets only, and --host ${named} is not one.`,
+    { nextSteps: [nextStep, 'Run `coding host list` to see each SSH target and its --host flag.'] }
   )
 }
 

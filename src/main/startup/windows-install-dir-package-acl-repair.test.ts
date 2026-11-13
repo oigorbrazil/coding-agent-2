@@ -10,7 +10,7 @@ const { runProcessMock, runProcessSyncMock } = vi.hoisted(() => ({
 }))
 
 // Fail any process spawn: repair must use the in-process addon rather than icacls.
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock,
   runProcessSync: runProcessSyncMock
 }))

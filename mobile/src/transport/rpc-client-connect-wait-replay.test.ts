@@ -332,7 +332,7 @@ describe('hosted GitHub operation physical authority', () => {
       const f = fixture()
       const result = boundUpdate(f.page.client)
       const rejected = expect(result).rejects.toThrow(
-        capable ? 'connection changed' : 'Update Orca'
+        capable ? 'connection changed' : 'Update Coding Agent 2'
       )
       f.post()
       await turn()

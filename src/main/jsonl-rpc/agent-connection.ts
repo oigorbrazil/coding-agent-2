@@ -1,5 +1,5 @@
-import type { PipedProcessSpawner } from '@orca/process-host/process-spec'
-import { spawnProcess } from '@orca/process-host'
+import type { PipedProcessSpawner } from '@coding-agent/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
 import {
   providerDiagnostic,
   withProviderDiagnostic

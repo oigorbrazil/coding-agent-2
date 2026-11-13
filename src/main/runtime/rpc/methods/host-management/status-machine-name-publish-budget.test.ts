@@ -7,7 +7,7 @@ import { partialRuntimeStore } from '../../../orca-runtime-tests/runtime-store-p
 
 // Use a fresh process before its memoized scutil lookup completes; control completion to exercise the publish deadline.
 const runProcessMock = vi.hoisted(() => vi.fn())
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 
 vi.mock('electron', () => ({
   BrowserWindow: { fromId: vi.fn(() => null) },

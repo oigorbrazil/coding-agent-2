@@ -9,12 +9,14 @@ const { spawn, signalTree, forceTree, inFlightKill } = vi.hoisted(() => ({
   forceTree: vi.fn(),
   inFlightKill: vi.fn()
 }))
-vi.mock('@orca/process-host', () => ({ spawnProcess: spawn }))
-vi.mock('@orca/process-host/process-tree-termination', () => ({
+vi.mock('@coding-agent/process-host', () => ({ spawnProcess: spawn }))
+vi.mock('@coding-agent/process-host/process-tree-termination', () => ({
   signalProcessTree: signalTree,
   forceTerminateProcessTree: forceTree
 }))
-vi.mock('@orca/process-host/windows-tree-kill', () => ({ inFlightWindowsTreeKill: inFlightKill }))
+vi.mock('@coding-agent/process-host/windows-tree-kill', () => ({
+  inFlightWindowsTreeKill: inFlightKill
+}))
 vi.mock('../../shared/node-cli-command-resolution', () => ({
   resolveCliCommand: (command: string) => command,
   withCliRuntimeOnPath: (_command: string, env: NodeJS.ProcessEnv) => env

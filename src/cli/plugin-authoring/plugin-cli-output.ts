@@ -1,5 +1,7 @@
-import { isAbsolute, resolve } from 'node:path'
 import type { HandlerContext } from '../dispatch'
+import { readAppEnv } from '../../shared/app-env'
+import { isAbsolute, resolve } from 'node:path'
+
 import { rejectRemoteSelectionFlags } from '../remote-selection-flag-rejection'
 import { RuntimeClientError } from '../runtime/types'
 import { writeStdoutLine } from '../stdout-line'
@@ -26,11 +28,11 @@ export function resolveLocalPluginPath(
   value: string,
   command: string
 ): string {
-  rejectRemoteSelectionFlags(ctx.flags, `orca plugin ${command}; it works on local files`)
-  if (process.env.ORCA_CLI_CWD) {
+  rejectRemoteSelectionFlags(ctx.flags, `coding plugin ${command}; it works on local files`)
+  if (readAppEnv(process.env, 'CLI_CWD')) {
     throw new RuntimeClientError(
       'invalid_environment',
-      `orca plugin ${command} works on the files of the machine that runs it, but this shell forwards orca to the Coding Agent 2 host. Write and check the plugin files on this machine directly, or run the command on the Coding Agent 2 host.`
+      `coding plugin ${command} works on the files of the machine that runs it, but this shell forwards orca to the Coding Agent 2 host. Write and check the plugin files on this machine directly, or run the command on the Coding Agent 2 host.`
     )
   }
   return isAbsolute(value) ? value : resolve(ctx.cwd, value)

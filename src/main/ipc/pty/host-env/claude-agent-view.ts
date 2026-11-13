@@ -1,14 +1,16 @@
+import type { BuildPtyHostEnvOptions } from './types'
+import { readAppEnv, deleteAppEnv, setAppEnv } from '../../../../shared/app-env'
 import { delimiter } from 'node:path'
 import { isTuiAgentEnabled } from '../../../../shared/agent-launch/catalog/tui-agent-selection'
 import { getClaudeAgentViewService } from '../../../claude/agent-view/agent-view-service'
-import type { BuildPtyHostEnvOptions } from './types'
 
 export function applyClaudeAgentViewEnv(
   env: Record<string, string>,
   opts: BuildPtyHostEnvOptions
 ): void {
   const previous =
-    env.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR ?? process.env.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR
+    readAppEnv(env, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR') ??
+    readAppEnv(process.env, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR')
   if (previous) {
     const paths = env.CLAUDE_CODE_PLUGIN_DIRS ?? process.env.CLAUDE_CODE_PLUGIN_DIRS
     if (paths?.split(delimiter).includes(previous)) {
@@ -17,8 +19,8 @@ export function applyClaudeAgentViewEnv(
       env.CLAUDE_CODE_PLUGIN_DIRS = remaining.join(delimiter)
     }
   }
-  delete env.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR
-  delete env.ORCA_CLAUDE_CONFIG_DIR
+  deleteAppEnv(env, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR')
+  deleteAppEnv(env, 'CLAUDE_CONFIG_DIR')
   if (
     !opts.agentStatusHooksEnabled ||
     opts.claudeSubagentNavigationEnabled === false ||
@@ -39,6 +41,6 @@ export function applyClaudeAgentViewEnv(
     paths.push(cached.pluginDir)
   }
   env.CLAUDE_CODE_PLUGIN_DIRS = paths.join(delimiter)
-  env.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR = cached.pluginDir
-  env.ORCA_CLAUDE_CONFIG_DIR = cached.configDir
+  setAppEnv(env, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR', cached.pluginDir)
+  setAppEnv(env, 'CLAUDE_CONFIG_DIR', cached.configDir)
 }

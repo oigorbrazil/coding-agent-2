@@ -17,7 +17,7 @@ export function runtimeAccessDeniedError(socketError: Error): RuntimeClientError
     systemCode,
     nextSteps: [
       retryStep,
-      "Do not restart Coding Agent 2 or run 'orca open'; a restart cannot grant this command access."
+      "Do not restart Coding Agent 2 or run 'coding open'; a restart cannot grant this command access."
     ]
   })
 }

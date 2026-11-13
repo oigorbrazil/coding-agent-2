@@ -41,7 +41,7 @@ async function makeFixture() {
   const appImagePath = join(root, 'Coding Agent 2.AppImage')
   const cacheRootPath = join(root, 'cache')
   const commandDirectory = join(root, 'home', '.local', 'bin')
-  const commandPath = join(commandDirectory, 'orca-ide')
+  const commandPath = join(commandDirectory, 'coding')
   await mkdir(commandDirectory, { recursive: true })
   await writeFile(appImagePath, '#!/usr/bin/env bash\n', { mode: 0o755 })
   return { root, appImagePath, cacheRootPath, commandDirectory, commandPath }

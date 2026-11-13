@@ -1,4 +1,4 @@
-import type { ChildProcessHandle } from '@orca/process-host/process-spec'
+import type { ChildProcessHandle } from '@coding-agent/process-host/process-spec'
 import type { MarkdownDocument } from './file-document'
 import { RipgrepFilenameDecoder } from '../ripgrep/ripgrep-filename-decoder'
 import {

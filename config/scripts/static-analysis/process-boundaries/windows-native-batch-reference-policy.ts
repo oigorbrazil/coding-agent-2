@@ -136,10 +136,17 @@ export function hasWindowsNativeBatchReferenceViolation(
     return true
   }
   const expectedMethod = executors.get(relativePath)
-  if ((expectedMethod || relativePath === observer) && !modules.includes('@orca/process-host')) {
+  if (
+    (expectedMethod || relativePath === observer) &&
+    !modules.includes('@coding-agent/process-host')
+  ) {
     return true
   }
-  if (!expectedMethod && relativePath !== observer && modules.includes('@orca/process-host')) {
+  if (
+    !expectedMethod &&
+    relativePath !== observer &&
+    modules.includes('@coding-agent/process-host')
+  ) {
     return true
   }
   const source = ts.createSourceFile(relativePath, contents, ts.ScriptTarget.Latest, true)
@@ -153,7 +160,7 @@ export function hasWindowsNativeBatchReferenceViolation(
     if (
       ts.isImportDeclaration(node) &&
       ts.isStringLiteral(node.moduleSpecifier) &&
-      node.moduleSpecifier.text === '@orca/process-host'
+      node.moduleSpecifier.text === '@coding-agent/process-host'
     ) {
       const bindings = node.importClause?.namedBindings
       if (bindings && ts.isNamedImports(bindings)) {

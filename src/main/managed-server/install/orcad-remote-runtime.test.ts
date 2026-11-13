@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { getRemoteHostPlatform } from '../../ssh/ssh-remote-platform'
 import { selectOrcadSlotRuntimeCommand } from './orcad-remote-runtime'
 import { stopOrcadCommand } from './orcad-remote-process-control'

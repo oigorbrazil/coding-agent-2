@@ -30,10 +30,6 @@ export function useFloatingWorkspacePanel() {
   const enabled = useAppStore((s) => s.settings?.floatingTerminalEnabled === true)
   // Unhydrated null settings are not a user disable; wait for the atomic settings replacement.
   const settingsHydrated = useAppStore((s) => s.settings != null)
-  const triggerLocation = useAppStore(
-    (s) => s.settings?.floatingTerminalTriggerLocation ?? 'floating-button'
-  )
-  const statusBarVisible = useAppStore((s) => s.statusBarVisible)
   const visibleTabCount = useAppStore(selectFloatingVisibleTabCount)
 
   // Return focus to the prior surface when hotkey-minimizing the overlay.
@@ -124,7 +120,6 @@ export function useFloatingWorkspacePanel() {
   }, [settingsHydrated, enabled, setOpenWithFocus])
 
   const shouldMountPanel = enabled && (open || visibleTabCount > 0)
-  const showToggleButton = enabled && (triggerLocation === 'floating-button' || !statusBarVisible)
   // Stable identity lets memoized root surfaces skip the App render each workspace switch causes.
   return useMemo(
     () => ({
@@ -135,7 +130,6 @@ export function useFloatingWorkspacePanel() {
       setOpenWithFocus,
       // Retain panes’ local state while closed once the floating workspace owns tabs.
       shouldMountPanel,
-      showToggleButton,
       tourInteractionSnapshotRef,
       visibleTabCount
     }),
@@ -146,7 +140,6 @@ export function useFloatingWorkspacePanel() {
       openMaximized,
       setOpenWithFocus,
       shouldMountPanel,
-      showToggleButton,
       visibleTabCount
     ]
   )

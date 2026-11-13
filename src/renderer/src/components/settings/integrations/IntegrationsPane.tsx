@@ -28,7 +28,7 @@ export function IntegrationsPane(): React.JSX.Element {
   useIntegrationProviderStatusRefresh()
 
   return (
-    <IntegrationCardPresentationProvider value="setup-guide">
+    <IntegrationCardPresentationProvider value="settings">
       <div className="space-y-8">
         <SettingsGroup
           title={t('auto.components.settings.IntegrationsPane.298c65ecac', 'Review providers')}

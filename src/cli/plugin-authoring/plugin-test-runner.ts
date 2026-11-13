@@ -1,11 +1,12 @@
+import { appEnvPairs } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { mkdir, readdir, writeFile } from 'node:fs/promises'
 import { join, relative, sep } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { selectPluginTestNode, type PluginTestNode } from './plugin-test-node'
 
-/** Plugin test files `orca plugin test` runs. */
+/** Plugin test files `coding plugin test` runs. */
 export const PLUGIN_TEST_FILE = /\.test\.(?:tsx?|mts|jsx?|mjs)$/i
 // Not plugin sources: dependencies, Coding Agent 2's own generated files, VCS and build output.
 const SKIPPED_DIRS = new Set(['node_modules', '.coding-agent-2', '.git', 'dist', 'out', 'coverage'])
@@ -53,7 +54,7 @@ export function pluginTestRunner(dir: string): { runner: PluginTestRunner; entry
 export function pluginVitestConfig(files: ReturnType<typeof pluginTestingFiles>): string {
   const url = (path: string): string => JSON.stringify(pathToFileURL(path).href)
   const path = (value: string): string => JSON.stringify(value)
-  return `// Written by \`orca plugin test\`. Do not edit.
+  return `// Written by \`coding plugin test\`. Do not edit.
 import { transformPluginSourceForTest } from ${url(files.hooks)}
 
 const SOURCE = /\\.(?:tsx?|mts|jsx)$/
@@ -101,7 +102,7 @@ export async function runPluginTests(options: {
   const testing = pluginTestingFiles(options.appRoot)
   const selected = pluginTestRunner(options.dir)
   const node = options.node ?? (await selectPluginTestNode())
-  const env = { ...process.env, ...node.env, ORCA_PLUGIN_TEST_ROOT: options.dir }
+  const env = { ...process.env, ...node.env, ...appEnvPairs('PLUGIN_TEST_ROOT', options.dir) }
   let args: string[]
   if (selected.runner === 'vitest' && selected.entry) {
     const configDir = join(options.dir, '.coding-agent-2', 'test')

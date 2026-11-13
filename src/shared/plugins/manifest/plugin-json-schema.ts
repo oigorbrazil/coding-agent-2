@@ -41,7 +41,7 @@ export function pluginManifestJsonSchema(): PluginJsonSchema {
     pluginManifestV2Object,
     PLUGIN_MANIFEST_SCHEMA_FILE,
     'Coding Agent 2 plugin manifest',
-    'The orca-plugin.json file at the root of a Coding Agent 2 plugin (manifest format 2).'
+    'The coding-plugin.json file at the root of a Coding Agent 2 plugin (manifest format 2).'
   )
 }
 
@@ -63,7 +63,7 @@ export function pluginSchemaGeneratedFiles(): Record<string, string> {
     [`${PLUGIN_SCHEMA_DIRECTORY}/${PLUGIN_MANIFEST_SCHEMA_FILE}`]: manifestJson,
     [`${PLUGIN_SCHEMA_DIRECTORY}/${PLUGIN_CATALOG_SCHEMA_FILE}`]: `${JSON.stringify(catalog, null, 2)}\n`,
     'docs/reference/plugin-manifest.md': renderPluginSchemaReference(manifest, {
-      file: 'orca-plugin.json',
+      file: 'coding-plugin.json',
       schemaFile: PLUGIN_MANIFEST_SCHEMA_FILE,
       sinceNote:
         '`Since` is the first Coding Agent 2 release that reads the field; raise `engines.orca` when you use a newer one.',

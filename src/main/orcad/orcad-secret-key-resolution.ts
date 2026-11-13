@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { randomBytes } from 'node:crypto'
 import { join } from 'node:path'
 import process from 'node:process'
@@ -21,8 +22,7 @@ import {
   describeOrcadHostKeyGap,
   describeOrcadDisposableProfile,
   describeOrcadPlaintextOptOut,
-  describeOrcadSealingUnavailable,
-  ORCAD_PLAINTEXT_SECRETS_ENV
+  describeOrcadSealingUnavailable
 } from './orcad-secret-protection-gap'
 import {
   deriveOrcadSealingKey,
@@ -156,7 +156,7 @@ export async function resolveState(
 ): Promise<StoreState> {
   const platform = options.platform ?? process.platform
   const env = options.env ?? process.env
-  if (env[ORCAD_PLAINTEXT_SECRETS_ENV] === 'plaintext') {
+  if (readAppEnv(env, 'HEADLESS_SECRET_STORE') === 'plaintext') {
     return { kind: 'plaintext', reason: describeOrcadPlaintextOptOut() }
   }
   // Disposable runs must not alter persistent keys or re-seal credentials that outlive them.

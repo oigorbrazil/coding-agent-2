@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { beforeAll, describe, expect, it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 const processCheck = readFileSync(
   new URL('../../../nsis/orca-process-check.nsh', import.meta.url),
   'utf8'

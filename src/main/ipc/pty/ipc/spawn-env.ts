@@ -1,3 +1,5 @@
+import type { PtyIpcSpawnState } from './spawn-state'
+import { readAppEnv } from '../../../../shared/app-env'
 import {
   isTerminalLeafId,
   makePaneKey,
@@ -11,7 +13,7 @@ import { routesFreshSpawnsToLocalProvider } from '../host-env/fresh-spawn-routin
 import { parseValidPaneKey } from '../pane/key-state'
 import { shouldRefreshNativeClaudeAgentTeamsEnv } from '../pane/launch-authority'
 import { selectWindowJcodeRuntimeDir, stampPtySpawnPaneEnv } from '../spawn-pane-env'
-import type { PtyIpcSpawnState } from './spawn-state'
+
 import { assemblePtyIpcSpawnCodexEnv } from './spawn-env-codex'
 import { prepareAntigravityAccountForLaunch } from '../../../antigravity/native-account-launch'
 
@@ -19,7 +21,7 @@ export async function assemblePtyIpcSpawnEnv(ctx: PtyIpcSpawnState): Promise<voi
   const args = ctx.args
   // Daemon providers bypass LocalPtyProvider environment assembly; inject the same host-local state here.
   const baseEnvWithAuth = ctx.claudeAuth ? { ...args.env, ...ctx.claudeAuth.envPatch } : args.env
-  const spawnPaneKey = baseEnvWithAuth?.ORCA_PANE_KEY
+  const spawnPaneKey = readAppEnv(baseEnvWithAuth ?? {}, 'PANE_KEY')
   const parsedSpawnPaneKey = parseValidPaneKey(spawnPaneKey)
   const verifiedPaneKey =
     parsedSpawnPaneKey &&
@@ -95,9 +97,10 @@ export async function assemblePtyIpcSpawnEnv(ctx: PtyIpcSpawnState): Promise<voi
       }
     }
   }
-  ctx.requestedAgentTeamsPath = ctx.baseEnv?.ORCA_AGENT_TEAMS_TEAM_ID
-    ? ctx.baseEnv[resolvePathEnvKey(ctx.baseEnv, process.platform)]
-    : undefined
+  ctx.requestedAgentTeamsPath =
+    ctx.baseEnv && readAppEnv(ctx.baseEnv, 'AGENT_TEAMS_TEAM_ID')
+      ? ctx.baseEnv[resolvePathEnvKey(ctx.baseEnv, process.platform)]
+      : undefined
   ctx.agentTeamsEnvToDelete = shouldRefreshAgentTeamsEnv ? ['TERM_PROGRAM'] : undefined
   stampPtySpawnPaneEnv(ctx.baseEnv, {
     // Renderer keys select bookkeeping, while environment identity must name this spawn's actual pane.

@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { join } from 'node:path'
 import { prepareOrcadSecretStore } from './orcad-host-adapters'
 
@@ -10,5 +11,5 @@ export async function prepareOrcadSecretStoreAndMigrate(userDataPath: string): P
   if (await prepareOrcadSecretStore(orcadCredentialRoot(), userDataPath)) {
     migratePlaintextCredentials(getSecretStore())
   }
-  reportSecretProtectionGap({ dataFile: join(userDataPath, 'orca-data.json') })
+  reportSecretProtectionGap({ dataFile: renamedUserDataFile(join(userDataPath, 'orca-data.json')) })
 }

@@ -218,8 +218,8 @@ jobs:
         if: ${{ !cancelled() && steps.root_dependencies.outcome == 'success' }}
         working-directory: cloud
         run: |
-          pnpm --filter '@orca-cloud/relay...' install --frozen-lockfile --ignore-scripts
-          pnpm --filter '@orca-cloud/relay^...' build
+          pnpm --filter '@coding-agent-cloud/relay...' install --frozen-lockfile --ignore-scripts
+          pnpm --filter '@coding-agent-cloud/relay^...' build
 
       - name: Test relay integration contracts
         if: ${{ !cancelled() && steps.relay_dependencies.outcome == 'success' }}

@@ -11,7 +11,7 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 import {
   ORCAD_FENCE_LOST_EXIT,
   ORCAD_FENCE_LOST_MARKER

@@ -10,7 +10,6 @@ import { getStatusBarToggles } from './appearance-status-bar-search'
 import { getUsagePercentageDisplayEntry } from './appearance-usage-percentage-search'
 import { getMenuBarIconEntries, getSystemTrayEntries } from './appearance-system-presence-search'
 import { getReduceVisualEffectsEntries } from './appearance-reduce-visual-effects-search'
-import { getAppIconEntries } from './appearance-app-icon-search'
 
 export const getThemeEntries = createLocalizedCatalog((): SettingsSearchEntry[] => [
   {
@@ -280,7 +279,6 @@ export function getAppearancePaneSearchEntries(
     ...getReduceVisualEffectsEntries(),
     ...getStatusBarEntries(),
     ...getSidebarEntries(),
-    ...getAppIconEntries(),
     ...getSystemTrayEntries(options),
     ...getMenuBarIconEntries(options)
   ]

@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { RELAY_INSTALL_LOCK_NAME } from '../../../shared/relay-install-lock-name'
 import { ORCAD_ACTIVATION_TRANSACTION_DIRNAME } from '../activation/orcad-activation-transaction'
 import { serializedStateMutationCommand } from './orcad-state-snapshot'

@@ -1,3 +1,4 @@
+import { readAppEnv, readAppEnvKey } from '../../../shared/app-env'
 import { REMOTE_VIEWER_CLIPBOARD_ENV } from '../../../shared/remote-viewer-clipboard-env'
 
 // Wrappers consume the feature env before user config so children cannot inherit the selection.
@@ -42,12 +43,13 @@ function shellName(shellPath: string): string {
 
 // Ignore inherited feature selections; derive this launch from its own intent.
 export function selectShellStartupFeatures(input: ShellStartupFeatureInput): ShellStartupFeature[] {
-  const overlay = OVERLAY_ENV_KEYS.some((key) => Boolean(input.env[key]))
+  const overlay = OVERLAY_ENV_KEYS.some((key) => Boolean(readAppEnvKey(input.env, key)))
   const wrappedBefore = overlay || input.hasStartupCommand
   const ready = input.waitsForShellReady
   // System zshrc overwrites HISTFILE; bash needs no wrapper for history alone.
   const history =
-    shellName(input.shellPath) === 'zsh' && (Boolean(input.env.ORCA_HISTFILE) || wrappedBefore)
+    shellName(input.shellPath) === 'zsh' &&
+    (Boolean(readAppEnv(input.env, 'HISTFILE')) || wrappedBefore)
 
   const features: ShellStartupFeature[] = []
   if (overlay) {

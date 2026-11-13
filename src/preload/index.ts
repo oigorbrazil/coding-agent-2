@@ -56,6 +56,8 @@ import { skillsApi } from './api/skills-bridge'
 import { petApi } from './api/pet-bridge'
 import { appIconApi } from './api/app-icon-bridge'
 import { codingOpusApi } from './api/coding-opus-bridge'
+import { codingAgentAccountApi } from './api/coding-agent-account-api'
+import { desktopWallpaperApi } from './api/desktop-wallpaper-api'
 import { browserPasswordsApi } from './api/browser-passwords-bridge'
 import { browserApi } from './api/browser/browser-bridge'
 import { emulatorApi } from './api/emulator-bridge'
@@ -163,6 +165,8 @@ const api = {
   pet: petApi,
   appIcon: appIconApi,
   codingOpus: codingOpusApi,
+  codingAgentAccount: codingAgentAccountApi,
+  desktopWallpaper: desktopWallpaperApi,
   browser: browserApi,
   browserPasswords: browserPasswordsApi,
   emulator: emulatorApi,

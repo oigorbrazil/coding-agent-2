@@ -1,6 +1,6 @@
 import { resolve, join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 describe.runIf(process.platform === 'win32')('native Windows administrator status', () => {
   it('agrees with the independent Windows integrity-level report', async () => {

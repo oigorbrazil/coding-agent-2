@@ -1,3 +1,4 @@
+import { deleteAppEnv, setAppEnv, setAppEnvKey } from '../../../shared/app-env'
 import { mkdirSync } from 'node:fs'
 import {
   buildJcodeRuntimeDirEnv,
@@ -46,27 +47,27 @@ export function stampPtySpawnPaneEnv(
   const { pane } = args
   if (!pane) {
     // Shell/hook identity must name this spawn's own pane, never an unproved renderer key.
-    delete env.ORCA_PANE_KEY
-    delete env.ORCA_TAB_ID
-    delete env.ORCA_WORKTREE_ID
-    delete env.ORCA_AGENT_LAUNCH_TOKEN
+    deleteAppEnv(env, 'PANE_KEY')
+    deleteAppEnv(env, 'TAB_ID')
+    deleteAppEnv(env, 'WORKTREE_ID')
+    deleteAppEnv(env, 'AGENT_LAUNCH_TOKEN')
     applyScrubSafeAgentEnvAliases(env)
     return
   }
-  env.ORCA_PANE_KEY = pane.paneKey
+  setAppEnv(env, 'PANE_KEY', pane.paneKey)
   if (pane.tabId !== undefined) {
-    env.ORCA_TAB_ID = pane.tabId
+    setAppEnv(env, 'TAB_ID', pane.tabId)
   } else {
-    delete env.ORCA_TAB_ID
+    deleteAppEnv(env, 'TAB_ID')
   }
   if (pane.worktreeId !== undefined) {
-    env.ORCA_WORKTREE_ID = pane.worktreeId
+    setAppEnv(env, 'WORKTREE_ID', pane.worktreeId)
   } else {
-    delete env.ORCA_WORKTREE_ID
+    deleteAppEnv(env, 'WORKTREE_ID')
   }
   // A failed managed-dir preparation must leave a working caller directory intact.
   if (args.jcodeRuntimeDir !== undefined) {
-    env[JCODE_RUNTIME_DIR_ENV_KEY] = args.jcodeRuntimeDir
+    setAppEnvKey(env, JCODE_RUNTIME_DIR_ENV_KEY, args.jcodeRuntimeDir)
   }
   // Why: SSH relay spawns skip the local/daemon env builders that otherwise mirror these.
   applyScrubSafeAgentEnvAliases(env)

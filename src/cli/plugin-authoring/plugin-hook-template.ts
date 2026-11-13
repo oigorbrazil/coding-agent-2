@@ -54,7 +54,7 @@ export function hook(input: PluginTemplateInput): PluginTemplate {
     description:
       'Worker-only hook that refuses dangerous terminal commands, with a test (needs --approve to load)',
     files: {
-      'orca-plugin.json': manifest(input, 'Refuses dangerous commands sent to terminals.', {
+      'coding-plugin.json': manifest(input, 'Refuses dangerous commands sent to terminals.', {
         engines: { orca: `>=${PLUGIN_HOOKS_SINCE}` },
         execution: 'trusted-worker',
         pluginApi: 1,
@@ -67,7 +67,7 @@ export function hook(input: PluginTemplateInput): PluginTemplate {
       'tsconfig.json': json({ extends: `./${PLUGIN_TYPES_DIR}/tsconfig.json`, include: ['src'] }),
       'README.md': readme(
         input,
-        `A guard (\`src/worker.ts\`) on the \`terminal.send\` hook: before Coding Agent 2, the CLI or a plugin types text into a terminal, the worker can refuse it with \`{ deny }\` or pass it on. \`"onError": "deny"\` in \`orca-plugin.json\` makes a crash or timeout refuse the send too. \`orca plugin test .\` runs \`src/worker.test.ts\` with \`orca/testing\`; with the folder loaded, \`orca plugin dev hook . terminal.send --data '{"terminalId":"t1","text":"rm -rf /","enter":true,"inputKind":"driving"}'\` prints what the chain decides.`
+        `A guard (\`src/worker.ts\`) on the \`terminal.send\` hook: before Coding Agent 2, the CLI or a plugin types text into a terminal, the worker can refuse it with \`{ deny }\` or pass it on. \`"onError": "deny"\` in \`coding-plugin.json\` makes a crash or timeout refuse the send too. \`coding plugin test .\` runs \`src/worker.test.ts\` with \`orca/testing\`; with the folder loaded, \`coding plugin dev hook . terminal.send --data '{"terminalId":"t1","text":"rm -rf /","enter":true,"inputKind":"driving"}'\` prints what the chain decides.`
       ),
       ...COMMON_FILES
     }

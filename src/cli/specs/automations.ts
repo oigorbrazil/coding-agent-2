@@ -26,23 +26,23 @@ export const AUTOMATION_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['automations', 'list'],
     summary: 'List scheduled Coding Agent 2 automations',
-    usage: 'orca automations list [--json]',
+    usage: 'coding automations list [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
-    examples: ['orca automations list', 'orca automations list --json']
+    examples: ['coding automations list', 'coding automations list --json']
   },
   {
     path: ['automations', 'show'],
     summary: 'Show one Coding Agent 2 automation',
-    usage: 'orca automations show <id> [--json]',
+    usage: 'coding automations show <id> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id'],
     positionalArgs: ['id'],
-    examples: ['orca automations show 2f9e...', 'orca automations show --id 2f9e... --json']
+    examples: ['coding automations show 2f9e...', 'coding automations show --id 2f9e... --json']
   },
   {
     path: ['automations', 'create'],
     summary: 'Create a scheduled Coding Agent 2 automation',
     usage:
-      'orca automations create --name <name> --trigger <preset|cron|rrule> --prompt <text> --provider <agent> [--precheck <command>] [--setup run|skip] [--repo <selector>|--workspace <selector>|--project <id-or-name> [--host <host>]|--project-host-setup <id>] [--json]',
+      'coding automations create --name <name> --trigger <preset|cron|rrule> --prompt <text> --provider <agent> [--precheck <command>] [--setup run|skip] [--repo <selector>|--workspace <selector>|--project <id-or-name> [--host <host>]|--project-host-setup <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'name',
@@ -57,29 +57,29 @@ export const AUTOMATION_COMMAND_SPECS: CommandSpec[] = [
     notes: [
       'Trigger accepts hourly, daily, weekdays, weekly, a 5-field cron expression, or an RRULE string.',
       'When --repo is omitted, the CLI uses the enclosing Coding Agent 2 worktree when one can be resolved from cwd.',
-      'Use --project, or --project-host-setup, to run on a specific project host setup. --project takes the project id or the display name from `orca project list`, and --host is only needed when the project is set up on more than one host.',
-      '--host takes local, ssh:<target-id>, runtime:<environment-id>, or the bare host name `orca host list` prints for any of them.',
+      'Use --project, or --project-host-setup, to run on a specific project host setup. --project takes the project id or the display name from `coding project list`, and --host is only needed when the project is set up on more than one host.',
+      '--host takes local, ssh:<target-id>, runtime:<environment-id>, or the bare host name `coding host list` prints for any of them.',
       'Use --source-context with a JSON TaskSourceContext when task/provider data should come from a specific host/account; pass null on edit to clear it.',
       'Use --workspace to run in an existing worktree. With --repo or a project target, the automation creates a new worktree per run; with no target, a local create runs in the current Coding Agent 2 worktree unless you pass --workspace-mode new-per-run.',
       'Use --setup run|skip for repository setup on new-per-run automations. Explicit choices override the repository setup policy and need a host running current Coding Agent 2. When omitted on create, no choice is saved; current Coding Agent 2 skips setup.',
       'Use --precheck to run a command only before scheduled runs; exit code 0 continues, any other exit, error, or timeout skips the run.',
-      'Use --precheck-timeout <seconds> to set the time limit (default 60 seconds). Skips appear in Coding Agent 2 run history and orca automations runs --id <automation-id> as skipped_precheck.',
-      'Run now in Coding Agent 2 and orca automations run intentionally bypass the precheck so you can test or override the scheduled condition.',
+      'Use --precheck-timeout <seconds> to set the time limit (default 60 seconds). Skips appear in Coding Agent 2 run history and coding automations runs --id <automation-id> as skipped_precheck.',
+      'Run now in Coding Agent 2 and coding automations run intentionally bypass the precheck so you can test or override the scheduled condition.',
       'Use --reuse-session only with existing-workspace automations to submit later runs to the previous live automation session when it is still available. Use --fresh-session to disable reuse.',
       'Use --extra-agent-args="--model opus --effort high" to add arguments after the host\'s default agent Arguments on each fresh run. Only model, effort, and a few safe options are accepted (Antigravity, Claude, Codex, CodeBuddy, Cursor, Grok, OMP, Pi); extras cannot be combined with --reuse-session. On edit, --extra-agent-args= clears them.'
     ],
     examples: [
-      'orca automations create --name "Daily review" --trigger daily --prompt "Review open changes" --provider codex',
-      'orca automations create --name "Weekday triage" --trigger "0 9 * * 1-5" --prompt "Triage issues" --provider claude --repo my-repo',
-      'orca automations create --name "PR review" --trigger hourly --precheck "gh pr list --json number -q .[0].number" --prompt "Review requested PRs" --provider codex',
-      'orca automations create --name "Docs pass" --trigger daily --prompt "Tidy the docs" --provider claude --extra-agent-args="--model opus --effort high --add-dir docs"'
+      'coding automations create --name "Daily review" --trigger daily --prompt "Review open changes" --provider codex',
+      'coding automations create --name "Weekday triage" --trigger "0 9 * * 1-5" --prompt "Triage issues" --provider claude --repo my-repo',
+      'coding automations create --name "PR review" --trigger hourly --precheck "gh pr list --json number -q .[0].number" --prompt "Review requested PRs" --provider codex',
+      'coding automations create --name "Docs pass" --trigger daily --prompt "Tidy the docs" --provider claude --extra-agent-args="--model opus --effort high --add-dir docs"'
     ]
   },
   {
     path: ['automations', 'edit'],
     summary: 'Edit a Coding Agent 2 automation',
     usage:
-      'orca automations edit <id> [--name <name>] [--trigger <preset|cron|rrule>] [--setup run|skip] [--json]',
+      'coding automations edit <id> [--name <name>] [--trigger <preset|cron|rrule>] [--setup run|skip] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'id',
@@ -97,50 +97,50 @@ export const AUTOMATION_COMMAND_SPECS: CommandSpec[] = [
       'Use --setup run|skip only for new-per-run automations. Omit it to preserve the saved setup choice.'
     ],
     examples: [
-      'orca automations edit 2f9e... --disabled',
-      'orca automations edit --id 2f9e... --trigger "30 * * * *" --json',
-      'orca automations edit 2f9e... --extra-agent-args='
+      'coding automations edit 2f9e... --disabled',
+      'coding automations edit --id 2f9e... --trigger "30 * * * *" --json',
+      'coding automations edit 2f9e... --extra-agent-args='
     ]
   },
   {
     path: ['automations', 'remove'],
     destructive: true,
     summary: 'Remove a Coding Agent 2 automation and its run history',
-    usage: 'orca automations remove <id> [--json]',
+    usage: 'coding automations remove <id> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id'],
     positionalArgs: ['id'],
-    examples: ['orca automations remove 2f9e...', 'orca automations remove --id 2f9e... --json']
+    examples: ['coding automations remove 2f9e...', 'coding automations remove --id 2f9e... --json']
   },
   {
     path: ['automations', 'run'],
     summary: 'Run a Coding Agent 2 automation now',
-    usage: 'orca automations run <id> [--json]',
+    usage: 'coding automations run <id> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id'],
     positionalArgs: ['id'],
     notes: [
-      'Use the full automation UUID from orca automations list; shortened prefixes are not accepted.',
+      'Use the full automation UUID from coding automations list; shortened prefixes are not accepted.',
       'Like Run now in Coding Agent 2, this manually starts a run without executing the precheck; prechecks gate scheduled runs only.',
-      'A queued or dispatching run has been accepted but may not have a workspace or terminal yet. Use orca automations runs --id <automation-id> to follow its progress.'
+      'A queued or dispatching run has been accepted but may not have a workspace or terminal yet. Use coding automations runs --id <automation-id> to follow its progress.'
     ],
     examples: [
-      'orca automations run 497bafa9-5a97-4f85-9e48-2b211b8f31fa',
-      'orca automations run --id 497bafa9-5a97-4f85-9e48-2b211b8f31fa --json'
+      'coding automations run 497bafa9-5a97-4f85-9e48-2b211b8f31fa',
+      'coding automations run --id 497bafa9-5a97-4f85-9e48-2b211b8f31fa --json'
     ]
   },
   {
     path: ['automations', 'runs'],
     summary: 'List automation run history',
     usage:
-      'orca automations runs [--id <automation-id>] [--limit <n>] [--cursor <cursor>] [--json]',
+      'coding automations runs [--id <automation-id>] [--limit <n>] [--cursor <cursor>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'id', 'limit', 'cursor'],
     notes: [
       'Without --limit or --cursor, reads the whole history in pages, so a large history from a paired server still fits in its replies.',
       'With --limit or --cursor, prints one page (newest first, at most 100 runs) and its nextCursor; pass that as --cursor for the next page.'
     ],
     examples: [
-      'orca automations runs',
-      'orca automations runs --id 2f9e... --json',
-      'orca automations runs --limit 20 --json'
+      'coding automations runs',
+      'coding automations runs --id 2f9e... --json',
+      'coding automations runs --limit 20 --json'
     ]
   }
 ]

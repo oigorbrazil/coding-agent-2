@@ -24,7 +24,7 @@ import {
 export async function createPersistedUsageTestFixture(getPath: Mock<() => string>) {
   const directory = await mkdtemp(join(tmpdir(), 'orca-claude-persisted-usage-'))
   const transcript = join(directory, 'session.jsonl')
-  const reportPath = join(directory, 'orca-claude-usage.json')
+  const reportPath = join(directory, 'coding-claude-usage.json')
   const sourceRef = {
     path: usageSourceCachePath(reportPath),
     schemaVersion: 7,

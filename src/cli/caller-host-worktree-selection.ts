@@ -1,17 +1,21 @@
-import { resolve as resolvePath } from 'node:path'
 import type { TuiAgent } from '../shared/agent-launch/catalog/tui-agent'
+import {
+  type ExecutionHostId,
+  LOCAL_EXECUTION_HOST_ID,
+  parseExecutionHostId,
+  toSshExecutionHostId
+} from '../shared/execution-host'
+import type { RuntimeClient } from './runtime-client'
+import { readAppEnv } from '../shared/app-env'
+import { resolve as resolvePath } from 'node:path'
+
 import { projectGroupIdFromRepoId } from '../shared/folder-workspaces/folder-workspace-worktree'
 import { isFloatingWorkspaceId } from '../shared/floating-workspace-worktree'
 import { parseWorkspaceKey } from '../shared/workspace-scope'
-import {
-  LOCAL_EXECUTION_HOST_ID,
-  parseExecutionHostId,
-  toSshExecutionHostId,
-  type ExecutionHostId
-} from '../shared/execution-host'
+
 import { readOrchestrationCompatibilityEvidence } from '../shared/orchestration-compatibility-evidence'
 import type { RuntimeWorktreeListResult } from '../shared/runtime-types'
-import type { RuntimeClient } from './runtime-client'
+
 import { RuntimeClientError } from './runtime/types'
 import { refuseUnresolvedOwner, type CatalogRow } from './workspace-catalog-row'
 import { createCwdContainment, isOnCallerFilesystem } from './caller-cwd-containment'
@@ -27,7 +31,9 @@ function isFolderRow(row: CatalogRow): boolean {
 export function getCallerWorkspaceIds(
   env: Readonly<Record<string, string | undefined>> = process.env
 ): string[] {
-  return [env.ORCA_WORKTREE_ID, env.ORCA_WORKSPACE_ID].flatMap((id) => id?.trim() || [])
+  return [readAppEnv(env, 'WORKTREE_ID'), readAppEnv(env, 'WORKSPACE_ID')].flatMap(
+    (id) => id?.trim() || []
+  )
 }
 
 type CallerWorkspace = string | readonly string[] | undefined
@@ -175,7 +181,7 @@ export function selectEnclosingWorktreeSelectionOnHost(
                 'Run the command in your own live Coding Agent 2 terminal with ORCA_TERMINAL_HANDLE preserved.'
               ]
             : [
-                'Inspect a chosen workspace with `orca worktree show --worktree <selector> --json`.',
+                'Inspect a chosen workspace with `coding worktree show --worktree <selector> --json`.',
                 purpose === 'current'
                   ? 'Use the intended action’s target flag to select that workspace; current has no replacement target flag.'
                   : `Pass ${flag} <selector> on your original invocation${purpose === 'ports' ? '; native folders require --all for a host-wide scan' : ''}.`,
@@ -225,7 +231,7 @@ export function selectEnclosingRepoOnHost(
       {
         projects,
         nextSteps: [
-          'Run `orca repo list --json` or `orca project list --json`, then pass the intended --repo or --project selector.'
+          'Run `coding repo list --json` or `coding project list --json`, then pass the intended --repo or --project selector.'
         ]
       }
     )
@@ -241,7 +247,7 @@ export function selectWorktreeCreateCwdContext(
 ): { parentWorktree?: HostScopedWorktreeSelection; parentAmbiguous?: true; repoId?: string } {
   const hostId = getCallerExecutionHostId()
   const repoId = inferRepo
-    ? selectEnclosingRepoOnHost(catalog, cwd, hostId, process.env.ORCA_WORKTREE_ID)
+    ? selectEnclosingRepoOnHost(catalog, cwd, hostId, readAppEnv(process.env, 'WORKTREE_ID'))
     : undefined
   const owners = inferParent
     ? enclosingWorkspaceOwners(catalog, cwd, hostId, getCallerWorkspaceIds())
@@ -277,7 +283,7 @@ export function selectCallerTerminalWorkspace(
   catalog: readonly CatalogRow[],
   hostId: ExecutionHostId
 ): string | undefined {
-  const worktreeId = process.env.ORCA_WORKTREE_ID
+  const worktreeId = readAppEnv(process.env, 'WORKTREE_ID')
   const trimmed = worktreeId?.trim()
   if (isFloatingWorkspaceId(worktreeId)) {
     return undefined
@@ -292,7 +298,9 @@ export function selectCallerTerminalWorkspace(
     }
     return scoped
   }
-  return [trimmed, process.env.ORCA_WORKSPACE_ID?.trim()].find((id) => id?.startsWith('folder:'))
+  return [trimmed, readAppEnv(process.env, 'WORKSPACE_ID')?.trim()].find((id) =>
+    id?.startsWith('folder:')
+  )
 }
 
 export async function resolveCallerPaneWorktreeSelector(

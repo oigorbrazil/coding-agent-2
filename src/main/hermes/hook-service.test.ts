@@ -82,11 +82,18 @@ describe('HermesHookService', () => {
       client_env_passthrough: [
         'MY_VAR',
         'ORCA_TAB_ID',
+        'CODING_AGENT_AGENT_PANE',
         'ORCA_AGENT_PANE',
+        'CODING_AGENT_AGENT_LAUNCH',
         'ORCA_AGENT_LAUNCH',
+        'CODING_AGENT_TAB_ID',
+        'CODING_AGENT_WORKTREE_ID',
         'ORCA_WORKTREE_ID',
+        'CODING_AGENT_AGENT_HOOK_ENDPOINT',
         'ORCA_AGENT_HOOK_ENDPOINT',
+        'CODING_AGENT_AGENT_HOOK_ENV',
         'ORCA_AGENT_HOOK_ENV',
+        'CODING_AGENT_AGENT_HOOK_VERSION',
         'ORCA_AGENT_HOOK_VERSION'
       ]
     })

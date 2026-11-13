@@ -1,7 +1,7 @@
 // POSIX hooks drain before exit; Windows missing-context hooks may exit without owning stdin.
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import type * as CodexHookHashLookup from '../codex/trust/hooks/codex-hook-hash-lookup'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'

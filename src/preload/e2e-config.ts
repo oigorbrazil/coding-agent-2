@@ -1,3 +1,4 @@
+import { readAppEnv } from '../shared/app-env'
 import { createE2EConfig } from '../shared/e2e-config'
 
 const preloadEnv = (
@@ -14,9 +15,9 @@ function isEnvFlagEnabled(value: boolean | string | undefined): boolean {
 const exposeStore = preloadEnv?.MODE === 'e2e' || isEnvFlagEnabled(preloadEnv?.VITE_EXPOSE_STORE)
 
 export const preloadE2EConfig = createE2EConfig({
-  headless: process.env.ORCA_E2E_HEADLESS === '1',
+  headless: readAppEnv(process.env, 'E2E_HEADLESS') === '1',
   exposeStore,
-  userDataDir: process.env.ORCA_E2E_USER_DATA_DIR ?? null,
-  terminalParkingDelayMs: Number(process.env.ORCA_E2E_TERMINAL_PARKING_DELAY_MS) || null,
-  terminalRetentionLimit: Number(process.env.ORCA_E2E_TERMINAL_RETENTION_LIMIT) || null
+  userDataDir: readAppEnv(process.env, 'E2E_USER_DATA_DIR') ?? null,
+  terminalParkingDelayMs: Number(readAppEnv(process.env, 'E2E_TERMINAL_PARKING_DELAY_MS')) || null,
+  terminalRetentionLimit: Number(readAppEnv(process.env, 'E2E_TERMINAL_RETENTION_LIMIT')) || null
 })

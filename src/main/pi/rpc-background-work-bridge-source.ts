@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 // Answer the RPC host's idle-eviction probe from Pi's shared session-liveness registry. In-process
 // hosts ask it before evicting; native chat runs Pi as a child, so the question arrives as a file in
 // a private folder (never a prompt or dialog, which other extensions and the model would see) and
@@ -54,7 +55,7 @@ export function getPiBackgroundWorkBridgeSource(): string {
     '',
     'export default function (pi) {',
     '  const registry = sessionLivenessRegistry()',
-    `  const dir = process.env.${PI_BACKGROUND_WORK_DIR_ENV}`,
+    `  const dir = ${appEnvReadExpression('process.env', PI_BACKGROUND_WORK_DIR_ENV.slice(5))}`,
     '  let close = null',
     "  pi.on('session_start', (_event, ctx) => {",
     '    close?.()',

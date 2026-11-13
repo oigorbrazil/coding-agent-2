@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { SpawnOptions as SdkSpawnOptions } from '@anthropic-ai/claude-agent-sdk'
-import { spawnProcess } from '@orca/process-host'
-import type { ProcessSpec } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { ProcessSpec } from '@coding-agent/process-host/process-spec'
 import {
   PROVIDER_SIGTERM_GRACE_MS,
   PROVIDER_STDIN_END_GRACE_MS,
@@ -52,6 +52,7 @@ const OWNER = String.raw`
     const supervisor = JSON.parse(Buffer.from(env.ORCA_PROVIDER_SUPERVISOR_SPEC, 'base64').toString())
     supervisor.ownerPid = process.pid
     env.ORCA_PROVIDER_SUPERVISOR_SPEC = Buffer.from(JSON.stringify(supervisor)).toString('base64')
+    env.CODING_AGENT_PROVIDER_SUPERVISOR_SPEC = env.ORCA_PROVIDER_SUPERVISOR_SPEC
   }
   const child = spawn(spec.program, spec.args, {
     cwd: spec.cwd,

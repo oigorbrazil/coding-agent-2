@@ -1,10 +1,8 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { getAppEnvironment } from '../../shared/app-environment'
-import {
-  SPEECH_RECOGNIZER_DIR_ENV,
-  speechRecognizerPackageName
-} from '../../shared/speech-recognizer-package'
+import { speechRecognizerPackageName } from '../../shared/speech-recognizer-package'
 import {
   currentWorkerEntryLayout,
   resolveWorkerThreadEntryPath
@@ -34,7 +32,7 @@ export function getSherpaModulePath(): string | null {
   }
   if (getAppEnvironment().isPackaged()) {
     // orcad: only the installed app's copy, which `orca serve` names.
-    const handed = process.env[SPEECH_RECOGNIZER_DIR_ENV]
+    const handed = readAppEnv(process.env, 'SPEECH_RECOGNIZER_DIR')
     return handed && existsSync(join(handed, 'sherpa-onnx.node')) ? handed : null
   }
 

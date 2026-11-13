@@ -1,4 +1,6 @@
-import { fork, type ChildProcess } from 'node:child_process'
+import { type ChildProcess, fork } from 'node:child_process'
+import { appEnvPairs } from '../../shared/app-env'
+
 import { existsSync } from 'node:fs'
 import type {
   ComputerActionResult,
@@ -214,7 +216,7 @@ class ComputerSidecarProcess {
       env: {
         ...process.env,
         ELECTRON_RUN_AS_NODE: '1',
-        ORCA_COMPUTER_SIDECAR: '1'
+        ...appEnvPairs('COMPUTER_SIDECAR', '1')
       },
       ...(process.platform === 'win32' ? { windowsHide: true } : {})
     })

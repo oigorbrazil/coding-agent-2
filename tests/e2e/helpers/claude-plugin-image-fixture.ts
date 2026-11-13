@@ -75,7 +75,7 @@ export function register(on) {
   const launcher = join(root, 'launch-claude.cjs')
   writeFileSync(
     launcher,
-    `const {spawnProcess}=require(${JSON.stringify(createRequire(join(process.cwd(), 'package.json')).resolve('@orca/process-host'))});
+    `const {spawnProcess}=require(${JSON.stringify(createRequire(join(process.cwd(), 'package.json')).resolve('@coding-agent/process-host'))});
 const env={...process.env,CLAUDE_CONFIG_DIR:${JSON.stringify(config)},CLAUDE_CODE_TMPDIR:${JSON.stringify(join(temporaryRoot, 'cli-cache'))},CLAUDE_CODE_ENABLE_FUNCTION_HOOKS:'1',CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:'1',DISABLE_AUTOUPDATER:'1',COLORTERM:'truecolor'};
 for(const key of ['NO_COLOR','ANTHROPIC_API_KEY','ANTHROPIC_AUTH_TOKEN','CLAUDE_CODE_OAUTH_TOKEN','CLAUDECODE','CLAUDE_CODE_ENTRYPOINT','CLAUDE_CODE_SESSION_ID','CLAUDE_CODE_CHILD_SESSION','CLAUDE_CODE_SESSION_KIND']) delete env[key];
 ${force === true ? "env.CLAUDE_CODE_FORCE_TERMINAL_IMAGES='1';" : force === false ? 'delete env.CLAUDE_CODE_FORCE_TERMINAL_IMAGES;' : ''}

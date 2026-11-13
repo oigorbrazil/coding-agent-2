@@ -150,19 +150,20 @@ describe('new desktop profile initialization', () => {
     }
   })
 
-  it.each(['orca-data.json.bak.0', 'orca-data.json.sqlite-export.1.json', 'profile-state.db-wal'])(
-    'retains missing-authority evidence in %s',
-    (name) => {
-      const directory = dirname(getOrcaProfileDataFile(profileId, root))
-      mkdirSync(directory, { recursive: true })
-      const evidence = join(directory, name)
-      writeFileSync(evidence, 'retained recovery evidence')
+  it.each([
+    'coding-data.json.bak.0',
+    'coding-data.json.sqlite-export.1.json',
+    'profile-state.db-wal'
+  ])('retains missing-authority evidence in %s', (name) => {
+    const directory = dirname(getOrcaProfileDataFile(profileId, root))
+    mkdirSync(directory, { recursive: true })
+    const evidence = join(directory, name)
+    writeFileSync(evidence, 'retained recovery evidence')
 
-      expect(() => initializeNewOrcaProfileState(profileId, telemetry, root)).toThrow()
+    expect(() => initializeNewOrcaProfileState(profileId, telemetry, root)).toThrow()
 
-      expect(existsSync(getOrcaProfileDataFile(profileId, root))).toBe(false)
-      expect(existsSync(getOrcaProfileStateDatabaseFile(profileId, root))).toBe(false)
-      expect(readFileSync(evidence, 'utf8')).toBe('retained recovery evidence')
-    }
-  )
+    expect(existsSync(getOrcaProfileDataFile(profileId, root))).toBe(false)
+    expect(existsSync(getOrcaProfileStateDatabaseFile(profileId, root))).toBe(false)
+    expect(readFileSync(evidence, 'utf8')).toBe('retained recovery evidence')
+  })
 })

@@ -50,9 +50,9 @@ export const ZSH_WSL_CWD_REPORT_BLOCK = `__orca_wsl_cwd_report() {
  * do not count toward the prompt's width; dash has no line editor to miscount, and would print \\[.
  */
 export const SH_WSL_ENV_FILE = `# Coding Agent 2 WSL bridge sh ENV: restore the user's ENV, then report the folder (OSC 7) at each prompt.
-if [ -n "\${ORCA_WSL_USER_ENV:-}" ]; then
-  ENV=$ORCA_WSL_USER_ENV
-  unset ORCA_WSL_USER_ENV
+if [ -n "\${CODING_AGENT_WSL_USER_ENV-\${ORCA_WSL_USER_ENV:-}}" ]; then
+  ENV=\${CODING_AGENT_WSL_USER_ENV-$ORCA_WSL_USER_ENV}
+  unset ORCA_WSL_USER_ENV CODING_AGENT_WSL_USER_ENV
   # The shell expands ENV's value before reading it; a here-document does the same without
   # parsing the user's quotes as shell syntax.
   eval "IFS= read -r __orca_user_env <<__ORCA_USER_ENV_EOF

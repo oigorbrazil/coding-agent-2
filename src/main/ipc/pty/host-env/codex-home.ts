@@ -1,10 +1,13 @@
-import { normalizeRuntimePathForComparison } from '../../../../shared/cross-platform-path'
 import type { GlobalSettings } from '../../../../shared/global-settings-types'
+import type { CodexAccountSelectionTarget } from '../../../codex-accounts/runtime-selection'
+import { readAppEnv, deleteAppEnvKey } from '../../../../shared/app-env'
+import { normalizeRuntimePathForComparison } from '../../../../shared/cross-platform-path'
+
 import {
   isCodexHomeAuthReadyForLaunch,
   waitForManagedCodexAuthReady
 } from '../../../codex-accounts/managed-codex-auth-readiness'
-import type { CodexAccountSelectionTarget } from '../../../codex-accounts/runtime-selection'
+
 import {
   forgetCodexPaneAccount,
   getCodexPaneAccount,
@@ -45,13 +48,14 @@ export const CODEX_HOME_ENV_KEYS = ['CODEX_HOME', 'ORCA_CODEX_HOME'] as const
 // Remove only overrides matching Coding Agent 2's private marker, then drop the marker so wrappers cannot restore them; preserve user CODEX_HOME (#8606).
 export function stripInheritedOrcaCodexHomeOverride(baseEnv: Record<string, string>): void {
   for (const key of getLocalOrcaCodexHomeEnvKeysToDelete(baseEnv)) {
-    delete baseEnv[key]
+    deleteAppEnvKey(baseEnv, key)
   }
 }
 
 // Local spawns share this environment; persistent daemons must compare their own inherited values.
 export function getLocalOrcaCodexHomeEnvKeysToDelete(env: Record<string, string>): string[] {
-  const inheritedOrcaOverride = env.ORCA_CODEX_HOME ?? process.env.ORCA_CODEX_HOME
+  const inheritedOrcaOverride =
+    readAppEnv(env, 'CODEX_HOME') ?? readAppEnv(process.env, 'CODEX_HOME')
   const inheritedCodexHome = env.CODEX_HOME ?? process.env.CODEX_HOME
   const keysToDelete = ['ORCA_CODEX_HOME']
   if (inheritedOrcaOverride && inheritedCodexHome === inheritedOrcaOverride) {

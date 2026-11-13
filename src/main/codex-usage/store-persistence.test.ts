@@ -28,7 +28,7 @@ describe('CodexUsageStore', () => {
   it('rescans from scratch when the cache predates per-request long-context counts', async () => {
     const scanMock = vi.mocked(scanCodexUsageFilesViaWorker)
     const sourceCachePath = join(storeEnv.tempUserData, 'orca-codex-usage-sources.json')
-    const cacheFile = join(storeEnv.tempUserData, 'orca-codex-usage.json')
+    const cacheFile = join(storeEnv.tempUserData, 'coding-codex-usage.json')
     const seeded = new CodexUsageStore({ getRepos: () => [], getAllWorktreeMeta: () => ({}) })
     await seeded.setEnabled(true)
     await seeded.refresh(true)

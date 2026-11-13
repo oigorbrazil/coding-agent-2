@@ -1,13 +1,15 @@
+import type { SupervisedAppImageUpdate } from './serve-supervised-service'
+import { readAppEnv, deleteAppEnvKey } from '../../shared/app-env'
 /** AppImage swaps leave running copies stale; re-exec at the same PID to preserve service tracking. */
 import { readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, isAbsolute, join, resolve } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   readAppImageSourceOfNamespace,
   resolveAppImageCacheKey,
   resolveAppImageGenerationOfExecutable
 } from '../../shared/appimage-cache-identity'
-import type { SupervisedAppImageUpdate } from './serve-supervised-service'
+
 import { SERVE_SUPERVISOR_APP_ROOT_ENV } from './serve-supervisor-relocation'
 
 /** A file this recently written may still be mid-copy; executing half an AppImage fails. */
@@ -137,14 +139,14 @@ function appImageEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
     'OWD',
     'ORCA_CLI_LAUNCH_REDIRECTED'
   ]) {
-    delete next[name]
+    deleteAppEnvKey(next, name)
   }
   // Restore NODE_OPTIONS before the new launcher moves it aside again.
-  if (env.ORCA_NODE_OPTIONS) {
-    next.NODE_OPTIONS = env.ORCA_NODE_OPTIONS
+  if (readAppEnv(env, 'NODE_OPTIONS')) {
+    next.NODE_OPTIONS = readAppEnv(env, 'NODE_OPTIONS')
   }
-  if (env.ORCA_NODE_REPL_EXTERNAL_MODULE) {
-    next.NODE_REPL_EXTERNAL_MODULE = env.ORCA_NODE_REPL_EXTERNAL_MODULE
+  if (readAppEnv(env, 'NODE_REPL_EXTERNAL_MODULE')) {
+    next.NODE_REPL_EXTERNAL_MODULE = readAppEnv(env, 'NODE_REPL_EXTERNAL_MODULE')
   }
   return next
 }
@@ -197,7 +199,7 @@ export function createSupervisedAppImageUpdate(
       if (!reportedFailedAttempt) {
         reportedFailedAttempt = true
         deps.log(
-          `[serve] Keeping the running build: ${watch.appImagePath} was started once and did not come up. Replace it again, or run \`orca serve --supervise --force\` once to retry it.`
+          `[serve] Keeping the running build: ${watch.appImagePath} was started once and did not come up. Replace it again, or run \`coding serve --supervise --force\` once to retry it.`
         )
       }
       return 'current'

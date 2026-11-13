@@ -67,7 +67,7 @@ export async function resolvePluginViewPanel(
         ? `${pluginKey} contributes no panels.`
         : `${pluginKey} has no panel ${panelId}.`,
       panels.length === 0
-        ? ['Add one under contributes.panels in orca-plugin.json.']
+        ? ['Add one under contributes.panels in coding-plugin.json.']
         : [`Its panels: ${panels.map((entry) => entry.id).join(', ')}.`]
     )
   }
@@ -95,7 +95,7 @@ export async function resolvePluginViewEditor(
         ? `${pluginKey} contributes no custom editors.`
         : `No ${pluginKey} editor opens ${filePath}.`,
       editors.length === 0
-        ? ['Add one under contributes.customEditors in orca-plugin.json.']
+        ? ['Add one under contributes.customEditors in coding-plugin.json.']
         : editors.map(
             (entry) =>
               `${entry.id} opens ${[...entry.filenames, ...entry.extensions.map((ext) => `*${ext}`)].join(', ')}.`

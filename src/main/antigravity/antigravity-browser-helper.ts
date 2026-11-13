@@ -1,7 +1,7 @@
 // Capture sign-in URLs on stderr so remote hosts never open a browser.
 
 import { quotePosixShellDoubleQuotedApostrophe } from '../../shared/shell/launch/shell-argument-quoting'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 export const ANTIGRAVITY_BROWSER_MARKER = '__ORCA_ANTIGRAVITY_AUTH_URL__'
 

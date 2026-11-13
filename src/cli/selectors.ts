@@ -1,24 +1,28 @@
-import { resolve as resolvePath } from 'node:path'
 import type { ComputerAppQuery } from '../shared/runtime-types'
-import { resolveFolderWorkspaceSelector } from './folder-workspace-selector'
-import { resolveCallerDistroPathSelector } from './wsl-caller-path-selector'
 import type { RuntimeClient } from './runtime-client'
-import { RuntimeClientError } from './runtime/types'
-import { assertLocalCwdWorktreeSelector } from './local-environment-selector'
-import { isLaunchedByAnotherRuntime } from './runtime/runtime-source-fence'
-import { getOptionalStringFlag, getPresentStringFlag, getRequiredStringFlag } from './flags'
-import { readEnclosingWorkspaceCatalog } from './enclosing-workspace-catalog'
 import {
+  type WorkspaceSelectionPurpose,
+  type HostScopedWorktreeSelection,
   getCallerExecutionHostId,
   getCallerWorkspaceIds,
   resolveCallerPaneWorktreeSelector,
   selectWorktreeCreateCwdContext,
   selectEnclosingWorktreeSelectionOnHost,
   selectCallerTerminalWorkspace,
-  selectorPurpose,
-  type WorkspaceSelectionPurpose,
-  type HostScopedWorktreeSelection
+  selectorPurpose
 } from './caller-host-worktree-selection'
+
+import { readAppEnv } from '../shared/app-env'
+import { resolve as resolvePath } from 'node:path'
+
+import { resolveFolderWorkspaceSelector } from './folder-workspace-selector'
+import { resolveCallerDistroPathSelector } from './wsl-caller-path-selector'
+
+import { RuntimeClientError } from './runtime/types'
+import { assertLocalCwdWorktreeSelector } from './local-environment-selector'
+import { isLaunchedByAnotherRuntime } from './runtime/runtime-source-fence'
+import { getOptionalStringFlag, getPresentStringFlag, getRequiredStringFlag } from './flags'
+import { readEnclosingWorkspaceCatalog } from './enclosing-workspace-catalog'
 
 export type ComputerCliTarget = {
   session?: string
@@ -245,14 +249,14 @@ export async function getEmulatorWorktreeSelector(
   if (client.isRemote) {
     return undefined
   }
-  const terminalWorktreeId = process.env.ORCA_WORKTREE_ID
+  const terminalWorktreeId = readAppEnv(process.env, 'WORKTREE_ID')
   if (terminalWorktreeId?.trim()) {
     const scoped = await resolveCallerPaneWorktreeSelector(terminalWorktreeId, client)
     if (scoped) {
       return scoped
     }
   }
-  const folderWorkspaceId = process.env.ORCA_WORKSPACE_ID?.trim()
+  const folderWorkspaceId = readAppEnv(process.env, 'WORKSPACE_ID')?.trim()
   if (folderWorkspaceId?.startsWith('folder:')) {
     return folderWorkspaceId
   }

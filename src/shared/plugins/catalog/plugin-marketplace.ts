@@ -14,7 +14,8 @@ const NEXT = PLUGIN_MANIFEST_V2_SINCE
 
 // Why frozen: v1 entries are strict, so shipped clients reject any new field. New catalogs live
 // in orca-catalog.json (plugin-catalog.ts); this file is generated from it for old clients.
-export const PLUGIN_MARKETPLACE_FILENAME = 'orca-marketplace.json'
+export const PLUGIN_MARKETPLACE_FILENAME = 'coding-marketplace.json'
+export const LEGACY_PLUGIN_MARKETPLACE_FILENAME = 'orca-marketplace.json'
 export const PLUGIN_MARKETPLACE_ENTRY_LIMIT = 2_048
 export const PLUGIN_MARKETPLACE_CATEGORY_LIMIT = 16
 

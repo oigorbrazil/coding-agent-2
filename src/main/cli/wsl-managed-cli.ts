@@ -2,10 +2,10 @@ import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { getAppEnvironment } from '../../shared/app-environment'
-import { windowsPowerShellPath } from '@orca/process-host/windows-system-binary'
+import { windowsPowerShellPath } from '@coding-agent/process-host/windows-system-binary'
 import { writeShellWrapperFiles } from '../pty/shell-startup/shell-wrapper-file-writer'
 import { getBundledLauncherPath, LINUX_CLI_COMMAND_NAME } from './bundled-cli-launcher-path'
-import { DEV_COMMAND_NAME } from './cli-install-constants'
+import { CLI_COMMAND_NAME, DEV_COMMAND_NAME } from './cli-install-constants'
 import { buildColocatedWslLauncher, buildWslBridgeScript } from './wsl-cli-scripts'
 
 /** Packaged builds share `orca-ide` with guest registration; dev builds get their own name. */
@@ -41,6 +41,7 @@ export function getManagedWslCliDir(opts: {
   const digest = createHash('sha256').update(launcher).update(bridge).digest('hex').slice(0, 20)
   const directory = join(opts.userDataPath, 'wsl-managed-cli', digest)
   const files = [
+    [join(directory, CLI_COMMAND_NAME), launcher],
     [join(directory, getWslCliCommandName(opts.isPackaged)), launcher],
     [join(directory, 'orca-wsl-bridge.ps1'), bridge]
   ] as const

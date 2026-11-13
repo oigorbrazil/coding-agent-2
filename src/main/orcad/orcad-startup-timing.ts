@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 /** Startup phase timing for the real-distro lane; inert unless its launch env sets the variable. */
 export const ORCAD_STARTUP_TIMING_ENV = 'ORCA_E2E_ORCAD_STARTUP_TIMING'
 
@@ -11,7 +12,7 @@ export function createOrcadStartupTiming(
   now: () => number = () => performance.now(),
   write: (line: string) => void = (line) => console.error(line)
 ) {
-  const enabled = env[ORCAD_STARTUP_TIMING_ENV] === '1'
+  const enabled = readAppEnv(env, 'E2E_ORCAD_STARTUP_TIMING') === '1'
   const phases: OrcadStartupPhase[] = []
   return {
     async time<T>(name: string, run: () => Promise<T>): Promise<T> {

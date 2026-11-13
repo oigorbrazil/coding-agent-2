@@ -1,4 +1,4 @@
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
   isWindowsProcessTableAvailable,

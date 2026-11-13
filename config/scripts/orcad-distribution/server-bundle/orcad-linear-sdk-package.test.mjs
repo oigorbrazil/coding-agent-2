@@ -2,7 +2,7 @@ import { mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, expect, it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   ORCAD_ARTIFACTS,
   ORCAD_LINEAR_SDK_ENTRY,

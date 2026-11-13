@@ -1,3 +1,4 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import type { ExecutionHostId } from '../../shared/execution-host'
 import { hostedReviewSshConnectionId } from '../source-control/hosted-review-execution-host'
 import { Buffer } from 'node:buffer'
@@ -32,16 +33,13 @@ type AzureDevOpsCreateAuthConfig = {
   username: string | null
 }
 
-function envValue(name: string): string | null {
-  const value = process.env[name]?.trim() ?? ''
-  return value.length > 0 ? value : null
-}
-
 function getAuthConfig(): AzureDevOpsCreateAuthConfig {
   return {
-    pat: envValue('ORCA_AZURE_DEVOPS_TOKEN') ?? envValue('ORCA_AZURE_DEVOPS_PAT'),
-    accessToken: envValue('ORCA_AZURE_DEVOPS_ACCESS_TOKEN'),
-    username: envValue('ORCA_AZURE_DEVOPS_USERNAME')
+    pat:
+      readProviderEnvironment('CODING_AZURE_DEVOPS_TOKEN') ??
+      readProviderEnvironment('CODING_AZURE_DEVOPS_PAT'),
+    accessToken: readProviderEnvironment('CODING_AZURE_DEVOPS_ACCESS_TOKEN'),
+    username: readProviderEnvironment('CODING_AZURE_DEVOPS_USERNAME')
   }
 }
 
@@ -124,7 +122,7 @@ function classifyCreateError(error: unknown): CreateHostedReviewResult {
       ok: false,
       code: 'auth_required',
       error:
-        'Create PR failed: Azure DevOps is not authenticated. Next step: set ORCA_AZURE_DEVOPS_TOKEN in this environment.',
+        'Create PR failed: Azure DevOps is not authenticated. Next step: set CODING_AGENT_AZURE_DEVOPS_TOKEN (legacy ORCA_* names still work) in this environment.',
       reason: 'auth_required'
     }
   }

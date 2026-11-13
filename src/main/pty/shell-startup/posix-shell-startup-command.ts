@@ -1,4 +1,5 @@
 import { basename, win32 as pathWin32 } from 'node:path'
+import { posixAppEnvRestore } from '../../../shared/app-env-script'
 
 export const POSIX_SHELL_STARTUP_COMMAND_ENV = 'ORCA_POSIX_SHELL_STARTUP_COMMAND'
 
@@ -8,7 +9,8 @@ export function supportsPosixShellStartupCommand(shellPath: string): boolean {
 }
 
 export function getBashStartupCommandPromptBlock(): string {
-  return `if [[ \${${POSIX_SHELL_STARTUP_COMMAND_ENV}+present} == present ]]; then
+  return `${posixAppEnvRestore(['POSIX_SHELL_STARTUP_COMMAND'])}
+if [[ \${${POSIX_SHELL_STARTUP_COMMAND_ENV}+present} == present ]]; then
   __orca_remove_startup_command_prompt_hook() {
     local __orca_item
     local -a __orca_remaining=()
@@ -26,7 +28,7 @@ export function getBashStartupCommandPromptBlock(): string {
   }
   __orca_run_startup_command() {
     local __orca_command="$${POSIX_SHELL_STARTUP_COMMAND_ENV}" __orca_status
-    unset ${POSIX_SHELL_STARTUP_COMMAND_ENV}
+    unset ${POSIX_SHELL_STARTUP_COMMAND_ENV} CODING_AGENT_POSIX_SHELL_STARTUP_COMMAND
     __orca_remove_startup_command_prompt_hook
     unset -f __orca_remove_startup_command_prompt_hook
     builtin history -s "$__orca_command" 2>/dev/null || true

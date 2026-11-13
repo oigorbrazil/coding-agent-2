@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as ProcessHost from '@orca/process-host'
+import type * as ProcessHost from '@coding-agent/process-host'
 import { installFakeAppEnvironment } from '../../../config/scripts/test-runtime/environment/vitest-host-ports-setup'
 import { CLIPBOARD_TEXT_MEASURE_YIELD_CODE_UNITS } from '../../shared/clipboard-text'
 import {
@@ -56,7 +56,7 @@ const {
   callRuntimeEnvironmentMock: vi.fn()
 }))
 
-vi.mock('@orca/process-host', async (importOriginal) => ({
+vi.mock('@coding-agent/process-host', async (importOriginal) => ({
   ...(await importOriginal<typeof ProcessHost>()),
   runProcess: runProcessMock
 }))

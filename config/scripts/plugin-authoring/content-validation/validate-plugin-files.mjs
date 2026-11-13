@@ -1,5 +1,5 @@
 // Strict check of plugin manifests and catalogs, for authors and catalog CI.
-// Usage: node config/scripts/validate-plugin-files.mjs <plugin dir | orca-plugin.json | orca-catalog.json>...
+// Usage: node config/scripts/validate-plugin-files.mjs <plugin dir | coding-plugin.json | coding-catalog.json>...
 // For a plugin directory in a Git repository it also prints the catalog release entry for the
 // committed HEAD, with the `source.path` to list when the plugin is not the repository root.
 import { createHash } from 'node:crypto'
@@ -66,7 +66,7 @@ async function installContentErrors(root, manifest) {
 const targets = process.argv.slice(2)
 if (targets.length === 0) {
   console.error(
-    'usage: validate-plugin-files <plugin dir | orca-plugin.json | orca-catalog.json>...'
+    'usage: validate-plugin-files <plugin dir | coding-plugin.json | coding-catalog.json>...'
   )
   process.exit(2)
 }
@@ -78,12 +78,17 @@ for (const target of targets) {
     continue
   }
   const files = statSync(target).isDirectory()
-    ? ['orca-plugin.json', 'orca-catalog.json']
+    ? [
+        ['coding-plugin.json', 'orca-plugin.json'],
+        ['coding-catalog.json', 'orca-catalog.json']
+      ]
+        .map((names) => names.find((name) => existsSync(path.join(target, name))))
+        .filter(Boolean)
         .map((name) => path.join(target, name))
         .filter((file) => existsSync(file))
     : [target]
   if (files.length === 0) {
-    console.error(`${target}: no orca-plugin.json or orca-catalog.json`)
+    console.error(`${target}: no coding-plugin.json or coding-catalog.json`)
     failed = true
   }
   let manifestOk = false
@@ -107,7 +112,10 @@ for (const target of targets) {
       return { bytes, sha256: createHash('sha256').update(bytes).digest('hex') }
     }
     const errors = validatePluginFile(path.basename(file), raw, readCatalogFile)
-    if (errors.length === 0 && path.basename(file) === 'orca-plugin.json') {
+    if (
+      errors.length === 0 &&
+      ['coding-plugin.json', 'orca-plugin.json'].includes(path.basename(file))
+    ) {
       const { manifest } = parsePluginManifest(raw)
       errors.push(...strictPluginArtifactErrors(manifest, readPluginText(root), englishLookup()))
       errors.push(...(await installContentErrors(root, manifest)))
@@ -115,7 +123,10 @@ for (const target of targets) {
     for (const error of errors) {
       console.error(`${file}: ${error}`)
     }
-    if (errors.length === 0 && path.basename(file) === 'orca-plugin.json') {
+    if (
+      errors.length === 0 &&
+      ['coding-plugin.json', 'orca-plugin.json'].includes(path.basename(file))
+    ) {
       const { manifest } = parsePluginManifest(raw)
       for (const warning of [
         ...pluginManifestWarnings(raw),
@@ -127,7 +138,7 @@ for (const target of targets) {
     failed ||= errors.length > 0
     if (errors.length === 0) {
       console.log(`${file}: ok`)
-      manifestOk ||= path.basename(file) === 'orca-plugin.json'
+      manifestOk ||= ['coding-plugin.json', 'orca-plugin.json'].includes(path.basename(file))
     }
   }
   if (manifestOk && statSync(target).isDirectory()) {

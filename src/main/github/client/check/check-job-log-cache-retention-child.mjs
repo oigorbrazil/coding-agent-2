@@ -5,6 +5,9 @@ import { pathToFileURL } from 'node:url'
 import { performance, monitorEventLoopDelay } from 'node:perf_hooks'
 import { workload } from '../../../../../config/scripts/performance/check-job-log/check-job-log-performance-cases.mjs'
 
+// Plain Node runs this script, so it reads the mirrored app env without importing app source.
+const readAppEnv = (env, name) => env[`CODING_AGENT_${name}`] ?? env[`ORCA_${name}`]
+
 assert(
   !process.versions.bun && typeof globalThis.gc === 'function',
   'Node with explicit GC is required'
@@ -201,5 +204,5 @@ for (const descriptor of cpuDescriptors) {
 }
 const finalMemory = memory()
 process.stdout.write(
-  `${JSON.stringify({ trial: Number(trial), identityHash, runtime: { node: process.version, v8: process.versions.v8, uv: process.versions.uv, executableHash: hash(realpathSync(process.execPath)), platform: process.platform, arch: process.arch, gc: true, background: process.env.ORCA_BACKGROUND_LAUNCH === '1' }, pinnedControl, eight, nearCap, maximum, fullPayload, mixedPayload, cpu, finalMemory, activeTimeouts: process.getActiveResourcesInfo().filter((name) => name === 'Timeout').length })}\n`
+  `${JSON.stringify({ trial: Number(trial), identityHash, runtime: { node: process.version, v8: process.versions.v8, uv: process.versions.uv, executableHash: hash(realpathSync(process.execPath)), platform: process.platform, arch: process.arch, gc: true, background: readAppEnv(process.env, 'BACKGROUND_LAUNCH') === '1' }, pinnedControl, eight, nearCap, maximum, fullPayload, mixedPayload, cpu, finalMemory, activeTimeouts: process.getActiveResourcesInfo().filter((name) => name === 'Timeout').length })}\n`
 )

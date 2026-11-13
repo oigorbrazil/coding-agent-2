@@ -12,7 +12,20 @@ import { execCommand } from '../../ssh/remote-exec/remote-exec-command'
 import { wslHostAddRefusal } from './wsl-host-add-admission'
 
 // Prints only the public half; the private key never leaves the distro.
-const READ_PUBLIC_KEY = `sed -n 's/.*"publicKeyB64"[[:space:]]*:[[:space:]]*"\\([A-Za-z0-9+/=]*\\)".*/\\1/p' "$HOME/.coding-agent-2/${E2EE_KEYPAIR_FILENAME}" 2>/dev/null | head -n 1`
+const READ_PUBLIC_KEY = `
+key="$HOME/.coding-agent-2/${E2EE_KEYPAIR_FILENAME}"
+legacy="$HOME/.coding-agent-2/orca-e2ee-keypair.json"
+if [ ! -e "$key" ] && [ -f "$legacy" ]
+then
+  stage="$(mktemp "$key.XXXXXX")" && chmod 600 "$stage" && cp "$legacy" "$stage" && mv -n "$stage" "$key"
+  [ -z "$stage" ] || rm -f "$stage"
+fi
+if [ ! -e "$key" ]
+then
+  key="$legacy"
+fi
+sed -n 's/.*"publicKeyB64"[[:space:]]*:[[:space:]]*"\\([A-Za-z0-9+/=]*\\)".*/\\1/p' "$key" 2>/dev/null | head -n 1
+`.trim()
 
 export async function readWslDistroOrcadPublicKey(
   transport: OrcadHostTransport,

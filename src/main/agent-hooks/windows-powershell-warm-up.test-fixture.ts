@@ -1,4 +1,4 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { expect } from 'vitest'
 import { wrapWindowsHookCommand } from './installer-utils'
 

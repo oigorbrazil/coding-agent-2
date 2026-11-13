@@ -1,5 +1,5 @@
-import { spawnProcess } from '@orca/process-host'
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
 import { resolveWslInteropSpawnCwd } from '../../../wsl/execution/wsl-interop-spawn-directory'
 
 /** Start the in-distro poll script; process-host applies the internal distro allowlist. */

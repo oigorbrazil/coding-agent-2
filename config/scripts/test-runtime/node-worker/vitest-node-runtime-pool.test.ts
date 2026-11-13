@@ -5,8 +5,8 @@ import { join, resolve } from 'node:path'
 import { PassThrough } from 'node:stream'
 import { afterAll, afterEach, beforeAll, expect, it, onTestFinished, vi } from 'vitest'
 import { createVitest, type PoolOptions, type Vitest } from 'vitest/node'
-import * as processes from '@orca/process-host'
-import type { ChildProcessHandle } from '@orca/process-host/process-spec'
+import * as processes from '@coding-agent/process-host'
+import type { ChildProcessHandle } from '@coding-agent/process-host/process-spec'
 import { nodeRuntimePool } from './vitest-node-runtime-pool'
 
 let context: Vitest

@@ -1,8 +1,9 @@
+import { pluginManifestPath, readPluginManifestText } from './plugin-manifest-file'
 import { createHash } from 'node:crypto'
 import { mkdtemp, readFile, rm, stat } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, sep } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { parseGitRepositoryIdentity } from '../../shared/plugins/catalog/plugin-marketplace'
 import {
   pluginCatalogReleaseEntry,
@@ -18,7 +19,6 @@ import {
 import { validatePluginInstallTree } from './plugin-artifact-validation'
 import { materializePluginGitTree, type PluginGitBytesRunner } from './installation/plugin-git-tree'
 import { hashPluginTree } from './plugin-content-hash'
-import { readPluginManifestText } from './plugin-manifest-file'
 import { formatPluginSchemaIssues } from '../../shared/plugins/manifest/plugin-schema-issues'
 
 const GIT_QUERY_TIMEOUT_MS = 30_000
@@ -165,7 +165,7 @@ async function committedReleaseEntry(
 async function publisherOwnerWarning(pluginDir: string): Promise<string | undefined> {
   const remote = await gitText(pluginDir, ['remote', 'get-url', 'origin']).catch(() => '')
   const owner = parseGitRepositoryIdentity(remote)?.owner?.toLowerCase()
-  const manifest: unknown = await readFile(join(pluginDir, PLUGIN_MANIFEST_FILENAME), 'utf8')
+  const manifest: unknown = await readFile(pluginManifestPath(pluginDir), 'utf8')
     .then((text) => JSON.parse(text))
     .catch(() => null)
   const publisher =

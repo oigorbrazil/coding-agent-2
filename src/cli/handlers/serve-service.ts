@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import type { CommandHandler } from '../dispatch'
 import { RuntimeClientError } from '../runtime/types'
 import { getOptionalServePort } from '../runtime/serve-port-flag'
@@ -53,7 +53,7 @@ function requireManager(platform: NodeJS.Platform): void {
   if (!resolveServeServiceManager(platform)) {
     throw new RuntimeClientError(
       'unsupported_platform',
-      '`orca serve service` is not available on Windows yet. Run `orca serve` under a service wrapper of your own.'
+      '`coding serve service` is not available on Windows yet. Run `coding serve` under a service wrapper of your own.'
     )
   }
 }

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { buildSync } from 'esbuild'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { stagePackagedProcessHost } from '../../../../config/scripts/desktop-distribution/runtime-verification/packaged-process-host-fixture.mjs'
 import {
   acquireProfileStateMaintenance,

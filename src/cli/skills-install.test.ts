@@ -32,6 +32,11 @@ vi.mock('../main/skills/bundled-skill-install/bundled-skill-sources', () => ({
 vi.mock('../main/preflight/installed-agent-detection', () => ({
   detectInstalledAgentsWithShellPathHydration: detectAgentsMock
 }))
+// The shipped app keeps inherited skill writes off; these cases cover the installer behind that gate.
+vi.mock('../main/skills/bundled-skill-install/cli-entry', async (importOriginal) => ({
+  ...(await importOriginal<object>()),
+  INHERITED_SKILL_WRITES_ENABLED: true
+}))
 // Avoid the production five-second lock wait in tests.
 vi.mock('../main/skills/bundled-skill-install/local-host', async (importOriginal) => {
   const actual = await importOriginal<typeof LocalHost>()

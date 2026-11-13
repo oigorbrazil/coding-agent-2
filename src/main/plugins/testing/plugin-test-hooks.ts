@@ -1,3 +1,5 @@
+import { readAppEnv } from '../../../shared/app-env'
+import { pluginManifestPath } from '../../../shared/plugins/manifest/plugin-manifest-path'
 /**
  * Node module hooks for running a plugin's own tests in plain Node: `orca` and `orca/testing`
  * resolve to the files Coding Agent 2 ships beside this one, and plugin sources (.ts, .tsx, .mts, .jsx) are
@@ -41,7 +43,7 @@ const SCRIPT_FILE = /\.[cm]?[jt]sx?$/i
 
 /** The plugin folder under test; files outside it (and node_modules) load as Node loads them.
  *  Real path, because Node's module URLs are (macOS /var is /private/var). */
-const pluginRoot = realpathSync(process.env.ORCA_PLUGIN_TEST_ROOT ?? process.cwd())
+const pluginRoot = realpathSync(readAppEnv(process.env, 'PLUGIN_TEST_ROOT') ?? process.cwd())
 
 function pluginRelativePath(url: string): string | null {
   if (!url.startsWith('file:')) {
@@ -59,9 +61,7 @@ const isFile = (path: string): boolean => existsSync(path) && statSync(path).isF
 /** The manifest's worker `main`, as a file URL; null when the plugin has none. */
 function workerEntryUrl(): string | null {
   try {
-    const manifest: unknown = JSON.parse(
-      readFileSync(`${pluginRoot}${sep}orca-plugin.json`, 'utf8')
-    )
+    const manifest: unknown = JSON.parse(readFileSync(pluginManifestPath(pluginRoot), 'utf8'))
     const main =
       typeof manifest === 'object' && manifest !== null && 'main' in manifest ? manifest.main : null
     return typeof main === 'string'

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // WSL-host orcad must ignore Windows CLI shims; identify mounts by type because the automount root is configurable.
 import { existsSync, readFileSync } from 'node:fs'
 import { isAbsolute } from 'node:path'
@@ -34,7 +35,9 @@ export function isWslHostOrcadProcess(
   platform: NodeJS.Platform = process.platform,
   interopRegistered?: () => boolean
 ): boolean {
-  return env[ORCAD_WSL_HOST_ENV] === '1' && isWslGuestProcess(env, platform, interopRegistered)
+  return (
+    readAppEnv(env, 'WSL_ORCAD_HOST') === '1' && isWslGuestProcess(env, platform, interopRegistered)
+  )
 }
 
 /** Decode /proc/mounts octal escapes, including whitespace and backslashes. */

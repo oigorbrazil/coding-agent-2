@@ -1,7 +1,10 @@
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
+
+import { appEnvPairs } from '../../shared/app-env'
 import { isAbsolute } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
-import { windowsPowerShellPath } from '@orca/process-host/windows-system-binary'
+
+import { windowsPowerShellPath } from '@coding-agent/process-host/windows-system-binary'
 import { withTimeout } from '../../shared/promise-timeout-fallback'
 
 export type ClipboardFileResult = { ok: boolean; reason?: string }
@@ -58,9 +61,9 @@ export async function writeFileToClipboard(
         '-NoProfile',
         '-NonInteractive',
         '-Command',
-        `Set-Clipboard -LiteralPath $env:${WINDOWS_CLIPBOARD_FILE_ENV}`
+        `Set-Clipboard -LiteralPath $(if (Test-Path Env:CODING_AGENT_CLIPBOARD_FILE) { $env:CODING_AGENT_CLIPBOARD_FILE } else { $env:${WINDOWS_CLIPBOARD_FILE_ENV} })`
       ],
-      env: { ...process.env, [WINDOWS_CLIPBOARD_FILE_ENV]: clipboardPath }
+      env: { ...process.env, ...appEnvPairs('CLIPBOARD_FILE', clipboardPath) }
     })
     return copied ? { ok: true } : { ok: false, reason: 'clipboard-command-failed' }
   }

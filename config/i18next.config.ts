@@ -12,7 +12,10 @@ export default defineConfig({
       '**/*.spec.*',
       '**/__tests__/**',
       '**/__snapshots__/**',
-      '**/assets/**'
+      '**/assets/**',
+      // The playbooks editor ships its own en/pt message catalogs (lib/coding-opus-playbooks/messages.*.json).
+      'src/renderer/src/components/settings/coding-opus/playbooks/**',
+      'src/renderer/src/lib/coding-opus-playbooks/**'
     ],
     output,
     defaultNS: false,

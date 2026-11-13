@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // Optional report-only drift logging excludes runtime-owned fields that legitimately outrun renderer snapshots.
 
 import { appendFileSync } from 'node:fs'
@@ -20,7 +21,6 @@ import type { WorkspaceSessionState } from '../../shared/workspace-session/works
 import { droppedTabBarEntries, terminalTabBarEntries } from './window-save-raw-session-divergence'
 import { compactFieldChanges, type FieldChange } from './window-save-divergence-values'
 
-const LOG_PATH_ENV = 'ORCA_LAYOUT_SAVE_DIVERGENCE_LOG'
 const MAX_PATHS = 12
 const BINDING_FIELDS = new Set(['ptyId', 'incarnationId', 'sleeping', 'resume'])
 
@@ -256,7 +256,7 @@ export function windowSaveDivergences(
 
 function report(source: string, partition: ExecutionHostId, divergence: WindowSaveDivergence) {
   console.warn('[layout-owner] window save changed main layout:', source, divergence)
-  const logPath = process.env[LOG_PATH_ENV]
+  const logPath = readAppEnv(process.env, 'LAYOUT_SAVE_DIVERGENCE_LOG')
   if (!logPath) {
     return
   }
@@ -277,7 +277,7 @@ export function reportWindowSaveDrift(
   hostId: string | null | undefined,
   source: string
 ): void {
-  if (!process.env[LOG_PATH_ENV]) {
+  if (!readAppEnv(process.env, 'LAYOUT_SAVE_DIVERGENCE_LOG')) {
     return
   }
   const partition = normalizeExecutionHostId(hostId) ?? LOCAL_EXECUTION_HOST_ID

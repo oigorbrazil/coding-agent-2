@@ -1,8 +1,10 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { CLAUDE_AGENT_VIEW_PATH } from '../../../shared/claude-agent-view'
-import { parseAgentHookEndpointFile } from '../../../shared/agent-hook-listener/transport/agent-hook-endpoint-file'
+import { createAgentHookEndpointParser } from '../../../shared/agent-hook-listener/transport/agent-hook-endpoint-file'
 
 export const CLAUDE_AGENT_VIEW_MOD_SOURCE = String.raw`
-const parseEndpoint = ${parseAgentHookEndpointFile.toString()}
+const readAppEnv = ${readAppEnv.toString()}
+const parseEndpoint = (${createAgentHookEndpointParser.toString()})(${readAppEnv.toString()})
 
 let identity
 let configDir
@@ -13,9 +15,9 @@ let viewRevision = 0
 
   async function post($, action, data = {}, session = identity) {
     if (!session) return {}
-    let port = await $.env.get('ORCA_AGENT_HOOK_PORT')
-    let token = await $.env.get('ORCA_AGENT_HOOK_TOKEN')
-    const endpoint = await $.env.get('ORCA_AGENT_HOOK_ENDPOINT')
+    let port = readAppEnv({ CODING_AGENT_AGENT_HOOK_PORT: await $.env.get('CODING_AGENT_AGENT_HOOK_PORT'), ORCA_AGENT_HOOK_PORT: await $.env.get('ORCA_AGENT_HOOK_PORT') }, 'AGENT_HOOK_PORT')
+    let token = readAppEnv({ CODING_AGENT_AGENT_HOOK_TOKEN: await $.env.get('CODING_AGENT_AGENT_HOOK_TOKEN'), ORCA_AGENT_HOOK_TOKEN: await $.env.get('ORCA_AGENT_HOOK_TOKEN') }, 'AGENT_HOOK_TOKEN')
+    const endpoint = readAppEnv({ CODING_AGENT_AGENT_HOOK_ENDPOINT: await $.env.get('CODING_AGENT_AGENT_HOOK_ENDPOINT'), ORCA_AGENT_HOOK_ENDPOINT: await $.env.get('ORCA_AGENT_HOOK_ENDPOINT') }, 'AGENT_HOOK_ENDPOINT')
     if (endpoint) {
       try {
         const file = parseEndpoint(await $.fs.read(endpoint))
@@ -76,10 +78,10 @@ export function register(on) {
 
   on('session.start', async ($, event, next) => {
     const result = await next(event)
-    const targetPane = await $.env.get('ORCA_PANE_KEY')
+    const targetPane = readAppEnv({ CODING_AGENT_PANE_KEY: await $.env.get('CODING_AGENT_PANE_KEY'), ORCA_PANE_KEY: await $.env.get('ORCA_PANE_KEY') }, 'PANE_KEY')
     if (!event.isInteractive || event.surface !== 'terminal' || !targetPane) return result
     paneKey = targetPane
-    configDir = await $.env.get('CLAUDE_CONFIG_DIR') || await $.env.get('ORCA_CLAUDE_CONFIG_DIR')
+    configDir = await $.env.get('CLAUDE_CONFIG_DIR') || readAppEnv({ CODING_AGENT_CLAUDE_CONFIG_DIR: await $.env.get('CODING_AGENT_CLAUDE_CONFIG_DIR'), ORCA_CLAUDE_CONFIG_DIR: await $.env.get('ORCA_CLAUDE_CONFIG_DIR') }, 'CLAUDE_CONFIG_DIR')
     if (!configDir) return result
     endedSessionId = undefined
     await $.command.register({ name: 'orca-agent-view', description: 'Open the agent selected in Coding Agent 2', immediate: true })

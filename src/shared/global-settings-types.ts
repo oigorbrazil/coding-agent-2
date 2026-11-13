@@ -34,7 +34,6 @@ import type { ZcodePlanSite } from './zcode-plan-sites'
 import type {
   AgentDashboardMode,
   BranchPrefixStrategy,
-  FloatingTerminalTriggerLocation,
   JiraIssueKeyCasing,
   LeftSidebarAppearanceMode,
   OpenInApplication,
@@ -262,8 +261,6 @@ export type GlobalSettings = GlobalSettingsBase & {
   showArtifactsButton?: boolean
   /** Only toggles the sidebar shortcut; Skills stay reachable from Settings. */
   showSkillsButton?: boolean
-  /** Only toggles the sidebar shortcut; Coding Agent 2 Mobile stays reachable from Settings. */
-  showMobileButton?: boolean
   /** Pinned workspaces show in one sidebar location by default; opt in to also show them in their natural groups. */
   showPinnedWorktreesInGroups?: boolean
   /** How Ctrl+Tab picks the next visible tab; optional (older profiles), readers default to MRU. */
@@ -290,8 +287,6 @@ export type GlobalSettings = GlobalSettingsBase & {
   floatingTerminalTrustedCwds?: string[]
   /** One-shot migration marker for legacy floating workspace cwd trust grants. */
   floatingTerminalCwdMigratedToAppWorkspace?: boolean
-  /** Where the Floating Workspace toggle is shown; defaults to the floating button for discoverability. */
-  floatingTerminalTriggerLocation: FloatingTerminalTriggerLocation
   diffDefaultView: 'inline' | 'side-by-side'
   diffWordWrap: boolean
   diffShowWhitespace: boolean

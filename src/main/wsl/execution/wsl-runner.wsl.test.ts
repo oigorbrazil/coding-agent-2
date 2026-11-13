@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { runWslProcess } from './wsl-runner'
 import { invalidateWslGuestEnvironment } from './wsl-guest-environment'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveWslExecutablePath } from './wsl-executable-path'
 
 /** Real distro/login/rc contract, gated on Windows and ORCA_REAL_WSL_RUNNER_TEST because it mutates ~/.profile. Run: ORCA_REAL_WSL_RUNNER_TEST=1 pnpm vitest run src/main/wsl/wsl-runner.wsl.test.ts */

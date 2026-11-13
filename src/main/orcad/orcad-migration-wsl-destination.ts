@@ -1,5 +1,7 @@
-// In-place WSL moves require the desktop-launched orcad in the source distro to own the unchanged paths.
 import type { OrcadMigrationManifestSource } from '../../shared/orcad-migration/orcad-migration-manifest'
+import { readAppEnv } from '../../shared/app-env'
+// In-place WSL moves require the desktop-launched orcad in the source distro to own the unchanged paths.
+
 import { isOrcadMigrationLocalWslSource } from '../../shared/orcad-migration/orcad-migration-source-kind'
 import { isWslHostOrcadProcess } from '../ipc/wsl-guest-windows-drive-path'
 import { ORCAD_WSL_DISTRO_GUID_ENV } from '../../shared/orcad-server-launch-env'
@@ -23,7 +25,7 @@ export const ORCA_E2E_WSL_MOVE_DESTINATION_ENV = 'ORCA_E2E_WSL_MOVE_DESTINATION'
  * serves their stored scrollback. Every other host keeps that wire surface off.
  */
 export function servesWslMovedPaneHistory(env: NodeJS.ProcessEnv = process.env): boolean {
-  return isWslHostOrcadProcess(env) || env[ORCA_E2E_WSL_MOVE_DESTINATION_ENV] === '1'
+  return isWslHostOrcadProcess(env) || readAppEnv(env, 'E2E_WSL_MOVE_DESTINATION') === '1'
 }
 
 export function assertOrcadMigrationSourceServedHere(
@@ -40,7 +42,7 @@ export function assertOrcadMigrationSourceServedHere(
     throw new Error(ORCAD_MIGRATION_SOURCE_NOT_THIS_HOST)
   }
   // Re-registering a distro reuses its name, not its files; require its registry ID when supplied.
-  const guid = env[ORCAD_WSL_DISTRO_GUID_ENV]?.trim().toLowerCase()
+  const guid = readAppEnv(env, 'WSL_DISTRO_GUID')?.trim().toLowerCase()
   if (source.distroGuid !== undefined && guid !== source.distroGuid.toLowerCase()) {
     throw new Error(ORCAD_MIGRATION_SOURCE_NOT_THIS_HOST)
   }

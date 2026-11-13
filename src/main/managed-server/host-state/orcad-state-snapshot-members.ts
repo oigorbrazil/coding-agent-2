@@ -1,7 +1,9 @@
 /** Only rollback-owned state: omit regenerable data and state owned by surviving processes. */
 export const ORCAD_SNAPSHOT_MEMBERS = [
+  'coding-profile-index.json',
   'orca-profile-index.json',
   // Legacy layouts still supply migration input.
+  'coding-data.json',
   'orca-data.json',
   'profiles',
   // Preserve cross-profile move recovery across server rollback.

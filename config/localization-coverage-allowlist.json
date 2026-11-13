@@ -250,5 +250,299 @@
     "text": "text-[13px] leading-5",
     "dynamic": false,
     "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/home/HomeActivityCard.tsx",
+    "kind": "jsx-text",
+    "text": "90d",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/home/HomePromptCard.tsx",
+    "kind": "jsx-text",
+    "text": "coding-agent-2@workspace:~",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/home/HomeUsageCards.tsx",
+    "kind": "object-property:label",
+    "text": "5h",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/home/HomeUsageCards.tsx",
+    "kind": "object-property:label",
+    "text": "Fable",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/AccountPane.tsx",
+    "kind": "jsx-attribute:placeholder",
+    "text": "https://xxxx.supabase.co",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.worker",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.lead",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.check",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.narrow",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.research",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.deep",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.low",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.above",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.spare",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.allLow",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.price",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.spent",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.budget",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx",
+    "kind": "object-property:label",
+    "text": "playbooks.block.failed",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/playbooks/PlaybooksEditor.tsx",
+    "kind": "jsx-text",
+    "text": "coding-opus-playbooks.yaml",
+    "dynamic": false,
+    "count": 2
+  },
+  {
+    "filePath": "src/renderer/src/components/settings/coding-opus/SkillsPane.tsx",
+    "kind": "jsx-text",
+    "text": "Linear",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "fiveHours",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "week",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "credits",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Claude",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "opusWeek",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Codex",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Antigravity",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "gemini",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "claude",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "gpt",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Kimi",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "month",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Kiro",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Copilot",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "premium",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "Gemini CLI",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "day",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/catalog.ts",
+    "kind": "object-property:label",
+    "text": "9router",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/graph.ts",
+    "kind": "object-property:label",
+    "text": "yes",
+    "dynamic": false,
+    "count": 4
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/graph.ts",
+    "kind": "object-property:label",
+    "text": "no",
+    "dynamic": false,
+    "count": 1
+  },
+  {
+    "filePath": "src/renderer/src/lib/coding-opus-playbooks/graph.ts",
+    "kind": "object-property:label",
+    "text": "recheck",
+    "dynamic": false,
+    "count": 1
   }
 ]

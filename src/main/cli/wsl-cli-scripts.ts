@@ -75,9 +75,9 @@ export function buildWslBridgeScript(app?: {
 }): string {
   const setAppEnv = app
     ? [
-        `$env:ORCA_USER_DATA_PATH = ${quotePowerShellLiteral(app.userDataPath)}`,
+        `$env:CODING_AGENT_USER_DATA_PATH = $env:ORCA_USER_DATA_PATH = ${quotePowerShellLiteral(app.userDataPath)}`,
         // Why: WSLENV /p maps this guest-only dir back; an app the CLI starts must not inherit it.
-        'Remove-Item Env:ORCA_WSL_CLI_DIR -ErrorAction SilentlyContinue',
+        'Remove-Item Env:CODING_AGENT_WSL_CLI_DIR,Env:ORCA_WSL_CLI_DIR -ErrorAction SilentlyContinue',
         ...(app.cliEntryPath ? buildDevCliEnv(app.cliEntryPath) : [])
       ]
     : []
@@ -141,15 +141,15 @@ try {
     $ForwardArgs = @($args[$ForwardArgStart..($args.Count - 1)])
   }
   if ([string]::IsNullOrEmpty($WslCwd)) {
-    Remove-Item Env:ORCA_CLI_CWD -ErrorAction SilentlyContinue
+    Remove-Item Env:CODING_AGENT_CLI_CWD,Env:ORCA_CLI_CWD -ErrorAction SilentlyContinue
   } else {
-    $env:ORCA_CLI_CWD = $WslCwd
+    $env:CODING_AGENT_CLI_CWD = $env:ORCA_CLI_CWD = $WslCwd
   }
   # Do not let an inherited Windows environment choose the caller's account location.
   if ([string]::IsNullOrEmpty($WslDistro)) {
-    Remove-Item Env:ORCA_CLI_WSL_DISTRO -ErrorAction SilentlyContinue
+    Remove-Item Env:CODING_AGENT_CLI_WSL_DISTRO,Env:ORCA_CLI_WSL_DISTRO -ErrorAction SilentlyContinue
   } else {
-    $env:ORCA_CLI_WSL_DISTRO = $WslDistro
+    $env:CODING_AGENT_CLI_WSL_DISTRO = $env:ORCA_CLI_WSL_DISTRO = $WslDistro
   }
   $LauncherDirectory = Split-Path -Parent $OrcaLauncher
   Push-Location -LiteralPath $LauncherDirectory
@@ -186,9 +186,9 @@ exit $exitCode
 function buildDevCliEnv(cliEntryPath: string): string[] {
   return [
     "$env:ELECTRON_RUN_AS_NODE = '1'",
-    "if (-not $env:ORCA_APP_EXECUTABLE) { $env:ORCA_APP_EXECUTABLE = $OrcaLauncher; $env:ORCA_APP_EXECUTABLE_NEEDS_APP_ROOT = '1' }",
-    '$env:ORCA_NODE_OPTIONS = $env:NODE_OPTIONS',
-    '$env:ORCA_NODE_REPL_EXTERNAL_MODULE = $env:NODE_REPL_EXTERNAL_MODULE',
+    "if (-not $(if (Test-Path Env:CODING_AGENT_APP_EXECUTABLE) { $env:CODING_AGENT_APP_EXECUTABLE } else { $env:ORCA_APP_EXECUTABLE })) { $env:CODING_AGENT_APP_EXECUTABLE = $env:ORCA_APP_EXECUTABLE = $OrcaLauncher; $env:CODING_AGENT_APP_EXECUTABLE_NEEDS_APP_ROOT = $env:ORCA_APP_EXECUTABLE_NEEDS_APP_ROOT = '1' }",
+    '$env:CODING_AGENT_NODE_OPTIONS = $env:ORCA_NODE_OPTIONS = $env:NODE_OPTIONS',
+    '$env:CODING_AGENT_NODE_REPL_EXTERNAL_MODULE = $env:ORCA_NODE_REPL_EXTERNAL_MODULE = $env:NODE_REPL_EXTERNAL_MODULE',
     'Remove-Item Env:NODE_OPTIONS, Env:NODE_REPL_EXTERNAL_MODULE -ErrorAction SilentlyContinue',
     `$ForwardArgs = @(${quotePowerShellLiteral(cliEntryPath)}) + $ForwardArgs`
   ]

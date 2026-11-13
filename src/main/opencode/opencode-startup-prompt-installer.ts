@@ -1,3 +1,4 @@
+import { readAppEnv, setAppEnv, deleteAppEnv, deleteAppEnvKey } from '../../shared/app-env'
 import { OpenCodeHookService, openCodeHookService, openCode2HookService } from './hook-service'
 import { OPENCODE_STARTUP_PROMPT_PLUGIN_DIRECTORY } from '../../shared/opencode-startup-prompt-install'
 import { join } from 'node:path'
@@ -29,17 +30,17 @@ export function installOpenCodeStartupPromptForLaunch(
   restoreAfterShellStartup = true,
   sourceEnvironment: NodeJS.ProcessEnv = { ...process.env, ...env }
 ): boolean {
-  const nonce = env[OPENCODE_STARTUP_PROMPT_NONCE_ENV]
-  if (!nonce || env.ORCA_OPENCODE_PLUGIN_API !== 'v2') {
+  const nonce = readAppEnv(env, 'OPENCODE_STARTUP_PROMPT_NONCE')
+  if (!nonce || readAppEnv(env, 'OPENCODE_PLUGIN_API') !== 'v2') {
     return false
   }
   const source =
     resolveOpenCodeSourceConfigDir(env, sourceEnvironment) ||
     resolveOpenCodeConfigDirectory(sourceEnvironment)
   const statusOwner =
-    env.ORCA_OPENCODE_AGENT === 'opencode2' ? openCode2HookService : openCodeHookService
+    readAppEnv(env, 'OPENCODE_AGENT') === 'opencode2' ? openCode2HookService : openCodeHookService
   const existing =
-    env.OPENCODE_CONFIG_DIR && env.OPENCODE_CONFIG_DIR === env.ORCA_OPENCODE_CONFIG_DIR
+    env.OPENCODE_CONFIG_DIR && env.OPENCODE_CONFIG_DIR === readAppEnv(env, 'OPENCODE_CONFIG_DIR')
       ? installer.installIntoSourceOverlay(env.OPENCODE_CONFIG_DIR, source, statusOwner)
       : 'unmatched'
   const overlay =
@@ -61,22 +62,25 @@ export function installOpenCodeStartupPromptForLaunch(
       OPENCODE_STARTUP_PROMPT_BODY_ENV,
       OPENCODE_STARTUP_PROMPT_ENDPOINT_ENV
     ]) {
-      delete env[key]
+      deleteAppEnvKey(env, key)
     }
     return false
   }
   env.OPENCODE_CONFIG_DIR = overlay
-  env.ORCA_OPENCODE_SOURCE_CONFIG_DIR = source
+  setAppEnv(env, 'OPENCODE_SOURCE_CONFIG_DIR', source)
   if (restoreAfterShellStartup || existing === 'installed') {
-    env.ORCA_OPENCODE_CONFIG_DIR = overlay
+    setAppEnv(env, 'OPENCODE_CONFIG_DIR', overlay)
   } else {
-    delete env.ORCA_OPENCODE_CONFIG_DIR
+    deleteAppEnv(env, 'OPENCODE_CONFIG_DIR')
   }
   return true
 }
 
 export function ensureOpenCodeStartupPromptForLaunch(env: Record<string, string>): void {
-  if (env[OPENCODE_STARTUP_PROMPT_NONCE_ENV] && !installOpenCodeStartupPromptForLaunch(env)) {
+  if (
+    readAppEnv(env, 'OPENCODE_STARTUP_PROMPT_NONCE') &&
+    !installOpenCodeStartupPromptForLaunch(env)
+  ) {
     throw new Error('Cannot prepare OpenCode startup prompt; launch was canceled.')
   }
 }

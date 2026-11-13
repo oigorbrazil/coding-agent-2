@@ -2,7 +2,7 @@ import { chmod, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterEach, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { getElectronPlatformPath } from '../electron-installation/platform-layout/electron-platform-path.mjs'
 
 const roots: string[] = []

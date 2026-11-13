@@ -12,14 +12,15 @@ const POSIX_STDIN_DRAIN = '{ command -p cat 2>/dev/null || cat; } >/dev/null 2>&
 const WINDOWS_BARE_PATH = /^[A-Za-z0-9_.:/~-]+$/
 
 function buildPosixCommand(): string {
-  const rootScript = '"${ORCA_AGENT_HOOK_ROOT-}/agent-hooks/codex-hook.sh"'
+  const rootScript =
+    '"${CODING_AGENT_AGENT_HOOK_ROOT-${ORCA_AGENT_HOOK_ROOT-}}/agent-hooks/codex-hook.sh"'
   const sharedScript = '"${HOME-}/.coding-agent-2/agent-hooks/codex-hook.sh"'
   // The root branch stays dormant until Coding Agent 2 sets its root; shared hooks require a pane and port.
   // Outside Coding Agent 2 or with hooks off, only drain stdin, preserving the frozen command bytes.
   return [
     `: orca-agent-hook-form=${CODEX_HOOK_COMMAND_FORM};`,
-    `if [ -n "\${ORCA_PANE_KEY-}" ] && [ -n "\${ORCA_AGENT_HOOK_ROOT-}" ] && [ -f ${rootScript} ]; then /bin/sh ${rootScript} || :;`,
-    `elif [ -z "\${ORCA_AGENT_HOOK_ROOT-}" ] && [ -n "\${ORCA_PANE_KEY-}" ] && [ -n "\${ORCA_AGENT_HOOK_PORT-}" ] && [ -f ${sharedScript} ]; then /bin/sh ${sharedScript} || :;`,
+    `if [ -n "\${CODING_AGENT_PANE_KEY-\${ORCA_PANE_KEY-}}" ] && [ -n "\${CODING_AGENT_AGENT_HOOK_ROOT-\${ORCA_AGENT_HOOK_ROOT-}}" ] && [ -f ${rootScript} ]; then /bin/sh ${rootScript} || :;`,
+    `elif [ -z "\${CODING_AGENT_AGENT_HOOK_ROOT-\${ORCA_AGENT_HOOK_ROOT-}}" ] && [ -n "\${CODING_AGENT_PANE_KEY-\${ORCA_PANE_KEY-}}" ] && [ -n "\${CODING_AGENT_AGENT_HOOK_PORT-\${ORCA_AGENT_HOOK_PORT-}}" ] && [ -f ${sharedScript} ]; then /bin/sh ${sharedScript} || :;`,
     `else ${POSIX_STDIN_DRAIN}; fi`
   ].join(' ')
 }

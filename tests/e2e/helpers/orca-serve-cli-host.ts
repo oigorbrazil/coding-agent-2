@@ -1,7 +1,7 @@
 // Launch the real CLI so runtime selection exercises its orcad default and Electron override/fallback.
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { createElectronHomeIsolation } from './electron-home-isolation'
 import { getE2ECompletedOnboardingProfile } from './e2e-completed-onboarding-profile'
 import { resolveElectronExecutable } from './daemon-generation-runtime-fixture'

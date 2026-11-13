@@ -1,4 +1,5 @@
-import { app as electronApp, type BrowserWindow } from 'electron'
+import { type BrowserWindow, app as electronApp } from 'electron'
+import { readAppEnv } from '../../shared/app-env'
 
 /** Automation must not steal OS foreground. Background/sidecar requests override E2E_FOREGROUND; the hosted-Xvfb benchmark may present explicitly after startup (tests/AGENTS.md), while automatic reveals stay suppressed. */
 
@@ -11,11 +12,11 @@ type PolicyEnv = Readonly<Record<string, string | undefined>>
 
 /** orcad's headless browser provider: a serve process on a throwaway profile that no user drives. */
 export function isOrcadSidecarLaunch(env: PolicyEnv = process.env): boolean {
-  return env.ORCA_ORCAD_SIDECAR === '1'
+  return readAppEnv(env, 'ORCAD_SIDECAR') === '1'
 }
 
 function isExplicitBackgroundLaunch(env: PolicyEnv): boolean {
-  return env.ORCA_BACKGROUND_LAUNCH === '1' || isOrcadSidecarLaunch(env)
+  return readAppEnv(env, 'BACKGROUND_LAUNCH') === '1' || isOrcadSidecarLaunch(env)
 }
 
 /** True when this process must not steal focus, raise windows, or activate the app. */
@@ -23,17 +24,19 @@ export function isBackgroundLaunch(env: PolicyEnv = process.env): boolean {
   if (isExplicitBackgroundLaunch(env)) {
     return true
   }
-  if (env.ORCA_E2E_FOREGROUND === '1') {
+  if (readAppEnv(env, 'E2E_FOREGROUND') === '1') {
     return false
   }
-  return env.ORCA_E2E_HEADLESS === '1' || env.ORCA_E2E_HEADFUL === '1'
+  return readAppEnv(env, 'E2E_HEADLESS') === '1' || readAppEnv(env, 'E2E_HEADFUL') === '1'
 }
 
 /** Suppresses automatic presentation on launch; this is not a query of current window visibility. */
 export function isWindowlessLaunch(env: PolicyEnv = process.env): boolean {
   return (
     isExplicitBackgroundLaunch(env) ||
-    (isBackgroundLaunch(env) && env.ORCA_E2E_HEADLESS === '1' && env.ORCA_E2E_HEADFUL !== '1')
+    (isBackgroundLaunch(env) &&
+      readAppEnv(env, 'E2E_HEADLESS') === '1' &&
+      readAppEnv(env, 'E2E_HEADFUL') !== '1')
   )
 }
 

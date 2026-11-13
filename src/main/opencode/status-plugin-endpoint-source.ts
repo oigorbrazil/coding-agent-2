@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 export function getStatusPluginEndpointSource(): string[] {
   return [
     "// Warn once per plugin process; Coding Agent 2's own warning guards live in a different process.",
@@ -8,7 +9,7 @@ export function getStatusPluginEndpointSource(): string[] {
     'let cachedEndpointValues = null;',
     '',
     'function readEndpointFile() {',
-    '  const path = process.env.ORCA_AGENT_HOOK_ENDPOINT;',
+    `  const path = ${appEnvReadExpression('process.env', 'AGENT_HOOK_ENDPOINT')};`,
     '  if (!path) return null;',
     '  try {',
     '    const fs = require("fs");',
@@ -49,11 +50,11 @@ export function getStatusPluginEndpointSource(): string[] {
     '  // Prefer endpoint files: inherited environment coordinates become stale after Coding Agent 2 restarts.',
     '  const fileEnv = readEndpointFile() || {};',
     '  return {',
-    '    port: fileEnv.ORCA_AGENT_HOOK_PORT || process.env.ORCA_AGENT_HOOK_PORT,',
-    '    token: fileEnv.ORCA_AGENT_HOOK_TOKEN || process.env.ORCA_AGENT_HOOK_TOKEN,',
-    '    env: fileEnv.ORCA_AGENT_HOOK_ENV || process.env.ORCA_AGENT_HOOK_ENV || "",',
-    '    version: fileEnv.ORCA_AGENT_HOOK_VERSION || process.env.ORCA_AGENT_HOOK_VERSION || "",',
-    '    openCodeTui: process.env.ORCA_AGENT_HOOK_ENDPOINT ? fileEnv.ORCA_AGENT_HOOK_OPENCODE_TUI : process.env.ORCA_AGENT_HOOK_OPENCODE_TUI,',
+    `    port: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_PORT')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_PORT')},`,
+    `    token: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_TOKEN')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_TOKEN')},`,
+    `    env: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_ENV')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_ENV')} || "",`,
+    `    version: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_VERSION')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_VERSION')} || "",`,
+    `    openCodeTui: ${appEnvReadExpression('process.env', 'AGENT_HOOK_ENDPOINT')} ? ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_OPENCODE_TUI')} : ${appEnvReadExpression('process.env', 'AGENT_HOOK_OPENCODE_TUI')},`,
     '  };',
     '}',
     '',

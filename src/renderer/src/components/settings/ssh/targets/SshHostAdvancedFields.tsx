@@ -184,7 +184,7 @@ export function SshHostAdvancedFields({
               <p className="text-muted-foreground">
                 {t(
                   'auto.components.settings.SshTargetForm.allowRemoteCliControlHelp',
-                  "On by default for new hosts. Agents and orca commands on this host can open, read and use Coding Agent 2 browser tabs on this desktop, only in this host's workspaces and only while it is connected. Tabs it controls show its name. Terminals started on this host by an older Coding Agent 2 also need this on to run orca orchestration commands. It cannot read your files, clipboard or cookies."
+                  "On by default for new hosts. Agents and coding commands on this host can open, read and use Coding Agent 2 browser tabs on this desktop, only in this host's workspaces and only while it is connected. Tabs it controls show its name. Terminals started on this host by an older Coding Agent 2 also need this on to run coding orchestration commands. It cannot read your files, clipboard or cookies."
                 )}
               </p>
             </div>

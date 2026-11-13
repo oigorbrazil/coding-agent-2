@@ -1,14 +1,16 @@
+import {
+  type AgentStartupShell,
+  tokenizeStartupCommand
+} from '../../shared/agent-launch/startup/tui-agent-startup-shell'
+import { readAppEnv } from '../../shared/app-env'
 import { readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { findOptionOccurrence } from '../../shared/command-option-occurrence'
 import { getCommandTokenPathBasename } from '../../shared/command-token-scanner'
-import { MANAGED_DATA_ACCOUNT_RESUME_ENV } from '../../shared/managed-data-account-resume'
+
 import { findOpenCodeRunCommand } from '../../shared/agent-status/process/opencode-headless-command'
-import {
-  tokenizeStartupCommand,
-  type AgentStartupShell
-} from '../../shared/agent-launch/startup/tui-agent-startup-shell'
+
 import { managedAccountLaunchEnvironment } from '../managed-data-accounts/launch-environment'
 import { getManagedDataAccountService } from '../managed-data-accounts/service'
 
@@ -53,8 +55,9 @@ export function needsOpenCodePrivateServer(env: Record<string, string>): boolean
   const userState = stateHome(original)
   // Daemon spawns already resolved (and consumed) the resume request into the env.
   const own =
-    (env.ORCA_DATA_ACCOUNT_PROVIDER === 'opencode' && env.ORCA_DATA_ACCOUNT_STATE_HOME) ||
-    managedAccountLaunchEnvironment(service, 'opencode', env[MANAGED_DATA_ACCOUNT_RESUME_ENV])
+    (readAppEnv(env, 'DATA_ACCOUNT_PROVIDER') === 'opencode' &&
+      readAppEnv(env, 'DATA_ACCOUNT_STATE_HOME')) ||
+    managedAccountLaunchEnvironment(service, 'opencode', readAppEnv(env, 'DATA_ACCOUNT_ID'))
       .XDG_STATE_HOME ||
     userState
   if (hasLiveService(own)) {

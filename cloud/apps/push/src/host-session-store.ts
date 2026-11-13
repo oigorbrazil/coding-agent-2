@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from 'node:crypto'
-import { PUSH_LIMITS } from '@orca-cloud/push-contract'
+import { PUSH_LIMITS } from '@coding-agent-cloud/push-contract'
 import type { PushDatabase } from './push-database.js'
 
 export type IssuedPushSession = {

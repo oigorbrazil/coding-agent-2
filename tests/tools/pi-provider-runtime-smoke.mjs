@@ -8,7 +8,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { build } from 'esbuild'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 const piCli = process.argv[2] && resolve(process.argv[2])
 assert.ok(piCli, 'Pass the installed Pi CLI entrypoint')
 const scratch = await mkdtemp(join(tmpdir(), 'orca-pi-provider-'))

@@ -3,7 +3,7 @@ import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from 'n
 import net from 'node:net'
 import path from 'node:path'
 
-export const SHARED_DEV_PROFILE_DIR_NAME = 'coding-agent-2-orca-dev'
+export const SHARED_DEV_PROFILE_DIR_NAME = 'coding-agent-2-dev'
 // Why the "orca-dev" prefix: CLI/orchestration dev-mode checks match "orca-dev" in ORCA_USER_DATA_PATH.
 // Why short: runtime sockets live in userData and macOS caps socket paths at 104 bytes.
 export const WORKTREE_DEV_PROFILES_DIR_NAME = 'coding-agent-2-orca-dev-wt'
@@ -39,7 +39,10 @@ export function getAppDataDir(env = process.env, platform = process.platform) {
 }
 
 export function getSharedDevUserDataPath(env = process.env, platform = process.platform) {
-  return path.join(getAppDataDir(env, platform), SHARED_DEV_PROFILE_DIR_NAME)
+  const root = getAppDataDir(env, platform)
+  const primary = path.join(root, SHARED_DEV_PROFILE_DIR_NAME)
+  const legacy = path.join(root, 'coding-agent-2-orca-dev')
+  return existsSync(primary) || !existsSync(legacy) ? primary : legacy
 }
 
 export function getWorktreeDevProfilesRoot(env = process.env, platform = process.platform) {

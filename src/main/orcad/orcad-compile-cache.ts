@@ -1,6 +1,6 @@
+import { readAppEnv } from '../../shared/app-env'
 import module from 'node:module'
 import { join } from 'node:path'
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../shared/orcad-managed-launch-env'
 
 export const ORCAD_COMPILE_CACHE_DIRNAME = '.orcad-compile-cache'
 
@@ -15,7 +15,10 @@ export function enableManagedOrcadCompileCache(
   env: NodeJS.ProcessEnv = process.env,
   api: CompileCacheModule = module
 ): void {
-  if (!env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV] || typeof api.enableCompileCache !== 'function') {
+  if (
+    !readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT') ||
+    typeof api.enableCompileCache !== 'function'
+  ) {
     return
   }
   try {
@@ -33,7 +36,7 @@ export function orcadCompileCacheEnv(
 ): Record<string, string> {
   // Preserve operator-specified caches on unmanaged hosts.
   const enabled =
-    Boolean(env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV]) &&
+    Boolean(readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT')) &&
     typeof api.getCompileCacheDir === 'function' &&
     Boolean(api.getCompileCacheDir())
   return enabled ? { NODE_COMPILE_CACHE: join(slotDirectory, ORCAD_COMPILE_CACHE_DIRNAME) } : {}

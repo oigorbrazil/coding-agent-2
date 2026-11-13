@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, realpathSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   buildDaemonLauncherDriver,
   closeLauncherWindows,

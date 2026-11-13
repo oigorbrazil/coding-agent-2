@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { appendFileSync } from 'node:fs'
 import type { SshConnectionState } from '../../../shared/ssh-types'
 import { createCancelledConnectAttemptError } from '../../ssh/ssh-connect-attempt-cancellation'
@@ -58,7 +59,7 @@ export async function connectTarget(
   targetId: string,
   options: { automatic?: boolean; quiet?: boolean } = {}
 ): Promise<SshConnectionState> {
-  const e2eProbePath = process.env.ORCA_E2E_FORBID_LOCAL_SSH_CONNECT_PROBE
+  const e2eProbePath = readAppEnv(process.env, 'E2E_FORBID_LOCAL_SSH_CONNECT_PROBE')
   if (e2eProbePath) {
     appendFileSync(e2eProbePath, `${JSON.stringify(targetId)}\n`)
     throw new Error('e2e_forbidden_local_ssh_connect')

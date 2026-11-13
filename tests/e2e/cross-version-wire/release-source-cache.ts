@@ -147,7 +147,7 @@ export async function resolveSharedReleaseCacheRoot(
     return undefined
   }
   try {
-    const { runProcess } = await import('@orca/process-host')
+    const { runProcess } = await import('@coding-agent/process-host')
     const result = await runProcess({
       program: 'git',
       args: ['rev-parse', '--git-common-dir'],

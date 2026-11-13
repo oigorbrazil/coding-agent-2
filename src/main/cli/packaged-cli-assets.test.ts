@@ -8,7 +8,7 @@ import { promisify } from 'node:util'
 import { fileURLToPath } from 'node:url'
 import { createPackageWithOptions, statFile } from '@electron/asar'
 import { describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { stagePackagedProcessHost } from '../../../config/scripts/desktop-distribution/runtime-verification/packaged-process-host-fixture.mjs'
 
 const require = createRequire(import.meta.url)

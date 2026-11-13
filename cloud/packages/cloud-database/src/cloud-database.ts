@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 import pg from 'pg'
 import { parseIntoClientConfig } from 'pg-connection-string'
-import { applyPostgresSchema, schemaLockTarget } from '@orca-cloud/postgres-schema'
+import { applyPostgresSchema, schemaLockTarget } from '@coding-agent-cloud/postgres-schema'
 
 const POSTGRES_LOCK_TIMEOUT_MS = 1_000
 const POSTGRES_CONNECTION_TIMEOUT_MS = 2_000

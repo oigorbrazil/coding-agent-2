@@ -32,13 +32,13 @@ export function assertProfileStateMaintenance(
   }
   maintenance.assertActive()
   const expectedDirectory = join(root, 'profiles', profile.profileId)
-  for (const [path, expectedName] of [
-    [profile.dataFile, 'orca-data.json'],
-    [profile.databasePath, 'profile-state.db']
+  for (const [path, expectedNames] of [
+    [profile.dataFile, ['coding-data.json', 'orca-data.json']],
+    [profile.databasePath, ['profile-state.db']]
   ] as const) {
     if (
       !samePath(realpathSync(dirname(path)), expectedDirectory) ||
-      !samePath(basename(path), expectedName)
+      !expectedNames.some((name) => samePath(basename(path), name))
     ) {
       throw new ProfileStateAccessError(
         'Profile state recovery paths do not belong to the maintenance root'

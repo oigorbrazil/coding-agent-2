@@ -18,6 +18,7 @@ export type CodingOpusSkillStatus = {
 }
 
 export type CodingOpusPlaybooks = {
+  backupText?: string | null
   text: string
   path: string
   /** False while the bundled playbooks stand in for a file the person never saved. */
@@ -26,6 +27,55 @@ export type CodingOpusPlaybooks = {
 
 export type CodingOpusPlaybooksSaveResult =
   | { ok: true; playbooks: CodingOpusPlaybooks }
+  | { ok: false; error: string }
+
+export type CodingOpusAccountProvider = 'codex' | 'claude'
+
+/** One account a Coding Opus worker can run on; the same shape comes from orchestrate.py `accounts_summary`. */
+export type CodingOpusAccountRow = {
+  /** `default` is the CLI's own login; other names come from `account add` or a Coding Agent 2 email. */
+  name: string
+  from: 'cli' | 'coding-agent' | 'coding-opus'
+  email: string | null
+  /** False for a Coding Agent 2 Claude account whose folder is prepared on its first use there. */
+  ready: boolean
+  inRotation: boolean
+  activeInCodingAgent: boolean
+  /** The fullest main window (5h or week), or null with no reading. */
+  quota: {
+    window: string
+    usedPercent: number
+    resetsAt: string
+    low: boolean
+    blocked: boolean
+    stale: boolean
+  } | null
+}
+
+export type CodingOpusAccounts = {
+  providers: Record<CodingOpusAccountProvider, CodingOpusAccountRow[]>
+}
+
+export type CodingOpusAccountsResult =
+  | { ok: true; accounts: CodingOpusAccounts }
+  | { ok: false; error: string }
+
+/** A model a provider offers today: from the CLI's own model list, or from the skill's price table. */
+export type CodingOpusCatalogModel = {
+  id: string
+  source: 'cli' | 'prices'
+  description?: string | null
+  /** The model the CLI itself recommends moving to, when it names one. */
+  upgrade?: string | null
+}
+
+/** The same shape comes from orchestrate.py `model_catalog`. */
+export type CodingOpusModelCatalog = {
+  providers: Record<string, CodingOpusCatalogModel[]>
+}
+
+export type CodingOpusModelCatalogResult =
+  | { ok: true; catalog: CodingOpusModelCatalog }
   | { ok: false; error: string }
 
 export type SecondBrainWhere = {
@@ -91,7 +141,8 @@ export type SkillCatalogEntry = {
   title: string
   description: string
   version: string | null
-  origin: 'coding-opus' | 'app'
+  /** `library`: loaded by the person from a folder on disk. */
+  origin: 'coding-opus' | 'app' | 'library'
 }
 
 export type SkillCatalogInstall = {

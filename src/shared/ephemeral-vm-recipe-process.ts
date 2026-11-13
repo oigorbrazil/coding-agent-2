@@ -2,8 +2,8 @@ import { quoteCmdDoubleQuoted, quotePosixShell } from './shell/launch/shell-argu
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 import { StringDecoder } from 'node:string_decoder'
 import type { EphemeralVmRecipeContext } from './ephemeral-vm-recipe-runner'
-import { admitProcessTreeKill } from '@orca/process-host/process-tree-kill-gate'
-import { GrowingByteBuffer } from '@orca/process-host/growing-byte-buffer'
+import { admitProcessTreeKill } from '@coding-agent/process-host/process-tree-kill-gate'
+import { GrowingByteBuffer } from '@coding-agent/process-host/growing-byte-buffer'
 
 export const DEFAULT_MAX_CAPTURE_BYTES = 1024 * 1024
 const CANCEL_FORCE_KILL_DELAY_MS = 5_000
@@ -231,18 +231,31 @@ function buildRecipeEnv(
   return {
     ...process.env,
     ...env,
+    CODING_AGENT_VM_MODE: mode,
     ORCA_VM_MODE: mode,
+    CODING_AGENT_VM_INSTANCE_ID: context.instanceId ?? '',
     ORCA_VM_INSTANCE_ID: context.instanceId ?? '',
+    CODING_AGENT_RECIPE_ID: context.recipeId,
     ORCA_RECIPE_ID: context.recipeId,
+    CODING_AGENT_PROJECT_ID: context.projectId ?? '',
     ORCA_PROJECT_ID: context.projectId ?? '',
+    CODING_AGENT_WORKSPACE_ID: context.workspaceId ?? '',
     ORCA_WORKSPACE_ID: context.workspaceId ?? '',
+    CODING_AGENT_WORKSPACE_NAME: context.workspaceName ?? '',
     ORCA_WORKSPACE_NAME: context.workspaceName ?? '',
+    CODING_AGENT_REPO_PATH: context.repoPath,
     ORCA_REPO_PATH: context.repoPath,
+    CODING_AGENT_REPO_URL: context.repoUrl ?? '',
     ORCA_REPO_URL: context.repoUrl ?? '',
+    CODING_AGENT_REPO_BRANCH: context.branch ?? '',
     ORCA_REPO_BRANCH: context.branch ?? '',
+    CODING_AGENT_REPO_REF: context.ref ?? '',
     ORCA_REPO_REF: context.ref ?? '',
+    CODING_AGENT_REPO_REF_HEAD: context.expectedRefHead ?? '',
     ORCA_REPO_REF_HEAD: context.expectedRefHead ?? '',
+    CODING_AGENT_RECIPE_RESULT_SCHEMA_VERSION: String(resultSchemaVersion),
     ORCA_RECIPE_RESULT_SCHEMA_VERSION: String(resultSchemaVersion),
+    CODING_AGENT_VERSION: context.orcaVersion ?? '',
     ORCA_VERSION: context.orcaVersion ?? ''
   }
 }

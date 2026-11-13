@@ -54,11 +54,9 @@ type MobilePageContentProps = {
   revokingDeviceIds: readonly string[]
   selectedAddress: string | undefined
   setPlatform: (platform: Platform) => void
-  showMobileButton: boolean
   showPairedDevices: (deviceCount: number) => void
   stage: MobilePageStage | null
   stepIdx: StepIndex
-  toggleMobileSidebarButton: () => void
 }
 
 export function MobilePageContent({
@@ -100,20 +98,14 @@ export function MobilePageContent({
   revokingDeviceIds,
   selectedAddress,
   setPlatform,
-  showMobileButton,
   showPairedDevices,
   stage,
-  stepIdx,
-  toggleMobileSidebarButton
+  stepIdx
 }: MobilePageContentProps): React.JSX.Element {
   const t = useTranslate()
   return (
     <div className="mobile-page-root scrollbar-sleek">
-      <MobilePageToolbar
-        showMobileButton={showMobileButton}
-        onClose={closeMobilePage}
-        onToggleMobileSidebarButton={toggleMobileSidebarButton}
-      />
+      <MobilePageToolbar onClose={closeMobilePage} />
       <section className="mp-hero">
         <div className="mp-hero-copy">
           {stage === null ? null : stage === 'intro' ? (

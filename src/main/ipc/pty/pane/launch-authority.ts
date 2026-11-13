@@ -1,6 +1,9 @@
 import type { TuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent'
-import { isTuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent-config'
 import type { SleepingAgentLaunchConfig } from '../../../../shared/agent-session/lifecycle/agent-session-resume'
+import { readAppEnv } from '../../../../shared/app-env'
+
+import { isTuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent-config'
+
 import { isPtyIncarnationId } from '../../../../shared/terminal/pty/lifecycle/pty-incarnation'
 
 const AGENT_LAUNCH_TOKEN_MAX_LENGTH = 128
@@ -23,7 +26,7 @@ export function admitRendererAgentLaunchAuthority(args: {
     typeof args.launchToken !== 'string' ||
     args.launchToken.length === 0 ||
     args.launchToken.length > AGENT_LAUNCH_TOKEN_MAX_LENGTH ||
-    args.spawnEnv?.ORCA_AGENT_LAUNCH_TOKEN !== args.launchToken
+    readAppEnv(args.spawnEnv ?? {}, 'AGENT_LAUNCH_TOKEN') !== args.launchToken
   ) {
     return null
   }

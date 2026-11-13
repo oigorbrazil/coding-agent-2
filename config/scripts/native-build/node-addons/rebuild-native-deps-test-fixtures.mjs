@@ -419,7 +419,7 @@ exports.loadNativeModule = function loadNativeModule(nativeName) {
 }
 
 export function writeFakeWindowsRegistry(projectDir) {
-  const registryDir = join(projectDir, 'node_modules', '@orca', 'windows-registry')
+  const registryDir = join(projectDir, 'node_modules', '@coding-agent', 'windows-registry')
   mkdirSync(registryDir, { recursive: true })
   writeFileSync(
     join(registryDir, 'index.js'),
@@ -428,7 +428,7 @@ export function writeFakeWindowsRegistry(projectDir) {
 }
 
 export function writeFakeWindowsSecurity(projectDir) {
-  const securityDir = join(projectDir, 'node_modules', '@orca', 'windows-security')
+  const securityDir = join(projectDir, 'node_modules', '@coding-agent', 'windows-security')
   mkdirSync(securityDir, { recursive: true })
   writeFileSync(
     join(securityDir, 'index.js'),

@@ -10,7 +10,7 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { captureOrcadStateSnapshotCommand, parseOrcadSnapshotCapture } from './orcad-state-snapshot'
 import { orcadSnapshotFailureReason } from './orcad-state-snapshot-space'
 import { getRemoteHostPlatform } from '../../ssh/ssh-remote-platform'

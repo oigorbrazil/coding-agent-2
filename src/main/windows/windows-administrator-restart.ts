@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { win32 } from 'node:path'
 import { app } from 'electron'
-import { quoteWindowsArgument } from '@orca/process-host/windows-command-line'
+import { quoteWindowsArgument } from '@coding-agent/process-host/windows-command-line'
 import { getBundledLauncherPath } from '../cli/bundled-cli-launcher-path'
 import { getWindowsAdministratorStatus } from './windows-administrator-status'
 

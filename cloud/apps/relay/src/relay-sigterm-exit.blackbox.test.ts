@@ -1,5 +1,5 @@
 import type { ChildProcess } from 'node:child_process'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { connect, createServer, type Socket } from 'node:net'
 import { tmpdir } from 'node:os'

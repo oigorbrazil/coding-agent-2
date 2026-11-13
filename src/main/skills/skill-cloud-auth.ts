@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import type { SkillCloudOperation, SkillCloudOptions } from '../../shared/skill-cloud-contract'
 import { ensureActiveOrcaProfile } from '../orca-profiles/profile-index-store'
 import { getOrcaCloudAuthConfig } from '../orca-profiles/profile-cloud-auth-config'
@@ -31,7 +32,8 @@ export async function runSkillCloudOperation<T>(input: {
       throw new Error('The signed-in Coding Agent 2 account changed during the skill request.')
     }
   }
-  const override = input.options.authToken?.trim() || process.env.ORCA_CLOUD_AUTH_TOKEN?.trim()
+  const override =
+    input.options.authToken?.trim() || readAppEnv(process.env, 'CLOUD_AUTH_TOKEN')?.trim()
   if (override) {
     if (!allowsArtifactCloudAuthOverride()) {
       throw new Error('Skill authentication overrides are available only in development builds.')

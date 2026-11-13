@@ -1,12 +1,15 @@
+import { type AppEnvironment, setAppEnvironment } from '../../shared/app-environment'
+import { type OrcadSecretStore, createOrcadSecretStore } from './orcad-secret-store'
+import { readAppEnv, setAppEnv } from '../../shared/app-env'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import process from 'node:process'
 import { ORCAD_CLI_PACKAGE_FILENAME } from '../../shared/orcad-artifacts'
-import { setAppEnvironment, type AppEnvironment } from '../../shared/app-environment'
+
 import { setSecretStore } from '../../shared/secret-store'
 import { resolveOrcadInstallRoot, resolveOrcadPath } from './orcad-app-paths'
 import { getOrcadCliLauncherPath } from './orcad-cli-launcher'
-import { createOrcadSecretStore, type OrcadSecretStore } from './orcad-secret-store'
+
 import { setSpeechServiceFactories } from '../speech/speech-runtime-service'
 import { orcadSpeechServiceFactories } from './orcad-speech-services'
 
@@ -36,7 +39,7 @@ function createNodeAppEnvironment(): AppEnvironment {
   return {
     getPath: resolveOrcadPath,
     getAppPath: () => resolveOrcadInstallRoot(),
-    getVersion: () => process.env.ORCA_VERSION ?? '0.0.0-orcad',
+    getVersion: () => readAppEnv(process.env, 'VERSION') ?? '0.0.0-orcad',
     // Packaged gates production HTTPS/CLI/PATH policy; layout callers must inspect asar separately.
     isPackaged: () => true,
     getCliLauncherPath: getOrcadCliLauncherPath,
@@ -69,7 +72,7 @@ export function stampOrcadAppVersion(installRoot: () => string = resolveOrcadIns
     return
   }
   if (typeof version === 'string' && version.length > 0) {
-    process.env.ORCA_APP_VERSION = version
+    setAppEnv(process.env, 'APP_VERSION', version)
   }
 }
 

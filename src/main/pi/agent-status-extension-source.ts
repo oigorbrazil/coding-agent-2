@@ -1,6 +1,8 @@
+import type { PiAgentKind } from '../../shared/pi-agent-kind'
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import { getPiAgentStatusPostQueueSourceLines } from './agent-status-post-queue-source'
 // Pi has no settings hook surface; install a self-contained extension that posts through the pane's Coding Agent 2 endpoint.
-import type { PiAgentKind } from '../../shared/pi-agent-kind'
+
 import { getPiAgentStatusHandlerSourceLines } from './agent-status-handler-source'
 import { getPiAgentStatusRuntimeDetectionSourceLines } from './agent-status-runtime-detection-source'
 import { getPiAgentStatusWslCurlSourceLines } from './agent-status-wsl-curl-source'
@@ -128,7 +130,7 @@ export function getPiAgentStatusExtensionSource(kind: PiAgentKind = 'pi'): strin
     'let cachedEndpointValues: Record<string, string> | null = null',
     '',
     'function readEndpointFile(): Record<string, string> | null {',
-    '  const path = process.env.ORCA_AGENT_HOOK_ENDPOINT',
+    `  const path = ${appEnvReadExpression('process.env', 'AGENT_HOOK_ENDPOINT')}`,
     '  if (!path) return null',
     '  try {',
     "    const fs = require('fs')",
@@ -166,10 +168,10 @@ export function getPiAgentStatusExtensionSource(kind: PiAgentKind = 'pi'): strin
     'function resolveHookCoords() {',
     '  const fileEnv = readEndpointFile() || {}',
     '  return {',
-    '    port: fileEnv.ORCA_AGENT_HOOK_PORT || process.env.ORCA_AGENT_HOOK_PORT,',
-    '    token: fileEnv.ORCA_AGENT_HOOK_TOKEN || process.env.ORCA_AGENT_HOOK_TOKEN,',
-    "    env: fileEnv.ORCA_AGENT_HOOK_ENV || process.env.ORCA_AGENT_HOOK_ENV || '',",
-    "    version: fileEnv.ORCA_AGENT_HOOK_VERSION || process.env.ORCA_AGENT_HOOK_VERSION || '',",
+    `    port: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_PORT')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_PORT')},`,
+    `    token: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_TOKEN')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_TOKEN')},`,
+    `    env: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_ENV')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_ENV')} || '',`,
+    `    version: ${appEnvReadExpression('fileEnv', 'AGENT_HOOK_VERSION')} || ${appEnvReadExpression('process.env', 'AGENT_HOOK_VERSION')} || '',`,
     '  }',
     '}',
     '',
@@ -213,14 +215,14 @@ export function getPiAgentStatusExtensionSource(kind: PiAgentKind = 'pi'): strin
     '  final: boolean',
     '): Promise<void> {',
     '  const coords = resolveHookCoords()',
-    '  const paneKey = process.env.ORCA_PANE_KEY',
+    `  const paneKey = ${appEnvReadExpression('process.env', 'PANE_KEY')}`,
     '  if (!coords.port || !coords.token || !paneKey) return',
     '  const url = `http://127.0.0.1:${coords.port}${resolveHookPath(ompRuntime)}`',
     '  const bodyWith = (subagents: Record<string, unknown>): string => JSON.stringify({',
     '    paneKey,',
-    "    launchToken: process.env.ORCA_AGENT_LAUNCH_TOKEN || '',",
-    "    tabId: process.env.ORCA_TAB_ID || '',",
-    "    worktreeId: process.env.ORCA_WORKTREE_ID || '',",
+    `    launchToken: ${appEnvReadExpression('process.env', 'AGENT_LAUNCH_TOKEN')} || '',`,
+    `    tabId: ${appEnvReadExpression('process.env', 'TAB_ID')} || '',`,
+    `    worktreeId: ${appEnvReadExpression('process.env', 'WORKTREE_ID')} || '',`,
     '    env: coords.env,',
     '    version: coords.version,',
     payloadLine,

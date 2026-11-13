@@ -10,7 +10,7 @@ export function enclosingPluginFolder(
   exists: (path: string) => boolean = existsSync
 ): string | null {
   for (let dir = cwd; ; dir = dirname(dir)) {
-    if (exists(join(dir, 'orca-plugin.json'))) {
+    if (exists(join(dir, 'coding-plugin.json')) || exists(join(dir, 'orca-plugin.json'))) {
       return dir
     }
     if (exists(join(dir, '.git')) || dirname(dir) === dir) {

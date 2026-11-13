@@ -35,21 +35,21 @@ fi
 # Force bracketed paste on older readline so multiline startup prompts remain one literal paste.
 [[ $- == *i* ]] && bind 'set enable-bracketed-paste on' 2>/dev/null
 __orca_restore_agent_teams_path() {
-  [[ -n "\${ORCA_AGENT_TEAMS_SHIM_DIR:-}" ]] || return 0
+  [[ -n "\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR:-}}" ]] || return 0
   case "$PATH" in
-    "\${ORCA_AGENT_TEAMS_SHIM_DIR}"|"\${ORCA_AGENT_TEAMS_SHIM_DIR}:"*) return 0 ;;
+    "\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}"|"\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}:"*) return 0 ;;
   esac
-  export PATH="\${ORCA_AGENT_TEAMS_SHIM_DIR}:$PATH"
+  export PATH="\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}:$PATH"
 }
 __orca_restore_agent_teams_path
 ${ORCA_CLI_POSIX_PATH_RESTORE}
 # Restore the managed OpenCode config after user profiles may have replaced it.
-[[ -n "\${ORCA_OPENCODE_CONFIG_DIR:-}" ]] && export OPENCODE_CONFIG_DIR="\${ORCA_OPENCODE_CONFIG_DIR}"
+[[ -n "\${CODING_AGENT_OPENCODE_CONFIG_DIR-\${ORCA_OPENCODE_CONFIG_DIR:-}}" ]] && export OPENCODE_CONFIG_DIR="\${CODING_AGENT_OPENCODE_CONFIG_DIR-\${ORCA_OPENCODE_CONFIG_DIR}}"
 ${MANAGED_DATA_ACCOUNT_POSIX_RESTORE}
-[[ -n "\${ORCA_MIMOCODE_CONFIG_DIR:-}" ]] && export MIMOCODE_CONFIG_DIR="\${ORCA_MIMOCODE_CONFIG_DIR}"
+[[ -n "\${CODING_AGENT_MIMOCODE_CONFIG_DIR-\${ORCA_MIMOCODE_CONFIG_DIR:-}}" ]] && export MIMOCODE_CONFIG_DIR="\${CODING_AGENT_MIMOCODE_CONFIG_DIR-\${ORCA_MIMOCODE_CONFIG_DIR}}"
 ${getPosixOmpShellWrapper()}
 # Preserve the managed CODEX_HOME after user profiles.
-[[ -n "\${ORCA_CODEX_HOME:-}" ]] && export CODEX_HOME="\${ORCA_CODEX_HOME}"
+[[ -n "\${CODING_AGENT_CODEX_HOME-\${ORCA_CODEX_HOME:-}}" ]] && export CODEX_HOME="\${CODING_AGENT_CODEX_HOME-\${ORCA_CODEX_HOME}}"
 ${getPosixCodexShellLaunchPreflight() + getPosixClaudeShellFunction()}
 # OSC 133 C/D clears stale agent status when a CLI exits without a stop hook.
 __orca_initializing_wrapper=1

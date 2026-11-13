@@ -1,23 +1,25 @@
-import { basename, extname, resolve } from 'node:path'
-import type {
-  ArtifactCloudOperation,
-  ArtifactCloudOptions,
-  ArtifactListPage,
-  ArtifactListItem,
-  ArtifactWriteRequest
-} from '../../shared/artifacts/artifacts'
-import { ARTIFACT_CLI_MAX_RPC_BYTES } from '../../shared/artifacts/artifacts'
 import {
-  parseRemoteArtifactInput,
-  REMOTE_ARTIFACT_INPUT_ENV
-} from '../../shared/artifacts/artifact-cli-bridge'
+  type ArtifactCloudOptions,
+  type ArtifactWriteRequest,
+  type ArtifactCloudOperation,
+  type ArtifactListPage,
+  type ArtifactListItem,
+  ARTIFACT_CLI_MAX_RPC_BYTES
+} from '../../shared/artifacts/artifacts'
+
+import type { CommandHandler, HandlerContext } from '../dispatch'
+
+import { readAppEnv } from '../../shared/app-env'
+import { basename, extname, resolve } from 'node:path'
+
+import { parseRemoteArtifactInput } from '../../shared/artifacts/artifact-cli-bridge'
 import { readArtifactFileWithinLimit } from '../../shared/artifacts/artifact-file-read'
 import {
   ARTIFACT_SHARING_DISABLED_CODE,
   ARTIFACT_SHARING_DISABLED_MESSAGE,
   ARTIFACT_SHARING_DISABLED_NEXT_STEPS
 } from '../../shared/artifacts/artifact-sharing-gate'
-import type { CommandHandler, HandlerContext } from '../dispatch'
+
 import { rejectRemoteSelectionFlags } from '../remote-selection-flag-rejection'
 import { RuntimeClientError } from '../runtime-client'
 import { formatArtifactListPage, formatArtifactShared } from '../artifact-format'
@@ -37,8 +39,8 @@ function requireStringFlag(ctx: HandlerContext, name: string): string {
 }
 
 function cloudOptions(ctx: HandlerContext): ArtifactCloudOptions {
-  const apiUrl = stringFlag(ctx, 'api-url') ?? process.env.ORCA_ARTIFACTS_API_URL?.trim()
-  const authToken = process.env.ORCA_CLOUD_AUTH_TOKEN?.trim()
+  const apiUrl = stringFlag(ctx, 'api-url') ?? readAppEnv(process.env, 'ARTIFACTS_API_URL')?.trim()
+  const authToken = readAppEnv(process.env, 'CLOUD_AUTH_TOKEN')?.trim()
   return {
     ...(apiUrl ? { apiUrl } : {}),
     ...(authToken ? { authToken } : {})
@@ -99,7 +101,7 @@ async function preflightPublishCapability(ctx: HandlerContext): Promise<void> {
 }
 
 async function readArtifactRequest(ctx: HandlerContext): Promise<ArtifactWriteRequest> {
-  const remoteInput = parseRemoteArtifactInput(process.env[REMOTE_ARTIFACT_INPUT_ENV])
+  const remoteInput = parseRemoteArtifactInput(readAppEnv(process.env, 'REMOTE_ARTIFACT_INPUT'))
   const sourceKey = remoteInput?.sourceKey ?? resolve(ctx.cwd, requireStringFlag(ctx, 'file'))
   const contentType = remoteInput?.contentType ?? artifactContentType(sourceKey)
   if (!contentType) {
@@ -192,7 +194,7 @@ export const ARTIFACT_HANDLERS: Record<string, CommandHandler> = {
   },
   'artifacts unshare': async (ctx) => {
     rejectArtifactRemoteSelectionFlags(ctx)
-    const remoteInput = parseRemoteArtifactInput(process.env[REMOTE_ARTIFACT_INPUT_ENV])
+    const remoteInput = parseRemoteArtifactInput(readAppEnv(process.env, 'REMOTE_ARTIFACT_INPUT'))
     const sourceKey = remoteInput?.sourceKey ?? resolve(ctx.cwd, requireStringFlag(ctx, 'file'))
     const response = await ctx.client.call<ArtifactCloudOperation<void>>('artifacts.unshare', {
       sourceKey,

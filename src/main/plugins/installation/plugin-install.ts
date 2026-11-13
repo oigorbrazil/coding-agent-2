@@ -1,3 +1,4 @@
+import { pluginManifestPath, readPluginManifestText } from '../plugin-manifest-file'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -33,7 +34,6 @@ import {
   isSameGitRepository,
   splitQualifiedPluginKey
 } from '../../../shared/plugins/catalog/plugin-marketplace'
-import { readPluginManifestText } from '../plugin-manifest-file'
 import { pluginCatalogTakeoverError } from './plugin-catalog-install-guard'
 
 export type { PluginInstallResult } from './plugin-install-staging'
@@ -55,7 +55,7 @@ export async function installPluginFromLocalPath(input: {
   blockedPluginReason?: (pluginKey: string) => string | null
 }): Promise<PluginInstallResult> {
   return serializePluginMutation(input.pluginsDir, async () => {
-    if (!existsSync(join(input.sourcePath, PLUGIN_MANIFEST_FILENAME))) {
+    if (!existsSync(pluginManifestPath(input.sourcePath))) {
       return { ok: false, error: `no ${PLUGIN_MANIFEST_FILENAME} found in ${input.sourcePath}` }
     }
     const reinstall = await installedPublisherFor(

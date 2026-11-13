@@ -1,3 +1,4 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import { Buffer } from 'node:buffer'
 
 export const DEFAULT_API_BASE_URL = 'https://api.bitbucket.org/2.0'
@@ -9,17 +10,12 @@ export type BitbucketAuthConfig = {
   apiToken: string | null
 }
 
-export function envValue(name: string): string | null {
-  const value = process.env[name]?.trim() ?? ''
-  return value.length > 0 ? value : null
-}
-
 export function getEnvAuthConfig(): BitbucketAuthConfig {
   return {
-    baseUrl: envValue('ORCA_BITBUCKET_API_BASE_URL') ?? DEFAULT_API_BASE_URL,
-    accessToken: envValue('ORCA_BITBUCKET_ACCESS_TOKEN'),
-    email: envValue('ORCA_BITBUCKET_EMAIL'),
-    apiToken: envValue('ORCA_BITBUCKET_API_TOKEN')
+    baseUrl: readProviderEnvironment('CODING_BITBUCKET_API_BASE_URL') ?? DEFAULT_API_BASE_URL,
+    accessToken: readProviderEnvironment('CODING_BITBUCKET_ACCESS_TOKEN'),
+    email: readProviderEnvironment('CODING_BITBUCKET_EMAIL'),
+    apiToken: readProviderEnvironment('CODING_BITBUCKET_API_TOKEN')
   }
 }
 

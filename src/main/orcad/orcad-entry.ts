@@ -1,3 +1,11 @@
+import type { OrcadRuntimeCleanup } from './orcad-runtime-lifetime'
+import type { OrcadHandle, OrcadOptions } from './orcad-start-contract'
+
+import {
+  type AiVaultSearchSettings,
+  changedAiVaultSearchSettings
+} from '../../shared/ai-vault/search/ai-vault-search-settings'
+import { setAppEnv } from '../../shared/app-env'
 // Compose the Node-host runtime; paired desktop pages work even without a local browser engine.
 import process from 'node:process'
 import { getAppEnvironment } from '../../shared/app-environment'
@@ -12,15 +20,12 @@ import {
   stopOrcadStructuredAgentSessions
 } from './orcad-lifecycle'
 import { resolveOrcadWebClientRoot } from './orcad-command-arguments'
-import type { OrcadRuntimeCleanup } from './orcad-runtime-lifetime'
+
 import { bindOrcadStopTerminalAdmission } from './orcad-stop-terminal-admission'
-import type { OrcadHandle, OrcadOptions } from './orcad-start-contract'
+
 import { beginOrcadIdleExit } from './orcad-managed-idle-exit-host'
 import { orcadAutomationsKeepHostBusy, startOrcadAutomations } from './orcad-automations'
-import {
-  changedAiVaultSearchSettings,
-  type AiVaultSearchSettings
-} from '../../shared/ai-vault/search/ai-vault-search-settings'
+
 import { stampRuntimeSourceEnv } from '../../shared/runtime-source-env'
 import { adoptWslHostLoginEnvironmentLogged } from './orcad-wsl-host-login-environment'
 import { orcadWsPortOptions } from './orcad-ws-port-policy'
@@ -39,7 +44,7 @@ export async function startOrcad(options: OrcadOptions = {}): Promise<OrcadHandl
   stampRuntimeSourceEnv(process.env, null)
   const userDataPath = resolveUserDataPath()
   // Override inherited data roots so CLI-shared Codex homes resolve on this host.
-  process.env.ORCA_USER_DATA_PATH = userDataPath
+  setAppEnv(process.env, 'USER_DATA_PATH', userDataPath)
   const { readiness, instance, stop } = await startOrcadWithHost(
     userDataPath,
     (registerCleanup) => startOrcadRuntime(options, registerCleanup),

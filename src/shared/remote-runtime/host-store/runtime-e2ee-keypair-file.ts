@@ -1,13 +1,14 @@
+import { renamedUserDataFile } from '../../legacy-renamed-file'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { readNodeFileSyncWithinLimit } from '../../file-content/node-bounded-file-reader'
 
-export const E2EE_KEYPAIR_FILENAME = 'orca-e2ee-keypair.json'
+export const E2EE_KEYPAIR_FILENAME = 'coding-e2ee-keypair.json'
 export const MAX_E2EE_KEYPAIR_FILE_BYTES = 8 * 1024
 
 /** This profile's runtime public key, or null when the profile has none or it cannot be read. */
 export function readProfileRuntimePublicKey(userDataPath: string): Buffer | null {
-  const filePath = join(userDataPath, E2EE_KEYPAIR_FILENAME)
+  const filePath = renamedUserDataFile(join(userDataPath, E2EE_KEYPAIR_FILENAME))
   if (!existsSync(filePath)) {
     return null
   }

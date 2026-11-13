@@ -27,7 +27,7 @@ export async function nodeGypRebuild({
 }) {
   const compileGypi = join(workDir, 'prebuild-compile.gypi')
   writeFileSync(compileGypi, prebuildCompileGypi({ staticCxxRuntime }))
-  const execute = runProcess ?? (await import('@orca/process-host')).runProcessSync
+  const execute = runProcess ?? (await import('@coding-agent/process-host')).runProcessSync
   let environment = process.env
   if (process.platform === 'win32') {
     const { initializeWindowsNativeToolchain, mergeWindowsCompilerEnvironment } =

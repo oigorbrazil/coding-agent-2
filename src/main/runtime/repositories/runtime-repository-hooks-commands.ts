@@ -5,6 +5,7 @@ import type { Repo } from '../../../shared/repo-types'
 import type { OrcaHooks } from '../../../shared/orca-yaml-hook-types'
 import {
   getEffectiveHooks,
+  hookConfigWarning,
   hasHooksFile,
   hasUnrecognizedOrcaYamlKeys,
   loadHooks
@@ -88,6 +89,7 @@ export class RuntimeRepositoryHooksCommands {
       status: 'ok' as const,
       hasHooks: has,
       hooks,
+      warning: hookConfigWarning(repo.path),
       mayNeedUpdate: has && !hooks && hasUnrecognizedOrcaYamlKeys(repo.path)
     }
   }

@@ -11,7 +11,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { afterEach, expect, it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { removeTreeSync } from '../../../../src/shared/windows-transient-lock-removal.ts'
 
 const repository = resolve(import.meta.dirname, '../../../..')
@@ -30,7 +30,7 @@ function standaloneMobile() {
   const root = mkdtempSync(join(tmpdir(), 'orca-mobile-process-tooling-'))
   temporary.push(root)
   const mobile = join(root, 'mobile')
-  const dependency = manifest.devDependencies['@orca/process-host']
+  const dependency = manifest.devDependencies['@coding-agent/process-host']
   expect(dependency).toBe('link:../src/packages/process-host')
   const packageDir = resolve(mobile, dependency.slice('link:'.length))
   mkdirSync(packageDir, { recursive: true })
@@ -50,10 +50,10 @@ function standaloneMobile() {
   }
   writeFileSync(join(mobile, 'package.json'), JSON.stringify(manifest))
   mkdirSync(join(mobile, 'rpc-foundation', 'goldens'), { recursive: true })
-  mkdirSync(join(mobile, 'node_modules', '@orca'), { recursive: true })
+  mkdirSync(join(mobile, 'node_modules', '@coding-agent'), { recursive: true })
   symlinkSync(
     packageDir,
-    join(mobile, 'node_modules', '@orca', 'process-host'),
+    join(mobile, 'node_modules', '@coding-agent', 'process-host'),
     process.platform === 'win32' ? 'junction' : 'dir'
   )
   expect(existsSync(join(root, 'node_modules'))).toBe(false)

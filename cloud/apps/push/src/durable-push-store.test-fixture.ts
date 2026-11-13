@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import pg from 'pg'
-import type { PushNotification } from '@orca-cloud/push-contract'
+import type { PushNotification } from '@coding-agent-cloud/push-contract'
 import { openInMemoryPushDatabase, openPushDatabase, type PushDatabase } from './push-database.js'
 import { DurablePushStore } from './durable-push-store.js'
 

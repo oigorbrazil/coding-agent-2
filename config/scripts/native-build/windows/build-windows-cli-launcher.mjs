@@ -14,12 +14,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const crateRoot = join(repoRoot, 'native', 'windows-cli-launcher')
   const iconPath = join(repoRoot, 'resources', 'build', 'icon.ico')
   const output = readArg('--output') ?? join(crateRoot, '.build', 'orca.exe')
-  for (const binName of ['orca', 'orca-administrator-restart']) {
+  for (const launcherName of ['orca', 'coding', 'orca-administrator-restart']) {
+    const isAdminRestart = launcherName === 'orca-administrator-restart'
     compileWindowsRustExecutable({
       repoRoot,
       crateRoot,
-      binName,
-      label: binName === 'orca' ? 'Windows CLI launcher' : 'Windows administrator restart launcher',
+      binName: isAdminRestart ? launcherName : 'orca',
+      label: isAdminRestart
+        ? 'Windows administrator restart launcher'
+        : `Windows ${launcherName} CLI launcher`,
       fingerprintInputs: [
         join(crateRoot, 'src', 'administrator_status.rs'),
         join(crateRoot, 'src', 'administrator_restart.rs'),
@@ -28,11 +31,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         join(repoRoot, 'config/scripts/native-build/windows/build-windows-cli-launcher.mjs')
       ],
       arch: readArg('--arch'),
-      outputPath: binName === 'orca' ? output : join(dirname(output), `${binName}.exe`),
+      outputPath: launcherName === 'orca' ? output : join(dirname(output), `${launcherName}.exe`),
       buildEnv: (version) => ({
         ORCA_LAUNCHER_VERSION: version,
         ORCA_LAUNCHER_ICON: iconPath,
-        ORCA_LAUNCHER_FILENAME: `${binName}.exe`
+        ORCA_LAUNCHER_FILENAME: `${launcherName}.exe`
       })
     })
   }

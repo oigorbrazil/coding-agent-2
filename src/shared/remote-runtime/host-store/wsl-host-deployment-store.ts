@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../legacy-renamed-file'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { z } from 'zod'
@@ -77,7 +78,7 @@ export class WslHostDeploymentStoreInvalidError extends Error {
 }
 
 export function getWslHostDeploymentStorePath(userDataPath: string): string {
-  return join(userDataPath, WSL_HOST_DEPLOYMENTS_FILE)
+  return renamedUserDataFile(join(userDataPath, WSL_HOST_DEPLOYMENTS_FILE))
 }
 
 function recordEnvironmentId(raw: unknown): string | undefined {

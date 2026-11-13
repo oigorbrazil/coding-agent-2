@@ -1,15 +1,18 @@
 import type { TuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent'
 import {
-  normalizeAgentProviderSession,
-  type AgentProviderSessionMetadata
+  type AgentProviderSessionMetadata,
+  normalizeAgentProviderSession
 } from '../../../../shared/agent-session/lifecycle/agent-session-resume'
-import { SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV } from '../../../../shared/setup-agent-sequencing'
-import { dropAgentResumeArgvFromCommand } from '../../../../shared/agent-launch/startup/agent-resume-argv-drop'
 import type { CodexAccountSelectionTarget } from '../../../codex-accounts/runtime-selection'
-import { dropUnverifiedCodexResumeArgv } from '../../../codex/history/resume/codex-unverified-resume-launch'
 import type { CodexSessionResumePreparation } from '../../../codex/history/resume/codex-session-resume-home'
-import { CODEX_RESUME_AUTH_UNAVAILABLE_MESSAGE, codexHomePathsEqual } from './codex-home'
 import type { PrepareCodexSessionResume } from './types'
+import { readAppEnv, appEnvPairs } from '../../../../shared/app-env'
+
+import { dropAgentResumeArgvFromCommand } from '../../../../shared/agent-launch/startup/agent-resume-argv-drop'
+
+import { dropUnverifiedCodexResumeArgv } from '../../../codex/history/resume/codex-unverified-resume-launch'
+
+import { CODEX_RESUME_AUTH_UNAVAILABLE_MESSAGE, codexHomePathsEqual } from './codex-home'
 
 export type CodexResumeLaunch = {
   codexResumeHome: Extract<CodexSessionResumePreparation, { outcome: 'resume' }> | null
@@ -118,7 +121,7 @@ export function stripSequencedStartupResumeArgv<T extends Record<string, string>
   env: T,
   launch: CodexResumeLaunch
 ): T {
-  const sequenced = env?.[SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]
+  const sequenced = readAppEnv(env ?? {}, 'SEQUENCED_STARTUP_COMMAND')
   if (!env || !sequenced || !launch.droppedResumeArgv || !launch.providerSession) {
     return env
   }
@@ -128,6 +131,6 @@ export function stripSequencedStartupResumeArgv<T extends Record<string, string>
     providerSession: launch.providerSession
   })
   return drop.status === 'dropped'
-    ? { ...env, [SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]: drop.command }
+    ? { ...env, ...appEnvPairs('SEQUENCED_STARTUP_COMMAND', drop.command) }
     : env
 }

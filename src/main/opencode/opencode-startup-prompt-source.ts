@@ -1,6 +1,8 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
+import { readAppEnv } from '../../shared/app-env'
 import { OPENCODE_NATIVE_PROMPT_VERSIONS } from '../../shared/opencode-cli-version'
 import { cancelUnreadResponseBody } from '../lib/unread-response-body'
-import { parseAgentHookEndpointFile } from '../../shared/agent-hook-listener/transport/agent-hook-endpoint-file'
+import { createAgentHookEndpointParser } from '../../shared/agent-hook-listener/transport/agent-hook-endpoint-file'
 import {
   OPENCODE_STARTUP_PROMPT_SHA256_ENV,
   OPENCODE_STARTUP_PROMPT_NONCE_ENV,
@@ -11,7 +13,7 @@ import {
 
 export function getOpenCodeStartupPromptSource(): string {
   return String.raw`
-const parseEndpoint = ${parseAgentHookEndpointFile.toString()};
+const parseEndpoint = (${createAgentHookEndpointParser.toString()})(${readAppEnv.toString()});
 const cancelUnreadResponseBody = ${cancelUnreadResponseBody.toString()};
 async function claimStartupPrompt(nonce, digest, endpoint, requestId) {
   let response;
@@ -38,9 +40,9 @@ async function claimStartupPrompt(nonce, digest, endpoint, requestId) {
 async function submitStartupPrompt(ctx) {
   const noop = async () => {};
   const digest = process.env.${OPENCODE_STARTUP_PROMPT_SHA256_ENV};
-  const nonce = process.env.${OPENCODE_STARTUP_PROMPT_NONCE_ENV};
-  const endpoint = process.env.${OPENCODE_STARTUP_PROMPT_ENDPOINT_ENV};
-  const prompt = process.env.${OPENCODE_STARTUP_PROMPT_BODY_ENV};
+  const nonce = ${appEnvReadExpression('process.env', OPENCODE_STARTUP_PROMPT_NONCE_ENV.slice(5))};
+  const endpoint = ${appEnvReadExpression('process.env', OPENCODE_STARTUP_PROMPT_ENDPOINT_ENV.slice(5))};
+  const prompt = ${appEnvReadExpression('process.env', OPENCODE_STARTUP_PROMPT_BODY_ENV.slice(5))};
   if (!${JSON.stringify(OPENCODE_NATIVE_PROMPT_VERSIONS)}.includes(ctx?.app?.version) || !/^[a-f0-9]{64}$/.test(digest || "") || !nonce || !endpoint || !prompt) return noop;
   const input = ctx.renderer?.keyInput;
   if (typeof ctx.storage?.memory !== "function" || typeof input?.on !== "function" ||

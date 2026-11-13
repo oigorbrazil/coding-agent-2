@@ -54,8 +54,64 @@ const REMOVED_SETTINGS_SECTION_IDS = new Set([
   'mobile-emulator',
   'floating-workspace',
   'stats',
-  'plugins'
+  'plugins',
+  // Telemetry is off without Orca's build key, the rest is macOS TCC and Orca's feature flags.
+  'privacy',
+  'developer-permissions',
+  'experimental',
+  // Folded into General and Terminal.
+  'input',
+  'quick-commands'
 ])
+
+const MERGED_SETTINGS_SECTIONS: Record<string, string> = {
+  input: 'general',
+  'quick-commands': 'terminal'
+}
+
+// Coding Agent 2's menu order; sections not listed (project pages) keep their place after these.
+const SETTINGS_SECTION_ORDER = [
+  'account',
+  'agents',
+  'orchestration',
+  'coding-opus-playbooks',
+  'second-brain',
+  'skills',
+  'accounts',
+  'general',
+  'language',
+  'integrations',
+  'terminal',
+  'quick-commands',
+  'git',
+  'session-history',
+  'automations',
+  'appearance',
+  'chat',
+  'input',
+  'notifications',
+  'shortcuts',
+  'mobile',
+  'servers',
+  'ssh',
+  'privacy',
+  'developer-permissions',
+  'advanced',
+  'dev',
+  'experimental'
+]
+// Sections moved to another group: Language sits with General, Mobile with the other devices.
+const SETTINGS_SECTION_GROUP: Record<string, string> = { language: 'setup', mobile: 'remote' }
+
+function orderSettingsSections(sections: SettingsNavSection[]): SettingsNavSection[] {
+  const rank = (id: string): number => {
+    const index = SETTINGS_SECTION_ORDER.indexOf(id)
+    return index === -1 ? SETTINGS_SECTION_ORDER.length : index
+  }
+  return sections
+    .map((section) => ({ ...section, group: SETTINGS_SECTION_GROUP[section.id] ?? section.group }))
+    .toSorted((a, b) => rank(a.id) - rank(b.id))
+}
 
 export function buildSettingsNavigationMetadata(
   {
@@ -123,14 +179,32 @@ export function buildSettingsNavigationMetadata(
   }
 
   // Match SETTINGS_NAV_GROUPS order so Settings and Cmd+J keep siblings together.
-  return [
+  const sections = [
     ...buildCodingOpusSettingsSections(t),
     ...buildCapabilitySettingsSections(options, t),
     ...buildSetupSettingsSections(options, t),
     ...buildWorkflowSettingsSections(options, terminalPaneSearchEntries, t),
     ...buildInterfaceSettingsSections(options, t),
     ...buildRemoteSettingsSections(options, runtimeEnvironmentsSearchEntry, reposById, t)
-  ].filter((section) => !REMOVED_SETTINGS_SECTION_IDS.has(section.id))
+  ]
+  const merged = sections.map((section) => {
+    const absorbed = sections.filter((other) => MERGED_SETTINGS_SECTIONS[other.id] === section.id)
+    return absorbed.length === 0
+      ? section
+      : {
+          ...section,
+          searchEntries: [
+            ...section.searchEntries,
+            ...absorbed.flatMap((other) => [
+              { title: other.title, description: other.description },
+              ...other.searchEntries
+            ])
+          ]
+        }
+  })
+  return orderSettingsSections(
+    merged.filter((section) => !REMOVED_SETTINGS_SECTION_IDS.has(section.id))
+  )
 }
 
 export function useSettingsNavigationMetadata(): SettingsNavSection[] {

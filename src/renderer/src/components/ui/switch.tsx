@@ -4,11 +4,11 @@ import * as SwitchPrimitive from 'radix-ui/switch'
 import { cn } from '@/lib/utils'
 
 const trackClassName =
-  'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-transparent p-0.5 transition-colors data-[state=checked]:bg-foreground data-[state=unchecked]:bg-muted-foreground/30'
+  'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border border-transparent p-0.5 transition-colors data-[state=checked]:bg-switch-on data-[state=unchecked]:bg-switch-track'
 const thumbClassName =
-  'pointer-events-none block size-3.5 translate-x-0 rounded-full bg-background shadow-sm transition-transform data-[state=checked]:translate-x-4'
+  'pointer-events-none block h-3.5 w-5 translate-x-0 rounded-full bg-white shadow-[0_1px_3px_rgb(0_0_0/0.18),0_0_0_0.5px_rgb(0_0_0/0.06)] transition-transform duration-200 ease-out data-[state=checked]:translate-x-2.5'
 const compactTrackClassName = 'h-3.5 w-6 border-0 p-0.5'
-const compactThumbClassName = 'size-2.5 data-[state=checked]:translate-x-2.5'
+const compactThumbClassName = 'h-2.5 w-3.5 data-[state=checked]:translate-x-1.5'
 
 type SwitchProps = React.ComponentProps<typeof SwitchPrimitive.Root> & {
   thumbClassName?: string

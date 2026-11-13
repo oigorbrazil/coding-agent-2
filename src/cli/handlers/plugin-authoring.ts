@@ -57,7 +57,7 @@ function invalidError(report: PluginValidationReport): RuntimeClientError {
     ].join('\n'),
     {
       ...report,
-      nextSteps: ['Fix the listed problems, then run `orca plugin validate` again.']
+      nextSteps: ['Fix the listed problems, then run `coding plugin validate` again.']
     }
   )
 }
@@ -124,7 +124,7 @@ export const PLUGIN_AUTHORING_HANDLERS: Record<string, CommandHandler> = {
           ? [`  ${created.typeFiles.join(', ')} (generated typings, ignored by Git)`]
           : []),
         ...formatGrants(report),
-        'Next: orca plugin dev load <dir>'
+        'Next: coding plugin dev load <dir>'
       ].join('\n')
     )
   },
@@ -160,7 +160,7 @@ export const PLUGIN_AUTHORING_HANDLERS: Record<string, CommandHandler> = {
     if (files.length === 0) {
       throw new RuntimeClientError('invalid_argument', `No *.test.ts(x) files under ${dir}.`, {
         nextSteps: [
-          'Add one next to the panel, e.g. src/panel.test.tsx; see `orca plugin create --template components`.'
+          'Add one next to the panel, e.g. src/panel.test.tsx; see `coding plugin create --template components`.'
         ]
       })
     }

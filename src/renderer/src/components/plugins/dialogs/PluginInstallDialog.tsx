@@ -200,7 +200,7 @@ export function PluginInstallDialog({
               <p className="text-xs leading-5 text-muted-foreground">
                 {t(
                   'auto.components.settings.PluginInstallDialog.localHelp',
-                  'The folder with orca-plugin.json'
+                  'The folder with coding-plugin.json'
                 )}
               </p>
             </TabsContent>

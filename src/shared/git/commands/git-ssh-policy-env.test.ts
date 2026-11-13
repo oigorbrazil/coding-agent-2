@@ -1,7 +1,7 @@
 import { chmod, mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { quotePosixShell } from '../../shell/launch/shell-argument-quoting'
 import { describe, expect, it } from 'vitest'
 import { buildGitSshPolicyEnv, parseGitSshConfig } from './git-ssh-policy-env'

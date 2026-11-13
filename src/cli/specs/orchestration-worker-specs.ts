@@ -5,7 +5,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'worker-start'],
     summary: 'Start one supervised worker on the Run home or a connected Coding Agent 2 server',
     usage:
-      'orca orchestration worker-start (--task <task_id> | --spec <text> | --spec-file <path|->) [--keep-open] [--on <saved-environment>] [--worktree <current|selector|new-child|new-top-level>] (--agent <agent> | --terminal <handle>) [--task-title <text>] [--deps <json_array>] [--parent <task_id>] [--model <id>] [--effort <level>] [--name <name>] [--repo <selector>] [--base-branch <ref>] [--display-name <text>] [--comment <text>] [--setup <run|skip|inherit>] [--retry-of <dispatch_id>] [--timeout-ms <n>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
+      'coding orchestration worker-start (--task <task_id> | --spec <text> | --spec-file <path|->) [--keep-open] [--on <saved-environment>] [--worktree <current|selector|new-child|new-top-level>] (--agent <agent> | --terminal <handle>) [--task-title <text>] [--deps <json_array>] [--parent <task_id>] [--model <id>] [--effort <level>] [--name <name>] [--repo <selector>] [--base-branch <ref>] [--display-name <text>] [--comment <text>] [--setup <run|skip|inherit>] [--retry-of <dispatch_id>] [--timeout-ms <n>] [--run <run_id>] [--from <handle>] [--retry-request <id>] [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'task',
@@ -48,7 +48,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
       'Creation flags (--name, --repo, --base-branch, --display-name, --comment, --setup) are rejected for current/existing worktrees. Use exact --repo on the selected server; project/host convenience routing remains on worktree create.',
       "How the worker runs follows the user's own setting for new agent tabs; there is no flag for it and no caller needs to ask. A dispatch the setting cannot apply to still starts, so the placement, agent, and launch options passed here are always the ones honoured.",
       'Drive every worker the same way whichever way it was started: the same orchestration verbs, the same handle. Mail, dispatch, worker-show, worker-read and the whole lifecycle behave identically. The start receipt records which one ran, for operators and telemetry.',
-      'Not every worker has a terminal. Read output with worker-read --source auto or --source transcript, which always work; --source terminal is refused when there is none, and orca terminal verbs do not accept every worker handle. Nothing above needs you to know which kind you have — the orchestration verbs cover all of them.',
+      'Not every worker has a terminal. Read output with worker-read --source auto or --source transcript, which always work; --source terminal is refused when there is none, and coding terminal verbs do not accept every worker handle. Nothing above needs you to know which kind you have — the orchestration verbs cover all of them.',
       '--on selects only the worker server; the Run and this command remain on the current Coding Agent 2 server.',
       'With --on, use an exact remote selector, new-child or new-top-level (new-child and new-top-level need a remote --repo); new-child nests the server worktree under your workspace, or starts it top-level with a warning when that server is too old to nest across machines. Remote current is invalid.',
       '--retry-of needs --task naming the failed Task (--spec creates a new one) and does not inherit placement; repeat the intended --on/worktree and --agent/terminal choices.',
@@ -60,7 +60,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['orchestration', 'worker-show'],
     summary: 'Inspect one supervised worker Dispatch',
-    usage: 'orca orchestration worker-show --dispatch <dispatch_id> [--json]',
+    usage: 'coding orchestration worker-show --dispatch <dispatch_id> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch'],
     notes: [
       'A Dispatch created by orchestration dispatch is shown as unsupervised and reports the exact adopted terminal when its identity is still provable.',
@@ -71,7 +71,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'worker-read'],
     summary: 'Read bounded output from one supervised worker',
     usage:
-      'orca orchestration worker-read --dispatch <dispatch_id> [--source <auto|transcript|terminal>] [--cursor <cursor>] [--limit <n>] [--json]',
+      'coding orchestration worker-read --dispatch <dispatch_id> [--source <auto|transcript|terminal>] [--cursor <cursor>] [--limit <n>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'source', 'cursor', 'limit'],
     notes: [
       'The default auto source uses an exact hook-reported transcript when available and otherwise returns labeled terminal output.',
@@ -85,7 +85,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     destructive: true,
     summary: 'Fence one Dispatch and stop its supervised agent terminal and its helpers',
     usage:
-      'orca orchestration worker-stop --dispatch <dispatch_id> [--retry-request <id>] [--json]',
+      'coding orchestration worker-stop --dispatch <dispatch_id> [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'retry-request'],
     notes: [
       'A Dispatch created by orchestration dispatch is fenced without closing its unsupervised terminal process.',
@@ -98,7 +98,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'worker-abandon'],
     summary: 'Fence a worker without claiming its process stopped',
     usage:
-      'orca orchestration worker-abandon --dispatch <dispatch_id> [--retry-request <id>] [--json]',
+      'coding orchestration worker-abandon --dispatch <dispatch_id> [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'retry-request'],
     notes: ['Retains all possibly-live resources and performs no process or filesystem action.']
   },
@@ -107,7 +107,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     destructive: true,
     summary: 'Release the terminal of one settled supervised worker',
     usage:
-      'orca orchestration worker-release --dispatch <dispatch_id> [--retry-request <id>] [--json]',
+      'coding orchestration worker-release --dispatch <dispatch_id> [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'retry-request'],
     notes: [
       'Post-completion cleanup for a settled (succeeded or failed) worker; closes only the exact coordinator-owned agent terminal of that worker.',
@@ -122,7 +122,7 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     path: ['orchestration', 'worker-keep-open'],
     summary: 'Keep a worker open after it finishes',
     usage:
-      'orca orchestration worker-keep-open --dispatch <dispatch_id> [--retry-request <id>] [--json]',
+      'coding orchestration worker-keep-open --dispatch <dispatch_id> [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'retry-request'],
     notes: [
       'Records a durable user-requested exception; a later explicit worker-release clears it and releases the terminal.',
@@ -138,14 +138,14 @@ export const ORCHESTRATION_WORKER_COMMAND_SPECS: CommandSpec[] = [
     hidden: true,
     summary: 'Keep a worker open after it finishes (old name of worker-keep-open)',
     usage:
-      'orca orchestration worker-retain --dispatch <dispatch_id> [--retry-request <id>] [--json]',
+      'coding orchestration worker-retain --dispatch <dispatch_id> [--retry-request <id>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'dispatch', 'retry-request']
   },
   {
     path: ['orchestration', 'worker-list'],
     summary: 'List supervised worker terminal resource accounting',
     usage:
-      'orca orchestration worker-list [--run <run_id>] [--terminal-state <active|reclaimable|retained|release_pending|release_unknown|released>] [--include-remote] [--cursor <cursor>] [--limit <1-100>] [--json]',
+      'coding orchestration worker-list [--run <run_id>] [--terminal-state <active|reclaimable|retained|release_pending|release_unknown|released>] [--include-remote] [--cursor <cursor>] [--limit <1-100>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'run', 'terminal-state', 'include-remote', 'cursor', 'limit'],
     notes: [
       'Terminal state is process accounting and is reported separately from Task status; a completed Task can still own a live terminal.',

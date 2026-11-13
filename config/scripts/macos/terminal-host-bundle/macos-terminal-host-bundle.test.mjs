@@ -116,14 +116,14 @@ describe.skipIf(process.platform !== 'darwin')('terminal host assembly', () => {
     writeFileSync(join(main, 'daemon-entry.js'), "require('./chunks/kill.js')")
     writeFileSync(
       join(main, 'chunks', 'kill.js'),
-      "require(`node:fs`);require('os');require(`@orca/process-host/gate`)"
+      "require(`node:fs`);require('os');require(`@coding-agent/process-host/gate`)"
     )
     // Main-process code shipped alongside is not part of the daemon.
     writeFileSync(join(main, 'index.js'), "require('unused');require(`electron`)")
     const modules = join(resources, 'node_modules')
-    mkdirSync(join(modules, '@orca', 'process-host', 'dist'), { recursive: true })
+    mkdirSync(join(modules, '@coding-agent', 'process-host', 'dist'), { recursive: true })
     writeFileSync(
-      join(modules, '@orca', 'process-host', 'package.json'),
+      join(modules, '@coding-agent', 'process-host', 'package.json'),
       '{"dependencies":{"retry":"1"}}'
     )
     mkdirSync(join(modules, 'retry'), { recursive: true })
@@ -138,9 +138,11 @@ describe.skipIf(process.platform !== 'darwin')('terminal host assembly', () => {
     })
     const helperModules = join(paths.daemon, 'node_modules')
     expect(daemonBareRequires(join(paths.daemon, 'out', 'main'))).toEqual([
-      '@orca/process-host/gate'
+      '@coding-agent/process-host/gate'
     ])
-    expect(existsSync(join(helperModules, '@orca', 'process-host', 'package.json'))).toBe(true)
+    expect(existsSync(join(helperModules, '@coding-agent', 'process-host', 'package.json'))).toBe(
+      true
+    )
     expect(existsSync(join(helperModules, 'retry', 'package.json'))).toBe(true)
     expect(existsSync(join(helperModules, 'unused'))).toBe(false)
     expect(existsSync(join(helperModules, 'electron'))).toBe(false)

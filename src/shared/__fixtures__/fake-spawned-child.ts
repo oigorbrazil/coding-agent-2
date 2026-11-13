@@ -1,6 +1,6 @@
 import type * as ChildProcessModule from 'node:child_process'
 import { PassThrough } from 'node:stream'
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
 import { vi } from 'vitest'
 
 // Consumers may mock spawn without exporting the ChildProcess constructor.

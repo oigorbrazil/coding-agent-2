@@ -9,7 +9,7 @@ import {
   type Page,
   type TestInfo
 } from '@stablyai/playwright-test'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { forwardElectronProcessLogs } from './orca-app'
 import { getE2ECompletedOnboardingProfile } from './e2e-completed-onboarding-profile'
 import { cleanupE2EDaemons, closeElectronAppForE2E } from './electron-process-shutdown'

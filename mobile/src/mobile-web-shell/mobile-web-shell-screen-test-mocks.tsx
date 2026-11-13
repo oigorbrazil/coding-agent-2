@@ -85,7 +85,7 @@ export function screenModuleMocks(dependencies: ScreenDependencies) {
       NotificationFeedbackType: { Error: 'error', Success: 'success' }
     }),
     'expo-document-picker': () => ({ getDocumentAsync: () => Promise.resolve(null) }),
-    '@orca/expo-two-way-audio': () => ({
+    '@coding-agent/expo-two-way-audio': () => ({
       addExpoTwoWayAudioEventListener: () => ({ remove: () => {} }),
       initialize: () => Promise.resolve(true),
       requestMicrophonePermissionsAsync: () =>

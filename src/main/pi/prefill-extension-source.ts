@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import type { PiAgentKind } from '../../shared/pi-agent-kind'
 
 export const ORCA_PI_PREFILL_EXTENSION_FILE = 'orca-prefill.ts'
@@ -24,11 +25,11 @@ export function getPiPrefillHandlerSourceLines(
   const register = wrapInStatusOwner && kind === 'omp' ? 'onStatus' : 'pi.on'
   return [
     `  ${register}('session_start', async (event, ctx) => {`,
-    '    if (!process.env.ORCA_PANE_KEY || ctx?.hasUI === false) return',
+    `    if (!${appEnvReadExpression('process.env', 'PANE_KEY')} || ctx?.hasUI === false) return`,
     ...(kind === 'pi' ? ["    if (event.reason !== 'startup') return"] : []),
-    `    const prefill = process.env.${envVar}`,
+    `    const prefill = ${appEnvReadExpression('process.env', envVar.slice(5))}`,
     "    if (!prefill || typeof ctx?.ui?.setEditorText !== 'function') return",
-    `    delete process.env.${envVar}`,
+    `    delete process.env.${envVar}; delete process.env.CODING_AGENT_${envVar.slice(5)}`,
     '    try {',
     '      ctx.ui.setEditorText(prefill)',
     '    } catch {}',

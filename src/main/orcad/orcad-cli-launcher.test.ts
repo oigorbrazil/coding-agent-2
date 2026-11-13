@@ -2,7 +2,7 @@ import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { ORCAD_CLI_ENTRY_FILENAME } from '../../shared/orcad-artifacts'
 import { getOrcadCliLauncherPath, prepareOrcadCliLauncher } from './orcad-cli-launcher'
 

@@ -76,7 +76,7 @@ describe('profile index store', () => {
     const activeProfile = ensureActiveOrcaProfile()
 
     expect(activeProfile.profile.id).toBe(profileId)
-    expect(activeProfile.dataFile).toBe(join(profileDirectory, 'orca-data.json'))
+    expect(activeProfile.dataFile).toBe(join(profileDirectory, 'coding-data.json'))
     expect(activeProfile.stateDatabaseFile).toBe(join(profileDirectory, 'profile-state.db'))
     expect(readJson(activeProfile.dataFile)).toEqual(profileData)
   })

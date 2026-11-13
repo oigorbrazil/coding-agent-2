@@ -24,7 +24,7 @@ import {
 } from '../identity/codex-trust-identity'
 
 // Unavailable wsl.exe leaves guest grants unstamped.
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: vi.fn(async () => ({
     code: 1,
     signal: null,

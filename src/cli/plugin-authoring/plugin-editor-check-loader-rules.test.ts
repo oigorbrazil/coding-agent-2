@@ -21,7 +21,7 @@ async function editorWith(files: Record<string, string>, entry?: string): Promis
     await mkdir(dirname(join(dir, ...path.split('/'))), { recursive: true })
     await writeFile(join(dir, ...path.split('/')), text)
   }
-  const manifestPath = join(dir, 'orca-plugin.json')
+  const manifestPath = join(dir, 'coding-plugin.json')
   const manifest = await readFile(manifestPath, 'utf8')
   await writeFile(manifestPath, manifest.replace('editor/main.ts', entry ?? 'editor/index.html'))
   return root

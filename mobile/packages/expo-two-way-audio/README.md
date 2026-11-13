@@ -12,7 +12,7 @@ The following features are provided:
 ## Installation
 
 ```
-npm i @orca/expo-two-way-audio
+npm i @coding-agent/expo-two-way-audio
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ npm i @orca/expo-two-way-audio
 1. Request permissions for recording audio
 
    ```JSX
-   import {useMicrophonePermissions} from "@orca/expo-two-way-audio";
+   import {useMicrophonePermissions} from "@coding-agent/expo-two-way-audio";
 
    const [micPermission, requestMicPermission] = useMicrophonePermissions();
    console.log(micPermission);

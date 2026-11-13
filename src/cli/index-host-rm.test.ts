@@ -102,7 +102,7 @@ describe('orca host rm', () => {
   it.each([
     ['local', 'This machine is always listed'],
     ['this machine', 'This machine is always listed'],
-    ['runtime:env-m4air', 'orca environment rm'],
+    ['runtime:env-m4air', 'coding environment rm'],
     ['m4air', '--host ssh:<target-id>']
   ])('refuses --host %s before it reaches the runtime', async (host, nextStep) => {
     pairRuntimeEnvironment(listEnvironmentsMock, 'env-m4air', 'm4air')
@@ -136,7 +136,7 @@ describe('orca host rm', () => {
 
     const printed = printedJson(logSpy)
     expect(printed.error?.code).toBe('invalid_argument')
-    expect(printed.error?.message).toContain(`\`--${flag}\` does not retarget \`orca host rm\``)
+    expect(printed.error?.message).toContain(`\`--${flag}\` does not retarget \`coding host rm\``)
     expect(runtime.removed).toEqual([])
     expect(process.exitCode).toBe(1)
   })

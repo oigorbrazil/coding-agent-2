@@ -240,7 +240,7 @@
         "remoteUnsupported": "Gestiona la identidad del navegador en el host remoto con la CLI de Coding Agent 2.",
         "loading": "Cargando…",
         "resetRequired": "Los datos de identidad deben restablecerse explícitamente antes de que se puedan cambiar.",
-        "resetRequiredCommand": "Restablecerlo desde la línea de comandos: orca browser identity set --mode <mode> --reset",
+        "resetRequiredCommand": "Restablecerlo desde la línea de comandos: coding-agent browser identity set --mode <mode> --reset",
         "optionClean": "Limpio",
         "optionCleanTooltip": "Elimina los tokens Coding Agent 2 y Electron para que coincidan con las sesiones de Chrome importadas.",
         "optionNative": "Nativo",
@@ -581,7 +581,6 @@
     "showStatusBar": "Mostrar barra de estado",
     "showTasksButton": "Botón Mostrar tareas",
     "showAutomationsButton": "Botón Mostrar automatizaciones",
-    "showMobileButton": "Mostrar botón móvil de Coding Agent 2",
     "showTitlebarAppName": "Mostrar el nombre de la aplicación de la barra de título",
     "view": "Vista",
     "reload": "Recargar",
@@ -1948,24 +1947,15 @@
         "commentTooLarge": "El comentario es demasiado grande para enviarlo de forma segura."
       },
       "Landing": {
-        "f9eaa9e12d": "Agregar proyecto",
-        "6ca6ff404e": "ORCA",
+        "6ca6ff404e": "Coding Agent 2",
         "520304a067": "logotipo de Coding Agent 2",
-        "c1cf168479": "Ocultar",
         "00cee697c1": "Ejecuta \"gh auth login\" en una terminal para conectar tu cuenta de GitHub.",
         "9f96d018b7": "La CLI de GitHub no está autenticada",
         "73e1ad4282": "Coding Agent 2 usa GitHub CLI (gh) para mostrar pull requests, issues y checks.",
         "5beaef5f9e": "La CLI de GitHub no está instalada",
         "b673e7cf1b": "Se requiere Git para proyectos Git, control de código fuente y gestión del espacio de trabajo.",
         "e5b7296d9d": "Git no está instalado",
-        "cd21242762": "Agrega un proyecto para comenzar.",
-        "9c00bd4adf": "Selecciona un espacio de trabajo en la barra lateral para comenzar.",
-        "0d0ace8861": "Dar estrella en GitHub",
-        "ec43b38ba7": "Con estrella en GitHub",
-        "157bb5ecbb": "Abrir GitHub",
         "preflightDismiss": "Descartar",
-        "moveUpWorkspace": "Seleccionar espacio de trabajo anterior",
-        "moveDownWorkspace": "Seleccionar espacio de trabajo siguiente",
         "installGit": "Instalar Git",
         "installGitHubCli": "Instalar GitHub CLI",
         "learnMore": "Más información"
@@ -2092,12 +2082,12 @@
         "dccd26d4e4": "Elige proyecto",
         "d6b0a96f32": "Agregar proyecto",
         "969a8bff66": "Proyecto",
-        "23bb365554": "orca.yaml",
+        "23bb365554": "coding.yaml",
         "a239038146": "Error de conexión SSH",
         "9a70e4859e": "Elige si quieres ejecutar el setup antes de crear este espacio de trabajo.",
         "803b7fe72f": "Verificando configuración de setup...",
         "92e34f0311": "ajustes locales",
-        "326a578923": "orca.yaml + local",
+        "326a578923": "coding.yaml + local",
         "ac3748dcda": "Crear desde",
         "f660aa1454": "Conectando",
         "addProjectBeforeWorkspace": "Agrega un proyecto antes de crear un espacio de trabajo.",
@@ -4142,7 +4132,6 @@
             "remoteServerLabel": "Servidor remoto",
             "antigravityUsage": "Uso de Antigravity",
             "grokUsageMenu": "Uso de Grok",
-            "floatingTerminalNewActivity": "{{label}}, nueva actividad",
             "4fba7dc1e7": "saldo {{value0}}",
             "codexSignInSuccess": "Sesión iniciada en Codex",
             "codexSignInError": "No se pudo iniciar sesión en Codex. Inténtalo de nuevo.",
@@ -5670,14 +5659,14 @@
           "archiveRunTitle": "¿Ejecutar el script de archivado de {{repo}}?",
           "issueCommandRunTitle": "¿Ejecutar el comando de issue de {{repo}}?",
           "vmRecipeRunTitle": "¿Ejecutar la receta de VM de {{repo}}?",
-          "setupChangedBody": "<code>orca.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al crear este espacio de trabajo.",
-          "archiveChangedBody": "<code>orca.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al eliminar este espacio de trabajo.",
-          "issueCommandChangedBody": "<code>orca.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al iniciar este espacio de trabajo con un issue vinculado.",
-          "vmRecipeChangedBody": "<code>orca.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute previo al aprovisionamiento de una VM.",
-          "setupRunBody": "El <code>orca.yaml</code> de este repositorio se ejecuta en tu equipo al crear este espacio de trabajo. Ejecútalo solo si confías en <repo/>.",
-          "archiveRunBody": "El <code>orca.yaml</code> de este repositorio se ejecuta en tu equipo al eliminar este espacio de trabajo. Ejecútalo solo si confías en <repo/>.",
-          "issueCommandRunBody": "El <code>orca.yaml</code> de este repositorio se ejecuta en tu equipo al iniciar este espacio de trabajo con un issue vinculado. Ejecútalo solo si confías en <repo/>.",
-          "vmRecipeRunBody": "El <code>orca.yaml</code> de este repositorio se ejecuta en tu equipo antes de aprovisionar una VM. Ejecútalo solo si confías en <repo/>.",
+          "setupChangedBody": "<code>coding.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al crear este espacio de trabajo.",
+          "archiveChangedBody": "<code>coding.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al eliminar este espacio de trabajo.",
+          "issueCommandChangedBody": "<code>coding.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute al iniciar este espacio de trabajo con un issue vinculado.",
+          "vmRecipeChangedBody": "<code>coding.yaml</code> cambió desde la última vez que lo aprobaste. Revísalo antes de que se ejecute previo al aprovisionamiento de una VM.",
+          "setupRunBody": "El <code>coding.yaml</code> de este repositorio se ejecuta en tu equipo al crear este espacio de trabajo. Ejecútalo solo si confías en <repo/>.",
+          "archiveRunBody": "El <code>coding.yaml</code> de este repositorio se ejecuta en tu equipo al eliminar este espacio de trabajo. Ejecútalo solo si confías en <repo/>.",
+          "issueCommandRunBody": "El <code>coding.yaml</code> de este repositorio se ejecuta en tu equipo al iniciar este espacio de trabajo con un issue vinculado. Ejecútalo solo si confías en <repo/>.",
+          "vmRecipeRunBody": "El <code>coding.yaml</code> de este repositorio se ejecuta en tu equipo antes de aprovisionar una VM. Ejecútalo solo si confías en <repo/>.",
           "newSetupScript": "Nuevo script de configuración",
           "setupScript": "Script de configuración",
           "newArchiveScript": "Nuevo script de archivado",
@@ -5687,7 +5676,7 @@
           "newVmRecipe": "Nueva receta de VM",
           "vmRecipe": "Receta de VM",
           "thisRepository": "este repositorio",
-          "alwaysTrustRepo": "Confiar siempre en <code>orca.yaml</code> de <repo/>"
+          "alwaysTrustRepo": "Confiar siempre en <code>coding.yaml</code> de <repo/>"
         },
         "PendingWorktreeRow": {
           "af21e953d1": "Cancelar creación del worktree",
@@ -5781,7 +5770,7 @@
           "822ff300ad": "Descartar",
           "5bfd5c8779": "Descartar scripts de configuración",
           "detectedFromSource": "Detectado en <source>{{source}}</source>",
-          "ignoresSharedSetup": "Este repositorio ignora los scripts de configuración compartidos de <yaml>orca.yaml</yaml>. Añade un comando local o cambia la fuente en Ajustes.",
+          "ignoresSharedSetup": "Este repositorio ignora los scripts de configuración compartidos de <yaml>coding.yaml</yaml>. Añade un comando local o cambia la fuente en Ajustes.",
           "foundSetupCommandIn": "Se encontró un comando de configuración en <source>{{source}}</source>. Guárdalo para ejecutarlo en los nuevos worktrees.",
           "reviewSetupScript": "Revisar script de configuración"
         },
@@ -5843,8 +5832,6 @@
         "SidebarNav": {
           "80611a8b10": "Buscar",
           "0c3395fd32": "Buscar worktrees y pestañas del navegador",
-          "c86d83b5c3": "Nuevo",
-          "1b5c41caee": "Coding Agent 2 Móvil",
           "f323383e9a": "Automatizaciones",
           "e7ad3c540d": "Abrir tareas de Jira",
           "c39ab10000": "Abrir tareas de Linear",
@@ -6060,8 +6047,8 @@
           "copyLinkFailure": "No se pudo copiar el enlace",
           "issueLinkLabel": "Enlace del issue",
           "cliHeader": "Coding Agent 2 CLI",
-          "cliCreatedFromAgent": "Creado por un agente a través de `orca worktree create`",
-          "cliCreatedFromShell": "Creado a través de `orca worktree create`",
+          "cliCreatedFromAgent": "Creado por un agente a través de `coding-agent worktree create`",
+          "cliCreatedFromShell": "Creado a través de `coding-agent worktree create`",
           "cliStartupAgent": "Started with {{value0}}",
           "cliCreated": "Creado por Coding Agent 2 CLI",
           "linkedJira": "Jira {{value0}} vinculado",
@@ -7237,17 +7224,8 @@
           "storedDefaultUndetected": "Guardado como predeterminado, pero no detectado en este momento",
           "noAgentsDetected": "No se detectaron agentes. Si hay uno instalado, es posible que la sonda haya agotado su tiempo de espera."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "Icono siguiente",
-          "415fa76f64": "Icono de aplicación seleccionada",
-          "5f5142a62a": "Icono anterior"
-        },
         "AppearancePane": {
           "3057983501": "No asignado",
-          "0cd9b8228f": "Elige el icono de la app que se muestra en el Dock y en el selector de ventanas.",
-          "ca1590d42f": "Icono de la app",
-          "61d842eca0": "Muestra el acceso directo de Coding Agent 2 Mobile en la barra lateral. Sigue estando disponible en Toolbox.",
-          "9da1020447": "Mostrar botón de Coding Agent 2 Mobile",
           "511f270ebb": "Mostrar botón de Automatizaciones",
           "cf81907069": "Mostrar botón de Tareas",
           "dc29f3cc0d": "Barra lateral",
@@ -7438,8 +7416,7 @@
           "cbe55e4d48": "Mostrar en el Explorador",
           "9fd4023db0": "Mostrar en el administrador de archivos",
           "installFailureUnknownReason": "Coding Agent 2 no pudo completar el registro de CLI y no reportó ninguna razón.",
-          "installFailureConflictRemedy": "Elimina {{value0}} y regístrate nuevamente si ya no es necesario.",
-          "outsideOrcaDescription": "Las terminales de Coding Agent 2 ya incluyen `orca`. Actívalo para usar `orca` desde otras terminales fuera de Coding Agent 2."
+          "installFailureConflictRemedy": "Elimina {{value0}} y regístrate nuevamente si ya no es necesario."
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL predeterminado"
@@ -7627,10 +7604,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Barra de estado",
-          "9fb225f2d7": "Botón flotante",
-          "3c900e26e5": "El atajo de teclado funciona independientemente de dónde se muestre el botón.",
-          "5e5a8da236": "Ubicación del botón de activación",
           "505001823e": "Elegir directorio del workspace flotante",
           "81afb79785": "Las nuevas pestañas de terminal flotante comienzan aquí. Las notas Markdown se guardan en el workspace flotante propiedad de la app de Coding Agent 2.",
           "12aa09f10c": "Directorio del terminal",
@@ -7974,9 +7947,6 @@
           "b5a2ed83ff": "App Store",
           "e7a3ae8c4e": "Móvil",
           "174f4a3c6d": "Controla terminales y agentes desde tu teléfono.",
-          "1de96ec8a6": "Mostrar botón de Coding Agent 2 Mobile",
-          "682293cadf": "Mostrar el botón de Coding Agent 2 Mobile en la parte superior de la barra lateral izquierda.",
-          "d4f2b65f30": "Mostrar el acceso directo de Coding Agent 2 Mobile en la barra lateral.",
           "installIntro": "Instala Coding Agent 2 Mobile desde la",
           "installOutro": ", luego empareja a continuación.",
           "androidApkLabel": "Android APK"
@@ -8049,15 +8019,9 @@
           "f79084947b": "Nueva aplicación"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Pídele a un agente coordinador que use la orquestación para handoffs, handoffs de worktree y agentes secundarios secuenciales o paralelos.",
-          "ae79504732": "Cómo usarlo",
-          "9bedd2a6e5": "Permite a los agentes transferir contexto y coordinar el trabajo a través de Coding Agent 2.",
-          "07641b9768": "Skill de orquestación",
-          "2aacdb0517": "Coordina agentes de programación en handoffs, handoffs de worktree y trabajo de agentes secundarios.",
           "191ac34567": "Orquestación de agentes",
           "nestedWorkerDepthTitle": "Profundidad del trabajador anidado",
           "nestedWorkerDepthDescription": "¿Cuántas generaciones de trabajadores despedidos pueden engendrar sus propios trabajadores? 1 mantiene el árbol de agentes plano: un coordinador envía trabajadores y esos trabajadores no envían.",
-          "7bc082f4de": "Copiar comando de instalación",
           "workerAutoReleaseTitle": "Cerrar automáticamente los trabajadores finalizados",
           "workerAutoReleaseDescription": "Cierra el terminal o chat de un trabajador 2 minutos después de que termine, salvo que elijas Mantener abierto. Si vuelve a trabajar, los 2 minutos empiezan de nuevo cuando termina.",
           "workerAutoReleaseKeywordClose": "cerrar",
@@ -8066,18 +8030,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Permite a los agentes transferir contexto y coordinar el trabajo a través de Coding Agent 2.",
           "2777ff0fdc": "Skill de orquestación"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Cobertura de agentes",
-          "ffe13e36fb": "Falta",
-          "1e8f8d8fae": "Listo",
-          "checking": "Comprobando agentes instalados y rutas de habilidades...",
-          "noAgents": "No se detectaron CLI de agentes en PATH. Instale agentes en Configuración → Agentes, luego vuelva a verificar.",
-          "fullCoverage_one": "Cada agente detectado tiene la habilidad.",
-          "fullCoverage_other": "Todos los agentes {{value0}} detectados tienen la habilidad.",
-          "fullCoverage_many": "Todos los agentes {{value0}} detectados tienen la habilidad.",
-          "noCoverage": "Instale la habilidad anterior y luego vuelva a verificar.",
-          "partialCoverage": "{{value0}} de {{value1}} agentes detectados tienen la habilidad."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Crear archivo de diagnóstico",
@@ -8148,11 +8100,11 @@
         },
         "RepositoryHooksSection": {
           "af49e2a19e": "El archivo está presente, pero Coding Agent 2 no pudo encontrar definiciones válidas de `scripts` o `issueCommand`.",
-          "39da2ae12f": "orca.yaml",
+          "39da2ae12f": "coding.yaml",
           "32fec28f5b": "Origen de comandos",
-          "bbbd6e0bc4": "Origen de comandos y orca.yaml",
+          "bbbd6e0bc4": "Origen de comandos y coding.yaml",
           "c9bc1bfd8f": "Avanzado",
-          "610d90fdbd": "Origen de comandos y detalles de orca.yaml.",
+          "610d90fdbd": "Origen de comandos y detalles de coding.yaml.",
           "4084720f47": "Completar {{artifact_url}}",
           "13394103bd": "Comando personalizado de Issue de GitHub",
           "2cc27dc12b": "Anulación opcional por usuario para el comando de Issue vinculado.",
@@ -8164,7 +8116,7 @@
           "fb6bebcf7e": "Cuándo ejecutar la configuración",
           "30d555acd2": "Scripts locales y compartidos que se ejecutan después de crear un nuevo worktree.",
           "52b31baf02": "Script de configuración",
-          "8567127a40": "Scripts que se ejecutan cuando se crean o archivan worktrees. Los scripts locales se almacenan en esta máquina; los scripts de `orca.yaml` se comparten con tu equipo.",
+          "8567127a40": "Scripts que se ejecutan cuando se crean o archivan worktrees. Los scripts locales se almacenan en esta máquina; los scripts de `coding.yaml` se comparten con tu equipo.",
           "ff082fe7c6": "Hooks de worktree",
           "5d940bde5c": "Agregar script local",
           "8c2893fae0": "Se ejecuta como un script de shell único. Guardado en esta máquina.",
@@ -8175,13 +8127,13 @@
           "f828e1de19": "- compartido con tu equipo",
           "673a7fd10e": "Comprobando...",
           "5426ecbdcb": "Los scripts locales no se ejecutarán",
-          "b2b06c7ce8": "Variables de entorno disponibles (pasa el cursor para ver más detalles):",
+          "b2b06c7ce8": "Variables de entorno disponibles (pasa el cursor para ver más detalles): Los nombres anteriores ORCA_* siguen funcionando.",
           "95a0411b3e": "plantilla",
           "175daba180": "Ejemplo",
-          "b20c5df6ca": "Agrega un archivo `orca.yaml` para habilitar valores predeterminados compartidos de configuración, archivado o automatización de Issues para este repositorio. Plantilla de ejemplo:",
-          "56f9a4a1d0": "Usando `orca.yaml`",
-          "623e0c9f31": "No se pudo analizar `orca.yaml`",
-          "5a67e4793d": "No se detectó `orca.yaml`",
+          "b20c5df6ca": "Agrega un archivo `coding.yaml` para habilitar valores predeterminados compartidos de configuración, archivado o automatización de Issues para este repositorio. Plantilla de ejemplo: El archivo heredado `orca.yaml` se sigue leyendo.",
+          "56f9a4a1d0": "Usando `coding.yaml`",
+          "623e0c9f31": "No se pudo analizar `coding.yaml`",
+          "5a67e4793d": "No se detectó `coding.yaml`",
           "07ba35bc68": "Revisa la indentación bajo `scripts:`. Las claves de hooks deben usar dos espacios y las líneas de comandos deben usar cuatro.",
           "787ca433ef": "Define solo las claves admitidas: `scripts`, `setup`, `archive` e `issueCommand`.",
           "ecc73d9125": "Compara tu archivo con la plantilla funcional de abajo y copia esa estructura si hace falta.",
@@ -8193,15 +8145,15 @@
           "0fa21e19ec": "Nombre del workspace, normalmente basado en el nombre de la rama.",
           "54c73d88d0": "Ruta al worktree que se está creando. Los comandos de configuración se ejecutan desde este directorio.",
           "30952c4aa4": "Ruta al checkout principal del repositorio. Útil para copiar archivos compartidos, como .env, a un worktree.",
-          "9b821fa19d": "# p.ej. echo \"Limpiando $ORCA_WORKSPACE_NAME\"",
+          "9b821fa19d": "# p.ej. echo \"Limpiando $CODING_AGENT_WORKSPACE_NAME\"",
           "6f90ebe3fd": "Se ejecuta antes de archivar o eliminar un worktree.",
-          "a3fc966677": "# p. ej. pnpm install cp \"$ORCA_ROOT_PATH/.env\" \"$ORCA_WORKTREE_PATH/.env\"",
+          "a3fc966677": "# p. ej. pnpm install cp \"$CODING_AGENT_ROOT_PATH/.env\" \"$CODING_AGENT_WORKTREE_PATH/.env\"",
           "f0710e1c83": "Se ejecuta después de que se crea un nuevo worktree; instalar dependencias, copiar archivos de entorno, ejecutar migraciones.",
-          "8561b0665f": "orca.yaml primero, luego tus comandos locales.",
-          "0e8b2a520d": "Ignorar orca.yaml; ejecutar solo tus comandos locales.",
+          "8561b0665f": "coding.yaml primero, luego tus comandos locales.",
+          "0e8b2a520d": "Ignorar coding.yaml; ejecutar solo tus comandos locales.",
           "83dc78202a": "Solo local",
           "29397e8bbc": "Ejecutar solo comandos confirmados en el repositorio; ignorar comandos locales.",
-          "d88b6ff88f": "orca.yaml solamente",
+          "d88b6ff88f": "coding.yaml solamente",
           "99e3264a49": "Ejecutar la configuración solo cuando lo elijas.",
           "15debc1fd9": "Saltar por defecto",
           "022ba10cf2": "Ejecutar la configuración automáticamente.",
@@ -8213,17 +8165,17 @@
           "d2b3016c20": "compartido",
           "4611b78617": "fuente de comando",
           "c5a55a2d2e": "avanzado",
-          "0ce113fd7b": "Los scripts locales están guardados, pero el origen de scripts está configurado solo en orca.yaml.",
-          "7f78e5eea6": "Los scripts locales están guardados. Coding Agent 2 sigue revisando orca.yaml antes de poder recomendar qué origen de scripts usar.",
+          "0ce113fd7b": "Los scripts locales están guardados, pero el origen de scripts está configurado solo en coding.yaml.",
+          "7f78e5eea6": "Los scripts locales están guardados. Coding Agent 2 sigue revisando coding.yaml antes de poder recomendar qué origen de scripts usar.",
           "2b6356e744": "Guardado",
           "81057d5f71": "Guardando...",
           "da37d6f10e": "Copiar",
           "3149964b66": "Copiado",
           "waitForSetupBeforeAgent": "Espera a que se complete la configuración antes de iniciar el agente",
           "issueCommandDescription": "Anulación opcional. Usa <artifactUrl>{{artifact_url}}</artifactUrl> para la URL del Issue o PR vinculado.",
-          "issueCommandSharedDefault": "Déjalo en blanco para usar el valor predeterminado del repositorio desde <yaml>orca.yaml</yaml>.",
-          "issueCommandOptionalDefault": "Déjalo en blanco para usar el valor predeterminado del repositorio desde <yaml>orca.yaml</yaml>, si existe.",
-          "commandSourceDescription": "Cuando existen tanto <yaml>orca.yaml</yaml> como comandos locales, elige cuáles se ejecutan.",
+          "issueCommandSharedDefault": "Déjalo en blanco para usar el valor predeterminado del repositorio desde <yaml>coding.yaml</yaml>.",
+          "issueCommandOptionalDefault": "Déjalo en blanco para usar el valor predeterminado del repositorio desde <yaml>coding.yaml</yaml>, si existe.",
+          "commandSourceDescription": "Cuando existen tanto <yaml>coding.yaml</yaml> como comandos locales, elige cuáles se ejecutan.",
           "issueCommandWslStopped": "La distribución de WSL {{distro}} está detenida. Abre una terminal en ella para ver o editar este comando."
         },
         "RepositoryIconPicker": {
@@ -8544,7 +8496,6 @@
           "43b68e10f0": "Hay ajustes de IA sin guardar. Se descartarán al salir.",
           "17bdee4ff1": "¿Descartar los ajustes de IA sin guardar?",
           "084d8fac5b": "Privacidad y seguridad",
-          "23931df7e8": "Hosts remotos",
           "8bd117d669": "Interfaz",
           "e1578cd4bc": "Flujos de trabajo",
           "9abb9be3bc": "Configuración inicial",
@@ -8759,7 +8710,6 @@
           "reconnectOnLaunch": "Reconectar al iniciar",
           "reconnectOnLaunchHelp": "Si está desactivado, Coding Agent 2 deja este host, y cualquier servidor de Coding Agent 2 al que se llegue a través de él, desconectado al iniciarse hasta que lo conectes.",
           "allowRemoteCliControl": "Permitir que este host controle pestañas del navegador de Coding Agent 2 en sus espacios de trabajo",
-          "allowRemoteCliControlHelp": "Activado de forma predeterminada en los hosts nuevos. Los agentes y comandos orca de este host pueden abrir, leer y usar pestañas del navegador de Coding Agent 2 en este escritorio, solo en los espacios de trabajo de este host y solo mientras esté conectado. Las pestañas que controla muestran su nombre. Las terminales iniciadas en este host por una versión anterior de Coding Agent 2 también necesitan esto activado para ejecutar comandos de orquestación de orca. No puede leer tus archivos, tu portapapeles ni tus cookies.",
           "addHost": "Añadir host",
           "proxyConnectionReuse": "Reutilizar una sola conexión proxy",
           "proxyConnectionReuseHelp": "Conexiones más rápidas a través de hosts ProxyCommand o ProxyJump lentos. Actívalo solo si tu ssh_config no depende de reglas Match o %h específicas de cada host."
@@ -9284,24 +9234,12 @@
         },
         "appearance": {
           "search": {
-            "468448bba4": "acuarela",
-            "f586abfa35": "azul",
-            "651f35b2c6": "conmutador",
             "e5bc35d59e": "ventana",
-            "d18b54ca90": "Dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "icono de la aplicación",
-            "e80c2af428": "Elija el ícono de la aplicación que se muestra en el Dock y en el selector de ventanas.",
-            "2b313598c6": "Icono de aplicación",
-            "839fb1e3ed": "herramientas",
             "ac79fe4a04": "mostrar",
             "648eeada79": "ocultar",
             "6cf5f54ce1": "botón",
             "5bff6a2ef0": "barra lateral",
-            "5e5b8878bf": "teléfono",
-            "74618577c7": "móvil",
-            "682293cadf": "Muestra el botón de Coding Agent 2 Mobile en la parte superior de la barra lateral izquierda.",
-            "1de96ec8a6": "Mostrar botón de Coding Agent 2 Mobile",
             "4c920ab2d1": "cronograma",
             "58f4e22fa2": "automatización",
             "b186f3cefb": "automatizaciones",
@@ -9796,7 +9734,6 @@
               "ebeedb2f6a": "terminal rápido",
               "6f183fa1b9": "terminal flotante",
               "a08e482f6d": "espacio de trabajo flotante",
-              "b96b5ee6cf": "Habilita el espacio de trabajo flotante, elige dónde comienzan las nuevas pestañas y dónde aparece el botón para alternar.",
               "b2b60e7163": "Espacio de trabajo flotante"
             }
           }
@@ -10208,16 +10145,8 @@
               "f213400800": "móvil",
               "671eb4173c": "Controla terminales y agentes desde tu teléfono.",
               "ffd52a96e4": "Móvil",
-              "1de96ec8a6": "Mostrar botón de Coding Agent 2 Mobile",
-              "682293cadf": "Mostrar el botón de Coding Agent 2 Mobile en la parte superior de la barra lateral izquierda.",
               "e4f4daea0e": "relé",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "móvil",
-              "5e5b8878bf": "teléfono",
-              "5bff6a2ef0": "barra lateral",
-              "6cf5f54ce1": "botón",
-              "648eeada79": "esconder",
-              "ac79fe4a04": "espectáculo"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -10351,12 +10280,12 @@
         "repository": {
           "search": {
             "bc7e504b8e": ".coding-agent-2/issue-command",
-            "603c68b68c": "orca.yaml",
+            "603c68b68c": "coding.yaml",
             "9dc60d7f6d": "github",
             "ec70364df2": "flujo de trabajo",
             "66b584bd6c": "comando de Issue",
             "2011a6a4f2": "comando de Issue de GitHub",
-            "d42d1e49c0": "Comando de Issue vinculado basado en archivo configurado mediante orca.yaml y una anulación local opcional.",
+            "d42d1e49c0": "Comando de Issue vinculado basado en archivo configurado mediante coding.yaml y una anulación local opcional.",
             "d86ea12d16": "Comando de Issue personalizado de GitHub",
             "c5e8bdbcbb": "omitir por defecto",
             "a69c5cbe90": "ejecutar por defecto",
@@ -10371,10 +10300,10 @@
             "0432d2fb7c": "local",
             "ed269fad69": "fuente de comando",
             "19f58d6d89": "avanzado",
-            "d141897c90": "Fuente del comando y detalles de orca.yaml.",
+            "d141897c90": "Fuente del comando y detalles de coding.yaml.",
             "cc11699c3d": "Avanzado",
             "bf460fded8": "yaml",
-            "9cad92fe77": "hooks de orca.yaml",
+            "9cad92fe77": "hooks de coding.yaml",
             "6b80f7d3c8": "scripts de configuración local",
             "a1a4c51d58": "comando de archivado",
             "fbfd2386e8": "script de archivado",
@@ -11083,9 +11012,9 @@
                   "1a9475dace": "Más información",
                   "19fb419c12": "Las credenciales de Gitea están configuradas, pero no se pudo autenticar. Comprueba el token, la URL base de la API y los permisos del repositorio; después reinicia Coding Agent 2 si cambiaron las variables de entorno.",
                   "60708f23da": "solo cuando Coding Agent 2 no pueda derivar la URL de la API desde el remote.",
-                  "709057ad91": "ORCA_GITEA_API_BASE_URL",
+                  "709057ad91": "CODING_GITEA_API_BASE_URL",
                   "6da9dfa5de": "para repositorios privados, y configura",
-                  "6d5c2a3005": "ORCA_GITEA_TOKEN",
+                  "6d5c2a3005": "CODING_GITEA_TOKEN",
                   "fcbe0469fd": "Los repositorios públicos se detectan desde su remote de git. Configura",
                   "0613928cb3": "El estado de Gitea aún no está disponible en este runtime.",
                   "05863d2599": "Pull requests y estados de commit mediante la API REST de Gitea.",
@@ -11093,11 +11022,11 @@
                   "0b5242f8a2": "{{value0}} · Pull requests y estados de commit",
                   "40f678df73": "Las credenciales de Azure DevOps están configuradas, pero no se pudo autenticar. Comprueba el token, la URL base de la API y los permisos del repositorio; después reinicia Coding Agent 2 si cambiaron las variables de entorno.",
                   "7bd345e3f6": "solo cuando Coding Agent 2 no pueda derivar la URL base de la API desde el remote de git.",
-                  "186a6689df": "ORCA_AZURE_DEVOPS_API_BASE_URL",
+                  "186a6689df": "CODING_AZURE_DEVOPS_API_BASE_URL",
                   "b8a10b07c1": ". Configura",
-                  "fbfd237f5e": "ORCA_AZURE_DEVOPS_ACCESS_TOKEN",
+                  "fbfd237f5e": "CODING_AZURE_DEVOPS_ACCESS_TOKEN",
                   "087feb92f1": ", o configura",
-                  "48842720d2": "ORCA_AZURE_DEVOPS_TOKEN",
+                  "48842720d2": "CODING_AZURE_DEVOPS_TOKEN",
                   "7bbc9c64f0": "Configura",
                   "f3f47dc7de": "El estado de Azure DevOps aún no está disponible en este runtime.",
                   "0eb50d5593": "Pull requests y estados de build mediante tokens de la API REST de Azure DevOps.",
@@ -11224,8 +11153,8 @@
         },
         "PrivacyDiagnosticsRows": {
           "5a7cbe069a": "DO_NOT_TRACK=1 está configurado: crear y enviar archivos de diagnóstico está deshabilitado.",
-          "63d03261d1": "ORCA_TELEMETRY_DISABLED=1 está configurado: crear y enviar archivos de diagnóstico está deshabilitado.",
-          "d37e92a06b": "ORCA_DIAGNOSTICS_DISABLED=1 está configurado: los diagnósticos de la app están desactivados.",
+          "63d03261d1": "CODING_AGENT_TELEMETRY_DISABLED=1 está configurado: crear y enviar archivos de diagnóstico está deshabilitado. Los nombres anteriores ORCA_* siguen funcionando.",
+          "d37e92a06b": "CODING_AGENT_DIAGNOSTICS_DISABLED=1 está configurado: los diagnósticos de la app están desactivados. Los nombres anteriores ORCA_* siguen funcionando.",
           "5ebb31e1fb": "Se está ejecutando en CI: los diagnósticos están desactivados.",
           "e27c8d45bf": "Los diagnósticos están desactivados por una variable de entorno."
         },
@@ -11319,12 +11248,12 @@
           "notificationPlaygroundDescription": "Disparadores solo para desarrollo para comprobar el diseño de toasts, acciones de recuperación y ajuste de texto largo.",
           "devOnly": "Solo para desarrollo",
           "orcaCloud": "Coding Agent 2 Cloud",
-          "orcaCloudDescription": "Vista previa solo para desarrolladores del inicio de sesión de la nube propia. Oculto en producción; en desarrollo también aparece en el selector de cuentas de la barra lateral cuando se configuran ORCA_CLOUD_API_URL y ORCA_CLOUD_CLIENT_ID.",
+          "orcaCloudDescription": "Vista previa solo para desarrolladores del inicio de sesión de la nube propia. Oculto en producción; en desarrollo también aparece en el selector de cuentas de la barra lateral cuando se configuran CODING_AGENT_CLOUD_API_URL y CODING_AGENT_CLOUD_CLIENT_ID. Los nombres anteriores ORCA_* siguen funcionando.",
           "orcaCloudStatus": "Estado",
           "orcaCloudSignOut": "Cerrar sesión",
           "orcaCloudConnect": "Conectar perfil",
           "orcaCloudRefresh": "Actualizar estado",
-          "orcaCloudNotConfigured": "Configura ORCA_CLOUD_API_URL y ORCA_CLOUD_CLIENT_ID para previsualizar el inicio de sesión de Coding Agent 2 Cloud en esta versión de desarrollo.",
+          "orcaCloudNotConfigured": "Configura CODING_AGENT_CLOUD_API_URL y CODING_AGENT_CLOUD_CLIENT_ID para previsualizar el inicio de sesión de Coding Agent 2 Cloud en esta versión de desarrollo. Los nombres anteriores ORCA_* siguen funcionando.",
           "deleteAnywayClicked": "Eliminar de todos modos hecho clic"
         },
         "EphemeralVmRecipeRow": {
@@ -11376,7 +11305,7 @@
           "copy": "Copiar",
           "copied": "Copiado",
           "recipes": "Recetas",
-          "recipesHelp": "Las recetas de orca.yaml y de los plugins activados aparecen aquí, listas para iniciar un espacio de trabajo.",
+          "recipesHelp": "Las recetas de coding.yaml y de los plugins activados aparecen aquí, listas para iniciar un espacio de trabajo.",
           "checking": "Comprobando recetas…",
           "none": "Aún no se han encontrado recetas.",
           "cloudVmSkillTitle": "Skill de configuración de VM en la nube",
@@ -11409,7 +11338,6 @@
                   "installed": "Instalado",
                   "notInstalled": "No instalado",
                   "recheck": "Reverificar",
-                  "description": "Permite que los agentes lean y editen tareas de Linear. La configuración guiada completa (conexión + habilidad + visibilidad) está en Ajustes → Fuentes de tareas.",
                   "copyFailed": "Error al copiar el comando.",
                   "copyCommand": "Copiar comando",
                   "installedDescription": "Habilidad del agente instalada. Para actualizarla, ejecuta:",
@@ -11627,7 +11555,7 @@
           "gitTab": "Git URL",
           "localLabel": "Ruta de la carpeta del plugin",
           "localPlaceholder": "Ruta a una carpeta de plugin",
-          "localHelp": "La carpeta con orca-plugin.json",
+          "localHelp": "La carpeta con coding-plugin.json",
           "gitLabel": "URL del repositorio",
           "gitPlaceholder": "https://github.com/acme/orca-notes",
           "gitHelp": "Pega un enlace de repositorio, versión o etiqueta. Sin #tag ni #commit, Coding Agent 2 usa la etiqueta de versión más reciente.",
@@ -11679,7 +11607,7 @@
           "title": "Fuentes del catálogo",
           "description": "Repositorios Git que listan plugins",
           "urlLabel": "Git URL",
-          "urlDescription": "HTTPS o SSH, con un orca-catalog.json",
+          "urlDescription": "HTTPS o SSH, con un coding-catalog.json",
           "urlPlaceholder": "https://git.example.com/team/plugins.git",
           "refLabel": "Referencia de Git",
           "refDescription": "Rama, etiqueta o commit",
@@ -11805,14 +11733,14 @@
           "switchBack": "Volver"
         },
         "pluginError": {
-          "installManifestMissing": "No se encontró un orca-plugin.json legible. Elige la carpeta raíz del plugin.",
-          "installManifestInvalid": "orca-plugin.json no es válido. Pide al autor del plugin que corrija el manifiesto.",
+          "installManifestMissing": "No se encontró un coding-plugin.json legible. Elige la carpeta raíz del plugin.",
+          "installManifestInvalid": "coding-plugin.json no es válido. Pide al autor del plugin que corrija el manifiesto.",
           "incompatible": "Este plugin requiere otra versión de Coding Agent 2.",
           "installUnsafePath": "El plugin contiene una ruta de archivo o un enlace simbólico no seguros y no se instaló.",
           "installLimit": "El plugin supera los límites de tamaño o cantidad de archivos de Coding Agent 2.",
           "installGit": "No se pudo obtener esta revisión de Git. Revisa la URL, el #ref y el acceso.",
-          "invalidManifestMissing": "A la raíz del plugin le falta orca-plugin.json. Añádelo y actualiza los plugins.",
-          "invalidManifest": "orca-plugin.json no es válido. Corrígelo y actualiza los plugins.",
+          "invalidManifestMissing": "A la raíz del plugin le falta coding-plugin.json. Añádelo y actualiza los plugins.",
+          "invalidManifest": "coding-plugin.json no es válido. Corrígelo y actualiza los plugins.",
           "installedManifestUnloadable": "Esta versión no se puede cargar en este Coding Agent 2. Actualízala o reinstálala.",
           "invalidArtifact": "Falta un archivo de proceso o de panel, o no es seguro. Corrígelo y actualiza.",
           "consentChanged": "Este plugin cambió mientras lo revisabas. Revísalo de nuevo.",
@@ -12117,8 +12045,8 @@
               "connectFailed": "La conexión falló",
               "title": "Conectar Bitbucket",
               "description": "Utilice una credencial de Bitbucket Cloud para explorar solicitudes de extracción y estados de compilación. Coding Agent 2 lo verifica antes de guardar.",
-              "remoteRuntime": "Se guarda en esta máquina, no en el tiempo de ejecución remoto activo; en su lugar, establezca ORCA_BITBUCKET_* allí. Las variables de entorno siempre tienen prioridad sobre lo que guarde aquí.",
-              "environmentManaged": "Bitbucket ya está configurado a través de las variables de entorno ORCA_BITBUCKET_*, que tienen prioridad. Desactívelos para guardar una credencial en Coding Agent 2.",
+              "remoteRuntime": "Se guarda en esta máquina, no en el tiempo de ejecución remoto activo; en su lugar, establezca CODING_BITBUCKET_* allí. Las variables de entorno siempre tienen prioridad sobre lo que guarde aquí.",
+              "environmentManaged": "Bitbucket ya está configurado a través de las variables de entorno CODING_BITBUCKET_*, que tienen prioridad. Desactívelos para guardar una credencial en Coding Agent 2.",
               "authModeLabel": "Método de autenticación de Bitbucket",
               "modeBasic": "Token de correo electrónico y API",
               "modeToken": "token de acceso",
@@ -12139,7 +12067,7 @@
               "scopeWritePullRequest": "Crear pull requests",
               "scopesWriteNote": "Para uso de solo lectura, omita el alcance de escritura. La escritura no incluye la lectura; seleccione cada alcance por separado.",
               "docsLink": "Documentos del token API de Bitbucket",
-              "storageNote": "Almacenado en esta máquina con almacenamiento cifrado cuando el llavero del sistema operativo está disponible. Las variables de entorno ORCA_BITBUCKET_* siempre tienen prioridad sobre lo que guarda aquí.",
+              "storageNote": "Almacenado en esta máquina con almacenamiento cifrado cuando el llavero del sistema operativo está disponible. Las variables de entorno CODING_BITBUCKET_* siempre tienen prioridad sobre lo que guarda aquí.",
               "verifying": "Verificando...",
               "connect": "Conectar"
             }
@@ -12153,10 +12081,10 @@
               "authModeToken": "token de acceso",
               "authModeBasic": "Token de correo electrónico y API",
               "disconnect": "Desconectar Bitbucket",
-              "envManaged": "Configurado a través de variables de entorno. Desarme las variables ORCA_BITBUCKET_* para administrar esta credencial en Coding Agent 2.",
+              "envManaged": "Configurado a través de variables de entorno. Desarme las variables CODING_BITBUCKET_* para administrar esta credencial en Coding Agent 2.",
               "storedAuthFailed": "La credencial de Bitbucket guardada no se pudo autenticar. Edítelo o verifique que el token todavía tenga acceso a la solicitud de extracción.",
-              "storedCredential": "Guardado en Coding Agent 2 en esta máquina. Las variables de entorno ORCA_BITBUCKET_* tienen prioridad cuando se configuran.",
-              "notConfigured": "Conecte una cuenta de Bitbucket Cloud con un token API de Atlassian o un token de acceso. Las variables de entorno ORCA_BITBUCKET_* también funcionan y tienen prioridad.",
+              "storedCredential": "Guardado en Coding Agent 2 en esta máquina. Las variables de entorno CODING_BITBUCKET_* tienen prioridad cuando se configuran.",
+              "notConfigured": "Conecte una cuenta de Bitbucket Cloud con un token API de Atlassian o un token de acceso. Las variables de entorno CODING_BITBUCKET_* también funcionan y tienen prioridad.",
               "disconnectFailed": "No se pudo eliminar la credencial de Bitbucket guardada.",
               "statusLoadFailed": "No se pudo verificar si hay una credencial de Bitbucket guardada.",
               "replaceCredentials": "Agregar o reemplazar credenciales",
@@ -12695,15 +12623,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Actualiza Coding Agent 2 en el servidor para instalar sus skills.",
           "connectHost": "Conéctate a este host SSH para instalar sus skills."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "No se pudo copiar el comando de instalación.",
-          "f08d45293d": "Copiar comando",
-          "b99f375eb2": "Ejecuta este comando en una terminal para instalar el skill de orquestación para tus agentes.",
-          "35550f3b3b": "Hecho",
-          "2914abcfa2": "Instalar skill de orquestación",
-          "1bdce1911e": "Copiar comando de instalación del skill de orquestación",
-          "239bf9132b": "Comando de instalación copiado."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "Instalar para {{value0}}",
@@ -15065,11 +14984,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Cerrar · Esc",
-          "9883b58693": "Cerrar Coding Agent 2 Mobile",
-          "fb5f28330e": "Mostrar en la barra lateral",
-          "c669abcf8f": "Ocultar de la barra lateral",
-          "e1c7b4a92d": "Configúralo en Ajustes > Móvil.",
-          "f3d8e5b71a": "Vuelve a añadir el acceso directo a la barra lateral."
+          "9883b58693": "Cerrar Coding Agent 2 Mobile"
         },
         "PhoneCarousel": {
           "96d651cb87": "Sesión terminal",
@@ -15214,9 +15129,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Ocultar espacio de trabajo flotante",
-            "763f5fa2c1": "Mover al botón flotante",
-            "0ee79e0674": "Mover a la barra de estado"
+            "8e7d775287": "Ocultar espacio de trabajo flotante"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Permite a los agentes transferir contexto y coordinar el trabajo a través de Coding Agent 2.",
@@ -15238,12 +15151,6 @@
             "8cf80db43b": "Configura la CLI de Coding Agent 2 y el skill de agente para que los agentes puedan coordinarse a través de Coding Agent 2.",
             "2a3c5ddf5e": "Habilitar orquestación",
             "8b14ba6c17": "Nueva pestaña del navegador"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Mostrar espacio de trabajo flotante",
-            "4cb418b991": "Mostrar espacio de trabajo flotante, nueva actividad",
-            "5785dd9148": "Minimizar el espacio de trabajo flotante",
-            "bfe7809a70": "{{value0}} espacio de trabajo flotante ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Minimizar",
@@ -15632,7 +15539,6 @@
             "4795ac2d4a": "Prueba a pedir:",
             "53905bd076": "Vista previa de desarrollo: abriendo la terminal de configuración de skills.",
             "1da82af45b": "Coding Agent 2 CLI necesita atención",
-            "ce13a742d0": "`orca` registrado en PATH.",
             "d1a86c7eb5": "Abre Configuración para finalizar la configuración de la CLI.",
             "cliInstallFailed": "No se pudo instalar la CLI de Coding Agent 2.",
             "splitPrPrompt": "«Divide este PR en dos <term>worktrees</term> y crea un PR para cada uno»."
@@ -15642,7 +15548,7 @@
           },
           "CliSkillSetupPanel": {
             "title": "Configuración de skill",
-            "description": "Instala las habilidades de la CLI de Coding Agent 2 y de orquestación para tus agentes."
+            "description": "Instala la habilidad de la CLI de Coding Agent 2 para tus agentes."
           },
           "CliSkillSetupTerminal": {
             "6ff813fc1d": "No se pudo copiar el comando de skill.",
@@ -20592,8 +20498,8 @@
         "askRunSetup": "¿Ejecutar la configuración ahora?",
         "askRunDefaultTabs": "¿Ejecutar ahora los comandos de pestañas predeterminadas?",
         "askRunSetupAndDefaultTabs": "¿Ejecutar ahora la configuración y los comandos de pestañas predeterminadas?",
-        "yamlSource": "orca.yaml",
-        "bothSources": "orca.yaml + local",
+        "yamlSource": "coding.yaml",
+        "bothSources": "coding.yaml + local",
         "localSource": "ajustes locales"
       }
     },
@@ -21020,7 +20926,6 @@
       "continueButton": "Continue without CLI",
       "title": "Coding Agent 2 CLI unavailable",
       "message": "Coding Agent 2 no pudo iniciar su transporte de comando local.",
-      "detail": "Coding Agent 2 seguirá funcionando, pero los comandos como orca status, orca terminal y las funciones de orquestación no estarán disponibles durante esta sesión.\n\n{{guidance}}\n\nCausa: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 no pudo escribir su archivo de ejecución. Verifique los permisos en la carpeta de datos de Coding Agent 2 y luego reinicie.",
         "storageUnavailable": "Su disco puede estar lleno o ser de sólo lectura. Libere espacio y luego reinicie Coding Agent 2.",
@@ -21859,7 +21764,7 @@
     "createReviewFailure": {
       "authRequiredCommand": "{{providerName}} no está autenticado. Siguiente paso: ejecuta {{command}} en este entorno.",
       "authRequiredVariable": "{{providerName}} no está autenticado. Siguiente paso: define {{variable}} en este entorno.",
-      "authRequiredBitbucket": "Bitbucket no está autenticado. Siguiente paso: conecta Bitbucket en Ajustes > Integraciones o define ORCA_BITBUCKET_* en este entorno.",
+      "authRequiredBitbucket": "Bitbucket no está autenticado. Siguiente paso: conecta Bitbucket en Ajustes > Integraciones o define CODING_BITBUCKET_* en este entorno.",
       "signInHintCommand": "Ejecuta {{command}} en este entorno",
       "signInHintVariable": "Define {{variable}} en este entorno",
       "signInHintBitbucket": "Conecta Bitbucket en Ajustes > Integraciones",
@@ -22310,7 +22215,7 @@
     },
     "setupTerminalTitle": "Configuración",
     "setupTrust": {
-      "createdBranchSkipped": "No se ejecutó la configuración: la rama de este espacio de trabajo contiene comandos de configuración de orca.yaml diferentes de los que aprobaste."
+      "createdBranchSkipped": "No se ejecutó la configuración: la rama de este espacio de trabajo contiene comandos de configuración de coding.yaml diferentes de los que aprobaste."
     }
   },
   "mediaPreview": {
@@ -23121,13 +23026,13 @@
     "remoteServerPairingErrors": {
       "invalidPairingCode": "Código de emparejamiento no válido. Se esperaba una URL codingagent2://pair?... o datos de emparejamiento sin URL.",
       "selfPairingCode": "Este código de emparejamiento es para esta misma instancia de Coding Agent 2. Genera el código en el otro equipo.",
-      "managedDeployment": "Coding Agent 2 ejecuta este servidor en un host SSH por ti; su emparejamiento no se puede reemplazar ni eliminar aquí. Para retirarlo, ejecuta `orca environment stop --environment <name> --yes` o usa Ajustes > Coding Agent 2 en tus hosts SSH; si el host ya no existe, ejecuta `orca environment forget --environment <name> --yes`.",
+      "managedDeployment": "Coding Agent 2 ejecuta este servidor en un host SSH por ti; su emparejamiento no se puede reemplazar ni eliminar aquí. Para retirarlo, ejecuta `coding-agent environment stop --environment <name> --yes` o usa Ajustes > Coding Agent 2 en tus hosts SSH; si el host ya no existe, ejecuta `coding-agent environment forget --environment <name> --yes`.",
       "sshAccessChangePending": "El cambio de acceso SSH de este servidor no terminó. Reinténtalo o cancélalo en Ajustes > Servidores remotos de Coding Agent 2 > Acceso SSH para servidores emparejados antes de reemplazar su emparejamiento o eliminarlo.",
       "sshAccessLinked": "Desvincula el acceso SSH de este servidor en Ajustes > Servidores remotos de Coding Agent 2 > Acceso SSH para servidores emparejados antes de reemplazar su emparejamiento o eliminarlo.",
       "alreadyPairedCloudWorkspace": "Este servidor ya está emparejado como \"{{name}}\". Pertenece a un espacio de trabajo en la nube, que lo vuelve a emparejar al reanudarse.",
       "alreadyPairedCloudIdentity": "Este servidor ya está emparejado como \"{{name}}\". El servidor del espacio de trabajo en la nube reutiliza la identidad de ese servidor, por lo que no se guardó.",
       "alreadyPairedWslHost": "Este servidor ya está emparejado como \"{{name}}\". Coding Agent 2 lo gestiona como un host WSL, por lo que su emparejamiento no se puede reemplazar aquí.",
-      "alreadyPairedManagedDeployment": "Este servidor ya está emparejado como \"{{name}}\". Coding Agent 2 ejecuta este servidor en un host SSH por ti; su emparejamiento no se puede reemplazar ni eliminar aquí. Para retirarlo, ejecuta `orca environment stop --environment <name> --yes` o usa Ajustes > Coding Agent 2 en tus hosts SSH; si el host ya no existe, ejecuta `orca environment forget --environment <name> --yes`.",
+      "alreadyPairedManagedDeployment": "Este servidor ya está emparejado como \"{{name}}\". Coding Agent 2 ejecuta este servidor en un host SSH por ti; su emparejamiento no se puede reemplazar ni eliminar aquí. Para retirarlo, ejecuta `coding-agent environment stop --environment <name> --yes` o usa Ajustes > Coding Agent 2 en tus hosts SSH; si el host ya no existe, ejecuta `coding-agent environment forget --environment <name> --yes`.",
       "alreadyPairedSshAccessChangePending": "Este servidor ya está emparejado como \"{{name}}\". El cambio de acceso SSH de este servidor no terminó. Reinténtalo o cancélalo en Ajustes > Servidores remotos de Coding Agent 2 > Acceso SSH para servidores emparejados antes de reemplazar su emparejamiento o eliminarlo.",
       "alreadyPairedSshAccessLinked": "Este servidor ya está emparejado como \"{{name}}\". Desvincula el acceso SSH de este servidor en Ajustes > Servidores remotos de Coding Agent 2 > Acceso SSH para servidores emparejados antes de reemplazar su emparejamiento o eliminarlo.",
       "alreadyPairedAddAgain": "Este servidor ya está emparejado como \"{{name}}\". Para actualizar su conexión, vuelve a añadirlo en Ajustes > Servidores remotos de Coding Agent 2.",
@@ -23541,14 +23446,14 @@
     },
     "setupTrust": {
       "reviewTitle": "¿Aprobar los nuevos comandos de configuración de esta automatización?",
-      "reviewBody": "Una ejecución omitió la configuración porque cambiaron los comandos de configuración de <code>orca.yaml</code> de su rama. Si los apruebas, las ejecuciones posteriores usarán estos comandos. Apruébalos solo si confías en <repo/>.",
+      "reviewBody": "Una ejecución omitió la configuración porque cambiaron los comandos de configuración de <code>coding.yaml</code> de su rama. Si los apruebas, las ejecuciones posteriores usarán estos comandos. Apruébalos solo si confías en <repo/>.",
       "approve": "Aprobar",
       "approved": "Configuración aprobada. Las ejecuciones posteriores de esta automatización la ejecutarán.",
-      "skippedSinceApproved": "La configuración no se ejecutó en esta ejecución porque cambiaron los comandos de configuración de orca.yaml de su rama. Ya se aprobaron, así que las ejecuciones posteriores los ejecutarán.",
-      "skippedReview": "No se ejecutó la configuración: la rama de esta ejecución contiene comandos de configuración de orca.yaml diferentes de los aprobados para esta automatización. Revísalos para que las ejecuciones posteriores ejecuten la configuración.",
+      "skippedSinceApproved": "La configuración no se ejecutó en esta ejecución porque cambiaron los comandos de configuración de coding.yaml de su rama. Ya se aprobaron, así que las ejecuciones posteriores los ejecutarán.",
+      "skippedReview": "No se ejecutó la configuración: la rama de esta ejecución contiene comandos de configuración de coding.yaml diferentes de los aprobados para esta automatización. Revísalos para que las ejecuciones posteriores ejecuten la configuración.",
       "reviewAction": "Revisar y aprobar la configuración",
       "listSkipped": "Configuración omitida",
-      "listSkippedTitle": "La última ejecución omitió la configuración porque cambiaron los comandos de configuración de orca.yaml de su rama. Revísalos desde el menú de acciones."
+      "listSkippedTitle": "La última ejecución omitió la configuración porque cambiaron los comandos de configuración de coding.yaml de su rama. Revísalos desde el menú de acciones."
     }
   },
   "codeHost": {

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import type { GitBranchChangeEntry } from '../../../shared/git/diff/git-diff-compare-types'
 import { gitChangeListArgs } from '../../../shared/git/diff/git-change-list'
 import type { GitRuntimeOptions } from '../git-runtime-options'
@@ -45,7 +46,7 @@ export const settledBranchChangeListCache = new SettledDiffCache(BRANCH_CHANGE_L
 
 /** Rollback switch: `ORCA_GIT_BRANCH_CHANGES_REUSE=0` reruns the changed-files diff on every poll. */
 function isBranchChangeListReuseEnabled(): boolean {
-  return process.env.ORCA_GIT_BRANCH_CHANGES_REUSE !== '0'
+  return readAppEnv(process.env, 'GIT_BRANCH_CHANGES_REUSE') !== '0'
 }
 
 function attributeStampPaths(entries: readonly GitBranchChangeEntry[]): string[] | null {

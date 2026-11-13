@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 /** Memory limits are opt-in and applied only after a probe confirms kernel enforcement. */
 export const TERMINAL_MEMORY_MAX_ENV = 'ORCA_TERMINAL_MEMORY_MAX'
 export const TERMINAL_MEMORY_SWAP_MAX_ENV = 'ORCA_TERMINAL_MEMORY_SWAP_MAX'
@@ -38,7 +39,7 @@ export type TerminalMemoryLimitRequest = {
 export function requestedTerminalMemoryLimits(env: NodeJS.ProcessEnv): TerminalMemoryLimitRequest {
   const request: TerminalMemoryLimitRequest = { properties: [], invalid: [] }
   for (const limit of LIMITS) {
-    const raw = env[limit.env]
+    const raw = readAppEnv(env, limit.env.slice('ORCA_'.length))
     if (raw === undefined || raw.trim() === '') {
       continue
     }

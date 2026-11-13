@@ -5,11 +5,11 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import {
   setIsolatedSpawner,
   spawnDetachedWithoutInheritance
-} from '@orca/process-host/isolated-detached-spawn'
+} from '@coding-agent/process-host/isolated-detached-spawn'
 import { loadWindowsSecurity } from '../../shared/windows-security-addon'
 
 const describeOnWindows = process.platform === 'win32' ? describe : describe.skip

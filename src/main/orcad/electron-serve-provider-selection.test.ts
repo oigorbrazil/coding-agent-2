@@ -1,16 +1,16 @@
-import type { ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessSpec } from '@coding-agent/process-host/process-spec'
 import { chmod, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type * as RunProcessModule from '@orca/process-host'
+import type * as RunProcessModule from '@coding-agent/process-host'
 
 const { runProcessMock, spawnProcessMock } = vi.hoisted(() => ({
   runProcessMock: vi.fn(),
   spawnProcessMock: vi.fn()
 }))
 
-vi.mock('@orca/process-host', async (importOriginal) => ({
+vi.mock('@coding-agent/process-host', async (importOriginal) => ({
   ...(await importOriginal<typeof RunProcessModule>()),
   runProcess: runProcessMock,
   spawnProcess: spawnProcessMock
@@ -59,7 +59,7 @@ beforeEach(async () => {
     await chmod(chromiumExecutable, 0o755)
   }
 
-  const actual = await vi.importActual<typeof RunProcessModule>('@orca/process-host')
+  const actual = await vi.importActual<typeof RunProcessModule>('@coding-agent/process-host')
   spawnProcessMock.mockReset()
   spawnProcessMock.mockImplementation((spec: ProcessSpec) =>
     actual.spawnProcess({

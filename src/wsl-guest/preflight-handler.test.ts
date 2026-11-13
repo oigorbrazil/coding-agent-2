@@ -41,7 +41,7 @@ vi.mock('../main/wsl/discovery/distro-catalog', () => ({
 vi.mock('../main/pty/shell-startup/git-bash', () => ({
   isGitBashAvailable: isGitBashAvailableMock
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: runProcessMock }))
 
 import {
   hasAbsoluteCommandPath,

@@ -1,7 +1,7 @@
 export const ROOT_HELP_TEXT_PRIMARY = [
-  'orca',
+  'coding',
   '',
-  'Usage: orca <command> [options]',
+  'Usage: coding <command> [options]',
   '',
   'Startup:',
   '  open                      Launch Coding Agent 2 and wait for the runtime to be reachable',
@@ -101,7 +101,7 @@ export const ROOT_HELP_TEXT_PRIMARY = [
   '  repo list                 List repos registered in Coding Agent 2',
   '  repo add                  Add a project to Coding Agent 2 by filesystem path',
   '  repo show                 Show one registered repo',
-  '  repo set                  Set whether non-Orca worktrees are shown for a repo',
+  '  repo set                  Set whether non-Coding worktrees are shown for a repo',
   "  repo set-base-ref         Set the repo's default base ref for future worktrees",
   '  repo search-refs          Search branch/tag refs within a repo',
   '',

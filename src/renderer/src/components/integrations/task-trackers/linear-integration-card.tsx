@@ -12,7 +12,10 @@ import {
   IntegrationCardDetails,
   IntegrationCardShell
 } from '../presentation/integration-card-shell'
-import { useIntegrationSubordinateRowClass } from '../presentation/integration-card-presentation'
+import {
+  useIntegrationCardPresentation,
+  useIntegrationSubordinateRowClass
+} from '../presentation/integration-card-presentation'
 import { LinearAgentSkillInstallCta } from '../../skills/setup/linear-agent-skill-install-cta'
 import {
   getProviderAccountScope,
@@ -26,6 +29,7 @@ type VerificationResult = { state: 'ok' | 'error'; error?: string }
 
 export function LinearIntegrationCard(): React.JSX.Element {
   const t = useTranslate()
+  const presentation = useIntegrationCardPresentation()
   const linearStatus = useAppStore((s) => s.linearStatus)
   const linearStatusChecked = useAppStore((s) => s.linearStatusChecked)
   const linearStatusContextKey = useAppStore((s) => s.linearStatusContextKey)
@@ -34,6 +38,7 @@ export function LinearIntegrationCard(): React.JSX.Element {
   const checkLinearConnection = useAppStore((s) => s.checkLinearConnection)
   const testLinearConnection = useAppStore((s) => s.testLinearConnection)
   const settings = useAppStore((s) => s.settings)
+  const openSettingsTarget = useAppStore((s) => s.openSettingsTarget)
   const mountedRef = useMountedRef()
 
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -231,7 +236,19 @@ export function LinearIntegrationCard(): React.JSX.Element {
             </Button>
           </>
         ) : null}
-        <LinearAgentSkillInstallCta settings={settings} />
+        {presentation === 'settings' ? (
+          <Button
+            variant="link"
+            size="inline"
+            onClick={() =>
+              openSettingsTarget({ pane: 'skills', repoId: null, sectionId: 'linear-agent-skill' })
+            }
+          >
+            {t('integrations.linearSkillLink', 'Configure the Linear skill in Skills')}
+          </Button>
+        ) : (
+          <LinearAgentSkillInstallCta settings={settings} />
+        )}
       </IntegrationCardDetails>
 
       <LinearApiKeyDialog

@@ -1,8 +1,8 @@
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
-import { windowsPowerShellPath } from '@orca/process-host/windows-system-binary'
+import { runProcess } from '@coding-agent/process-host'
+import { windowsPowerShellPath } from '@coding-agent/process-host/windows-system-binary'
 import { test, expect } from './helpers/orca-app'
 
 test.use({ seedTestRepo: false })

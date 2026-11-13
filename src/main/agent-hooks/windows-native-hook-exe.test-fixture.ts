@@ -1,4 +1,4 @@
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { join, resolve } from 'node:path'
 
 const REPO_ROOT = resolve(import.meta.dirname, '../../..')

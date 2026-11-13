@@ -29,8 +29,14 @@ export default defineConfig({
         )
       },
       // Phone/host contract tests import original sources at runtime; only their Node type check reads declarations.
-      { find: '@orca/test-mobile', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
-      { find: '@orca/test-host', replacement: fileURLToPath(new URL('../src', import.meta.url)) }
+      {
+        find: '@coding-agent/test-mobile',
+        replacement: fileURLToPath(new URL('./src', import.meta.url))
+      },
+      {
+        find: '@coding-agent/test-host',
+        replacement: fileURLToPath(new URL('../src', import.meta.url))
+      }
     ]
   },
   test: {

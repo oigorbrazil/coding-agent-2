@@ -1,11 +1,20 @@
-import { addWslEnvKeys } from '../../shared/wsl-env'
 import type { TuiAgent } from '../../shared/agent-launch/catalog/tui-agent'
+import {
+  type AgentStartupShell,
+  tokenizeStartupCommand
+} from '../../shared/agent-launch/startup/tui-agent-startup-shell'
+import {
+  readAppEnv,
+  deleteAppEnv,
+  appEnvPairs,
+  setAppEnv,
+  deleteAppEnvKey
+} from '../../shared/app-env'
+import { addWslEnvKeys } from '../../shared/wsl-env'
+
 import { randomUUID, createHash } from 'node:crypto'
 import { agentHookServer } from '../agent-hooks/server'
-import {
-  tokenizeStartupCommand,
-  type AgentStartupShell
-} from '../../shared/agent-launch/startup/tui-agent-startup-shell'
+
 import { isOpenCodeRunCommand } from '../../shared/agent-status/process/opencode-headless-command'
 import {
   OPENCODE_STARTUP_PROMPT_SHA256_ENV,
@@ -42,13 +51,13 @@ export async function prepareOpenCodePtyLaunch(options: {
 }): Promise<{ env: Record<string, string> | undefined; command: string | undefined }> {
   let command = options.command
   const env = options.env ? { ...options.env } : undefined
-  const requestedPrompt = env?.[OPENCODE_STARTUP_PROMPT_SHA256_ENV]
-  const body = env?.[OPENCODE_STARTUP_PROMPT_BODY_ENV]
-  const shell = env?.[OPENCODE_STARTUP_PROMPT_SHELL_ENV]
+  const requestedPrompt = readAppEnv(env ?? {}, 'OPENCODE_STARTUP_PROMPT_SHA256')
+  const body = readAppEnv(env ?? {}, 'OPENCODE_STARTUP_PROMPT_BODY')
+  const shell = readAppEnv(env ?? {}, 'OPENCODE_STARTUP_PROMPT_SHELL')
   if (env) {
-    delete env.ORCA_OPENCODE_PLUGIN_API
+    deleteAppEnv(env, 'OPENCODE_PLUGIN_API')
     for (const key of intentKeys) {
-      delete env[key]
+      deleteAppEnvKey(env, key)
     }
   }
   // Providers merge their own ambient environment after this preparation.
@@ -79,13 +88,13 @@ export async function prepareOpenCodePtyLaunch(options: {
   }
   const launchEnv: Record<string, string> = {
     ...env,
-    ORCA_OPENCODE_PLUGIN_API: capabilities.pluginApi
+    ...appEnvPairs('OPENCODE_PLUGIN_API', capabilities.pluginApi)
   }
   options.envToDelete.splice(options.envToDelete.indexOf('ORCA_OPENCODE_PLUGIN_API'), 1)
   if (
     capabilities.promptMode === 'prefill' &&
     !options.wsl &&
-    launchEnv.ORCA_AGENT_LAUNCH_TOKEN &&
+    readAppEnv(launchEnv, 'AGENT_LAUNCH_TOKEN') &&
     requestedPrompt &&
     body &&
     command &&
@@ -105,10 +114,10 @@ export async function prepareOpenCodePtyLaunch(options: {
     ) {
       const endpoint = agentHookServer.endpointFilePath
       if (endpoint) {
-        launchEnv[OPENCODE_STARTUP_PROMPT_SHA256_ENV] = requestedPrompt
-        launchEnv[OPENCODE_STARTUP_PROMPT_BODY_ENV] = body
-        launchEnv[OPENCODE_STARTUP_PROMPT_NONCE_ENV] = randomUUID()
-        launchEnv[OPENCODE_STARTUP_PROMPT_ENDPOINT_ENV] = endpoint
+        setAppEnv(launchEnv, 'OPENCODE_STARTUP_PROMPT_SHA256', requestedPrompt)
+        setAppEnv(launchEnv, 'OPENCODE_STARTUP_PROMPT_BODY', body)
+        setAppEnv(launchEnv, 'OPENCODE_STARTUP_PROMPT_NONCE', randomUUID())
+        setAppEnv(launchEnv, 'OPENCODE_STARTUP_PROMPT_ENDPOINT', endpoint)
         if (installOpenCodeStartupPromptForLaunch(launchEnv, false, probeEnv)) {
           for (const key of [
             'OPENCODE_CONFIG_DIR',
@@ -121,12 +130,12 @@ export async function prepareOpenCodePtyLaunch(options: {
             }
           }
         }
-        const nonce = launchEnv[OPENCODE_STARTUP_PROMPT_NONCE_ENV]
+        const nonce = readAppEnv(launchEnv, 'OPENCODE_STARTUP_PROMPT_NONCE')
         if (nonce && reserveOpenCodeStartupPrompt(nonce, requestedPrompt)) {
           command = command.slice(0, parsed.spans[last - 1].start).trimEnd()
         } else {
           for (const key of intentKeys) {
-            delete launchEnv[key]
+            deleteAppEnvKey(launchEnv, key)
           }
         }
         for (const key of intentKeys) {

@@ -1,3 +1,4 @@
+import { readAppEnvKey } from '../../../shared/app-env'
 /** D10: desktop prepares distro-local account homes for orcad. Patch caller-built launches/plain shells, agent.launch accountEnv, and capability-advertised agent-session creates; leave bare-command Settings defaults untouched. */
 import { errorMessage } from '../../../shared/error-message'
 import { posix } from 'node:path'
@@ -60,7 +61,7 @@ function sameDistro(a: string | null | undefined, b: string): boolean {
 function accountKeysOf(env: Readonly<Record<string, string | undefined>>): Record<string, string> {
   const picked: Record<string, string> = {}
   for (const key of AGENT_LAUNCH_ACCOUNT_ENV_KEYS) {
-    const value = env[key]
+    const value = readAppEnvKey(env, key)
     if (value) {
       picked[key] = value
     }

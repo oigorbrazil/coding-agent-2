@@ -1,23 +1,29 @@
 import type { ChildProcessWithoutNullStreams } from 'node:child_process'
 import {
-  runWslRelayGuestInstall,
-  maybeRerunWslRelayGuestInstall
-} from './wsl-hook-relay-guest-install'
-import { buildWslRelaySpawnEnv, launchWslRelayWithInstall } from './wsl-hook-relay-launch'
-import {
+  type WslHookRelayManagerDeps,
   defaultWslHookRelayDeps,
+  readWslHookCoordinates,
   isWslHookRelayAllowed,
   FAILURE_COOLDOWN_BASE_MS,
   NO_NODE_COOLDOWN_MS,
   REINSTALL_ONE_SHOT_DELAY_MS,
   RUNNING_TEARDOWN_COOLDOWN_MS,
-  STABLE_UPTIME_MS,
-  type WslHookRelayManagerDeps
+  STABLE_UPTIME_MS
 } from './wsl-hook-relay-deps'
-import { wireWslRelayLink } from './wsl-hook-relay-link'
 import type { WslRelayRecovery } from './wsl-hook-relay-recovery'
+import { type MultiplexerTransport, SshChannelMultiplexer } from '../ssh/ssh-channel-multiplexer'
+import { type WslRelayIdleStop, createWslRelayIdleStopForManager } from './wsl-hook-relay-idle-stop'
+
+import {
+  runWslRelayGuestInstall,
+  maybeRerunWslRelayGuestInstall
+} from './wsl-hook-relay-guest-install'
+import { buildWslRelaySpawnEnv, launchWslRelayWithInstall } from './wsl-hook-relay-launch'
+
+import { wireWslRelayLink } from './wsl-hook-relay-link'
+
 import { wslHookRelayStateKey } from './wsl-hook-relay-state-key'
-import { SshChannelMultiplexer, type MultiplexerTransport } from '../ssh/ssh-channel-multiplexer'
+
 import { AGENT_HOOK_REQUEST_REPLAY_METHOD } from '../../shared/agent-hook-listener/transport/agent-hook-relay'
 import {
   sanitizeWslHookInstanceKey,
@@ -35,7 +41,7 @@ import {
   resumeWslStoppedRelays
 } from './wsl-hook-relay-state-machine'
 import type { WslRelayDistroState } from './wsl-hook-relay-state'
-import { createWslRelayIdleStopForManager, type WslRelayIdleStop } from './wsl-hook-relay-idle-stop'
+
 export class WslHookRelayManager {
   private deps: WslHookRelayManagerDeps
   private recovery: WslRelayRecovery
@@ -158,9 +164,8 @@ export class WslHookRelayManager {
         return
       }
     }
-    const coords = this.deps.hookCoordsEnv()
-    const port = Number(coords.ORCA_AGENT_HOOK_PORT ?? '')
-    if (!Number.isInteger(port) || port <= 0 || !coords.ORCA_AGENT_HOOK_TOKEN) {
+    const { env: coords, port } = readWslHookCoordinates(this.deps.hookCoordsEnv())
+    if (port === null) {
       return
     }
     const bundle = this.deps.resolveBundle()

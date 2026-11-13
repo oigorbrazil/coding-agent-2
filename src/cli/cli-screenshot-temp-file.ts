@@ -1,3 +1,4 @@
+import { readAppEnv } from '../shared/app-env'
 import {
   chmodSync,
   lstatSync,
@@ -32,7 +33,10 @@ export function writeCliScreenshotTempFile(
 }
 
 function screenshotTempDir(dir: CliScreenshotTempDir): string {
-  const outputDir = process.env[dir.envVar] || join(tmpdir(), dir.dirName)
+  const outputDir =
+    (dir.envVar.startsWith('ORCA_')
+      ? readAppEnv(process.env, dir.envVar.slice(5))
+      : process.env[dir.envVar]) || join(tmpdir(), dir.dirName)
   mkdirSync(outputDir, { recursive: true, mode: 0o700 })
   const stat = lstatSync(outputDir)
   if (!stat.isDirectory() || stat.isSymbolicLink()) {

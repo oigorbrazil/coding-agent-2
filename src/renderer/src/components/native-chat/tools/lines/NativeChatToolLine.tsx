@@ -58,7 +58,7 @@ function ToolLineDetail({
       {!diff && fullCommand ? (
         <pre
           data-native-chat-code-content
-          className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-lg border border-chat-code-border bg-chat-code-surface p-2 font-mono text-chat-code text-chat-foreground scrollbar-sleek"
+          className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-lg border border-chat-code-border bg-chat-code-surface p-2 font-code text-chat-code text-chat-foreground scrollbar-sleek"
         >
           {commandLanguage ? (
             <NativeChatHighlightedCode code={fullCommand} language={commandLanguage} />

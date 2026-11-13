@@ -1,3 +1,4 @@
+import { appEnvPairs } from '../../shared/app-env'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
 import { SERVE_LAUNCHD_LABEL_PREFIX } from '../../shared/serve-bundle-coordination'
@@ -65,7 +66,10 @@ export function renderServeService(input: ServeServiceInput): ServeServiceSpec {
   }
   const suffix = profileSuffix(input)
   // The manager’s environment may resolve a different default profile.
-  const env: Record<string, string> = { PATH: input.path, ORCA_USER_DATA_PATH: input.userDataPath }
+  const env: Record<string, string> = {
+    PATH: input.path,
+    ...appEnvPairs('USER_DATA_PATH', input.userDataPath)
+  }
   const argv = [input.command, ...serveServiceArgs(input)]
   if (manager === 'launchd') {
     const name = suffix ? `${SERVE_LAUNCHD_LABEL_PREFIX}.${suffix}` : SERVE_LAUNCHD_LABEL_PREFIX
@@ -156,7 +160,7 @@ function renderSystemdUnit(argv: string[], env: Record<string, string>): string 
     .join('\n')
   // Kill only the supervisor: it stops its server while the terminal daemon survives.
   return `[Unit]
-Description=Coding Agent 2 server (orca serve --supervise)
+Description=Coding Agent 2 server (coding serve --supervise)
 StartLimitIntervalSec=900
 StartLimitBurst=5
 

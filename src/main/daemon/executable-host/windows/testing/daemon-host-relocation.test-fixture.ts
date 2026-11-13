@@ -4,13 +4,13 @@ import { join } from 'node:path'
 export function buildInstallFixture(root: string): void {
   mkdirSync(root, { recursive: true })
   writeFileSync(join(root, 'Coding Agent 2.exe'), 'exe-bytes')
-  const processHostDir = join(root, 'resources', 'node_modules', '@orca', 'process-host')
+  const processHostDir = join(root, 'resources', 'node_modules', '@coding-agent', 'process-host')
   mkdirSync(join(processHostDir, 'dist'), { recursive: true })
   mkdirSync(join(processHostDir, 'src'), { recursive: true })
   writeFileSync(
     join(processHostDir, 'package.json'),
     JSON.stringify({
-      name: '@orca/process-host',
+      name: '@coding-agent/process-host',
       type: 'commonjs',
       exports: {
         '.': { default: './dist/run-process.js' },
@@ -47,7 +47,7 @@ export function buildInstallFixture(root: string): void {
     mkdirSync(join(prebuildsRoot, arch), { recursive: true })
     writeFileSync(join(prebuildsRoot, arch, 'pty.node'), `${arch}-prebuild`)
   }
-  const registryDir = join(root, 'resources', 'node_modules', '@orca', 'windows-registry')
+  const registryDir = join(root, 'resources', 'node_modules', '@coding-agent', 'windows-registry')
   mkdirSync(join(registryDir, 'build', 'Release', 'obj'), { recursive: true })
   const actualRegistryDir = join(import.meta.dirname, '../../../../../../native/windows-registry')
   for (const name of ['package.json', 'index.js']) {

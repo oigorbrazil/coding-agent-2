@@ -1,9 +1,11 @@
-import { quotePosixShell } from '../../../../../shared/shell/launch/shell-argument-quoting'
 import {
-  resolveSetupRunnerCommand,
   type SetupRunnerCommandPlatform,
-  type SetupRunnerShell
+  type SetupRunnerShell,
+  resolveSetupRunnerCommand
 } from '../../../../../shared/setup-runner-command'
+
+import { appEnvPairs } from '../../../../../shared/app-env'
+import { quotePosixShell } from '../../../../../shared/shell/launch/shell-argument-quoting'
 
 const SETUP_COMPLETION_PREFIX = '__ORCA_SETUP_COMPLETE__:'
 const SETUP_COMPLETION_CARRY_LENGTH = SETUP_COMPLETION_PREFIX.length + 96
@@ -19,7 +21,7 @@ export function buildObservedSetupCommand(
   const resolution = resolveSetupRunnerCommand(runnerScriptPath, platform, shell)
   if (resolution.shell === 'windows') {
     const script = [
-      `$runner = $env:${WINDOWS_SETUP_RUNNER_ENV}`,
+      `$runner = $(if (Test-Path Env:CODING_AGENT_SETUP_RUNNER_PATH) { $env:CODING_AGENT_SETUP_RUNNER_PATH } else { $env:${WINDOWS_SETUP_RUNNER_ENV} })`,
       '& $runner',
       '$succeeded = $?',
       '$status = $LASTEXITCODE',
@@ -32,7 +34,7 @@ export function buildObservedSetupCommand(
         script,
         'utf16le'
       ).toString('base64')}`,
-      env: { [WINDOWS_SETUP_RUNNER_ENV]: resolution.runnerScriptPathForShell }
+      env: { ...appEnvPairs('SETUP_RUNNER_PATH', resolution.runnerScriptPathForShell) }
     }
   }
 

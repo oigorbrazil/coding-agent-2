@@ -12,7 +12,7 @@ import {
   writeFileSync
 } from 'node:fs'
 import { join, resolve } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { describeProcessFailure } from '../../tool-invocation/process-failure-message.mjs'
 import { isDirectInvocation } from '../../tool-invocation/script-entry-detection.mjs'
 import { DESKTOP_RC_TAG, DESKTOP_STABLE_TAG } from '../versioning/release-tag-patterns.mjs'

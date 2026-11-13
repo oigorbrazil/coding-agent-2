@@ -13,8 +13,8 @@ import {
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
 import { uploadDirectoryIntoWsl } from './wsl-directory-upload'
 import {
   createWslOrcadHostTransport,

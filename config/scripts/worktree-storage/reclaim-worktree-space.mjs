@@ -2,7 +2,7 @@
 import { mkdir } from 'node:fs/promises'
 import { resolve, join } from 'node:path'
 import { lock } from 'proper-lockfile'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 export async function reclaimWorktreeSpace({
   repoRoot = process.cwd(),

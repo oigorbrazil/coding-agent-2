@@ -1,4 +1,4 @@
-/** File helpers shared by the `orca plugin create` templates. */
+/** File helpers shared by the `coding plugin create` templates. */
 
 import { localPluginPublisher } from '../../shared/plugins/installation/plugin-publisher-derivation'
 import { PLUGIN_DERIVED_PUBLISHER_SINCE } from '../../shared/plugins/manifest/plugin-schema-field-docs'
@@ -50,8 +50,8 @@ ${body}
 ## Develop
 
 \`\`\`sh
-orca plugin validate .
-orca plugin dev watch .    # loads this folder into Coding Agent 2 and prints its logs and reloads; Ctrl-C unloads it
+coding plugin validate .
+coding plugin dev watch .    # loads this folder into Coding Agent 2 and prints its logs and reloads; Ctrl-C unloads it
 \`\`\`
 
 Coding Agent 2 names the publisher after where the plugin is installed from: the GitHub or GitLab owner of
@@ -61,7 +61,7 @@ https://github.com/stablyai/orca/blob/main/docs/reference/plugin-authoring.md.
 }
 
 // Why -text: Git must not rewrite line endings, or the content hash differs per checkout.
-// `.coding-agent-2/` holds the typings `orca plugin types` writes; they are regenerated, never committed.
+// `.coding-agent-2/` holds the typings `coding plugin types` writes; they are regenerated, never committed.
 export const COMMON_FILES = {
   '.gitattributes': '* -text\n',
   '.gitignore': 'node_modules/\n.orca/\n'

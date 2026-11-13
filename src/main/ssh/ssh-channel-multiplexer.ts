@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 /* eslint-disable max-lines -- Why: the SSH relay protocol state machine keeps
    request, notification, keepalive, and cancellation semantics paired. */
 import { FrameDecoder, type DecodedFrame } from '../../shared/relay-frame-decoder'
@@ -328,7 +329,7 @@ export class SshChannelMultiplexer {
     if (this.disposed) {
       return
     }
-    if (process.env.ORCA_SSH_MUX_DEBUG === '1') {
+    if (readAppEnv(process.env, 'SSH_MUX_DEBUG') === '1') {
       console.warn(
         `[ssh-mux] Disposing multiplexer (reason: ${reason})`,
         new Error('dispose trace').stack

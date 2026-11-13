@@ -34,7 +34,7 @@ vi.mock('../../sessions/browser-session-registry', () => ({
     clearPendingCookieImport: clearPendingCookieImportMock
   }
 }))
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock
 }))
 vi.mock('node:fs', async (importOriginal) => ({ ...(await importOriginal<typeof NodeFs>()) }))

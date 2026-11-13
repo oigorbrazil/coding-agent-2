@@ -2,7 +2,7 @@ import { chmod, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 import { agentBrowserCommandOf } from '../browser/agent-browser/agent-browser-bridge-test-harness'
 import {
   resolveInstalledElectronExecutable,
@@ -13,7 +13,7 @@ import {
   setRuntimeBrowserUnavailableCause
 } from '../runtime/browser/installation/runtime-browser-commands-factory'
 
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: vi.fn(),
   spawnProcess: vi.fn()
 }))

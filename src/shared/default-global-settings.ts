@@ -64,7 +64,8 @@ export function buildDefaultSettings(args: {
     editorAutoSaveDelayMs: args.editorAutoSaveDelayMs,
     editorMinimapEnabled: false,
     // Why empty: the editor keeps following the terminal font unless the user opts in.
-    editorFontFamily: '',
+    // Liquid glass (DESIGN.md): the code editor shares the app's Inter face.
+    editorFontFamily: 'Inter',
     editorWordWrap: true,
     richMarkdownSpellcheckEnabled: true,
     markdownDefaultViewMode: 'rich',
@@ -101,6 +102,8 @@ export function buildDefaultSettings(args: {
     terminalCustomThemes: [],
     terminalDividerColorLight: '#d4d4d8',
     terminalInactivePaneOpacity: args.terminalInactivePaneOpacity,
+    // Liquid glass (DESIGN.md): terminals let the glass panel and environment show through.
+    terminalBackgroundOpacity: 0.45,
     terminalActivePaneOpacity: 1,
     terminalPaneOpacityTransitionMs: 140,
     terminalDividerThicknessPx: 3,
@@ -181,7 +184,6 @@ export function buildDefaultSettings(args: {
     orchestrationWorkerAutoReleaseEnabled: true,
     showArtifactsButton: false,
     showSkillsButton: false,
-    showMobileButton: true,
     showPinnedWorktreesInGroups: false,
     ctrlTabOrderMode: 'mru',
     // Why: Coding Agent 2-first keeps core shortcuts working from a focused terminal; TUI-ownership users opt in.
@@ -192,7 +194,6 @@ export function buildDefaultSettings(args: {
     floatingTerminalCwd: '~',
     floatingTerminalTrustedCwds: [],
     floatingTerminalCwdMigratedToAppWorkspace: true,
-    floatingTerminalTriggerLocation: 'floating-button',
     notifications: args.notifications,
     diffDefaultView: 'inline',
     diffWordWrap: false,

@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
-import type { ProcessResult } from '@orca/process-host/process-spec'
+import { runProcessSync } from '@coding-agent/process-host'
+import type { ProcessResult } from '@coding-agent/process-host/process-spec'
 import { writeFileAtomically } from '../../codex-accounts/fs-utils'
 
 // Opt out of the accent picker once so terminal keys repeat (#14746); later user choices win.

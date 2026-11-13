@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BaseWindow, BrowserWindow, protocol, session } from 'electron'
 import { renameSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:http'
@@ -23,7 +24,7 @@ if (
   !statusPath ||
   !extensionDirectory ||
   (phase !== 'first' && phase !== 'second') ||
-  process.env.ORCA_BACKGROUND_LAUNCH !== '1'
+  readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1'
 ) {
   throw new Error(
     'Persistence fixture requires a status path, an extension, a phase and background launch'

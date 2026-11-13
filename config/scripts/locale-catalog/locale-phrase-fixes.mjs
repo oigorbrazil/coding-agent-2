@@ -3,8 +3,8 @@ import { ZH_PHRASE_FIXES_ROUND5 } from './locale-zh-phrase-fixes-round5.mjs'
 
 import { JA_PHRASE_FIXES } from './locale-ja-phrase-fixes.mjs'
 
-// Why: Coding Agent 2 names the Agent concept 智能体; 代理 stays for proxy and user-agent copy.
-const ZH_AGENT_SOURCE = /(?<!user[ -])(?:sub)?agents?\b/i
+// Why: Coding Agent 2 names the Agent concept 智能体; 代理 stays for proxy, user-agent copy and the product name.
+const ZH_AGENT_SOURCE = /(?<!user[ -]|Coding )(?:sub)?agents?\b(?! 2\b)/i
 
 export const LOCALE_PHRASE_FIXES = {
   ko: [

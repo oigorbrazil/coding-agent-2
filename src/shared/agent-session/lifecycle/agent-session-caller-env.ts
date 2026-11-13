@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../app-env'
 /** Injected session identity resolves the orchestration caller without guessing a terminal. Valid only on the same host/user: refuse claims across SSH, pairing or WSL, and omit it from SSH passthrough. */
 import { ORCA_SESSION_ADDRESS_PREFIX } from '../../orca-session-address-prefix'
 import { isStructuredWorkerHandle } from '../../structured-worker-handle'
@@ -10,7 +11,7 @@ export const ORCA_AGENT_SESSION_SPAWN_TOKEN_ENV = 'ORCA_AGENT_SESSION_SPAWN_TOKE
 export function readInjectedAgentSessionId(
   env: Readonly<Record<string, string | undefined>> = process.env
 ): string | undefined {
-  const value = env[ORCA_AGENT_SESSION_ID_ENV]?.trim()
+  const value = readAppEnv(env, 'AGENT_SESSION_ID')?.trim()
   return value ? value : undefined
 }
 
@@ -22,7 +23,7 @@ export function injectedSessionAddress(
   if (!sessionId) {
     return undefined
   }
-  const ownHandle = env.ORCA_TERMINAL_HANDLE
+  const ownHandle = readAppEnv(env, 'TERMINAL_HANDLE')
   return isStructuredWorkerHandle(ownHandle)
     ? ownHandle
     : `${ORCA_SESSION_ADDRESS_PREFIX}${sessionId}`

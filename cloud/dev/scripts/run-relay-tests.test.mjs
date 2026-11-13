@@ -18,7 +18,7 @@ import { join, resolve } from 'node:path'
 import { setImmediate } from 'node:timers/promises'
 import { pathToFileURL } from 'node:url'
 import test from 'node:test'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { runRelayTests } from './run-relay-tests.mjs'
 
 const success = { code: 0, signal: null, timedOut: false }
@@ -215,7 +215,7 @@ test('launches with only the Cloud dependency link and no root install or compil
   const root = temporary(t)
   const standalone = join(root, 'cloud')
   const manifest = JSON.parse(readFileSync(join(cloud, 'package.json'), 'utf8'))
-  const dependency = manifest.devDependencies['@orca/process-host']
+  const dependency = manifest.devDependencies['@coding-agent/process-host']
   assert.equal(dependency, 'link:../src/packages/process-host')
   const packageDir = resolve(standalone, dependency.slice('link:'.length))
   mkdirSync(packageDir, { recursive: true })
@@ -229,10 +229,10 @@ test('launches with only the Cloud dependency link and no root install or compil
   cpSync(join(cloud, 'dev', 'scripts', 'run-relay-tests.mjs'), join(scripts, 'run-relay-tests.mjs'))
   writeFileSync(join(standalone, 'package.json'), JSON.stringify(manifest))
   mkdirSync(join(standalone, 'apps', 'relay'), { recursive: true })
-  mkdirSync(join(standalone, 'node_modules', '@orca'), { recursive: true })
+  mkdirSync(join(standalone, 'node_modules', '@coding-agent'), { recursive: true })
   symlinkSync(
     packageDir,
-    join(standalone, 'node_modules', '@orca', 'process-host'),
+    join(standalone, 'node_modules', '@coding-agent', 'process-host'),
     process.platform === 'win32' ? 'junction' : 'dir'
   )
   const fakeVitest = join(standalone, 'node_modules', 'vitest')

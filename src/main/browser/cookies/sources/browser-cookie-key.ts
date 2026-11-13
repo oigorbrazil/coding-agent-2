@@ -1,8 +1,8 @@
 import { pbkdf2Sync } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
-import { windowsPowerShellPath } from '@orca/process-host/windows-system-binary'
+import { runProcess } from '@coding-agent/process-host'
+import { windowsPowerShellPath } from '@coding-agent/process-host/windows-system-binary'
 import { diag } from '../browser-cookie-import-diagnostics'
 import {
   CHROMIUM_BROWSERS,

@@ -260,7 +260,7 @@ describe('configureElectronNetworkCompatibility', () => {
   function createUserDataDir(settings: Record<string, unknown>): string {
     const userDataPath = mkdtempSync(join(tmpdir(), 'orca-http1-compat-'))
     tempDirs.push(userDataPath)
-    writeFileSync(join(userDataPath, 'orca-data.json'), JSON.stringify({ settings }), 'utf-8')
+    writeFileSync(join(userDataPath, 'coding-data.json'), JSON.stringify({ settings }), 'utf-8')
     return userDataPath
   }
 
@@ -272,11 +272,11 @@ describe('configureElectronNetworkCompatibility', () => {
     const profileDirectory = join(userDataPath, 'profiles', profileId)
     mkdirSync(profileDirectory, { recursive: true })
     writeFileSync(
-      join(userDataPath, 'orca-profile-index.json'),
+      join(userDataPath, 'coding-profile-index.json'),
       JSON.stringify({ activeProfileId: profileId, profiles: [{ id: profileId }] }),
       'utf-8'
     )
-    writeFileSync(join(profileDirectory, 'orca-data.json'), JSON.stringify({ settings }), 'utf-8')
+    writeFileSync(join(profileDirectory, 'coding-data.json'), JSON.stringify({ settings }), 'utf-8')
     return profileDirectory
   }
 
@@ -296,7 +296,7 @@ describe('configureElectronNetworkCompatibility', () => {
     const { writeHttp1CompatibilityMarker } = await import('./http1-compatibility-marker')
     const userDataPath = createUserDataDir({ electronHttp1CompatibilityMode: false })
     writeHttp1CompatibilityMarker(userDataPath, true)
-    rmSync(join(userDataPath, 'orca-data.json'), { force: true })
+    rmSync(join(userDataPath, 'coding-data.json'), { force: true })
 
     expect(shouldDisableHttp2ForElectronNetworking({ env: {}, userDataPath })).toBe(true)
   })
@@ -531,5 +531,36 @@ describe('enableMainProcessGpuFeatures', () => {
       'max-active-webgl-contexts',
       expect.any(String)
     )
+  })
+})
+
+describe('dev profile filename compatibility', () => {
+  it.each([
+    [false, false, 'coding-agent-2-dev'],
+    [true, false, 'coding-agent-2-dev'],
+    [false, true, 'coding-agent-2-orca-dev'],
+    [true, true, 'coding-agent-2-dev']
+  ] as const)('selects primary=%s legacy=%s', async (primary, legacy, expected) => {
+    const root = mkdtempSync(join(tmpdir(), 'coding-dev-profile-'))
+    onTestFinished(() => {
+      rmSync(root, { recursive: true, force: true })
+      vi.unstubAllEnvs()
+    })
+    const { app } = await import('electron')
+    const { configureDevUserDataPath } = await import('./configure-process')
+    vi.stubEnv('ORCA_DEV_USER_DATA_PATH', '')
+    vi.stubEnv('ORCA_E2E_USER_DATA_DIR', '')
+    app.setPath('appData', root)
+    if (primary) {
+      mkdirSync(join(root, 'coding-agent-2-dev'))
+    }
+    if (legacy) {
+      mkdirSync(join(root, 'coding-agent-2-orca-dev'))
+    }
+    configureDevUserDataPath(true)
+    expect(app.getPath('userData')).toBe(join(root, expected))
+    vi.stubEnv('ORCA_DEV_USER_DATA_PATH', join(root, 'override'))
+    configureDevUserDataPath(true)
+    expect(app.getPath('userData')).toBe(join(root, 'override'))
   })
 })

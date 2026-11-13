@@ -6,7 +6,7 @@ export const SEARCH_COMMAND_SPECS: CommandSpec[] = [
     path: ['search'],
     summary: 'Search the full text of agent sessions indexed on the selected Coding Agent 2 host',
     usage:
-      'orca search <query> [--scope conversation|all] [--fresh] [--limit <n>] [--cursor <c>] [--agent <id>] [--path <p>] [--since <iso>] [--sort relevance|newest] [--debug] [--json]\n  orca search --index-status [--json]',
+      'coding search <query> [--scope conversation|all] [--fresh] [--limit <n>] [--cursor <c>] [--agent <id>] [--path <p>] [--since <iso>] [--sort relevance|newest] [--debug] [--json]\n  coding search --index-status [--json]',
     allowedFlags: [
       ...GLOBAL_FLAGS,
       'query',
@@ -37,12 +37,12 @@ export const SEARCH_COMMAND_SPECS: CommandSpec[] = [
       '--json prints the runtime response envelope with the search contract answer under `result`.'
     ],
     examples: [
-      'orca search "strict mode violation getByRole"',
-      'orca search resolveTerminalPath --agent claude --sort newest',
-      'orca search "kernel panic" --path /Users/me/orca --since 2026-08-01T00:00:00Z --json',
-      'orca search "kernel panic" --limit 50 --cursor eyJ2IjoxfQ',
-      'orca search --index-status',
-      'orca search "flaky test" --environment build-server'
+      'coding search "strict mode violation getByRole"',
+      'coding search resolveTerminalPath --agent claude --sort newest',
+      'coding search "kernel panic" --path /Users/me/orca --since 2026-08-01T00:00:00Z --json',
+      'coding search "kernel panic" --limit 50 --cursor eyJ2IjoxfQ',
+      'coding search --index-status',
+      'coding search "flaky test" --environment build-server'
     ]
   }
 ]

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { basename, dirname, join } from 'node:path'
@@ -13,8 +14,12 @@ import {
   type AppImageExtractionOptions
 } from './appimage-extracted-root'
 import { resolveGenerationStableLauncherPath } from './appimage-generation-stable-launcher'
-import { getBundledLauncherPath, LINUX_CLI_COMMAND_NAME } from './bundled-cli-launcher-path'
-import { DEFAULT_MAC_COMMAND_PATH, DEV_COMMAND_NAME } from './cli-install-constants'
+import { getBundledLauncherPath } from './bundled-cli-launcher-path'
+import {
+  CLI_COMMAND_NAME,
+  DEFAULT_MAC_COMMAND_PATH,
+  DEV_COMMAND_NAME
+} from './cli-install-constants'
 import { ensureDevLauncher } from './cli-dev-launcher'
 import type { CliInstallerOptions, InstallSpec } from './cli-installer-contracts'
 import {
@@ -67,7 +72,7 @@ export abstract class CliInstallLocation {
       // Why: development builds must not claim the production shell command.
       return DEV_COMMAND_NAME
     }
-    return this.platform === 'linux' ? LINUX_CLI_COMMAND_NAME : 'orca'
+    return CLI_COMMAND_NAME
   }
 
   constructor(options: CliInstallerOptions = {}) {
@@ -84,12 +89,12 @@ export abstract class CliInstallLocation {
       join(this.homePath, 'AppData', 'Local')
     this.processPathEnv = options.processPathEnv ?? process.env.PATH ?? process.env.Path ?? null
     this.commandPathOverride =
-      options.commandPathOverride ?? process.env.ORCA_CLI_INSTALL_PATH ?? null
+      options.commandPathOverride ?? readAppEnv(process.env, 'CLI_INSTALL_PATH') ?? null
     // Resolve once for hot status reads; Apple Silicon Macs may lack /usr/local/bin.
     const candidateMacPath = options.defaultMacCommandPath ?? DEFAULT_MAC_COMMAND_PATH
     this.macCommandPath = existsSync(dirname(candidateMacPath))
       ? candidateMacPath
-      : join(this.homePath, '.local', 'bin', 'orca')
+      : join(this.homePath, '.local', 'bin', CLI_COMMAND_NAME)
     this.privilegedRunner = options.privilegedRunner ?? runMacPrivilegedCommand
     this.userPathReader = options.userPathReader ?? readWindowsUserPathRegistry
     this.userPathMutationReader =
@@ -236,7 +241,7 @@ export abstract class CliInstallLocation {
 
     if (this.platform === 'linux') {
       // Linux registration stays user-scoped; it has no privileged global install flow.
-      return join(this.homePath, '.local', 'bin', LINUX_CLI_COMMAND_NAME)
+      return join(this.homePath, '.local', 'bin', CLI_COMMAND_NAME)
     }
 
     if (this.platform === 'win32') {

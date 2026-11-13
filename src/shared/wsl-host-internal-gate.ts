@@ -1,10 +1,11 @@
+import { readAppEnv, deleteAppEnv, setAppEnv } from './app-env'
 /** Keep WSL hosts internal until project moves are lossless and WSL parity is met. Main/preload agree through the same launch environment. */
 export const WSL_HOSTS_INTERNAL_GATE_ENV = 'ORCA_INTERNAL_WSL_HOSTS'
 
 export function isWslHostsInternalGateOpen(
   env: Readonly<Record<string, string | undefined>>
 ): boolean {
-  return env[WSL_HOSTS_INTERNAL_GATE_ENV] === '1'
+  return readAppEnv(env, 'INTERNAL_WSL_HOSTS') === '1'
 }
 
 /**
@@ -51,9 +52,9 @@ export function publishWslHostsGateState(
 ): void {
   resolvedHere = state !== null
   if (state === null) {
-    delete env[WSL_HOSTS_GATE_STATE_ENV]
+    deleteAppEnv(env, 'WSL_HOSTS_GATE_STATE')
   } else {
-    env[WSL_HOSTS_GATE_STATE_ENV] = state
+    setAppEnv(env, 'WSL_HOSTS_GATE_STATE', state)
   }
 }
 
@@ -65,7 +66,7 @@ export function ignoreInheritedWslHostsGateState(): void {
 function inheritedGateState(
   env: Readonly<Record<string, string | undefined>>
 ): WslHostsGateState | null {
-  const value = env[WSL_HOSTS_GATE_STATE_ENV]
+  const value = readAppEnv(env, 'WSL_HOSTS_GATE_STATE')
   return value === 'open' || value === 'serve-only' || value === 'closed' ? value : null
 }
 

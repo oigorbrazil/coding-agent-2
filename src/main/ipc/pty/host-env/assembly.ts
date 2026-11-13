@@ -1,3 +1,5 @@
+import type { BuildPtyHostEnvOptions } from './types'
+import { setAppEnv, deleteAppEnv, deleteAppEnvKey, readAppEnv } from '../../../../shared/app-env'
 import { applyClaudeAgentViewEnv } from './claude-agent-view'
 import { resolveTerminalInlineImagesEnabled } from '../../../../shared/terminal/images/terminal-inline-images-settings'
 import { resolveSetupAgentSequenceLaunchCommand } from '../../../../shared/setup-agent-sequencing'
@@ -20,7 +22,7 @@ import { resolveCodexShellLaunchPreflightCommand } from '../../../pty/shell-star
 import { scheduleCodexHookReconcile } from '../../../codex/hooks/reconciliation/codex-hook-reconcile'
 import { buildConfiguredProxyEnv } from '../../../../shared/network-proxy'
 import { isTuiAgentEnabled } from '../../../../shared/agent-launch/catalog/tui-agent-selection'
-import type { BuildPtyHostEnvOptions } from './types'
+
 import { stripInheritedOrcaCodexHomeOverride } from './codex-home'
 import {
   clearPiAgentShadowEnv,
@@ -118,16 +120,16 @@ export function buildPtyHostEnv(
     const overlay = mimoCodeHookService.buildPtyEnv(id, mimoSourceConfigDir).MIMOCODE_CONFIG_DIR
     if (overlay && overlay !== mimoSourceConfigDir) {
       baseEnv.MIMOCODE_CONFIG_DIR = overlay
-      baseEnv.ORCA_MIMOCODE_CONFIG_DIR = overlay
+      setAppEnv(baseEnv, 'MIMOCODE_CONFIG_DIR', overlay)
       if (mimoSourceConfigDir) {
-        baseEnv.ORCA_MIMOCODE_SOURCE_CONFIG_DIR = mimoSourceConfigDir
+        setAppEnv(baseEnv, 'MIMOCODE_SOURCE_CONFIG_DIR', mimoSourceConfigDir)
       }
     }
   }
 
   // Remove inherited hook coordinates before injecting the owning pane's receiver.
   for (const key of AGENT_HOOK_RUNTIME_ENV_KEYS) {
-    delete baseEnv[key]
+    deleteAppEnvKey(baseEnv, key)
   }
   if (opts.agentStatusHooksEnabled) {
     Object.assign(baseEnv, agentHookServer.buildPtyEnv())
@@ -141,7 +143,7 @@ export function buildPtyHostEnv(
       wslHookRelayManager.ensureForDistro(distro, opts.selectedCodexHomePath, wslLaunchKind)
       const guestEndpoint = wslHookRelayManager.getGuestEndpointFilePath(distro)
       if (guestEndpoint) {
-        baseEnv.ORCA_AGENT_HOOK_ENDPOINT = guestEndpoint
+        setAppEnv(baseEnv, 'AGENT_HOOK_ENDPOINT', guestEndpoint)
       }
       const claude =
         opts.claudeSubagentNavigationEnabled !== false &&
@@ -149,8 +151,8 @@ export function buildPtyHostEnv(
           ? wslHookRelayManager.getClaudeAgentView(distro)
           : null
       if (claude) {
-        baseEnv.ORCA_CLAUDE_AGENT_VIEW_PLUGIN_DIR = claude.pluginDir
-        baseEnv.ORCA_CLAUDE_CONFIG_DIR = claude.configDir
+        setAppEnv(baseEnv, 'CLAUDE_AGENT_VIEW_PLUGIN_DIR', claude.pluginDir)
+        setAppEnv(baseEnv, 'CLAUDE_CONFIG_DIR', claude.configDir)
       }
       // OpenCode must load status hooks from its guest-resident overlay.
       const opencodeOverlayDir = openCodeAgent
@@ -158,13 +160,13 @@ export function buildPtyHostEnv(
         : null
       if (opencodeOverlayDir) {
         baseEnv.OPENCODE_CONFIG_DIR = opencodeOverlayDir
-        baseEnv.ORCA_OPENCODE_CONFIG_DIR = opencodeOverlayDir
-        delete baseEnv.ORCA_OPENCODE_SOURCE_CONFIG_DIR
+        setAppEnv(baseEnv, 'OPENCODE_CONFIG_DIR', opencodeOverlayDir)
+        deleteAppEnv(baseEnv, 'OPENCODE_SOURCE_CONFIG_DIR')
       } else {
         // Only guest overlays belong in WSL; otherwise let OpenCode use its guest config.
         delete baseEnv.OPENCODE_CONFIG_DIR
-        delete baseEnv.ORCA_OPENCODE_CONFIG_DIR
-        delete baseEnv.ORCA_OPENCODE_SOURCE_CONFIG_DIR
+        deleteAppEnv(baseEnv, 'OPENCODE_CONFIG_DIR')
+        deleteAppEnv(baseEnv, 'OPENCODE_SOURCE_CONFIG_DIR')
       }
     }
   }
@@ -226,9 +228,9 @@ export function buildPtyHostEnv(
     if (shouldPrepareOmpShadow) {
       Object.assign(baseEnv, piTitlebarExtensionService.buildFreshOmpEnv())
     }
-    delete baseEnv.ORCA_OMP_STATUS_EXTENSION
-    delete baseEnv.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR
-    delete baseEnv.ORCA_PRIME_AGENT_STATUS_EXTENSION
+    deleteAppEnv(baseEnv, 'OMP_STATUS_EXTENSION')
+    deleteAppEnv(baseEnv, 'PRIME_AGENT_SOURCE_AGENT_DIR')
+    deleteAppEnv(baseEnv, 'PRIME_AGENT_STATUS_EXTENSION')
   }
 
   if (opts.isWsl && opts.agentStatusHooksEnabled) {
@@ -236,12 +238,12 @@ export function buildPtyHostEnv(
     if (explicitPiAgentKind === 'pi') {
       const guestPiDir = wslHookRelayManager.getGuestAgentPath(distro, 'pi')
       if (guestPiDir) {
-        baseEnv.ORCA_PI_SOURCE_AGENT_DIR = guestPiDir
+        setAppEnv(baseEnv, 'PI_SOURCE_AGENT_DIR', guestPiDir)
       }
     } else if (explicitPiAgentKind === 'omp') {
       const guestOmpExtension = wslHookRelayManager.getGuestAgentPath(distro, 'omp')
       if (guestOmpExtension) {
-        baseEnv.ORCA_OMP_STATUS_EXTENSION = guestOmpExtension
+        setAppEnv(baseEnv, 'OMP_STATUS_EXTENSION', guestOmpExtension)
       }
     }
   }
@@ -249,12 +251,12 @@ export function buildPtyHostEnv(
   // Keep managed Codex home selection PTY-scoped across dev/prod instances.
   if (opts.skipCodexHomeEnv) {
     delete baseEnv.CODEX_HOME
-    delete baseEnv.ORCA_CODEX_HOME
-    delete baseEnv.ORCA_CODEX_LAUNCH_PREFLIGHT
+    deleteAppEnv(baseEnv, 'CODEX_HOME')
+    deleteAppEnv(baseEnv, 'CODEX_LAUNCH_PREFLIGHT')
   } else if (opts.selectedCodexHomePath) {
     baseEnv.CODEX_HOME = opts.selectedCodexHomePath
     // Startup files may re-export CODEX_HOME; wrappers restore this pane's selected runtime home.
-    baseEnv.ORCA_CODEX_HOME = opts.selectedCodexHomePath
+    setAppEnv(baseEnv, 'CODEX_HOME', opts.selectedCodexHomePath)
     const preflightCommand = resolveCodexShellLaunchPreflightCommand({
       hooksEnabled:
         opts.agentStatusHooksEnabled && isTuiAgentEnabled('codex', opts.disabledTuiAgents),
@@ -264,15 +266,15 @@ export function buildPtyHostEnv(
       resourcesPath: opts.resourcesPath
     })
     if (preflightCommand) {
-      baseEnv.ORCA_CODEX_LAUNCH_PREFLIGHT = preflightCommand
+      setAppEnv(baseEnv, 'CODEX_LAUNCH_PREFLIGHT', preflightCommand)
     } else {
-      delete baseEnv.ORCA_CODEX_LAUNCH_PREFLIGHT
+      deleteAppEnv(baseEnv, 'CODEX_LAUNCH_PREFLIGHT')
     }
   } else if (opts.stripInheritedOrcaCodexHome) {
     stripInheritedOrcaCodexHomeOverride(baseEnv)
-    delete baseEnv.ORCA_CODEX_LAUNCH_PREFLIGHT
+    deleteAppEnv(baseEnv, 'CODEX_LAUNCH_PREFLIGHT')
   } else {
-    delete baseEnv.ORCA_CODEX_LAUNCH_PREFLIGHT
+    deleteAppEnv(baseEnv, 'CODEX_LAUNCH_PREFLIGHT')
   }
 
   if (!opts.isWsl) {
@@ -281,22 +283,26 @@ export function buildPtyHostEnv(
   }
 
   // An inherited WSL CLI path belongs to another launch.
-  delete baseEnv.ORCA_WSL_CLI_DIR
+  deleteAppEnv(baseEnv, 'WSL_CLI_DIR')
   // WSL wrapper state and development CLI routing require the owning instance's userData root.
   if (opts.isWsl) {
     wslInteropHealthMonitor.noteActivity(opts.wslDistro ?? null)
-    baseEnv.ORCA_USER_DATA_PATH = opts.userDataPath
+    setAppEnv(baseEnv, 'USER_DATA_PATH', opts.userDataPath)
     // Advertise the managed WSL CLI name for agent guidance.
-    baseEnv.ORCA_CLI_COMMAND = getWslCliCommandName(opts.isPackaged)
+    setAppEnv(baseEnv, 'CLI_COMMAND', getWslCliCommandName(opts.isPackaged))
     const managedCliDir = getManagedWslCliDir(opts)
     if (managedCliDir) {
-      baseEnv.ORCA_WSL_CLI_DIR = managedCliDir
+      setAppEnv(baseEnv, 'WSL_CLI_DIR', managedCliDir)
     }
   } else {
     if (!opts.isPackaged) {
-      baseEnv.ORCA_USER_DATA_PATH ??= opts.userDataPath
+      setAppEnv(
+        baseEnv,
+        'USER_DATA_PATH',
+        readAppEnv(baseEnv, 'USER_DATA_PATH') ?? opts.userDataPath
+      )
     }
-    delete baseEnv.ORCA_CLI_COMMAND
+    deleteAppEnv(baseEnv, 'CLI_COMMAND')
   }
   prependOrcaCliDirToChildPath(baseEnv, {
     isPackaged: opts.isPackaged,

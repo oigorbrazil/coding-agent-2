@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events'
 import { PassThrough, Readable } from 'node:stream'
 import { describe, expect, it, vi } from 'vitest'
-import type { PipedChildProcess, PipedProcessSpec } from '@orca/process-host/process-spec'
+import type { PipedChildProcess, PipedProcessSpec } from '@coding-agent/process-host/process-spec'
 import { execCommand } from '../../ssh/remote-exec/remote-exec-command'
 
 import { WSL_CHANNEL_CLOSE_GRACE_MS } from '../execution/wsl-command-channel'

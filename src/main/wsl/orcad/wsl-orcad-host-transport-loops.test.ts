@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream'
 import { afterEach, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
-import type { PipedChildProcess, PipedProcessSpec } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { PipedChildProcess, PipedProcessSpec } from '@coding-agent/process-host/process-spec'
 import { execCommand } from '../../ssh/remote-exec/remote-exec-command'
 import { createWslOrcadHostTransport, type WslOrcadHostTransport } from './wsl-orcad-host-transport'
 

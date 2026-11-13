@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, posix } from 'node:path'
@@ -21,7 +22,6 @@ import {
 
 // Leave roughly half the default macOS PTY limit for other terminals and agent-owned PTYs.
 export const DEFAULT_MAX_HOST_TERMINALS = 256
-const MAX_HOST_TERMINALS_ENV_VAR = 'ORCA_DAEMON_MAX_HOST_TERMINALS'
 const MAX_OVERRIDE_TERMINALS = 4096
 
 const REFRESH_INTERVAL_MS = 60_000
@@ -29,7 +29,7 @@ const REFRESH_INTERVAL_MS = 60_000
 const STALE_AFTER_MS = 5 * 60_000
 
 export function resolveMaxHostTerminals(env: NodeJS.ProcessEnv = process.env): number {
-  const raw = env[MAX_HOST_TERMINALS_ENV_VAR]?.trim()
+  const raw = readAppEnv(env, 'DAEMON_MAX_HOST_TERMINALS')?.trim()
   if (!raw || !/^\d+$/.test(raw)) {
     return DEFAULT_MAX_HOST_TERMINALS
   }

@@ -1,27 +1,44 @@
 import type { AgentSessionAccountKind } from '../../../../shared/agent-session/agent-session-availability'
-import {
-  throwIfSignalAborted,
-  waitForPromiseWithSignal
-} from '../../../../shared/abort-signal-reason'
 import type { StructuredAgentSessionAcquireInput } from '../../../native-chat/agent-session-wire/providers/structured-agent-session-adapter'
 import type {
   StructuredAgentSessionProviderOpenInput,
   StructuredAgentSessionProviderOpenResult
 } from '../../../native-chat/agent-session-wire/startup/structured-agent-session-provider-open-contract'
-import { initializeCodexAppServerConnection } from '../../app-server/codex-app-server-handshake'
+
 import type { CodexAppServerConnection } from '../../app-server/codex-app-server-connection-types'
+import type { CodexSubagentExecutions } from '../background-work/codex-subagent-executions'
+import type { CodexDispatchEchoes } from '../turns/codex-structured-dispatch-echo'
+import type { CodexJournalTranslator } from '../journal/codex-structured-journal-contracts'
+import {
+  type CodexAcquisitionRegistry,
+  type CodexAcquisitionAttempt,
+  type CodexSession,
+  type CodexStructuredLaunch,
+  type CodexStructuredSessionAdapterDeps,
+  assertCodexConnectionOpen,
+  codexSessionLifecycle
+} from './codex-structured-session-state'
+
+import type { CodexStructuredSessionTeardown } from './codex-structured-session-teardown'
+import { appEnvPairs } from '../../../../shared/app-env'
+
+import {
+  throwIfSignalAborted,
+  waitForPromiseWithSignal
+} from '../../../../shared/abort-signal-reason'
+
+import { initializeCodexAppServerConnection } from '../../app-server/codex-app-server-handshake'
+
 import {
   CodexBackgroundTaskTracker,
   codexChildWorkSink
 } from '../background-work/codex-background-task-tracker'
-import type { CodexSubagentExecutions } from '../background-work/codex-subagent-executions'
-import type { CodexDispatchEchoes } from '../turns/codex-structured-dispatch-echo'
-import type { CodexJournalTranslator } from '../journal/codex-structured-journal-contracts'
+
 import { codexProviderHandleLink } from '../acquisition/codex-structured-owner-identity'
 import { openCodexThread } from '../threads/codex-structured-thread-open'
 import { catchUpCodexThread } from '../threads/codex-structured-thread-catch-up'
 import { withCodexVisualsThreadConfig } from '../launch/codex-structured-visuals'
-import { NATIVE_CHAT_SCRATCH_DIR_ENV } from '../../../native-chat/native-chat-visuals-delivery'
+
 import {
   restoredCodexSessionOptions,
   reportedCodexSessionOptions
@@ -33,16 +50,6 @@ import {
   reportedCodexThreadOptions
 } from '../catalog/codex-structured-service-tier'
 import { readCodexConfiguredLaunchDefaults } from '../launch/codex-configured-launch-defaults'
-import {
-  assertCodexConnectionOpen,
-  codexSessionLifecycle,
-  type CodexAcquisitionRegistry,
-  type CodexAcquisitionAttempt,
-  type CodexSession,
-  type CodexStructuredLaunch,
-  type CodexStructuredSessionAdapterDeps
-} from './codex-structured-session-state'
-import type { CodexStructuredSessionTeardown } from './codex-structured-session-teardown'
 
 type CodexOpenContext = {
   input: StructuredAgentSessionAcquireInput
@@ -101,7 +108,7 @@ export async function openCodexStructuredSession(
   current()
   const commandEnv = {
     ...launch.commandEnv,
-    ...(launch.visuals ? { [NATIVE_CHAT_SCRATCH_DIR_ENV]: launch.visuals.folder } : {})
+    ...(launch.visuals ? { ...appEnvPairs('CHAT_SCRATCH_DIR', launch.visuals.folder) } : {})
   }
   const opened = await waitForPromiseWithSignal(
     openCodexThread(

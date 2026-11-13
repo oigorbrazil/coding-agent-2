@@ -1,3 +1,4 @@
+import { fishAppEnvRestore } from '../../../shared/app-env-script'
 import { SHELL_STARTUP_FEATURE_ENV } from './shell-startup-features'
 import { POSIX_SHELL_STARTUP_COMMAND_ENV } from './posix-shell-startup-command'
 
@@ -13,8 +14,8 @@ export const ZSH_FEATURE_CHANNEL_BLOCK = `builtin typeset -ga _orca_shell_featur
 _orca_shell_features=(\${(s:,:)\${${SHELL_STARTUP_FEATURE_ENV}:-}})
 builtin unset ${SHELL_STARTUP_FEATURE_ENV}
 # Consume now: user config can drop the deferred hook, leaving exported history state to leak into children.
-builtin typeset -g _orca_histfile="\${ORCA_HISTFILE:-}"
-builtin unset ORCA_HISTFILE
+builtin typeset -g _orca_histfile="\${CODING_AGENT_HISTFILE-\${ORCA_HISTFILE:-}}"
+builtin unset ORCA_HISTFILE CODING_AGENT_HISTFILE
 __orca_has_feature() { (( \${_orca_shell_features[(Ie)$1]} )) }`
 
 export const BASH_FEATURE_CHANNEL_BLOCK = `_orca_shell_features=",\${${SHELL_STARTUP_FEATURE_ENV}:-},"
@@ -35,12 +36,12 @@ export const ZSH_ZDOTDIR_HANDBACK_BLOCK = `__orca_usable_zdotdir() {
   done
   return 1
 }
-if __orca_usable_zdotdir "\${ORCA_ORIG_ZDOTDIR:-}"; then
-  builtin export ZDOTDIR="$ORCA_ORIG_ZDOTDIR"
+if __orca_usable_zdotdir "\${CODING_AGENT_ORIG_ZDOTDIR-\${ORCA_ORIG_ZDOTDIR:-}}"; then
+  builtin export ZDOTDIR="\${CODING_AGENT_ORIG_ZDOTDIR-$ORCA_ORIG_ZDOTDIR}"
 else
   builtin unset ZDOTDIR
 fi
-builtin unset ORCA_ORIG_ZDOTDIR ORCA_ZSHENV_SOURCE_DIR
+builtin unset ORCA_ORIG_ZDOTDIR CODING_AGENT_ORIG_ZDOTDIR ORCA_ZSHENV_SOURCE_DIR CODING_AGENT_ZSHENV_SOURCE_DIR
 builtin unfunction __orca_usable_zdotdir`
 
 // Parse registration before user code can switch emulation; source at top level to preserve scope.
@@ -103,13 +104,14 @@ export function getFishShellReadyInitCommand(
   const startupCommandBlock = supportsStartupCommand
     ? `  if set -q ${POSIX_SHELL_STARTUP_COMMAND_ENV}
     set -l __orca_command "\$${POSIX_SHELL_STARTUP_COMMAND_ENV}"
-    set -e ${POSIX_SHELL_STARTUP_COMMAND_ENV}
+    set -e ${POSIX_SHELL_STARTUP_COMMAND_ENV} CODING_AGENT_POSIX_SHELL_STARTUP_COMMAND
     builtin printf '%s\\n' "$__orca_command"
     eval "$__orca_command"
     return $status
   end\n`
     : ''
-  return `function __orca_shell_ready_marker --on-event fish_prompt
+  return `${fishAppEnvRestore(['POSIX_SHELL_STARTUP_COMMAND'])}
+function __orca_shell_ready_marker --on-event fish_prompt
 ${readyMarkerBlock}  functions -e __orca_shell_ready_marker
 ${startupCommandBlock}end`
 }

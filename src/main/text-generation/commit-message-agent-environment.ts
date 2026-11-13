@@ -1,4 +1,6 @@
 import type { ClaudeRuntimeAuthPreparation } from '../claude-accounts/runtime-auth-service'
+import { readAppEnv, deleteAppEnv, setAppEnvKey, readAppEnvKey } from '../../shared/app-env'
+
 import { applyClaudeEnvPatch } from '../claude-accounts/environment'
 import { readShellStartupEnvVar } from '../pty/shell-startup/shell-startup-env'
 import { parseWslUncPath } from '../../shared/wsl-paths'
@@ -23,7 +25,7 @@ function cloneProcessEnv(): Record<string, string> {
   const env: Record<string, string> = {}
   for (const [key, value] of Object.entries(process.env)) {
     if (value !== undefined) {
-      env[key] = value
+      setAppEnvKey(env, key, value)
     }
   }
   return env
@@ -32,10 +34,10 @@ function cloneProcessEnv(): Record<string, string> {
 // System-default routing strips only Coding Agent 2-marked inherited CODEX_HOME overlays; preserve user overrides.
 function withoutOrcaCodexHomeOverride(base: Record<string, string>): Record<string, string> {
   const env = { ...base }
-  if (env.ORCA_CODEX_HOME && env.CODEX_HOME === env.ORCA_CODEX_HOME) {
+  if (readAppEnv(env, 'CODEX_HOME') && env.CODEX_HOME === readAppEnv(env, 'CODEX_HOME')) {
     delete env.CODEX_HOME
   }
-  delete env.ORCA_CODEX_HOME
+  deleteAppEnv(env, 'CODEX_HOME')
   return env
 }
 
@@ -46,9 +48,9 @@ function readInheritedOrShellEnvVar(
 ): string | undefined {
   // Prefer saved overlay source, then chat login-shell base, over inherited Coding Agent 2 values.
   return (
-    (sourceName ? process.env[sourceName] : undefined) ??
+    (sourceName ? readAppEnvKey(process.env, sourceName) : undefined) ??
     base?.[name] ??
-    process.env[name] ??
+    readAppEnvKey(process.env, name) ??
     readShellStartupEnvVar(name, process.env.HOME, process.env.SHELL)
   )
 }

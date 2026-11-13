@@ -1,8 +1,14 @@
+import { deleteAppEnvKey, appEnvKeys, readAppEnvKey } from '../../shared/app-env'
 import { restoreOrStripOverlayEnv } from '../../shared/agent-launch/startup/agent-overlay-env'
 import { getAppEnvironment } from '../../shared/app-environment'
 import { isOpenCodeLegacySharedConfigDir } from './legacy-shared-config-dir'
 
-const ORCA_ENV_PREFIXES = ['ORCA_OPENCODE_', 'ORCA_DATA_ACCOUNT_']
+const ORCA_ENV_PREFIXES = [
+  'ORCA_OPENCODE_',
+  'ORCA_DATA_ACCOUNT_',
+  'CODING_AGENT_OPENCODE_',
+  'CODING_AGENT_DATA_ACCOUNT_'
+]
 const ACCOUNT_ENV_KEYS = ['XDG_DATA_HOME', 'XDG_STATE_HOME', 'OPENCODE_DB', 'OPENCODE_AUTH_CONTENT']
 
 /** Run after account setup: restore user config and remove terminal-hook/account inheritance.
@@ -42,13 +48,13 @@ export function scrubOpenCodeAcpEnvironment(
   }
   // Account keys left unset by the child environment must not leak from the terminal overlay.
   for (const key of ACCOUNT_ENV_KEYS) {
-    if (env[key] === undefined) {
-      removed.push(key)
+    if (readAppEnvKey(env, key) === undefined) {
+      removed.push(...appEnvKeys([key]))
     }
   }
   for (const key of new Set([...Object.keys(env), ...Object.keys(inherited)])) {
     if (ORCA_ENV_PREFIXES.some((prefix) => key.startsWith(prefix))) {
-      delete env[key]
+      deleteAppEnvKey(env, key)
       removed.push(key)
     }
   }

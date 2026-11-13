@@ -1,3 +1,4 @@
+import { readProviderEnvironment } from '../source-control/provider-environment'
 import { Buffer } from 'node:buffer'
 import type { AzureDevOpsRepoRef } from './repository-ref'
 import { cancelUnreadResponseBody } from '../lib/unread-response-body'
@@ -74,11 +75,6 @@ export type AzureDevOpsRequestOptions = {
   onResponse?: (response: Response) => void
 }
 
-function envValue(name: string): string | null {
-  const value = process.env[name]?.trim() ?? ''
-  return value.length > 0 ? value : null
-}
-
 export function normalizeAzureDevOpsApiBaseUrl(value: string): string {
   return value
     .trim()
@@ -88,10 +84,12 @@ export function normalizeAzureDevOpsApiBaseUrl(value: string): string {
 
 export function getAzureDevOpsAuthConfig(): AzureDevOpsAuthConfig {
   return {
-    apiBaseUrl: envValue('ORCA_AZURE_DEVOPS_API_BASE_URL'),
-    pat: envValue('ORCA_AZURE_DEVOPS_TOKEN') ?? envValue('ORCA_AZURE_DEVOPS_PAT'),
-    accessToken: envValue('ORCA_AZURE_DEVOPS_ACCESS_TOKEN'),
-    username: envValue('ORCA_AZURE_DEVOPS_USERNAME')
+    apiBaseUrl: readProviderEnvironment('CODING_AZURE_DEVOPS_API_BASE_URL'),
+    pat:
+      readProviderEnvironment('CODING_AZURE_DEVOPS_TOKEN') ??
+      readProviderEnvironment('CODING_AZURE_DEVOPS_PAT'),
+    accessToken: readProviderEnvironment('CODING_AZURE_DEVOPS_ACCESS_TOKEN'),
+    username: readProviderEnvironment('CODING_AZURE_DEVOPS_USERNAME')
   }
 }
 

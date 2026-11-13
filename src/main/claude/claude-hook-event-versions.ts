@@ -1,5 +1,5 @@
 import { hasReachedAppVersion, isValidAppVersion } from '../../shared/app-version'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import path from 'node:path'
 
 // Unknown hook events make older CLIs reject all settings, including user hooks.

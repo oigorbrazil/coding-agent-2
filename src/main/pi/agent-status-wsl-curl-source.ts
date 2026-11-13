@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 export function getPiAgentStatusWslCurlSourceLines(): string[] {
   return [
     '// WSL identity and host curl availability are process-constant; avoid repeated filesystem probes on failed delivery.',
@@ -42,8 +43,8 @@ export function getPiAgentStatusWslCurlSourceLines(): string[] {
     '// Guest loopback may not reach Windows Coding Agent 2; retry through host curl.exe.',
     'async function postViaWindowsCurl(body: string, ompRuntime: boolean): Promise<void> {',
     '  const curlPath = resolveWindowsCurlPath()',
-    '  const windowsPort = process.env.ORCA_AGENT_HOOK_PORT',
-    '  const windowsToken = process.env.ORCA_AGENT_HOOK_TOKEN',
+    `  const windowsPort = ${appEnvReadExpression('process.env', 'AGENT_HOOK_PORT')}`,
+    `  const windowsToken = ${appEnvReadExpression('process.env', 'AGENT_HOOK_TOKEN')}`,
     "  if (!curlPath || !windowsPort || !windowsToken) throw new Error('Coding Agent 2 WSL hook bridge unavailable')",
     '  // Stale guest endpoints must fall back to current host coordinates.',
     '  const windowsUrl = `http://127.0.0.1:${windowsPort}${resolveHookPath(ompRuntime)}`',

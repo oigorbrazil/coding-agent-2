@@ -18,7 +18,7 @@ export const PLUGIN_INSTALL_COMMAND_SPECS: CommandSpec[] = [
     path: ['plugin', 'install'],
     summary: 'Install a plugin from a catalog, a Git repository or a folder',
     usage:
-      'orca plugin install <publisher.id|owner/repo[@ref]|git-url|page-url|dir> [--ref <ref>] [--catalog <official|community|id|url>] [--approve <fingerprint>] [--json]',
+      'coding plugin install <publisher.id|owner/repo[@ref]|git-url|page-url|dir> [--ref <ref>] [--catalog <official|community|id|url>] [--approve <fingerprint>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'source', 'ref', 'catalog', 'approve'],
     positionalArgs: ['source'],
     notes: [
@@ -30,17 +30,17 @@ export const PLUGIN_INSTALL_COMMAND_SPECS: CommandSpec[] = [
       EXIT_CODES_NOTE
     ],
     examples: [
-      'orca plugin install acme.dusk-theme',
-      'orca plugin install acme/orca-dusk-theme',
-      'orca plugin install acme/notes-panel@v1.4.0 --json',
-      'orca plugin install https://github.com/acme/notes-panel/releases/tag/v1.4.0',
-      'orca plugin install git@github.com:acme/private-panel.git --approve ap1-…'
+      'coding plugin install acme.dusk-theme',
+      'coding plugin install acme/orca-dusk-theme',
+      'coding plugin install acme/notes-panel@v1.4.0 --json',
+      'coding plugin install https://github.com/acme/notes-panel/releases/tag/v1.4.0',
+      'coding plugin install git@github.com:acme/private-panel.git --approve ap1-…'
     ]
   },
   {
     path: ['plugin', 'update'],
     summary: 'Update one installed plugin, or all of them',
-    usage: 'orca plugin update <plugin-key|--all> [--approve <fingerprint>] [--json]',
+    usage: 'coding plugin update <plugin-key|--all> [--approve <fingerprint>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'plugin', 'all', 'approve'],
     positionalArgs: ['plugin'],
     notes: [
@@ -51,37 +51,37 @@ export const PLUGIN_INSTALL_COMMAND_SPECS: CommandSpec[] = [
       EXIT_CODES_NOTE
     ],
     examples: [
-      'orca plugin update acme.notes-panel',
-      'orca plugin update --all --json',
-      'orca plugin update acme.notes-panel --approve ap1-…'
+      'coding plugin update acme.notes-panel',
+      'coding plugin update --all --json',
+      'coding plugin update acme.notes-panel --approve ap1-…'
     ]
   },
   {
     path: ['plugin', 'uninstall'],
     summary: 'Remove an installed plugin',
-    usage: 'orca plugin uninstall <plugin-key> [--json]',
+    usage: 'coding plugin uninstall <plugin-key> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'plugin'],
     positionalArgs: ['plugin'],
     notes: [
-      'Never needs approval. Removes its files, approval and theme choices. Bundled plugins can only be disabled; development folders use `orca plugin dev unload`.'
+      'Never needs approval. Removes its files, approval and theme choices. Bundled plugins can only be disabled; development folders use `coding plugin dev unload`.'
     ],
-    examples: ['orca plugin uninstall acme.notes-panel']
+    examples: ['coding plugin uninstall acme.notes-panel']
   },
   {
     path: ['plugin', 'catalog', 'list'],
     summary: 'List the plugin catalogs on the Coding Agent 2 host',
-    usage: 'orca plugin catalog list [--json]',
+    usage: 'coding plugin catalog list [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
     notes: [
       'Coding Agent 2’s official catalog is always present; the community catalog is added by default.'
     ],
-    examples: ['orca plugin catalog list --json']
+    examples: ['coding plugin catalog list --json']
   },
   {
     path: ['plugin', 'catalog', 'add'],
     summary: 'Add a plugin catalog; needs --approve',
     usage:
-      'orca plugin catalog add <owner/repo|git-url> [--ref <branch>] [--approve <fingerprint>] [--json]',
+      'coding plugin catalog add <owner/repo|git-url> [--ref <branch>] [--approve <fingerprint>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'source', 'ref', 'approve'],
     positionalArgs: ['source'],
     notes: [
@@ -90,8 +90,8 @@ export const PLUGIN_INSTALL_COMMAND_SPECS: CommandSpec[] = [
       EXIT_CODES_NOTE
     ],
     examples: [
-      'orca plugin catalog add acme/orca-catalog',
-      'orca plugin catalog add git@gitlab.com:acme/catalog.git --approve cat1-…'
+      'coding plugin catalog add acme/orca-catalog',
+      'coding plugin catalog add git@gitlab.com:acme/catalog.git --approve cat1-…'
     ]
   },
   {
@@ -99,12 +99,12 @@ export const PLUGIN_INSTALL_COMMAND_SPECS: CommandSpec[] = [
     aliases: [['plugin', 'catalog', 'remove']],
     destructive: true,
     summary: 'Remove a plugin catalog',
-    usage: 'orca plugin catalog rm <id|name|url> [--json]',
+    usage: 'coding plugin catalog rm <id|name|url> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'catalog'],
     positionalArgs: ['catalog'],
     notes: [
       'Never needs approval. Plugins installed from it stay installed but no longer update. Coding Agent 2’s official catalog cannot be removed.'
     ],
-    examples: ['orca plugin catalog rm community']
+    examples: ['coding plugin catalog rm community']
   }
 ]

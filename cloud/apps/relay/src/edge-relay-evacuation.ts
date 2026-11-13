@@ -3,7 +3,7 @@
 // rows whose host is no longer in the cohort and asks the edge to drain them; the desktop then
 // re-asks /v1/assign, and that ask exports its data and places it on a cell (app.ts). Each pass also
 // retries fences that did not land after a host left (edge-relay-fence.ts).
-import { RELAY_DEFAULT_REGION, RelayRegionSchema } from '@orca-cloud/relay-contract/relay-regions'
+import { RELAY_DEFAULT_REGION, RelayRegionSchema } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { RelayDatabase } from './database/database.js'
 import { EdgeAdminUnavailableError, type EdgeAdmin } from './edge-admin-client.js'
 import { inEdgeCohort, text, type EdgeRelayConfig, type Identity } from './edge-relay-cohort.js'

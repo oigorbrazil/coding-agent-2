@@ -14,8 +14,8 @@ import {
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { afterEach, expect, it, vi } from 'vitest'
-import * as processHost from '@orca/process-host'
-import { runProcess } from '@orca/process-host'
+import * as processHost from '@coding-agent/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { reclaimWorktreeGeneratedFiles } from './reclaim-worktree-generated-files.mjs'
 
 const roots = []

@@ -12,7 +12,7 @@ import {
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { createServer } from 'vite'
 import { afterEach, expect, it, vi } from 'vitest'
 import { createViteCacheRetentionPlugin } from '../../build-plugins/vite-cache-retention'

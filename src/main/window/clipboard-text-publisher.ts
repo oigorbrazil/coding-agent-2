@@ -1,6 +1,6 @@
 import { app, clipboard } from 'electron'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import {
   assertClipboardTextWriteWithinLimitWithYield,
   CLIPBOARD_TEXT_WRITE_MAX_BYTES,

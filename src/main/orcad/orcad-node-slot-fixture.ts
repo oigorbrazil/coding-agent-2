@@ -4,7 +4,7 @@ import { createRequire } from 'node:module'
 import type * as NodePty from 'node-pty'
 import { join, resolve } from 'node:path'
 import { it } from 'vitest'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   NODE_RUNTIME_ASSETS,
   SERVER_TARGETS,

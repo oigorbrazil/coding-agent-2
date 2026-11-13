@@ -63,6 +63,24 @@ function run(launch: ReturnType<typeof guestLoginShellLaunch>): string {
   return runRaw(launch).trim().split('\n').at(-1) ?? ''
 }
 
+it('forwards task-private values under both names without putting secrets in argv', () => {
+  const launch = guestLoginShellLaunch(
+    { binary: 'opencode', args: ['serve'], stdinMode: 'pipe', useCwdForNative: true },
+    {
+      ORCA_OPENCODE_TASK_ENV_OPENCODE_SERVER_PASSWORD: 'old-parent',
+      CODING_AGENT_OPENCODE_TASK_ENV_OPENCODE_SERVER_PASSWORD: 'new-parent'
+    },
+    {},
+    { OPENCODE_SERVER_PASSWORD: 'task-secret-7f3' }
+  )
+
+  expect(launch.env).toEqual({
+    ORCA_OPENCODE_TASK_ENV_OPENCODE_SERVER_PASSWORD: 'task-secret-7f3',
+    CODING_AGENT_OPENCODE_TASK_ENV_OPENCODE_SERVER_PASSWORD: 'task-secret-7f3'
+  })
+  expect(launch.args.join(' ')).not.toContain('task-secret-7f3')
+})
+
 describe.skipIf(process.platform === 'win32')('guestLoginShellLaunch', () => {
   it('reaches a profile-defined command, with task-private values winning over the profile', () => {
     const guest = guestHome()

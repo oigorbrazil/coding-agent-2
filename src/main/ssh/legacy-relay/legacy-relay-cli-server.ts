@@ -1,3 +1,14 @@
+import type { RpcResponse } from '../../runtime/rpc/core'
+import {
+  type LegacyRelayCliCall,
+  type LegacyRelayCliCaller,
+  assertLegacyRelayCliScope,
+  resolveLegacyRelayCliCaller
+} from './legacy-relay-cli-caller'
+
+import type { LegacyRelayCliServer } from './legacy-relay-client'
+import type { LegacyRelayLivePane } from './legacy-relay-bridge-leases'
+import { readAppEnv } from '../../../shared/app-env'
 /**
  * Serves the `orca orchestration` commands a relay-era terminal still runs, on this desktop's
  * runtime, where that terminal's Dispatch and Run records live.
@@ -11,15 +22,10 @@ import { createHash, randomUUID } from 'node:crypto'
 import { ORCHESTRATION_CONTRACT_VERSION } from '../../../shared/protocol-version'
 import { DESKTOP_BROWSER_BRIDGE_SETTING_LABEL } from '../../../shared/desktop-browser-bridge-protocol'
 import type { OrcaRuntimeService } from '../../runtime/orca-runtime'
-import type { RpcResponse } from '../../runtime/rpc/core'
+
 import { RpcDispatcher } from '../../runtime/rpc/dispatcher'
 import { ALL_RPC_METHODS } from '../../runtime/rpc/methods/rpc-method-registry'
-import {
-  assertLegacyRelayCliScope,
-  resolveLegacyRelayCliCaller,
-  type LegacyRelayCliCall,
-  type LegacyRelayCliCaller
-} from './legacy-relay-cli-caller'
+
 import {
   messagePayload,
   numberFlag,
@@ -27,7 +33,7 @@ import {
   retryRequestFlag,
   stringFlag
 } from './legacy-relay-cli-args'
-import type { LegacyRelayCliServer } from './legacy-relay-client'
+
 import { CONNECTOR_REPLY_UNAVAILABLE } from '../../../shared/rpc-contract/connector-params'
 import {
   cappedInboxLimit,
@@ -36,7 +42,6 @@ import {
   runLegacyRelayCliCall
 } from './legacy-relay-cli-call-limits'
 import { formatLegacyRelayCliResult, isRecord } from './legacy-relay-cli-output'
-import type { LegacyRelayLivePane } from './legacy-relay-bridge-leases'
 
 const METHODS: ReadonlySet<string> = new Set([
   'orchestration.check',
@@ -178,7 +183,7 @@ function buildCall(
 /** Its own receipt namespace per host terminal: a host can never replay another caller's result. */
 function callerFingerprint(targetId: string, env: Record<string, string>): string {
   return createHash('sha256')
-    .update(['legacy-relay-cli-v1', targetId, env.ORCA_TERMINAL_HANDLE ?? ''].join('\0'))
+    .update(['legacy-relay-cli-v1', targetId, readAppEnv(env, 'TERMINAL_HANDLE') ?? ''].join('\0'))
     .digest('hex')
 }
 
@@ -211,7 +216,7 @@ async function dispatchAsCaller(
     const exactReplay = isExactLegacyRelayCliReplay(runtime, fingerprint, requestId, call)
     const db = runtime.getOrchestrationDb()
     assertLegacyRelayCliScope(db, caller, call, deps.livePane, exactReplay)
-    const launchToken = env.ORCA_AGENT_LAUNCH_TOKEN?.trim()
+    const launchToken = readAppEnv(env, 'AGENT_LAUNCH_TOKEN')?.trim()
     return await dispatcherFor(runtime).dispatch(
       {
         id: `legacy-relay-cli-${requestId}`,

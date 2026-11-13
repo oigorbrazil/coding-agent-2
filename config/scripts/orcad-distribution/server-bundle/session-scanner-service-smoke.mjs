@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { describeProcessFailure } from '../../tool-invocation/process-failure-message.mjs'
 import { ORCAD_SESSION_SCANNER_SERVICE_ENTRY } from '../../../../src/shared/orcad-artifacts.ts'
 import { AI_VAULT_SERVICE_PROTOCOL_VERSION } from '../../../../src/main/ai-vault/scan-service/session-scanner-service-protocol.ts'

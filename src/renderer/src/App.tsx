@@ -110,7 +110,7 @@ function App(): React.JSX.Element {
           <LinkRoutingPreferenceDialogProvider>
             <AppBackgroundServices />
             <SpaceWindowStatePublisher />
-            <AppWorkspaceShell layout={layout} floatingWorkspace={floatingWorkspace} />
+            <AppWorkspaceShell layout={layout} />
             <AppRootSurfaces
               floatingWorkspace={floatingWorkspace}
               onboardingGate={onboardingGate}

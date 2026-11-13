@@ -1,3 +1,4 @@
+import { readAppEnv } from './app-env'
 import { spawnSync } from 'node:child_process'
 
 /** Developer machines may skip without fish; required shell-contract CI is the only end-to-end #9993 guard, so ORCA_REQUIRE_FISH=1 must fail instead. */
@@ -45,7 +46,7 @@ export function fishRequirementViolation(
   lookup: FishBinaryLookup,
   env: NodeJS.ProcessEnv = process.env
 ): string | null {
-  if (lookup.available || env[REQUIRE_FISH_ENV_VAR] !== '1') {
+  if (lookup.available || readAppEnv(env, 'REQUIRE_FISH') !== '1') {
     return null
   }
   return `${REQUIRE_FISH_ENV_VAR}=1 but the live fish tests would skip: ${lookup.reason}`

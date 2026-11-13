@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 /** Set ORCA_DAEMON_STREAM_BACKLOG_FILE to append queue and socket diagnostics as JSONL. */
 import { appendFileSync } from 'node:fs'
 
@@ -19,7 +20,7 @@ export function recordDaemonStreamBacklogEvent(
   event: string,
   detail: Record<string, unknown>
 ): void {
-  const filePath = process.env.ORCA_DAEMON_STREAM_BACKLOG_FILE
+  const filePath = readAppEnv(process.env, 'DAEMON_STREAM_BACKLOG_FILE')
   if (!filePath) {
     return
   }
@@ -31,7 +32,7 @@ export function recordDaemonStreamBacklogEvent(
 }
 
 export function startDaemonStreamBacklogProbe(sample: () => StreamBacklogSample): () => void {
-  const filePath = process.env.ORCA_DAEMON_STREAM_BACKLOG_FILE
+  const filePath = readAppEnv(process.env, 'DAEMON_STREAM_BACKLOG_FILE')
   if (!filePath) {
     return () => {}
   }

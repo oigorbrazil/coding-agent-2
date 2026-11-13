@@ -1,7 +1,7 @@
+import { readAppEnv } from '../../shared/app-env'
 import { app } from 'electron'
 import { totalmem } from 'node:os'
 
-const RENDERER_HEAP_ENV_VAR = 'ORCA_RENDERER_HEAP_MB'
 const BYTES_PER_GIB = 1024 * 1024 * 1024
 // Heavy sessions exceed Chromium's ~RAM/4 default; reclaim headroom within V8's 4GB cage. Keep low-RAM defaults to avoid OS kills/swap; 7.5GiB includes 8GB Linux machines whose MemTotal excludes reserved RAM.
 const RENDERER_HEAP_MIN_TOTAL_GIB = 7.5
@@ -64,7 +64,7 @@ export function enableRendererHeapHeadroom(
   options: { totalMemoryBytes?: number; env?: NodeJS.ProcessEnv } = {}
 ): void {
   const totalMemoryBytes = options.totalMemoryBytes ?? totalmem()
-  const envOverride = (options.env ?? process.env)[RENDERER_HEAP_ENV_VAR]
+  const envOverride = readAppEnv(options.env ?? process.env, 'RENDERER_HEAP_MB')
   const ceilingMb = computeRendererHeapCeilingMb(totalMemoryBytes, envOverride)
   if (ceilingMb === null) {
     return

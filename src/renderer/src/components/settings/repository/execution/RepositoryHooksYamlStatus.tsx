@@ -38,7 +38,7 @@ function getYamlStateCopy(
       return {
         heading: t(
           'auto.components.settings.RepositoryHooksSection.56f9a4a1d0',
-          'Using `orca.yaml`'
+          'Using `coding.yaml`'
         ),
         description: t(
           'auto.components.settings.RepositoryHooksSection.ca424ff135',
@@ -49,7 +49,7 @@ function getYamlStateCopy(
       return {
         heading: t(
           'auto.components.settings.RepositoryHooksSection.623e0c9f31',
-          '`orca.yaml` could not be parsed'
+          '`coding.yaml` could not be parsed'
         ),
         description: t(
           'auto.components.settings.RepositoryHooksSection.aba825233f',
@@ -60,7 +60,7 @@ function getYamlStateCopy(
       return {
         heading: t(
           'auto.components.settings.RepositoryHooksSection.623e0c9f31',
-          '`orca.yaml` could not be parsed'
+          '`coding.yaml` could not be parsed'
         ),
         description: t(
           'auto.components.settings.RepositoryHooksSection.0cc712b823',
@@ -71,11 +71,11 @@ function getYamlStateCopy(
       return {
         heading: t(
           'auto.components.settings.RepositoryHooksSection.5a67e4793d',
-          'No `orca.yaml` detected'
+          'No `coding.yaml` detected'
         ),
         description: t(
           'auto.components.settings.RepositoryHooksSection.b20c5df6ca',
-          'Add an `orca.yaml` file to enable shared setup, archive, or issue-automation defaults for this repo. Example template:'
+          'Add a `coding.yaml` file to enable shared setup, archive, or issue-automation defaults for this repo. Legacy `orca.yaml` is still read. Example template:'
         )
       }
   }
@@ -111,7 +111,7 @@ function ExampleTemplateCard({
       <p className="text-[10px] tracking-[0.18em] text-muted-foreground">
         {t('auto.components.settings.RepositoryHooksSection.175daba180', 'Example')}{' '}
         <code className="rounded bg-muted px-1 py-0.5">
-          {t('auto.components.settings.RepositoryHooksSection.39da2ae12f', 'orca.yaml')}
+          {t('auto.components.settings.RepositoryHooksSection.39da2ae12f', 'coding.yaml')}
         </code>{' '}
         {t('auto.components.settings.RepositoryHooksSection.95a0411b3e', 'template')}
       </p>
@@ -136,12 +136,14 @@ function ExampleTemplateCard({
 }
 
 export function RepositoryHooksYamlStatus({
+  warning,
   yamlState,
   yamlHooks,
   copiedTemplate,
   onCopyTemplate
 }: {
   yamlState: string
+  warning?: string
   yamlHooks: OrcaHooks | null
   copiedTemplate: boolean
   onCopyTemplate: () => void
@@ -156,6 +158,7 @@ export function RepositoryHooksYamlStatus({
           {copy.heading}
         </p>
         <p className="text-xs text-muted-foreground">{copy.description}</p>
+        {warning && <p className="text-xs text-muted-foreground">{warning}</p>}
       </div>
       {yamlState === 'loaded' ? (
         <pre className="overflow-x-auto whitespace-pre-wrap break-words rounded-lg border border-border/50 bg-muted/30 p-3 font-mono text-[11.5px] leading-5 text-foreground">

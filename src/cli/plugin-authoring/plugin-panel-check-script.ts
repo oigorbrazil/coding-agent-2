@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 /**
  * Runs inside the plugin's Node process with the test hooks: for each components panel, and each
  * scenario its `<entry>.check.ts` defines (else one plain run), mount the worker (`main`) and the
@@ -6,7 +7,7 @@
 export const PLUGIN_PANEL_CHECK_SCRIPT = `
 const { mount, mockHost, mountWorker } = await import('orca/testing')
 const { panels, main, scenario: only, drawnTree, listOnly } = JSON.parse(
-  process.env.ORCA_PLUGIN_CHECK_PANELS
+  ${appEnvReadExpression('process.env', 'PLUGIN_CHECK_PANELS')}
 )
 const results = []
 let stray = []

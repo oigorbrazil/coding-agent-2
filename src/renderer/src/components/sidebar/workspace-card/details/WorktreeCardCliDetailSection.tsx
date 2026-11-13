@@ -30,11 +30,11 @@ export function WorktreeCardCliDetailSection({
           {provenance.callerTerminalHandle
             ? t(
                 'auto.components.sidebar.WorktreeCardMeta.cliCreatedFromAgent',
-                'Created by an agent via `orca worktree create`'
+                'Created by an agent via `coding-agent worktree create`'
               )
             : t(
                 'auto.components.sidebar.WorktreeCardMeta.cliCreatedFromShell',
-                'Created via `orca worktree create`'
+                'Created via `coding-agent worktree create`'
               )}
         </div>
         {agentLabel ? (

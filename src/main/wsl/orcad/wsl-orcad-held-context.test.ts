@@ -58,7 +58,7 @@ vi.mock('../../managed-server/install/orcad-remote-context', async () => {
   }
 })
 
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { readWslHostFacts, WSL_HOST_FACTS_COMMAND } from './wsl-orcad-held-context'
 
 /** What WSL_HOST_FACTS_COMMAND prints. */

@@ -1,16 +1,17 @@
-import { readCommandBody } from './command-body-input'
-import type {
-  LinearIssueInclude,
-  LinearIssueListRequest,
-  LinearIssueRequest,
-  LinearIssueTaskUpdateRequest,
-  LinearWriteTargetRequest
-} from '../shared/linear/agent-access'
 import {
+  type LinearIssueInclude,
+  type LinearIssueRequest,
+  type LinearIssueTaskUpdateRequest,
+  type LinearWriteTargetRequest,
+  type LinearIssueListRequest,
   LINEAR_CHILDREN_MAX_DEPTH,
   LINEAR_WRITE_BODY_CAP,
   clampLinearIssueDepth
 } from '../shared/linear/agent-access'
+
+import { readAppEnv } from '../shared/app-env'
+import { readCommandBody } from './command-body-input'
+
 import { isLinearUuid } from '../shared/linear/uuid'
 import {
   getOptionalNonNegativeIntegerFlag,
@@ -180,9 +181,11 @@ export function buildLinearCurrentContext(
   return {
     remote,
     ...(remote ? {} : { cwd }),
-    ...(process.env.ORCA_WORKTREE_ID ? { worktreeId: process.env.ORCA_WORKTREE_ID } : {}),
-    ...(process.env.ORCA_TERMINAL_HANDLE
-      ? { terminalHandle: process.env.ORCA_TERMINAL_HANDLE }
+    ...(readAppEnv(process.env, 'WORKTREE_ID')
+      ? { worktreeId: readAppEnv(process.env, 'WORKTREE_ID') }
+      : {}),
+    ...(readAppEnv(process.env, 'TERMINAL_HANDLE')
+      ? { terminalHandle: readAppEnv(process.env, 'TERMINAL_HANDLE') }
       : {})
   }
 }

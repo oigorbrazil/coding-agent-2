@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
@@ -16,7 +17,7 @@ export function desktopScriptPlatform(): DesktopScriptPlatform | null {
 export function resolveDesktopScriptProviderPath(
   platform = desktopScriptPlatform()
 ): string | null {
-  const override = process.env.ORCA_COMPUTER_DESKTOP_SCRIPT_PROVIDER_PATH
+  const override = readAppEnv(process.env, 'COMPUTER_DESKTOP_SCRIPT_PROVIDER_PATH')
   if (override && existsSync(override)) {
     return override
   }

@@ -103,7 +103,7 @@ describe('plain Node entry guard', () => {
       runWriteBundle(
         plugin,
         createOutputDir(),
-        'require("node:fs"); require("path"); require("@orca/process-host/spawn-observer"); require("node-pty")'
+        'require("node:fs"); require("path"); require("@coding-agent/process-host/spawn-observer"); require("node-pty")'
       )
     ).not.toThrow()
   })

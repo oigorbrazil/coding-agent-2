@@ -23,7 +23,7 @@ async function editorPlugin(): Promise<string> {
     join(dir, 'editor', 'index.html'),
     '<!doctype html>\n<html>\n<body>\n<script type="module" src="./main.ts"></script>\n</body>\n</html>\n'
   )
-  const manifestPath = join(dir, 'orca-plugin.json')
+  const manifestPath = join(dir, 'coding-plugin.json')
   await writeFile(
     manifestPath,
     (await readFile(manifestPath, 'utf8')).replace('editor/main.ts', 'editor/index.html')

@@ -1,6 +1,6 @@
 import { createServer, type Server, type Socket } from 'node:net'
 import type { Duplex } from 'node:stream'
-import { GrowingByteBuffer } from '@orca/process-host/growing-byte-buffer'
+import { GrowingByteBuffer } from '@coding-agent/process-host/growing-byte-buffer'
 import { BROWSER_NETWORK_TUNNEL_MAX_STREAMS } from './browser-network-tunnel-stream-state'
 import { pipeUpstreamToClient } from './remote-browser-socks-upstream'
 

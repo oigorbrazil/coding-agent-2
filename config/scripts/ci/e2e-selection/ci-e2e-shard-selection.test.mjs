@@ -3,7 +3,7 @@ import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { planE2e, verifyE2eSelection } from './ci-e2e-shard-plan.mjs'
 
 const require = createRequire(new URL('../../ci-e2e-shard-selection.test.mjs', import.meta.url))

@@ -1,5 +1,5 @@
 {
-  "name": "@orca/windows-registry",
+  "name": "@coding-agent/windows-registry",
   "version": "1.0.0",
   "private": true,
   "description": "Read-only Windows registry value enumeration for Coding Agent 2",

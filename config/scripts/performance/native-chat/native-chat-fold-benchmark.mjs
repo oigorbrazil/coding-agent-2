@@ -6,7 +6,7 @@ import { performance } from 'node:perf_hooks'
 import { build } from 'esbuild'
 import { buildCounterbalancedSchedule } from '../measurement/counterbalanced-benchmark-schedule.mjs'
 import { summarizeBenchmarkSamples } from '../measurement/benchmark-sample-summary.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { describeProcessFailure } from '../../tool-invocation/process-failure-message.mjs'
 import {
   assertFoldConservesEvidence,

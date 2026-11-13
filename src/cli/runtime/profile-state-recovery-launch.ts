@@ -1,12 +1,15 @@
-import { realpathSync } from 'node:fs'
-import { runProcess } from '@orca/process-host'
 import {
+  type ProfileStateRecoveryRequest,
+  type ProfileStateRollbackResult,
   PROFILE_STATE_RECOVERY_FLAG,
   PROFILE_STATE_RECOVERY_RESULT_PREFIX,
-  profileStateRecoveryResponseSchema,
-  type ProfileStateRecoveryRequest,
-  type ProfileStateRollbackResult
+  profileStateRecoveryResponseSchema
 } from '../../shared/profile-state-recovery-command'
+
+import { appEnvPairs } from '../../shared/app-env'
+import { realpathSync } from 'node:fs'
+import { runProcess } from '@coding-agent/process-host'
+
 import {
   getExecutableAppArgs,
   resolveAppRoot,
@@ -36,8 +39,8 @@ export async function launchProfileStateRecovery(
     cwd: resolveAppRoot(),
     env: {
       ...stripElectronRunAsNode(process.env),
-      ORCA_BACKGROUND_LAUNCH: '1',
-      ORCA_USER_DATA_PATH: userDataPath
+      ...appEnvPairs('BACKGROUND_LAUNCH', '1'),
+      ...appEnvPairs('USER_DATA_PATH', userDataPath)
     },
     // Recovery may copy large backups; the lock owner must finish or be explicitly terminated.
     timeoutMs: null

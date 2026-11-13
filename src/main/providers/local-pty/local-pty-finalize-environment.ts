@@ -1,3 +1,13 @@
+import {
+  type HistoryInjectionResult,
+  injectHistoryEnv,
+  injectWslFishHistoryEnv,
+  logHistoryInjection
+} from '../../pty/history/terminal-history'
+import type { LocalPtyLaunchPlan } from './local-pty-launch-plan'
+import type { LocalPtyProviderOptions } from './local-pty-provider-types'
+import type { PtySpawnOptions } from '../pty-provider-contract'
+import { deleteAppEnv, readAppEnvKey } from '../../../shared/app-env'
 import { win32 as pathWin32 } from 'node:path'
 import { shouldUseShellReadyStartupDelivery } from '../../../shared/agent-launch/startup/codex-startup-delivery'
 import { expandWindowsPathEnvironmentVariables } from '../../../shared/windows-environment-expansion'
@@ -8,26 +18,16 @@ import {
   POWERLEVEL10K_WIZARD_DISABLE_ENV,
   seedPowerlevel10kWizardEnv
 } from '../../pty/shell-startup/powerlevel10k-wizard-env'
-import {
-  POSIX_SHELL_STARTUP_COMMAND_ENV,
-  supportsPosixShellStartupCommand
-} from '../../pty/shell-startup/posix-shell-startup-command'
+import { supportsPosixShellStartupCommand } from '../../pty/shell-startup/posix-shell-startup-command'
 import { resolvePathEnvKey } from '../../pty/environment/windows-path-segment-merge'
 import { selectShellStartupFeatures } from '../../pty/shell-startup/shell-startup-features'
-import {
-  injectHistoryEnv,
-  injectWslFishHistoryEnv,
-  logHistoryInjection,
-  type HistoryInjectionResult
-} from '../../pty/history/terminal-history'
+
 import { addWslEnvKeys } from '../../../shared/wsl-env'
 import { dropInheritedOrcaHistFile } from '../../pty/history/worktree-history-file-path'
 import { promoteAgentTeamsShimPath } from './local-pty-launch-context'
-import type { LocalPtyLaunchPlan } from './local-pty-launch-plan'
-import type { LocalPtyProviderOptions } from './local-pty-provider-types'
+
 import { getShellLaunchConfig } from './local-pty-shell-ready'
 import { finalizeWindowsLocalPtySpawnEnvironment } from './local-pty-windows-spawn-environment'
-import type { PtySpawnOptions } from '../pty-provider-contract'
 
 export function finalizeLocalPtySpawnEnvironment(args: {
   spawn: PtySpawnOptions
@@ -41,7 +41,7 @@ export function finalizeLocalPtySpawnEnvironment(args: {
   }
   seedPowerlevel10kWizardEnv(env, { envToDelete: spawn.envToDelete })
   if (
-    env[POWERLEVEL10K_WIZARD_DISABLE_ENV] !== undefined &&
+    readAppEnvKey(env, POWERLEVEL10K_WIZARD_DISABLE_ENV) !== undefined &&
     process.platform === 'win32' &&
     pathWin32.basename(plan.shellPath).toLowerCase() === 'wsl.exe'
   ) {
@@ -51,7 +51,9 @@ export function finalizeLocalPtySpawnEnvironment(args: {
   expandWindowsPathEnvironmentVariables(env)
   promoteAgentTeamsShimPath(
     env,
-    requestedEnv ? requestedEnv[resolvePathEnvKey(requestedEnv, process.platform)] : undefined
+    requestedEnv
+      ? readAppEnvKey(requestedEnv, resolvePathEnvKey(requestedEnv, process.platform))
+      : undefined
   )
   // Requested PATH is promoted after the host scrub, so strip legacy shims again.
   stripLegacyTerminalShimEnv(env, process.platform)
@@ -78,7 +80,7 @@ export function finalizeLocalPtySpawnEnvironment(args: {
     logHistoryInjection(worktreeId, historyResult)
   } else {
     // History-off bypasses injectHistoryEnv, so clear inherited Coding Agent 2 history explicitly (#11146).
-    delete env.ORCA_HISTFILE
+    deleteAppEnv(env, 'HISTFILE')
     // Exported fish_history must not select the launching workspace history when isolation is off.
     dropInheritedOrcaFishHistory(env)
     // Exported HISTFILE must not select the launching workspace history when isolation is off.
@@ -96,8 +98,8 @@ export function finalizeLocalPtySpawnEnvironment(args: {
         startupCommandDelivery: spawn.startupCommandDelivery
       })
     // Only this shell launch config may choose Coding Agent 2-owned features.
-    delete env.ORCA_SHELL_FEATURES
-    delete env[POSIX_SHELL_STARTUP_COMMAND_ENV]
+    deleteAppEnv(env, 'SHELL_FEATURES')
+    deleteAppEnv(env, 'POSIX_SHELL_STARTUP_COMMAND')
     const userShellArgs = !spawn.command && !spawn.launchAgent ? spawn.terminalShellArgs : undefined
     // Capture before launch config prefixes XDG_DATA_DIRS.
     const fishLaunch = {
@@ -128,7 +130,7 @@ export function finalizeLocalPtySpawnEnvironment(args: {
     }
     const shellLaunch = plan.getFallbackShellReadyConfig(plan.shellPath)
     plan.primaryPreLaunchEnv = Object.fromEntries(
-      Object.keys(shellLaunch.env).map((key) => [key, env[key]])
+      Object.keys(shellLaunch.env).map((key) => [key, readAppEnvKey(env, key)])
     )
     Object.assign(env, shellLaunch.env)
     plan.shellArgs = userShellArgs ?? shellLaunch.args ?? plan.shellArgs

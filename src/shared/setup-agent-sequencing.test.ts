@@ -217,7 +217,15 @@ describe('createSequencedSetupAgentCommands', () => {
           env: {
             ...process.env,
             ...commands.startupEnv,
-            [SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]: `FOO=bar bash ${quoteSh(startupScriptPath)}; printf 'env-cleanup\\n' >> ${quoteSh(logPath)}`
+            ...Object.fromEntries(
+              [
+                SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV,
+                'CODING_AGENT_SEQUENCED_STARTUP_COMMAND'
+              ].map((key) => [
+                key,
+                `FOO=bar bash ${quoteSh(startupScriptPath)}; printf 'env-cleanup\\n' >> ${quoteSh(logPath)}`
+              ])
+            )
           }
         })
       )

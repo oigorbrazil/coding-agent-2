@@ -4,7 +4,7 @@
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { describe, expect, it } from 'vitest'
 import { runClaudeCommandProcess } from './claude-command-process'
 import {

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 import { buildAppFontFamily } from '@/lib/app-font-family'
+import { useDesktopWallpaperBackdrop } from './use-desktop-wallpaper-backdrop'
 import { applyCodeFontSmoothing } from '@/lib/code-font-smoothing'
 import { applyMarkdownCodeFontFamily } from '@/lib/markdown-code-font'
 import { useSplitDividerSetting } from '@/hooks/use-split-divider-setting'
@@ -92,6 +93,7 @@ export function useDocumentAppearance(): void {
   usePluginTerminalPaletteRefresh()
   usePluginAppThemeSync()
   useSplitDividerSetting()
+  useDesktopWallpaperBackdrop()
   const appFontFamily = useAppStore((s) => s.settings?.appFontFamily)
   const codeFontSmoothing = useAppStore((s) => s.settings?.codeFontSmoothing)
   const editorFontFamily = useAppStore((s) => s.settings?.editorFontFamily)

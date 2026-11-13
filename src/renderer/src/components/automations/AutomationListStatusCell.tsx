@@ -44,7 +44,7 @@ export function AutomationListStatusCell({
         className="inline-flex min-w-0 items-center gap-1 truncate text-status-warning-text"
         title={t(
           'automations.setupTrust.listSkippedTitle',
-          "The last run skipped setup because its branch's orca.yaml setup commands changed. Review them from the actions menu."
+          "The last run skipped setup because its branch's coding.yaml setup commands changed. Review them from the actions menu."
         )}
       >
         <TriangleAlert className="size-3.5 shrink-0" />

@@ -11,7 +11,15 @@ function readRootEntries(sha) {
 }
 
 // These reviewed additions stay listed until the base tree carries them.
-const REVIEWED_ROOT_ENTRIES = new Set(['.claude', '.mcp.json', 'cloud', 'opencode.json'])
+// DESIGN.md and PRODUCT.md are read from the root by the design skill (impeccable).
+const REVIEWED_ROOT_ENTRIES = new Set([
+  '.claude',
+  '.mcp.json',
+  'cloud',
+  'DESIGN.md',
+  'opencode.json',
+  'PRODUCT.md'
+])
 
 function checkRootDirectoryEntries(argv) {
   if (argv.length !== 2) {

@@ -125,6 +125,20 @@ function sentRuntime(runtime: ProjectRuntimeSent): Record<string, unknown> {
 }
 
 /** The full pty:spawn request a real pane sends for this case. */
+// Folder-scope keys stay legacy-only; the pane identity keys are mirrored.
+const UNMIRRORED_FOLDER_KEYS = new Set(['ORCA_PROJECT_GROUP_ID', 'ORCA_WORKSPACE_ROOT'])
+
+/** The pane env carries each legacy ORCA_ identity key under its CODING_AGENT_ name too. */
+function withAppEnvMirrors(env: Record<string, string>): Record<string, string> {
+  const mirrored = { ...env }
+  for (const [key, value] of Object.entries(env)) {
+    if (key.startsWith('ORCA_') && !UNMIRRORED_FOLDER_KEYS.has(key)) {
+      mirrored[`CODING_AGENT_${key.slice('ORCA_'.length)}`] = value
+    }
+  }
+  return mirrored
+}
+
 export function windowSpawnRequest(c: WindowLaunchCase): Record<string, unknown> {
   const { workspace, producer, request } = c
   const worktreeId = launchWorkspaceId(workspace)
@@ -136,7 +150,7 @@ export function windowSpawnRequest(c: WindowLaunchCase): Record<string, unknown>
   return {
     ...PANE_GRID,
     cwd,
-    env: {
+    env: withAppEnvMirrors({
       ...request.agentEnv,
       ORCA_WORKSPACE_ID: worktreeId,
       ...(workspace.kind === 'folder'
@@ -146,7 +160,7 @@ export function windowSpawnRequest(c: WindowLaunchCase): Record<string, unknown>
       ORCA_TAB_ID: LAUNCH_TAB_ID,
       ORCA_WORKTREE_ID: worktreeId,
       ORCA_AGENT_LAUNCH_TOKEN: LAUNCH_TOKEN
-    },
+    }),
     command: request.command,
     launchConfig: {
       agentCommand: request.agentCommand,

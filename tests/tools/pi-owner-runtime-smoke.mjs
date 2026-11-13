@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { build } from 'esbuild'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 const piRoot = resolve(process.argv[2] || '')
 assert.ok(process.argv[2], 'Pass an installed pi-coding-agent package directory')

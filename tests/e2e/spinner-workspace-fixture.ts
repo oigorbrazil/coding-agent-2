@@ -1,7 +1,7 @@
 import { expect, type Page } from '@stablyai/playwright-test'
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { attachRepoAndOpenTerminal } from './helpers/orca-restart'
 import { configureRendererScaleFixture } from '../../config/scripts/performance/idle-cpu/idle-cpu-renderer-scale-fixture.mjs'
 

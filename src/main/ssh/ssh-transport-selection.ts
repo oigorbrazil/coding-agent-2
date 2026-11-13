@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import type { SshTarget } from '../../shared/ssh-types'
 import type { SshResolvedConfig } from './config/ssh-g-config-resolution'
 import { listDefaultIdentityFilePaths, resolveIdentityFilePaths } from './ssh-auth-resolution'
@@ -32,14 +33,14 @@ export function shouldUseSystemSshTransport(
 ): boolean {
   if (isOpenSshConfigBackedTarget(target) && resolved) {
     return (
-      process.env.ORCA_SSH_FORCE_SYSTEM_TRANSPORT === '1' ||
+      readAppEnv(process.env, 'SSH_FORCE_SYSTEM_TRANSPORT') === '1' ||
       resolved.proxyUseFdpass === true ||
       resolved.proxyCommand != null ||
       resolved.proxyJump != null
     )
   }
   return (
-    process.env.ORCA_SSH_FORCE_SYSTEM_TRANSPORT === '1' ||
+    readAppEnv(process.env, 'SSH_FORCE_SYSTEM_TRANSPORT') === '1' ||
     target.proxyCommand != null ||
     target.jumpHost != null ||
     resolved?.proxyUseFdpass === true ||

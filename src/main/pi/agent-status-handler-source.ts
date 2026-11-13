@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import { getOmpModelCommandSourceLines } from './omp-model-command-source'
 import { getPiPrefillHandlerSourceLines } from './prefill-extension-source'
 import { getAgentStatusInputRedactionSourceLines } from './agent-status-input-redaction-source'
@@ -125,10 +126,10 @@ export function getPiAgentStatusHandlerSourceLines(kind: PiAgentKind): string[] 
     '// Inherited pane identity permits only the lead process; PID equality retains in-process reloads.',
     'export default function (pi): void {',
     ...primeDaemonWorkerGuard,
-    `  const ownerPid = process.env.${ownerEnv}`,
+    `  const ownerPid = ${appEnvReadExpression('process.env', ownerEnv.slice(5))}`,
     '  const selfPid = String(process.pid)',
     '  if (ownerPid && ownerPid !== selfPid && isStatusOwnerAlive(ownerPid)) return',
-    `  process.env.${ownerEnv} = selfPid`,
+    `  process.env.${ownerEnv} = process.env.CODING_AGENT_${ownerEnv.slice(5)} = selfPid`,
     '  resetPostQueue()',
     ...getPiSubagentRosterSetupSourceLines(kind),
     ...getOmpSessionOwnerHandlerSourceLines(kind),

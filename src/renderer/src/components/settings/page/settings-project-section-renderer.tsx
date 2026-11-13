@@ -59,6 +59,7 @@ export function renderProjectSettingsSections(
             yamlHooks={repoHooksState?.hooks ?? null}
             hasHooksFile={repoHooksState?.hasHooks ?? false}
             hooksInspectionReady={Boolean(repoHooksState)}
+            warning={repoHooksState?.warning}
             mayNeedUpdate={repoHooksState?.mayNeedUpdate ?? false}
             updateRepo={model.updateRepo}
             removeProject={() => void model.removeProjectAllHosts(settingsProject.setups)}

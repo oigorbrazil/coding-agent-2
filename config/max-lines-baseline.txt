@@ -6,3 +6,15 @@ inline src/main/ipc/worktree-remote.ts
 inline src/main/ssh/ssh-channel-multiplexer.ts
 inline src/main/ssh/connection/ssh-connection.ts
 inline src/renderer/src/components/terminal-pane/pty-transport/remote-runtime/remote-runtime-pty-transport.ts
+inline src/main/runtime/orca-runtime-test-mocks/setup.spec.ts
+inline src/renderer/src/components/home/ascii-effect.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/Dropdown.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/FlowCanvas.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/GlobalEditors.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/NodeCanvas.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/PhaseEditors.tsx
+inline src/renderer/src/components/settings/coding-opus/playbooks/PlaybooksEditor.tsx
+inline src/renderer/src/lib/coding-opus-playbooks/flowDoc.ts
+inline src/renderer/src/lib/coding-opus-playbooks/graph.ts
+inline src/renderer/src/lib/coding-opus-playbooks/state.ts
+inline src/renderer/src/lib/coding-opus-playbooks/yaml.ts

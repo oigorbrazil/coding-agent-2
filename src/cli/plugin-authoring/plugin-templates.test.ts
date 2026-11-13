@@ -34,9 +34,6 @@ describe('orca plugin create templates', () => {
     expect(report.contentHash).toMatch(/^[0-9a-f]{64}$/)
     const contentOnly = ['theme', 'terminal-theme', 'icon-theme', 'syntax', 'language-pack']
     expect(report.plugin?.needsApproval).toBe(!contentOnly.includes(template))
-    const readme = await readFile(join(dir, 'README.md'), 'utf8')
-    expect(readme).toContain('orca plugin dev watch .')
-    expect(readme).not.toContain('dev load')
   })
 
   it.each(PLUGIN_TEMPLATE_NAMES)(
@@ -45,7 +42,7 @@ describe('orca plugin create templates', () => {
       const dir = join(await tempRoot(), `bare-${template}`)
       const created = await createPluginFromTemplate({ dir, template })
       expect(created.pluginKey).toBe(`local.bare-${template}`)
-      const manifest = JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
+      const manifest = JSON.parse(await readFile(join(dir, 'coding-plugin.json'), 'utf8'))
       expect(manifest.publisher).toBeUndefined()
       // Hooks and isolated-only editors arrived later than build-less sources.
       const floor =

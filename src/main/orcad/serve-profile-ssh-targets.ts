@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DEFAULT_LOCAL_ORCA_PROFILE_ID } from '../../shared/orca-profiles'
@@ -10,7 +11,7 @@ import { classifyProfileStateStorage } from '../persistence/profile-state/profil
 export function serveProfileHasSshTargets(userDataPath: string): boolean {
   // Before profile indexes existed, state lived at the legacy root paths.
   const location = getActiveProfileStateLocation(userDataPath) ?? {
-    dataFile: join(userDataPath, 'orca-data.json'),
+    dataFile: renamedUserDataFile(join(userDataPath, 'orca-data.json')),
     databaseFile: join(userDataPath, PROFILE_STATE_DATABASE_FILE_NAME),
     profileId: DEFAULT_LOCAL_ORCA_PROFILE_ID
   }

@@ -35,22 +35,22 @@ fi
 [[ $- == *i* ]] && bind 'set enable-bracketed-paste on' 2>/dev/null
 # Login profiles may already source .bashrc; sourcing it again would duplicate PATH, hooks and prompt setup.
 __orca_restore_agent_teams_path() {
-  [[ -n "\${ORCA_AGENT_TEAMS_SHIM_DIR:-}" ]] || return 0
+  [[ -n "\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR:-}}" ]] || return 0
   case "$PATH" in
-    "\${ORCA_AGENT_TEAMS_SHIM_DIR}"|"\${ORCA_AGENT_TEAMS_SHIM_DIR}:"*) return 0 ;;
+    "\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}"|"\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}:"*) return 0 ;;
   esac
-  export PATH="\${ORCA_AGENT_TEAMS_SHIM_DIR}:$PATH"
+  export PATH="\${CODING_AGENT_AGENT_TEAMS_SHIM_DIR-\${ORCA_AGENT_TEAMS_SHIM_DIR}}:$PATH"
 }
 __orca_restore_agent_teams_path
 ${ORCA_CLI_POSIX_PATH_RESTORE}
 ${WSL_MANAGED_CLI_PATH_RESTORE}
 # Restore Coding Agent 2-managed config after user startup files may override it.
-[[ -n "\${ORCA_OPENCODE_CONFIG_DIR:-}" ]] && export OPENCODE_CONFIG_DIR="\${ORCA_OPENCODE_CONFIG_DIR}"
+[[ -n "\${CODING_AGENT_OPENCODE_CONFIG_DIR-\${ORCA_OPENCODE_CONFIG_DIR:-}}" ]] && export OPENCODE_CONFIG_DIR="\${CODING_AGENT_OPENCODE_CONFIG_DIR-\${ORCA_OPENCODE_CONFIG_DIR}}"
 ${MANAGED_DATA_ACCOUNT_POSIX_RESTORE}
-[[ -n "\${ORCA_MIMOCODE_CONFIG_DIR:-}" ]] && export MIMOCODE_CONFIG_DIR="\${ORCA_MIMOCODE_CONFIG_DIR}"
+[[ -n "\${CODING_AGENT_MIMOCODE_CONFIG_DIR-\${ORCA_MIMOCODE_CONFIG_DIR:-}}" ]] && export MIMOCODE_CONFIG_DIR="\${CODING_AGENT_MIMOCODE_CONFIG_DIR-\${ORCA_MIMOCODE_CONFIG_DIR}}"
 ${getPosixOmpShellWrapper()}
 # Profile scripts must not replace Coding Agent 2's runtime CODEX_HOME.
-[[ -n "\${ORCA_CODEX_HOME:-}" ]] && export CODEX_HOME="\${ORCA_CODEX_HOME}"
+[[ -n "\${CODING_AGENT_CODEX_HOME-\${ORCA_CODEX_HOME:-}}" ]] && export CODEX_HOME="\${CODING_AGENT_CODEX_HOME-\${ORCA_CODEX_HOME}}"
 ${getPosixCodexShellLaunchPreflight() + getPosixClaudeShellFunction()}
 ${BASH_WSL_CWD_REPORT_BLOCK}
 # OSC 133 C/D clears agent status after interrupted CLIs exit without sending Stop/SessionEnd hooks.

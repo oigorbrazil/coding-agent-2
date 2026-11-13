@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { CLAUDE_AGENT_VIEW_MOD_SOURCE } from '../claude/agent-view/agent-view-mod-source'
 import { bindRemoteClaudeInterruptReconciliation } from '../ssh/ssh-agent-hook-interrupt-reconciliation'
 import { createHash } from 'node:crypto'
@@ -167,4 +168,15 @@ export const defaultWslHookRelayDeps: WslHookRelayManagerDeps = {
   }),
   warn: (message) => console.warn(message),
   transientRetryDelayMs: WSL_RELAY_TRANSIENT_RETRY_DELAY_MS
+}
+
+export function readWslHookCoordinates(env: Record<string, string>): {
+  env: Record<string, string>
+  port: number | null
+} {
+  const port = Number(readAppEnv(env, 'AGENT_HOOK_PORT') ?? '')
+  return {
+    env,
+    port: Number.isInteger(port) && port > 0 && readAppEnv(env, 'AGENT_HOOK_TOKEN') ? port : null
+  }
 }

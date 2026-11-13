@@ -2,7 +2,7 @@
 
 This Node package owns subprocess spawning, forked children, bounded output, cancellation, Windows argument handling, and process-tree termination. Desktop, the headless server, CLI, SSH relay, and daemon use the same implementation. It has no runtime npm dependencies, Electron imports, or native addons.
 
-Import `runProcess`, `runProcessSync`, and `spawnProcess` from `@orca/process-host`. Import their contracts and default limits from `@orca/process-host/process-spec`. Other explicit subpaths expose forking, termination, Windows arguments, and bounded output. Application code must use public exports.
+Import `runProcess`, `runProcessSync`, and `spawnProcess` from `@coding-agent/process-host`. Import their contracts and default limits from `@coding-agent/process-host/process-spec`. Other explicit subpaths expose forking, termination, Windows arguments, and bounded output. Application code must use public exports.
 
 `spawnProcess` guarantees three stream pipes when `stdio` is omitted, is `'pipe'`, or starts with `['pipe', 'pipe', 'pipe']`. Other specifications return a child with nullable streams. Use `PipedProcessSpec` and `PipedChildProcess` when a stream-owning interface requires pipes.
 
@@ -12,8 +12,8 @@ From the repository root:
 
 ```sh
 pnpm build:packages
-pnpm --filter @orca/process-host typecheck
-ORCA_BACKGROUND_LAUNCH=1 pnpm --filter @orca/process-host test
+pnpm --filter @coding-agent/process-host typecheck
+ORCA_BACKGROUND_LAUNCH=1 pnpm --filter @coding-agent/process-host test
 ```
 
 Which copy a caller loads:

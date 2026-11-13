@@ -1,3 +1,5 @@
+import { readAppEnv, setAppEnv, readAppEnvKey, setAppEnvKey } from '../../shared/app-env'
+import { resolveLegacyRenamedFile } from '../../shared/legacy-renamed-file'
 import { app } from 'electron'
 import { guardExternalOpensInE2E } from './e2e-external-open-guard'
 import { quitProcess } from './process-quit-request'
@@ -19,7 +21,6 @@ import {
 } from './http1-compatibility-profile-state'
 
 const DEV_PARENT_SHUTDOWN_GRACE_MS = 3000
-const HTTP1_COMPATIBILITY_ENV_VAR = 'ORCA_DISABLE_HTTP2'
 const TRUE_ENV_VALUES = new Set(['1', 'true', 'yes', 'on'])
 const FALSE_ENV_VALUES = new Set(['0', 'false', 'no', 'off'])
 let devParentShutdownRequested = false
@@ -46,7 +47,9 @@ function parseBooleanEnvFlag(value: string | undefined): boolean | null {
 export function shouldDisableHttp2ForElectronNetworking(
   options: NetworkCompatibilityOptions = {}
 ): boolean {
-  const envValue = parseBooleanEnvFlag(options.env?.[HTTP1_COMPATIBILITY_ENV_VAR])
+  const envValue = parseBooleanEnvFlag(
+    options.env ? readAppEnv(options.env, 'DISABLE_HTTP2') : undefined
+  )
   if (envValue !== null) {
     return envValue
   }
@@ -174,7 +177,7 @@ export function patchPackagedProcessPath(): void {
   }
 
   const pathKey = process.platform === 'win32' && process.env.Path !== undefined ? 'Path' : 'PATH'
-  const currentPath = process.env[pathKey] ?? ''
+  const currentPath = readAppEnvKey(process.env, pathKey) ?? ''
   const pathDelimiter = getProcessPathDelimiter()
   const currentSegments = currentPath.split(pathDelimiter).filter(Boolean)
   const existing = new Set(currentSegments)
@@ -182,7 +185,11 @@ export function patchPackagedProcessPath(): void {
   const append = appendPaths.filter((path) => !existing.has(path) && !prepend.includes(path))
 
   if (prepend.length > 0 || append.length > 0) {
-    process.env[pathKey] = [...prepend, ...currentSegments, ...append].join(pathDelimiter)
+    setAppEnvKey(
+      process.env,
+      pathKey,
+      [...prepend, ...currentSegments, ...append].join(pathDelimiter)
+    )
   }
 }
 
@@ -190,7 +197,8 @@ export function configureDevUserDataPath(isDev: boolean): void {
   const e2eConfig = getMainE2EConfig()
   if (e2eConfig.userDataDir) {
     // Isolate each E2E launch from persisted profiles while leaving the real packaged profile untouched.
-    const e2eHomeDir = process.env.ORCA_E2E_HOME_DIR ?? join(e2eConfig.userDataDir, 'home')
+    const e2eHomeDir =
+      readAppEnv(process.env, 'E2E_HOME_DIR') ?? join(e2eConfig.userDataDir, 'home')
     // Imports can resolve homedir before Electron readiness; reject launches outside disposable Node home.
     if (!areSameE2EHomePath(homedir(), e2eHomeDir)) {
       throw new Error('Refusing to start E2E outside its disposable home boundary')
@@ -206,14 +214,21 @@ export function configureDevUserDataPath(isDev: boolean): void {
   if (!isDev) {
     return
   }
-  const overrideUserDataPath = process.env.ORCA_DEV_USER_DATA_PATH
+  const overrideUserDataPath = readAppEnv(process.env, 'DEV_USER_DATA_PATH')
   if (overrideUserDataPath) {
     // Why: run-electron-vite-dev.mjs resolves a per-worktree (or shared orca-dev) profile here; repros also pass isolated ones.
     app.setPath('userData', overrideUserDataPath)
     return
   }
   // Why: launches that bypass the dev runner still need a dev-only path, or they overwrite the packaged app's runtime pointer under userData and break the orca CLI.
-  app.setPath('userData', join(app.getPath('appData'), 'coding-agent-2-orca-dev'))
+  app.setPath(
+    'userData',
+    resolveLegacyRenamedFile(
+      join(app.getPath('appData'), 'coding-agent-2-dev'),
+      join(app.getPath('appData'), 'coding-agent-2-orca-dev'),
+      { copy: false }
+    )
+  )
 }
 
 function areSameE2EHomePath(left: string, right: string): boolean {
@@ -235,7 +250,7 @@ export function configureOrcaUserDataPathEnv(): void {
     throw new Error(serveProfileRefusal)
   }
   // Canonicalize stale inherited profile overrides before CLI modules derive runtime-home paths.
-  process.env.ORCA_USER_DATA_PATH = userDataPath
+  setAppEnv(process.env, 'USER_DATA_PATH', userDataPath)
   // A Coding Agent 2 launched from another Coding Agent 2 terminal must own its CLI children.
   stampRuntimeSourceEnv(process.env, null)
 }

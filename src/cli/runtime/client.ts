@@ -32,7 +32,7 @@ import {
 } from './terminal-prompt-mutation-recovery'
 import { recordRuntimeEnvironmentUsage } from '../../shared/remote-runtime/host-store/runtime-environment-usage-record'
 import { createRuntimeSourceFence, type RuntimeSourceFence } from './runtime-source-fence'
-import { resolveRemoteConnection } from './runtime-remote-pairing'
+import * as pairing from './runtime-remote-pairing'
 import {
   ORCHESTRATION_CONTRACT_RUNTIME_CAPABILITY,
   ORCHESTRATION_CONTRACT_VERSION
@@ -78,8 +78,8 @@ export class RuntimeClient {
   constructor(
     userDataPath = getDefaultUserDataPath(),
     private readonly requestTimeoutMs = 60_000,
-    remotePairingCode = process.env.ORCA_PAIRING_CODE ?? process.env.ORCA_REMOTE_PAIRING ?? null,
-    environmentSelector = process.env.ORCA_ENVIRONMENT ?? null,
+    pairingCode = pairing.readRemotePairingCode(),
+    environmentSelector = pairing.readRemoteEnvironment(),
     cliExecutable = resolveOrchestrationCliExecutable(),
     originalArgs?: readonly string[]
   ) {
@@ -87,7 +87,7 @@ export class RuntimeClient {
     this.environmentSelector = environmentSelector
     this.cliExecutable = cliExecutable
     this.originalArgs = originalArgs ? [...originalArgs] : undefined
-    this.remote = resolveRemoteConnection(userDataPath, remotePairingCode, environmentSelector)
+    this.remote = pairing.resolveRemoteConnection(userDataPath, pairingCode, environmentSelector)
     this.remoteCompat = new RemoteRuntimeCompatGate(userDataPath, environmentSelector)
     this.runtimeSourceFence = createRuntimeSourceFence(process.env, userDataPath, requestTimeoutMs)
   }

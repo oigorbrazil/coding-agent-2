@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BaseWindow, BrowserWindow, WebContentsView } from 'electron'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -5,7 +6,7 @@ import { openPopupWithOriginBar } from './popup-origin-bar-window'
 import { prepareNativeBrowserPopup } from './browser-popup-native-window'
 import { applyBackgroundActivationPolicy } from '../../../window/foreground-activation-policy'
 
-if (process.env.ORCA_BACKGROUND_LAUNCH !== '1') {
+if (readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1') {
   throw new Error('Popup identity probes require a background launch')
 }
 applyBackgroundActivationPolicy()

@@ -38,7 +38,7 @@ Options:
                            an earlier boot, nothing answering) and, with --yes, clear it.
 
 Environment:
-  ORCA_USER_DATA           Data directory for this instance's profile and state.
+  CODING_AGENT_USER_DATA           Data directory for this instance's profile and state (ORCA_USER_DATA still works).
 `
 
 type OrcadCommandArguments = OrcadOptions & { help?: boolean }

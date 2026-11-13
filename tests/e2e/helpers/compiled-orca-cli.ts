@@ -1,6 +1,6 @@
 // Run the bundled CLI as a separate process discovering this E2E runtime through its user-data directory.
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 export type OrcaCliResult = {
   args: string[]

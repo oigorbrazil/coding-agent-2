@@ -3,7 +3,7 @@ import { performance } from 'node:perf_hooks'
 import { join } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 import pg from 'pg'
-import { RELAY_REGIONS } from '@orca-cloud/relay-contract/relay-regions'
+import { RELAY_REGIONS } from '@coding-agent-cloud/relay-contract/relay-regions'
 import {
   emptyPostgresPoolPressureCounts,
   isPostgresPoolConnectFailure,
@@ -11,7 +11,7 @@ import {
   type PostgresPoolLane,
   type PostgresPoolPressureCounts
 } from './postgres-pool-pressure.js'
-import { applyPostgresSchema } from '@orca-cloud/postgres-schema/apply-postgres-schema'
+import { applyPostgresSchema } from '@coding-agent-cloud/postgres-schema/apply-postgres-schema'
 import { POSTGRES_STATEMENT_STATS_MIGRATION } from './postgres-statement-stats.js'
 import { reportPostgresQueryFailure } from './postgres-query-failure.js'
 import { noteStickySlotPoolWait, noteStickySlotStatement } from './sticky-slot-statements.js'

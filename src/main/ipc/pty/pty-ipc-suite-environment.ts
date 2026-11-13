@@ -1,10 +1,12 @@
-import { afterEach, beforeEach, vi } from 'vitest'
+import { type Mock, afterEach, beforeEach, vi } from 'vitest'
+import { setAppEnv, appEnvPairs } from '../../../shared/app-env'
+
 import * as electron from 'electron'
 import { join } from 'node:path'
 import { installFakeAppEnvironment } from '../../../../config/scripts/test-runtime/environment/vitest-host-ports-setup'
 import { setPtyHostBindings } from './pty-host-bindings'
 import { testPtyIpcSurface } from './pty-ipc-test-surface'
-import type { Mock } from 'vitest'
+
 import {
   handleMock,
   onMock,
@@ -200,7 +202,7 @@ export function createPtyIpcSuiteEnvironment(): PtyIpcSuiteEnvironment {
     })
     getPathMock.mockReturnValue('/tmp/orca-user-data')
     // Wrapper roots must use the same userData path as the mocked app.
-    process.env.ORCA_USER_DATA_PATH = '/tmp/orca-user-data'
+    setAppEnv(process.env, 'USER_DATA_PATH', '/tmp/orca-user-data')
     existsSyncMock.mockReturnValue(true)
     // Generated shell wrapper validation rejects empty files.
     statSyncMock.mockReturnValue({ isDirectory: () => true, mode: 0o755, size: 1 })
@@ -227,8 +229,8 @@ export function createPtyIpcSuiteEnvironment(): PtyIpcSuiteEnvironment {
         : '/tmp/orca-mimocode-shared'
     }))
     buildAgentHookEnvMock.mockReturnValue({
-      ORCA_AGENT_HOOK_PORT: '5678',
-      ORCA_AGENT_HOOK_TOKEN: 'agent-token'
+      ...appEnvPairs('AGENT_HOOK_PORT', '5678'),
+      ...appEnvPairs('AGENT_HOOK_TOKEN', 'agent-token')
     })
     piBuildPtyEnvMock.mockImplementation(
       (
@@ -242,13 +244,18 @@ export function createPtyIpcSuiteEnvironment(): PtyIpcSuiteEnvironment {
           // Bare shells keep OMP status under userData without creating ~/.omp (#10196).
           if (!existingAgentDir && !materializeDefaultHome) {
             return {
-              ORCA_OMP_STATUS_EXTENSION:
+              ...appEnvPairs(
+                'OMP_STATUS_EXTENSION',
                 '/tmp/orca-user-data/omp-managed-status-extension/orca-agent-status.ts'
+              )
             }
           }
           return {
-            ORCA_OMP_SOURCE_AGENT_DIR: existingAgentDir ?? '/tmp/default-omp-agent',
-            ORCA_OMP_STATUS_EXTENSION: `${existingAgentDir ?? '/tmp/default-omp-agent'}/extensions/orca-agent-status.ts`
+            ...appEnvPairs('OMP_SOURCE_AGENT_DIR', existingAgentDir ?? '/tmp/default-omp-agent'),
+            ...appEnvPairs(
+              'OMP_STATUS_EXTENSION',
+              `${existingAgentDir ?? '/tmp/default-omp-agent'}/extensions/orca-agent-status.ts`
+            )
           }
         }
         if (kind === 'prime-agent') {
@@ -256,14 +263,17 @@ export function createPtyIpcSuiteEnvironment(): PtyIpcSuiteEnvironment {
             return {}
           }
           return {
-            ORCA_PRIME_AGENT_SOURCE_AGENT_DIR: existingAgentDir ?? '/tmp/default-prime-agent'
+            ...appEnvPairs(
+              'PRIME_AGENT_SOURCE_AGENT_DIR',
+              existingAgentDir ?? '/tmp/default-prime-agent'
+            )
           }
         }
         if (!existingAgentDir && !materializeDefaultHome) {
           return {}
         }
         return {
-          ORCA_PI_SOURCE_AGENT_DIR: existingAgentDir ?? '/tmp/default-pi-agent'
+          ...appEnvPairs('PI_SOURCE_AGENT_DIR', existingAgentDir ?? '/tmp/default-pi-agent')
         }
       }
     )

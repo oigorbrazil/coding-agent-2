@@ -4,7 +4,7 @@ import { mkdtempSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import * as path from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { bulkUnstageFiles, unstageFile } from './staging'
 import { bulkDiscardChanges, discardChanges } from './discard-changes'
 

@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { DesktopScriptRuntimeHost } from './desktop-script-runtime-host'
 
 /** Exercise real PowerShell framing and flushing; fake-child unit tests cannot verify them. */

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { ORCA_LAYOUT_OWNER_IS_MAIN } from '../../../shared/layout-owner-switch'
 import { visibleGraphChangedWorktrees } from '../session-graph/visible-graph-changed-worktrees'
 import type { RuntimeSessionTabsInventoryPublication as SessionTabsInventoryPublicationMethods } from './session-tabs-inventory-publication'
@@ -322,7 +323,7 @@ export abstract class OrcaRuntimeWithCollectMobileVisibleGraphChangedWorktrees e
   }
 
   supportsAuthoritativeSessionTabsInventory(): boolean {
-    return process.env.ORCA_E2E_DISABLE_AUTHORITATIVE_SESSION_TABS_INVENTORY !== '1'
+    return readAppEnv(process.env, 'E2E_DISABLE_AUTHORITATIVE_SESSION_TABS_INVENTORY') !== '1'
   }
 
   protected abstract assertSessionTabsInventoryRequestActive(signal?: AbortSignal): void

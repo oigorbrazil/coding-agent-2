@@ -1,3 +1,4 @@
+import { appEnvPairs, setAppEnv } from '../../../shared/app-env'
 import { join } from 'node:path'
 import {
   getEndpointFileName,
@@ -15,16 +16,16 @@ export abstract class AgentHookServerRuntimeEnv extends AgentHookServerIngestRem
       return {}
     }
     const env: Record<string, string> = {
-      ORCA_AGENT_HOOK_PORT: String(this.port),
-      ORCA_AGENT_HOOK_TOKEN: this.token,
-      ORCA_AGENT_HOOK_ENV: this.env,
-      ORCA_AGENT_HOOK_VERSION: ORCA_HOOK_PROTOCOL_VERSION,
-      ORCA_AGENT_HOOK_OPENCODE_TUI: '1',
-      ORCA_AGENT_HOOK_TRANSPORT: ORCA_HOOK_RAW_JSON_TRANSPORT
+      ...appEnvPairs('AGENT_HOOK_PORT', String(this.port)),
+      ...appEnvPairs('AGENT_HOOK_TOKEN', this.token),
+      ...appEnvPairs('AGENT_HOOK_ENV', this.env),
+      ...appEnvPairs('AGENT_HOOK_VERSION', ORCA_HOOK_PROTOCOL_VERSION),
+      ...appEnvPairs('AGENT_HOOK_OPENCODE_TUI', '1'),
+      ...appEnvPairs('AGENT_HOOK_TRANSPORT', ORCA_HOOK_RAW_JSON_TRANSPORT)
     }
     // Hooks read the endpoint on invocation; dev instances must not steal each other's hooks.
     if (this.endpointFileWritten && this.endpointFilePathCache) {
-      env.ORCA_AGENT_HOOK_ENDPOINT = this.endpointFilePathCache
+      setAppEnv(env, 'AGENT_HOOK_ENDPOINT', this.endpointFilePathCache)
     }
     return env
   }

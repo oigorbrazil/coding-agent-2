@@ -11,7 +11,7 @@ import {
   type SpawnOptions as SdkSpawnOptions
 } from '@anthropic-ai/claude-agent-sdk'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { ClaudePromptRegistry } from './claude-prompt-registry'
 import { claudeLaunchPermissions } from './structured/claude-structured-inbound-control'
 import { claudeStructuredPermissionOptions } from './structured/launch/claude-structured-launch-resolution'

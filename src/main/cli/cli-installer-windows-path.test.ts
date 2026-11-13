@@ -138,7 +138,7 @@ describe('CliInstaller', () => {
   it('keeps a bundled Windows launcher installed when the user PATH read is unknown', async () => {
     const fixture = await makeFixture()
     const resourcesPath = join(fixture.root, 'resources')
-    const bundledLauncher = join(resourcesPath, 'bin', 'orca.exe')
+    const bundledLauncher = join(resourcesPath, 'bin', 'coding.exe')
     await mkdir(dirname(bundledLauncher), { recursive: true })
     await writeFile(bundledLauncher, 'native launcher', 'utf8')
 
@@ -166,7 +166,7 @@ describe('CliInstaller', () => {
     const fixture = await makeFixture()
     const localAppDataPath = join(fixture.root, 'AppData', 'Local')
     const resourcesPath = join(fixture.root, 'D Custom Coding Agent 2', 'resources')
-    const bundledLauncher = join(resourcesPath, 'bin', 'orca.exe')
+    const bundledLauncher = join(resourcesPath, 'bin', 'coding.exe')
     const bundledContent = 'native launcher'
     await mkdir(dirname(bundledLauncher), { recursive: true })
     await writeFile(bundledLauncher, bundledContent, 'utf8')

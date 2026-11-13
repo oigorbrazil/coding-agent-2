@@ -1,3 +1,4 @@
+import { readAppEnv } from './app-env'
 /**
  * Windows produces no compositor frame for an idle never-shown window, and main-process
  * webContents.invalidate() does not change that, so CDP Page.captureScreenshot under
@@ -12,7 +13,7 @@ export function shouldPumpHiddenWindowFrames(
   env: Readonly<Record<string, string | undefined>>,
   platform: NodeJS.Platform
 ): boolean {
-  return platform === 'win32' && env.ORCA_BACKGROUND_LAUNCH === '1'
+  return platform === 'win32' && readAppEnv(env, 'BACKGROUND_LAUNCH') === '1'
 }
 
 export function formatHiddenWindowFramePumpArgument(): string {

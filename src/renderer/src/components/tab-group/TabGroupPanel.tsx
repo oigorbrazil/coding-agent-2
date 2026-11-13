@@ -49,7 +49,6 @@ export default function TabGroupPanel({
   suppressLeftBorder = false,
   suppressRightBorder = false,
   suppressBottomBorder = false,
-  reserveClosedExplorerToggleSpace,
   reserveCollapsedSidebarHeaderSpace,
   isTabDragActive = false,
   hoveredTabInsertion = null
@@ -74,7 +73,6 @@ export default function TabGroupPanel({
   hoveredTabInsertion?: HoveredTabInsertion | null
 }): React.JSX.Element {
   const t = useTranslate()
-  const rightSidebarOpen = useAppStore((state) => state.rightSidebarOpen)
   const sidebarOpen = useAppStore((state) => state.sidebarOpen)
   const model = useTabGroupWorkspaceModel({ groupId, worktreeId })
   const {
@@ -318,18 +316,7 @@ export default function TabGroupPanel({
                 <TabGroupPaneActionsMenu isFocused={isFocused} onCloseGroup={commands.closeGroup} />
               ) : null}
             </div>
-            {/* Why: Electron drag hit-test respects no-drag only on DOM descendants, not z-index siblings, so this no-drag spacer keeps the floating right-sidebar toggle + window controls clickable. */}
-            {reserveClosedExplorerToggleSpace && !rightSidebarOpen ? (
-              <div
-                className="shrink-0"
-                style={
-                  {
-                    width: 'calc(40px + var(--window-controls-width, 0px))',
-                    WebkitAppRegion: 'no-drag'
-                  } as React.CSSProperties
-                }
-              />
-            ) : null}
+            {/* Coding Agent 2 keeps the right-sidebar toggle and window controls in the top bar, so nothing is reserved here. */}
           </div>
         </div>
       )}

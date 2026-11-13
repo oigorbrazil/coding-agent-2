@@ -240,7 +240,7 @@
         "remoteUnsupported": "Coding Agent 2 CLI를 사용하여 원격 호스트에서 브라우저 ID를 관리합니다.",
         "loading": "로드 중…",
         "resetRequired": "ID 데이터를 변경하려면 먼저 명시적으로 재설정해야 합니다.",
-        "resetRequiredCommand": "명령줄에서 재설정하세요: orca browser identity set --mode <mode> --reset",
+        "resetRequiredCommand": "명령줄에서 재설정하세요: coding-agent browser identity set --mode <mode> --reset",
         "optionClean": "정리됨",
         "optionCleanTooltip": "가져온 Chrome 세션과 일치하도록 Coding Agent 2 및 Electron 토큰을 제거합니다.",
         "optionNative": "네이티브",
@@ -575,7 +575,6 @@
     "showStatusBar": "상태 표시줄 표시",
     "showTasksButton": "작업 버튼 표시",
     "showAutomationsButton": "자동화 버튼 표시",
-    "showMobileButton": "Coding Agent 2 모바일 버튼 표시",
     "showTitlebarAppName": "제목 표시줄 앱 이름 표시",
     "view": "보기",
     "reload": "새로고침",
@@ -1914,24 +1913,15 @@
         "commentTooLarge": "댓글이 너무 길어 안전하게 제출할 수 없습니다."
       },
       "Landing": {
-        "f9eaa9e12d": "프로젝트 추가",
         "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 로고",
-        "c1cf168479": "숨기기",
         "00cee697c1": "GitHub 계정을 연결하려면 terminal에서 \"gh auth login\"을 실행하세요.",
         "9f96d018b7": "GitHub CLI가 인증되지 않았습니다.",
         "73e1ad4282": "Coding Agent 2는 GitHub CLI(gh)를 사용하여 PR, 이슈 및 검사를 표시합니다.",
         "5beaef5f9e": "GitHub CLI가 설치되지 않았습니다.",
         "b673e7cf1b": "Git 프로젝트, 소스 제어 및 워크스페이스 관리에는 Git이 필요합니다.",
         "e5b7296d9d": "Git이 설치되지 않았습니다.",
-        "cd21242762": "시작하려면 프로젝트를 추가하세요.",
-        "9c00bd4adf": "시작하려면 사이드바에서 워크스페이스를 선택하세요.",
-        "0d0ace8861": "GitHub에서 별표 주기",
-        "ec43b38ba7": "GitHub에 별표 표시됨",
-        "157bb5ecbb": "GitHub 열기",
         "preflightDismiss": "닫기",
-        "moveUpWorkspace": "이전 워크스페이스 선택",
-        "moveDownWorkspace": "다음 워크스페이스 선택",
         "installGit": "Git 설치",
         "installGitHubCli": "GitHub CLI 설치",
         "learnMore": "자세히 알아보기"
@@ -2058,12 +2048,12 @@
         "dccd26d4e4": "프로젝트 선택",
         "d6b0a96f32": "프로젝트 추가",
         "969a8bff66": "프로젝트",
-        "23bb365554": "orca.yaml",
+        "23bb365554": "coding.yaml",
         "a239038146": "SSH 연결 오류",
         "9a70e4859e": "이 워크스페이스를 만들기 전에 설정을 실행할지 여부를 선택하세요.",
         "803b7fe72f": "설정 구성을 확인하는 중...",
         "92e34f0311": "로컬 설정",
-        "326a578923": "orca.yaml + 로컬",
+        "326a578923": "coding.yaml + 로컬",
         "ac3748dcda": "다음에서 만들기",
         "f660aa1454": "연결 중",
         "addProjectBeforeWorkspace": "워크스페이스를 만들기 전에 프로젝트를 추가하세요.",
@@ -4061,7 +4051,6 @@
             "remoteServerLabel": "원격 서버",
             "antigravityUsage": "Antigravity 사용량",
             "grokUsageMenu": "Grok 사용량",
-            "floatingTerminalNewActivity": "{{label}}, 새 활동",
             "4fba7dc1e7": "잔액 {{value0}}",
             "codexSignInSuccess": "Codex에 로그인했습니다",
             "codexSignInError": "Codex 로그인에 실패했습니다. 다시 시도해 주세요.",
@@ -5432,14 +5421,14 @@
           "archiveRunTitle": "{{repo}}의 아카이브 스크립트를 실행할까요?",
           "issueCommandRunTitle": "{{repo}}의 이슈 명령을 실행할까요?",
           "vmRecipeRunTitle": "{{repo}}의 VM 레시피를 실행할까요?",
-          "setupChangedBody": "마지막 승인 이후 <code>orca.yaml</code>이 변경되었습니다. 이 워크스페이스를 만들 때 실행되기 전에 다시 검토하세요.",
-          "archiveChangedBody": "마지막 승인 이후 <code>orca.yaml</code>이 변경되었습니다. 이 워크스페이스를 제거할 때 실행되기 전에 다시 검토하세요.",
-          "issueCommandChangedBody": "마지막 승인 이후 <code>orca.yaml</code>이 변경되었습니다. 연결된 이슈가 있는 이 워크스페이스를 시작할 때 실행되기 전에 다시 검토하세요.",
-          "vmRecipeChangedBody": "마지막 승인 이후 <code>orca.yaml</code>이 변경되었습니다. VM 프로비저닝에 앞서 실행되기 전에 다시 검토하세요.",
-          "setupRunBody": "이 리포지토리의 <code>orca.yaml</code>은 이 워크스페이스를 만들 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
-          "archiveRunBody": "이 리포지토리의 <code>orca.yaml</code>은 이 워크스페이스를 제거할 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
-          "issueCommandRunBody": "이 리포지토리의 <code>orca.yaml</code>은 연결된 이슈가 있는 이 워크스페이스를 시작할 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
-          "vmRecipeRunBody": "이 리포지토리의 <code>orca.yaml</code>은 VM 프로비저닝 전에 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
+          "setupChangedBody": "마지막 승인 이후 <code>coding.yaml</code>이 변경되었습니다. 이 워크스페이스를 만들 때 실행되기 전에 다시 검토하세요.",
+          "archiveChangedBody": "마지막 승인 이후 <code>coding.yaml</code>이 변경되었습니다. 이 워크스페이스를 제거할 때 실행되기 전에 다시 검토하세요.",
+          "issueCommandChangedBody": "마지막 승인 이후 <code>coding.yaml</code>이 변경되었습니다. 연결된 이슈가 있는 이 워크스페이스를 시작할 때 실행되기 전에 다시 검토하세요.",
+          "vmRecipeChangedBody": "마지막 승인 이후 <code>coding.yaml</code>이 변경되었습니다. VM 프로비저닝에 앞서 실행되기 전에 다시 검토하세요.",
+          "setupRunBody": "이 리포지토리의 <code>coding.yaml</code>은 이 워크스페이스를 만들 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
+          "archiveRunBody": "이 리포지토리의 <code>coding.yaml</code>은 이 워크스페이스를 제거할 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
+          "issueCommandRunBody": "이 리포지토리의 <code>coding.yaml</code>은 연결된 이슈가 있는 이 워크스페이스를 시작할 때 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
+          "vmRecipeRunBody": "이 리포지토리의 <code>coding.yaml</code>은 VM 프로비저닝 전에 사용자의 컴퓨터에서 실행됩니다. <repo/>을(를) 신뢰하는 경우에만 실행하세요.",
           "newSetupScript": "새 설정 스크립트",
           "setupScript": "설정 스크립트",
           "newArchiveScript": "새 아카이브 스크립트",
@@ -5449,7 +5438,7 @@
           "newVmRecipe": "새 VM 레시피",
           "vmRecipe": "VM 레시피",
           "thisRepository": "이 리포지토리",
-          "alwaysTrustRepo": "<repo/>의 <code>orca.yaml</code>을 항상 신뢰"
+          "alwaysTrustRepo": "<repo/>의 <code>coding.yaml</code>을 항상 신뢰"
         },
         "PendingWorktreeRow": {
           "af21e953d1": "워크트리 만들기 취소",
@@ -5536,7 +5525,7 @@
           "822ff300ad": "닫기",
           "5bfd5c8779": "설정 스크립트 닫기",
           "detectedFromSource": "<source>{{source}}</source>에서 감지됨",
-          "ignoresSharedSetup": "이 저장소는 공유 <yaml>orca.yaml</yaml> 설정 스크립트를 무시합니다. 로컬 명령을 추가하거나 설정에서 소스를 변경하세요.",
+          "ignoresSharedSetup": "이 저장소는 공유 <yaml>coding.yaml</yaml> 설정 스크립트를 무시합니다. 로컬 명령을 추가하거나 설정에서 소스를 변경하세요.",
           "foundSetupCommandIn": "<source>{{source}}</source>에서 설정 명령을 찾았습니다. 새 워크트리에서 실행하려면 저장하세요.",
           "reviewSetupScript": "설정 스크립트 검토"
         },
@@ -5598,8 +5587,6 @@
         "SidebarNav": {
           "80611a8b10": "검색",
           "0c3395fd32": "작업 트리 및 브라우저 탭 검색",
-          "c86d83b5c3": "신규",
-          "1b5c41caee": "Coding Agent 2 모바일",
           "f323383e9a": "자동화",
           "e7ad3c540d": "Jira 작업 열기",
           "c39ab10000": "Linear 작업 열기",
@@ -5807,8 +5794,8 @@
           "copyLinkFailure": "링크 복사 실패",
           "issueLinkLabel": "이슈 링크",
           "cliHeader": "Coding Agent 2 CLI",
-          "cliCreatedFromAgent": "Agent가 `orca worktree create`로 생성",
-          "cliCreatedFromShell": "`orca worktree create`로 생성",
+          "cliCreatedFromAgent": "Agent가 `coding-agent worktree create`로 생성",
+          "cliCreatedFromShell": "`coding-agent worktree create`로 생성",
           "cliStartupAgent": "{{value0}}(으)로 시작됨",
           "cliCreated": "Coding Agent 2 CLI로 생성됨",
           "linkedJira": "연결된 Jira {{value0}}",
@@ -6358,7 +6345,7 @@
           "a4c2d8f1b0": "외부 워크트리를 숨길까요?",
           "6e91b3c4d2": "{{value0}}에서는 나중에 생성되는 항목을 포함해 외부 워크트리가 사이드바나 이 목록에 더 이상 표시되지 않습니다.",
           "1f8a5d9e73": "나중에 프로젝트 설정에서 다시 켤 수 있습니다.",
-          "8c0b2e7a41": "Non-Orca 워크트리 설정 열기",
+          "8c0b2e7a41": "외부 워크트리 설정 열기",
           "5d1c9f0a82": "취소",
           "3b7e4a1c96": "외부 워크트리 숨기기"
         },
@@ -6945,19 +6932,10 @@
           "storedDefaultUndetected": "기본값으로 저장되었지만 지금은 감지되지 않습니다.",
           "noAgentsDetected": "감지된 에이전트가 없습니다. 에이전트가 설치되어 있다면 감지 시간이 초과되었을 수 있습니다."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "다음 아이콘",
-          "415fa76f64": "선택한 앱 아이콘",
-          "5f5142a62a": "이전 아이콘"
-        },
         "AppearancePane": {
           "3057983501": "할당되지 않음",
           "2edf606c46": "닫을 때 트레이로 최소화",
           "b707773a0d": "활성화하면 창을 닫아도 Coding Agent 2가 종료되지 않고 시스템 트레이에서 계속 실행됩니다.",
-          "0cd9b8228f": "Dock 및 창 전환기에 표시된 앱 아이콘을 선택합니다.",
-          "ca1590d42f": "앱 아이콘",
-          "61d842eca0": "사이드바에 Coding Agent 2 Mobile 바로가기를 표시합니다. 도구 상자에서는 계속 사용할 수 있습니다.",
-          "9da1020447": "Coding Agent 2 모바일 버튼 표시",
           "511f270ebb": "자동화 버튼 표시",
           "cf81907069": "작업 버튼 표시",
           "dc29f3cc0d": "사이드바",
@@ -7146,8 +7124,7 @@
           "cbe55e4d48": "탐색기에서 보기",
           "9fd4023db0": "파일 관리자에서 보기",
           "installFailureUnknownReason": "Coding Agent 2가 CLI 등록을 완료하지 못했고 이유를 보고하지 않았습니다.",
-          "installFailureConflictRemedy": "{{value0}}이(가) 더 이상 필요하지 않다면 제거한 뒤 다시 등록하세요.",
-          "outsideOrcaDescription": "Coding Agent 2 터미널에서는 이미 `orca`를 쓸 수 있습니다. Coding Agent 2 밖의 다른 터미널에서 `orca`를 쓰려면 켜세요."
+          "installFailureConflictRemedy": "{{value0}}이(가) 더 이상 필요하지 않다면 제거한 뒤 다시 등록하세요."
         },
         "CliSkillRuntimeSetup": {
           "c47127f222": "WSL 기본값"
@@ -7335,10 +7312,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "상태 표시줄",
-          "9fb225f2d7": "플로팅 버튼",
-          "3c900e26e5": "키보드 단축키는 토글이 표시되는 위치에 관계없이 작동합니다.",
-          "5e5a8da236": "토글 버튼 위치",
           "505001823e": "플로팅 워크스페이스 디렉터리 선택",
           "81afb79785": "새로운 플로팅 터미널 탭이 여기에서 시작됩니다. Markdown 메모는 Coding Agent 2의 앱 소유 플로팅 워크스페이스에 저장됩니다.",
           "12aa09f10c": "터미널 디렉터리",
@@ -7681,9 +7654,6 @@
           "b5a2ed83ff": "앱스토어",
           "e7a3ae8c4e": "모바일",
           "174f4a3c6d": "휴대폰에서 terminals과 agents를 제어하세요.",
-          "1de96ec8a6": "Coding Agent 2 Mobile 버튼 표시",
-          "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
-          "d4f2b65f30": "사이드바에 Coding Agent 2 Mobile 바로가기를 표시합니다.",
           "installIntro": "다음 스토어에서 Coding Agent 2 Mobile 설치",
           "installOutro": "하고 아래에서 페어링하세요.",
           "androidApkLabel": "Android APK"
@@ -7756,15 +7726,9 @@
           "f79084947b": "새로운 앱"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "핸드오프, 작업 트리 핸드오버, 순차 또는 병렬 하위 에이전트 작업에 오케스트레이션을 사용하도록 조율 에이전트에게 요청하세요.",
-          "ae79504732": "사용 방법",
-          "9bedd2a6e5": "에이전트가 Coding Agent 2를 통해 컨텍스트를 인계하고 작업을 조율할 수 있습니다.",
-          "07641b9768": "오케스트레이션 스킬",
-          "2aacdb0517": "핸드오프, 작업 트리 핸드오버, 하위 에이전트 작업 전반에 걸쳐 코딩 에이전트를 조율합니다.",
           "191ac34567": "에이전트 오케스트레이션",
           "nestedWorkerDepthTitle": "하위 에이전트 최대 생성 단계",
           "nestedWorkerDepthDescription": "하위 에이전트를 몇 단계까지 생성할 수 있는지 설정합니다. 1이면 조율 에이전트만 하위 에이전트를 생성할 수 있고, 생성된 하위 에이전트는 자신의 하위 에이전트를 생성할 수 없습니다.",
-          "7bc082f4de": "설치 명령 복사",
           "workerAutoReleaseTitle": "완료된 워커 자동 닫기",
           "workerAutoReleaseDescription": "열어 두기를 선택하지 않으면 워커가 완료된 지 2분 후 터미널 또는 채팅을 닫습니다. 다시 작업을 시작하면 완료 시 2분이 다시 시작됩니다.",
           "workerAutoReleaseKeywordClose": "닫기",
@@ -7773,17 +7737,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "에이전트가 Coding Agent 2를 통해 컨텍스트를 인계하고 작업을 조율할 수 있습니다.",
           "2777ff0fdc": "오케스트레이션 스킬"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "에이전트별 스킬 설치 상태",
-          "ffe13e36fb": "미설치",
-          "1e8f8d8fae": "준비됨",
-          "checking": "설치된 에이전트와 스킬 경로를 확인하는 중…",
-          "noAgents": "PATH에서 에이전트 CLI가 감지되지 않습니다. 설정 → 에이전트에서 에이전트를 설치한 후 다시 확인하세요.",
-          "fullCoverage_one": "감지된 에이전트 1개에 스킬이 설치되어 있습니다.",
-          "fullCoverage_other": "감지된 {{value0}}개 에이전트 모두에 스킬이 설치되어 있습니다.",
-          "noCoverage": "위의 스킬을 설치한 후 다시 확인해 보세요.",
-          "partialCoverage": "감지된 {{value1}}개 에이전트 중 {{value0}}개에 스킬이 설치되어 있습니다."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "진단 파일 만들기",
@@ -7854,11 +7807,11 @@
         },
         "RepositoryHooksSection": {
           "af49e2a19e": "파일이 있지만 Coding Agent 2가 유효한 `scripts` 또는 `issueCommand` 정의를 찾을 수 없습니다.",
-          "39da2ae12f": "orca.yaml",
+          "39da2ae12f": "coding.yaml",
           "32fec28f5b": "명령 소스",
-          "bbbd6e0bc4": "명령 소스 및 orca.yaml",
+          "bbbd6e0bc4": "명령 소스 및 coding.yaml",
           "c9bc1bfd8f": "고급",
-          "610d90fdbd": "명령 소스 및 orca.yaml 세부정보",
+          "610d90fdbd": "명령 소스 및 coding.yaml 세부정보",
           "4084720f47": "{{artifact_url}} 완료",
           "13394103bd": "사용자 지정 GitHub 이슈 명령",
           "2cc27dc12b": "연결된 이슈 명령에 대한 선택적 사용자별 재정의입니다.",
@@ -7870,7 +7823,7 @@
           "fb6bebcf7e": "설정 스크립트 실행 시기",
           "30d555acd2": "새 작업 트리가 생성된 후 실행되는 로컬 및 공유 스크립트입니다.",
           "52b31baf02": "설정 스크립트",
-          "8567127a40": "작업 트리가 생성되거나 보관될 때 실행되는 스크립트입니다. 로컬 스크립트는 이 시스템에 저장됩니다. `orca.yaml` 스크립트는 팀과 공유됩니다.",
+          "8567127a40": "작업 트리가 생성되거나 보관될 때 실행되는 스크립트입니다. 로컬 스크립트는 이 시스템에 저장됩니다. `coding.yaml` 스크립트는 팀과 공유됩니다.",
           "ff082fe7c6": "작업트리 후크",
           "5d940bde5c": "로컬 스크립트 추가",
           "8c2893fae0": "단일 셸 스크립트로 실행됩니다. 이 컴퓨터에 저장되었습니다.",
@@ -7881,13 +7834,13 @@
           "f828e1de19": "- 팀과 공유",
           "673a7fd10e": "확인 중...",
           "5426ecbdcb": "로컬 스크립트가 실행되지 않습니다.",
-          "b2b06c7ce8": "사용 가능한 환경 변수(자세한 내용을 보려면 마우스를 올리세요):",
+          "b2b06c7ce8": "사용 가능한 환경 변수(자세한 내용을 보려면 마우스를 올리세요): ?? ORCA_* ??? ?? ??? ? ????.",
           "95a0411b3e": "템플릿",
           "175daba180": "예",
-          "b20c5df6ca": "이 repo의 공유 설정, 아카이브 또는 이슈 자동화 기본값을 사용하려면 `orca.yaml` 파일을 추가하세요. 예제 템플릿:",
-          "56f9a4a1d0": "`orca.yaml` 사용 중",
-          "623e0c9f31": "`orca.yaml`을 구문 분석할 수 없습니다",
-          "5a67e4793d": "`orca.yaml`을 찾을 수 없습니다",
+          "b20c5df6ca": "이 repo의 공유 설정, 아카이브 또는 이슈 자동화 기본값을 사용하려면 `coding.yaml` 파일을 추가하세요. 예제 템플릿: ?? `orca.yaml` ??? ?? ????.",
+          "56f9a4a1d0": "`coding.yaml` 사용 중",
+          "623e0c9f31": "`coding.yaml`을 구문 분석할 수 없습니다",
+          "5a67e4793d": "`coding.yaml`을 찾을 수 없습니다",
           "07ba35bc68": "`scripts:` 아래의 들여쓰기를 확인하세요. 후크 키는 두 칸, 명령 줄은 네 칸을 사용해야 합니다.",
           "787ca433ef": "지원되는 키만 정의하세요: `scripts`, `setup`, `archive`, `issueCommand`.",
           "ecc73d9125": "아래의 작동하는 템플릿과 비교하고 필요한 경우 그 형식을 복사하세요.",
@@ -7899,15 +7852,15 @@
           "0fa21e19ec": "일반적으로 브랜치 이름을 기반으로 하는 워크스페이스의 이름입니다.",
           "54c73d88d0": "생성 중인 워크트리의 경로입니다. 초기 설정 명령은 이 디렉터리에서 실행됩니다.",
           "30952c4aa4": "기본 repo 체크아웃 경로입니다. .env와 같은 공유 파일을 작업 트리에 복사하는 데 유용합니다.",
-          "9b821fa19d": "# 예: echo \"$ORCA_WORKSPACE_NAME 정리 중\"",
+          "9b821fa19d": "# 예: echo \"$CODING_AGENT_WORKSPACE_NAME 정리 중\"",
           "6f90ebe3fd": "작업 트리가 보관되거나 제거되기 전에 실행됩니다.",
-          "a3fc966677": "# 예: pnpm install cp \"$ORCA_ROOT_PATH/.env\" \"$ORCA_WORKTREE_PATH/.env\"",
+          "a3fc966677": "# 예: pnpm install cp \"$CODING_AGENT_ROOT_PATH/.env\" \"$CODING_AGENT_WORKTREE_PATH/.env\"",
           "f0710e1c83": "새 작업 트리가 생성된 후 실행됩니다. deps를 설치하고, env 파일을 복사하고, 마이그레이션을 실행하세요.",
-          "8561b0665f": "orca.yaml을 먼저 사용한 다음 로컬 명령을 실행합니다.",
-          "0e8b2a520d": "orca.yaml을 무시하십시오. 로컬 명령만 실행하세요.",
+          "8561b0665f": "coding.yaml을 먼저 사용한 다음 로컬 명령을 실행합니다.",
+          "0e8b2a520d": "coding.yaml을 무시하십시오. 로컬 명령만 실행하세요.",
           "83dc78202a": "로컬 전용",
           "29397e8bbc": "저장소에 커밋된 명령만 실행하고 로컬 명령은 무시합니다.",
-          "d88b6ff88f": "orca.yaml 전용",
+          "d88b6ff88f": "coding.yaml 전용",
           "99e3264a49": "선택한 경우에만 설정을 실행하세요.",
           "15debc1fd9": "기본적으로 건너뛰기",
           "022ba10cf2": "자동으로 설정을 실행합니다.",
@@ -7919,17 +7872,17 @@
           "d2b3016c20": "공유됨",
           "4611b78617": "명령 소스",
           "c5a55a2d2e": "고급",
-          "0ce113fd7b": "로컬 스크립트는 저장되지만 스크립트 소스는 orca.yaml로만 설정됩니다.",
-          "7f78e5eea6": "로컬 스크립트가 저장됩니다. Coding Agent 2는 사용할 스크립트 소스를 추천하기 전에 orca.yaml을 계속 확인하고 있습니다.",
+          "0ce113fd7b": "로컬 스크립트는 저장되지만 스크립트 소스는 coding.yaml로만 설정됩니다.",
+          "7f78e5eea6": "로컬 스크립트가 저장됩니다. Coding Agent 2는 사용할 스크립트 소스를 추천하기 전에 coding.yaml을 계속 확인하고 있습니다.",
           "2b6356e744": "저장됨",
           "81057d5f71": "저장 중...",
           "da37d6f10e": "복사",
           "3149964b66": "복사됨",
           "waitForSetupBeforeAgent": "에이전트를 시작하기 전에 설정이 완료될 때까지 기다리기",
           "issueCommandDescription": "필요하면 기본 명령을 재정의할 수 있습니다. 연결된 이슈 또는 PR의 URL에는 <artifactUrl>{{artifact_url}}</artifactUrl> 변수를 사용하세요.",
-          "issueCommandSharedDefault": "비워 두면 <yaml>orca.yaml</yaml>에 지정된 저장소 기본값을 사용합니다.",
-          "issueCommandOptionalDefault": "비워 두면 <yaml>orca.yaml</yaml>에 지정된 저장소 기본값이 있는 경우 사용합니다.",
-          "commandSourceDescription": "<yaml>orca.yaml</yaml>의 명령과 로컬 명령이 모두 있으면 실행할 명령을 선택하세요.",
+          "issueCommandSharedDefault": "비워 두면 <yaml>coding.yaml</yaml>에 지정된 저장소 기본값을 사용합니다.",
+          "issueCommandOptionalDefault": "비워 두면 <yaml>coding.yaml</yaml>에 지정된 저장소 기본값이 있는 경우 사용합니다.",
+          "commandSourceDescription": "<yaml>coding.yaml</yaml>의 명령과 로컬 명령이 모두 있으면 실행할 명령을 선택하세요.",
           "issueCommandWslStopped": "WSL 배포판 {{distro}}이(가) 중지되었습니다. 이 명령을 보거나 편집하려면 해당 배포판에서 터미널을 여세요."
         },
         "RepositoryIconPicker": {
@@ -8250,7 +8203,6 @@
           "43b68e10f0": "저장하지 않은 AI 설정이 있습니다. 나가면 해당 설정이 버려집니다.",
           "17bdee4ff1": "저장하지 않은 AI 설정을 버리시겠습니까?",
           "084d8fac5b": "개인 정보 보호 및 보안",
-          "23931df7e8": "원격 호스트",
           "8bd117d669": "인터페이스",
           "e1578cd4bc": "워크플로",
           "9abb9be3bc": "설정 시작",
@@ -8465,7 +8417,6 @@
           "reconnectOnLaunch": "시작 시 다시 연결",
           "reconnectOnLaunchHelp": "끄면 Coding Agent 2가 시작될 때 이 호스트와 이 호스트를 통해 연결되는 Coding Agent 2 서버를 직접 연결할 때까지 연결하지 않습니다.",
           "allowRemoteCliControl": "이 호스트가 작업 공간의 Coding Agent 2 브라우저 탭을 제어하도록 허용",
-          "allowRemoteCliControlHelp": "새 호스트에서는 기본적으로 켜져 있습니다. 이 호스트의 에이전트와 orca 명령은 이 호스트의 작업 공간에서만, 연결되어 있는 동안에만 이 데스크톱의 Coding Agent 2 브라우저 탭을 열고 읽고 사용할 수 있습니다. 제어 중인 탭에는 호스트 이름이 표시됩니다. 이 호스트에서 이전 버전의 Coding Agent 2가 시작한 터미널에서 orca 오케스트레이션 명령을 실행하려면 이 설정도 켜져 있어야 합니다. 파일, 클립보드, 쿠키는 읽을 수 없습니다.",
           "addHost": "호스트 추가",
           "proxyConnectionReuse": "프록시 연결 하나를 재사용",
           "proxyConnectionReuseHelp": "느린 ProxyCommand 또는 ProxyJump 호스트를 통한 연결이 빨라집니다. ssh_config가 호스트별 Match 또는 %h 규칙에 의존하지 않는 경우에만 사용하세요."
@@ -8990,24 +8941,12 @@
         },
         "appearance": {
           "search": {
-            "468448bba4": "수채화",
-            "f586abfa35": "파란색",
-            "651f35b2c6": "스위처",
             "e5bc35d59e": "창",
-            "d18b54ca90": "Dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "앱 아이콘",
-            "e80c2af428": "Dock 및 창 전환기에 표시된 앱 아이콘을 선택합니다.",
-            "2b313598c6": "앱 아이콘",
-            "839fb1e3ed": "도구 상자",
             "ac79fe4a04": "표시",
             "648eeada79": "숨기기",
             "6cf5f54ce1": "버튼",
             "5bff6a2ef0": "사이드바",
-            "5e5b8878bf": "핸드폰",
-            "74618577c7": "모바일",
-            "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
-            "1de96ec8a6": "Coding Agent 2 모바일 버튼 표시",
             "4c920ab2d1": "일정",
             "58f4e22fa2": "오토메이션",
             "b186f3cefb": "자동화",
@@ -9502,7 +9441,6 @@
               "ebeedb2f6a": "빠른 터미널",
               "6f183fa1b9": "플로팅 터미널",
               "a08e482f6d": "플로팅 워크스페이스",
-              "b96b5ee6cf": "플로팅 워크스페이스를 활성화하고, 새 탭이 시작되는 위치를 선택하고, 토글 버튼이 나타나는 위치를 선택하세요.",
               "b2b60e7163": "플로팅 워크스페이스"
             }
           }
@@ -9843,8 +9781,8 @@
               "b8ddd13195": "에이전트 에뮬레이터",
               "1ad6fb6230": "기본 장치",
               "ac0a985873": "에뮬레이터 스킬",
-              "9353854ff3": "orca emulator",
-              "d4b7833894": "orca cli",
+              "9353854ff3": "coding-agent emulator",
+              "d4b7833894": "coding-agent cli",
               "84e5706975": "serve-sim",
               "7c5a8a2bee": "Xcode",
               "bec7231663": "아이패드",
@@ -9914,16 +9852,8 @@
               "f213400800": "모바일",
               "671eb4173c": "휴대폰에서 terminals과 agents를 제어하세요.",
               "ffd52a96e4": "모바일",
-              "1de96ec8a6": "Coding Agent 2 Mobile 버튼 표시",
-              "682293cadf": "왼쪽 사이드바 상단에 Coding Agent 2 Mobile 버튼을 표시합니다.",
               "e4f4daea0e": "릴레이",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "모바일",
-              "5e5b8878bf": "핸드폰",
-              "5bff6a2ef0": "사이드바",
-              "6cf5f54ce1": "단추",
-              "648eeada79": "숨기기",
-              "ac79fe4a04": "표시"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -10057,12 +9987,12 @@
         "repository": {
           "search": {
             "bc7e504b8e": ".coding-agent-2/issue-command",
-            "603c68b68c": "orca.yaml",
+            "603c68b68c": "coding.yaml",
             "9dc60d7f6d": "GitHub",
             "ec70364df2": "작업 흐름",
             "66b584bd6c": "이슈 명령",
             "2011a6a4f2": "GitHub 이슈 명령",
-            "d42d1e49c0": "orca.yaml과 선택적인 로컬 재정의로 설정하는 파일 기반의 연결된 이슈 명령입니다.",
+            "d42d1e49c0": "coding.yaml과 선택적인 로컬 재정의로 설정하는 파일 기반의 연결된 이슈 명령입니다.",
             "d86ea12d16": "사용자 정의 GitHub 이슈 명령",
             "c5e8bdbcbb": "기본적으로 건너뛰기",
             "a69c5cbe90": "기본적으로 실행",
@@ -10077,10 +10007,10 @@
             "0432d2fb7c": "로컬",
             "ed269fad69": "명령 소스",
             "19f58d6d89": "고급의",
-            "d141897c90": "명령 소스 및 orca.yaml 세부정보",
+            "d141897c90": "명령 소스 및 coding.yaml 세부정보",
             "cc11699c3d": "고급",
             "bf460fded8": "yaml",
-            "9cad92fe77": "orca.yaml 후크",
+            "9cad92fe77": "coding.yaml 후크",
             "6b80f7d3c8": "로컬 설정 스크립트",
             "a1a4c51d58": "아카이브 명령",
             "fbfd2386e8": "아카이브 스크립트",
@@ -10800,9 +10730,9 @@
                   "1a9475dace": "자세히 알아보기",
                   "19fb419c12": "Gitea 자격 증명이 구성되어 있지만 인증할 수 없습니다. 토큰, API 기본 URL, repos 권한을 확인하고, 환경 변수가 변경되었다면 Coding Agent 2를 다시 시작하세요.",
                   "60708f23da": "Coding Agent 2가 원격에서 API URL을 추론할 수 없는 경우에만 사용하세요.",
-                  "709057ad91": "ORCA_GITEA_API_BASE_URL",
+                  "709057ad91": "CODING_GITEA_API_BASE_URL",
                   "6da9dfa5de": "비공개 repos의 경우, 그리고",
-                  "6d5c2a3005": "ORCA_GITEA_TOKEN",
+                  "6d5c2a3005": "CODING_GITEA_TOKEN",
                   "fcbe0469fd": "공개 repos는 Git 원격에서 감지됩니다. 설정하세요",
                   "0613928cb3": "이 런타임에서는 아직 Gitea 상태를 사용할 수 없습니다.",
                   "05863d2599": "Gitea REST API를 통한 PR 및 commit 상태입니다.",
@@ -10810,11 +10740,11 @@
                   "0b5242f8a2": "{{value0}} · PR 및 commit 상태",
                   "40f678df73": "Azure DevOps 자격 증명이 구성되어 있지만 인증할 수 없습니다. 토큰, API 기본 URL, repos 권한을 확인하고, 환경 변수가 변경되었다면 Coding Agent 2를 다시 시작하세요.",
                   "7bd345e3f6": "Coding Agent 2가 Git 원격에서 API 기본 URL을 추론할 수 없는 경우에만 사용하세요.",
-                  "186a6689df": "ORCA_AZURE_DEVOPS_API_BASE_URL",
+                  "186a6689df": "CODING_AZURE_DEVOPS_API_BASE_URL",
                   "b8a10b07c1": ". 설정하세요",
-                  "fbfd237f5e": "ORCA_AZURE_DEVOPS_ACCESS_TOKEN",
+                  "fbfd237f5e": "CODING_AZURE_DEVOPS_ACCESS_TOKEN",
                   "087feb92f1": ", 또는 설정",
-                  "48842720d2": "ORCA_AZURE_DEVOPS_TOKEN",
+                  "48842720d2": "CODING_AZURE_DEVOPS_TOKEN",
                   "7bbc9c64f0": "설정",
                   "f3f47dc7de": "이 런타임에서는 아직 Azure DevOps 상태를 사용할 수 없습니다.",
                   "0eb50d5593": "Azure DevOps REST API 토큰을 통한 PR 및 빌드 상태입니다.",
@@ -10940,8 +10870,8 @@
         },
         "PrivacyDiagnosticsRows": {
           "5a7cbe069a": "DO_NOT_TRACK=1이 설정되어 있어 진단 파일 만들기와 보내기가 비활성화되었습니다.",
-          "63d03261d1": "ORCA_TELEMETRY_DISABLED=1이 설정되어 있어 진단 파일 만들기와 보내기가 비활성화되었습니다.",
-          "d37e92a06b": "ORCA_DIAGNOSTICS_DISABLED=1이 설정되어 있어 앱 진단이 꺼져 있습니다.",
+          "63d03261d1": "CODING_AGENT_TELEMETRY_DISABLED=1이 설정되어 있어 진단 파일 만들기와 보내기가 비활성화되었습니다. ?? ORCA_* ??? ?? ??? ? ????.",
+          "d37e92a06b": "CODING_AGENT_DIAGNOSTICS_DISABLED=1이 설정되어 있어 앱 진단이 꺼져 있습니다. ?? ORCA_* ??? ?? ??? ? ????.",
           "5ebb31e1fb": "CI에서 실행 중입니다. 진단이 꺼져 있습니다.",
           "e27c8d45bf": "환경 변수로 인해 진단이 비활성화되었습니다."
         },
@@ -11035,12 +10965,12 @@
           "notificationPlaygroundDescription": "토스트 레이아웃, 복구 액션, 긴 텍스트 줄바꿈을 확인하기 위한 개발 전용 트리거입니다.",
           "devOnly": "개발 전용",
           "orcaCloud": "Coding Agent 2 Cloud",
-          "orcaCloudDescription": "자사 클라우드 로그인의 개발자 전용 미리보기. 프로덕션에서는 숨겨집니다. 개발 환경에서는 ORCA_CLOUD_API_URL과 ORCA_CLOUD_CLIENT_ID가 설정되면 사이드바 계정 전환기에도 표시됩니다.",
+          "orcaCloudDescription": "자사 클라우드 로그인의 개발자 전용 미리보기. 프로덕션에서는 숨겨집니다. 개발 환경에서는 CODING_AGENT_CLOUD_API_URL과 CODING_AGENT_CLOUD_CLIENT_ID가 설정되면 사이드바 계정 전환기에도 표시됩니다. ?? ORCA_* ??? ?? ??? ? ????.",
           "orcaCloudStatus": "상태",
           "orcaCloudSignOut": "로그아웃",
           "orcaCloudConnect": "프로필 연결",
           "orcaCloudRefresh": "상태 새로고침",
-          "orcaCloudNotConfigured": "ORCA_CLOUD_API_URL과 ORCA_CLOUD_CLIENT_ID를 설정하여 이 개발 빌드에서 Coding Agent 2 Cloud 로그인을 미리보세요.",
+          "orcaCloudNotConfigured": "CODING_AGENT_CLOUD_API_URL과 CODING_AGENT_CLOUD_CLIENT_ID를 설정하여 이 개발 빌드에서 Coding Agent 2 Cloud 로그인을 미리보세요. ?? ORCA_* ??? ?? ??? ? ????.",
           "deleteAnywayClicked": "무시하고 삭제를 클릭했습니다."
         },
         "EphemeralVmRecipeRow": {
@@ -11092,7 +11022,7 @@
           "copy": "복사",
           "copied": "복사됨",
           "recipes": "레시피",
-          "recipesHelp": "orca.yaml과 활성화된 플러그인의 레시피가 여기에 표시되어 워크스페이스를 시작할 수 있습니다.",
+          "recipesHelp": "coding.yaml과 활성화된 플러그인의 레시피가 여기에 표시되어 워크스페이스를 시작할 수 있습니다.",
           "checking": "레시피 확인 중...",
           "none": "아직 레시피를 찾을 수 없습니다.",
           "cloudVmSkillTitle": "클라우드 VM 설정 스킬",
@@ -11125,7 +11055,6 @@
                   "installed": "설치됨",
                   "notInstalled": "설치되지 않음",
                   "recheck": "다시 확인",
-                  "description": "에이전트가 Linear 작업을 읽고 편집할 수 있도록 합니다. 전체 가이드 설정(연결 + 스킬 + 표시)은 설정 → 작업 소스에 있습니다.",
                   "copyFailed": "명령 복사 실패.",
                   "copyCommand": "명령 복사",
                   "installedDescription": "에이전트 스킬이 설치되었습니다. 업데이트하려면 다음을 실행하세요:",
@@ -11343,7 +11272,7 @@
           "gitTab": "Git URL",
           "localLabel": "플러그인 폴더 경로",
           "localPlaceholder": "플러그인 폴더 경로",
-          "localHelp": "orca-plugin.json이 있는 폴더",
+          "localHelp": "coding-plugin.json이 있는 폴더",
           "gitLabel": "저장소 URL",
           "gitPlaceholder": "https://github.com/acme/orca-notes",
           "gitHelp": "저장소, 릴리스 또는 태그 링크를 붙여넣으세요. #tag나 #commit이 없으면 최신 버전 태그를 사용합니다.",
@@ -11395,7 +11324,7 @@
           "title": "카탈로그 소스",
           "description": "플러그인 목록이 있는 Git 저장소",
           "urlLabel": "Git URL",
-          "urlDescription": "HTTPS 또는 SSH, orca-catalog.json 포함",
+          "urlDescription": "HTTPS 또는 SSH, coding-catalog.json 포함",
           "urlPlaceholder": "https://git.example.com/team/plugins.git",
           "refLabel": "Git ref",
           "refDescription": "브랜치, 태그 또는 커밋",
@@ -11521,14 +11450,14 @@
           "switchBack": "되돌리기"
         },
         "pluginError": {
-          "installManifestMissing": "읽을 수 있는 orca-plugin.json이 없습니다. 플러그인 루트 폴더를 선택하세요.",
-          "installManifestInvalid": "orca-plugin.json이 유효하지 않습니다. 플러그인 작성자에게 매니페스트 수정을 요청하세요.",
+          "installManifestMissing": "읽을 수 있는 coding-plugin.json이 없습니다. 플러그인 루트 폴더를 선택하세요.",
+          "installManifestInvalid": "coding-plugin.json이 유효하지 않습니다. 플러그인 작성자에게 매니페스트 수정을 요청하세요.",
           "incompatible": "이 플러그인은 다른 Coding Agent 2 버전이 필요합니다.",
           "installUnsafePath": "플러그인에 안전하지 않은 파일 경로 또는 심볼릭 링크가 있어 설치되지 않았습니다.",
           "installLimit": "플러그인의 설치 크기 또는 파일 수 제한을 초과합니다.",
           "installGit": "이 Git 리비전을 가져올 수 없습니다. URL, #ref, 접근 권한을 확인하세요.",
-          "invalidManifestMissing": "플러그인 루트에 orca-plugin.json이 없습니다. 추가한 후 플러그인을 새로고침하세요.",
-          "invalidManifest": "orca-plugin.json이 유효하지 않습니다. 수정한 후 플러그인을 새로고침하세요.",
+          "invalidManifestMissing": "플러그인 루트에 coding-plugin.json이 없습니다. 추가한 후 플러그인을 새로고침하세요.",
+          "invalidManifest": "coding-plugin.json이 유효하지 않습니다. 수정한 후 플러그인을 새로고침하세요.",
           "installedManifestUnloadable": "이 버전은 이 Coding Agent 2에서 불러올 수 없습니다. 업데이트하거나 다시 설치하세요.",
           "invalidArtifact": "워커 또는 패널 파일이 없거나 안전하지 않습니다. 수정한 후 새로 고치세요.",
           "consentChanged": "검토하는 동안 이 플러그인이 변경되었습니다. 다시 검토하세요.",
@@ -11850,8 +11779,8 @@
               "connectFailed": "연결 실패",
               "title": "Bitbucket 연결",
               "description": "Bitbucket Cloud 자격 증명을 사용하여 PR 및 빌드 상태를 찾아보세요. Coding Agent 2는 저장하기 전에 이를 확인합니다.",
-              "remoteRuntime": "활성 원격 런타임이 아닌 이 컴퓨터에 저장됩니다. 대신 원격 런타임에서 ORCA_BITBUCKET_*을 설정하세요. 환경 변수는 항상 여기에 저장한 값보다 우선합니다.",
-              "environmentManaged": "Bitbucket은 ORCA_BITBUCKET_* 환경 변수를 통해 이미 구성되어 있으며 우선 순위가 높습니다. Coding Agent 2에 자격 증명을 저장하려면 설정을 해제하세요.",
+              "remoteRuntime": "활성 원격 런타임이 아닌 이 컴퓨터에 저장됩니다. 대신 원격 런타임에서 CODING_BITBUCKET_*을 설정하세요. 환경 변수는 항상 여기에 저장한 값보다 우선합니다.",
+              "environmentManaged": "Bitbucket은 CODING_BITBUCKET_* 환경 변수를 통해 이미 구성되어 있으며 우선 순위가 높습니다. Coding Agent 2에 자격 증명을 저장하려면 설정을 해제하세요.",
               "authModeLabel": "Bitbucket 인증 방법",
               "modeBasic": "이메일 및 API 토큰",
               "modeToken": "액세스 토큰",
@@ -11872,7 +11801,7 @@
               "scopeWritePullRequest": "PR 생성",
               "scopesWriteNote": "읽기 전용으로 사용하려면 쓰기 범위를 생략하세요. 쓰기에는 읽기가 포함되지 않으므로 각 범위를 따로 선택하세요.",
               "docsLink": "Bitbucket API 토큰 문서",
-              "storageNote": "OS 키체인을 사용할 수 있는 경우 암호화된 저장소와 함께 이 시스템에 저장됩니다. ORCA_BITBUCKET_* 환경 변수는 항상 여기에 저장한 것보다 우선합니다.",
+              "storageNote": "OS 키체인을 사용할 수 있는 경우 암호화된 저장소와 함께 이 시스템에 저장됩니다. CODING_BITBUCKET_* 환경 변수는 항상 여기에 저장한 것보다 우선합니다.",
               "cancel": "취소",
               "verifying": "확인 중...",
               "connect": "연결"
@@ -11887,10 +11816,10 @@
               "authModeToken": "액세스 토큰",
               "authModeBasic": "이메일 및 API 토큰",
               "disconnect": "Bitbucket 연결 끊기",
-              "envManaged": "환경 변수를 통해 구성됩니다. Coding Agent 2에서 이 자격 증명을 관리하려면 ORCA_BITBUCKET_* 변수를 설정 해제하세요.",
+              "envManaged": "환경 변수를 통해 구성됩니다. Coding Agent 2에서 이 자격 증명을 관리하려면 CODING_BITBUCKET_* 변수를 설정 해제하세요.",
               "storedAuthFailed": "저장된 Bitbucket 자격 증명을 인증할 수 없습니다. 이를 편집하거나 토큰에 여전히 PR 액세스 권한이 있는지 확인하세요.",
-              "storedCredential": "이 컴퓨터의 Coding Agent 2에 저장되었습니다. ORCA_BITBUCKET_* 환경 변수는 설정 시 우선순위를 갖습니다.",
-              "notConfigured": "Atlassian API 토큰 또는 액세스 토큰을 사용하여 Bitbucket Cloud 계정을 연결하세요. ORCA_BITBUCKET_* 환경 변수도 작동하며 우선 적용됩니다.",
+              "storedCredential": "이 컴퓨터의 Coding Agent 2에 저장되었습니다. CODING_BITBUCKET_* 환경 변수는 설정 시 우선순위를 갖습니다.",
+              "notConfigured": "Atlassian API 토큰 또는 액세스 토큰을 사용하여 Bitbucket Cloud 계정을 연결하세요. CODING_BITBUCKET_* 환경 변수도 작동하며 우선 적용됩니다.",
               "disconnectFailed": "저장된 Bitbucket 사용자 인증 정보를 삭제할 수 없습니다.",
               "statusLoadFailed": "저장된 Bitbucket 자격 증명을 확인할 수 없습니다.",
               "replaceCredentials": "자격 증명 추가 또는 교체",
@@ -12408,15 +12337,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "스킬을 설치하려면 서버의 Coding Agent 2를 업데이트하세요.",
           "connectHost": "이 SSH 호스트에 연결하면 스킬을 설치할 수 있습니다."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "설치 명령을 복사하지 못했습니다.",
-          "f08d45293d": "명령 복사",
-          "b99f375eb2": "에이전트용 오케스트레이션 스킬을 설치하려면 터미널에서 이 명령을 실행하세요.",
-          "35550f3b3b": "완료",
-          "2914abcfa2": "오케스트레이션 스킬 설치",
-          "1bdce1911e": "오케스트레이션 스킬 설치 명령 복사",
-          "239bf9132b": "설치 명령을 복사했습니다."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "{{value0}}에 설치",
@@ -14690,11 +14610,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "닫기 · Esc",
-          "9883b58693": "Coding Agent 2 모바일 닫기",
-          "fb5f28330e": "사이드바에 표시",
-          "c669abcf8f": "사이드바에서 숨기기",
-          "e1c7b4a92d": "설정 > 모바일에서 구성하세요.",
-          "f3d8e5b71a": "단축키를 왼쪽 사이드바에 다시 추가합니다."
+          "9883b58693": "Coding Agent 2 모바일 닫기"
         },
         "PhoneCarousel": {
           "96d651cb87": "Terminal 세션",
@@ -14839,9 +14755,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "플로팅 워크스페이스 숨기기",
-            "763f5fa2c1": "플로팅 버튼으로 이동",
-            "0ee79e0674": "상태 표시줄로 이동"
+            "8e7d775287": "플로팅 워크스페이스 숨기기"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "agents가 Coding Agent 2를 통해 컨텍스트를 넘기고 작업을 조정할 수 있습니다.",
@@ -14863,12 +14777,6 @@
             "8cf80db43b": "agents가 Coding Agent 2를 통해 조정할 수 있도록 Coding Agent 2 CLI 및 agents 스킬을 설정합니다.",
             "2a3c5ddf5e": "오케스트레이션 활성화",
             "8b14ba6c17": "새 브라우저 탭"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "플로팅 워크스페이스 표시",
-            "4cb418b991": "플로팅 워크스페이스 표시, 새 활동",
-            "5785dd9148": "플로팅 워크스페이스 최소화",
-            "bfe7809a70": "{{value0}} 플로팅 워크스페이스({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "최소화",
@@ -15257,7 +15165,6 @@
             "4795ac2d4a": "다음과 같이 질문해 보세요.",
             "53905bd076": "개발 미리보기: 스킬 설정 terminal 열기.",
             "1da82af45b": "Coding Agent 2 CLI에 주의가 필요합니다",
-            "ce13a742d0": "PATH에 'orca'를 등록했습니다.",
             "d1a86c7eb5": "설정을 열어 CLI 설정을 완료하세요.",
             "cliInstallFailed": "Coding Agent 2 CLI를 설치하지 못했습니다.",
             "splitPrPrompt": "“이 PR을 두 개의 <term>작업 트리</term>로 나누고 각각 PR을 만들어 줘.”"
@@ -15267,7 +15174,7 @@
           },
           "CliSkillSetupPanel": {
             "title": "스킬 설정",
-            "description": "에이전트용 Coding Agent 2 CLI 및 오케스트레이션 스킬을 설치합니다."
+            "description": "에이전트용 Coding Agent 2 CLI 스킬을 설치합니다."
           },
           "CliSkillSetupTerminal": {
             "6ff813fc1d": "스킬 명령어 복사에 실패했습니다.",
@@ -20006,8 +19913,8 @@
         "askRunSetup": "지금 설정을 실행할까요?",
         "askRunDefaultTabs": "지금 기본 탭 명령을 실행할까요?",
         "askRunSetupAndDefaultTabs": "지금 설정 및 기본 탭 명령을 실행할까요?",
-        "yamlSource": "orca.yaml",
-        "bothSources": "orca.yaml + 로컬",
+        "yamlSource": "coding.yaml",
+        "bothSources": "coding.yaml + 로컬",
         "localSource": "로컬 설정"
       }
     },
@@ -20427,7 +20334,6 @@
       "continueButton": "CLI 없이 계속",
       "title": "Coding Agent 2 CLI를 사용할 수 없습니다",
       "message": "Coding Agent 2가 로컬 명령 전송 기능을 시작하지 못했습니다.",
-      "detail": "Coding Agent 2는 계속 작동하지만 이번 세션에서는 orca status, orca terminal 등의 명령과 오케스트레이션 기능을 사용할 수 없습니다.\n\n{{guidance}}\n\n원인: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2가 런타임 파일을 쓸 수 없습니다. Coding Agent 2 데이터 폴더의 권한을 확인한 후 다시 시작하세요.",
         "storageUnavailable": "디스크가 가득 찼거나 읽기 전용일 수 있습니다. 공간을 확보한 후 Coding Agent 2를 다시 시작하세요.",
@@ -20764,7 +20670,7 @@
     "createReviewFailure": {
       "authRequiredCommand": "{{providerName}}이(가) 인증되지 않았습니다. 다음 단계: 이 환경에서 {{command}}을(를) 실행하세요.",
       "authRequiredVariable": "{{providerName}}이(가) 인증되지 않았습니다. 다음 단계: 이 환경에서 {{variable}}을(를) 설정하세요.",
-      "authRequiredBitbucket": "Bitbucket이 인증되지 않았습니다. 다음 단계: 설정 > 연동에서 Bitbucket을 연결하거나 이 환경에서 ORCA_BITBUCKET_*을(를) 설정하세요.",
+      "authRequiredBitbucket": "Bitbucket이 인증되지 않았습니다. 다음 단계: 설정 > 연동에서 Bitbucket을 연결하거나 이 환경에서 CODING_BITBUCKET_*을(를) 설정하세요.",
       "signInHintCommand": "이 환경에서 {{command}}을(를) 실행하세요",
       "signInHintVariable": "이 환경에서 {{variable}}을(를) 설정하세요",
       "signInHintBitbucket": "설정 > 연동에서 Bitbucket을 연결하세요",
@@ -21050,7 +20956,7 @@
     "launchFailedGenericDetail": "시스템이 시작을 거부했습니다. 메모리를 확보하거나 다른 앱을 종료한 다음 다시 시도를 클릭하세요. 계속 발생하면 Coding Agent 2를 다시 설치하세요.",
     "lowCommitMessage": "Windows의 메모리가 부족합니다.",
     "lowCommitDetail": "Windows에는 앱용 메모리가 {{availableMB}} MB밖에 남아 있지 않으므로 다시 로드한 후 다시 메모리가 부족합니다.",
-    "lowCommitAdvice": "사용하지 않는 앱이나 ORCA 워크스페이스를 닫거나 Windows 페이지 파일 크기를 늘려 메모리를 확보한 다음 다시 로드 를 클릭합니다."
+    "lowCommitAdvice": "사용하지 않는 앱이나 Coding Agent 2 워크스페이스를 닫거나 Windows 페이지 파일 크기를 늘려 메모리를 확보한 다음 다시 로드 를 클릭합니다."
   },
   "sessionSearch": {
     "panel": {
@@ -21076,7 +20982,7 @@
       "sortSessionsAriaLabel": "세션 정렬: {{value0}}",
       "showMoreSessions": "더 많은 세션 보기",
       "loadingMoreSessions": "추가 세션 로드 중…",
-      "unsupportedAgent": "이 컴퓨터는 선택한 에이전트에 대한 이력 검색을 지원하지 않습니다. 해당 컴퓨터에서 ORCA를 업데이트하거나 다른 에이전트를 선택하십시오.",
+      "unsupportedAgent": "이 컴퓨터는 선택한 에이전트에 대한 이력 검색을 지원하지 않습니다. 해당 컴퓨터에서 Coding Agent 2를 업데이트하거나 다른 에이전트를 선택하십시오.",
       "resultCount_other": "결과 {{count}}개",
       "sessionCount_other": "세션 {{count}}개",
       "sessionsShownOfLoaded_other": "세션 {{count}}개 중 {{shown}}개",
@@ -21406,33 +21312,33 @@
     "sessionSaveFailure": {
       "title": "터미널 세션을 저장할 수 없습니다",
       "capacity": "이 터미널을 저장하는 장치가 전체 스토리지 또는 초과된 스토리지 할당량을 보고했습니다. 해당 장치의 여유 공간을 확보한 다음 다시 시도하십시오.",
-      "unknown": "ORCA는 터미널 상태를 저장할 수 없습니다. 다시 시도하세요. 이 문제가 계속되면 원인을 파악할 수 있도록 지원팀과 ORCA 로그를 공유하세요."
+      "unknown": "Coding Agent 2는 터미널 상태를 저장할 수 없습니다. 다시 시도하세요. 이 문제가 계속되면 원인을 파악할 수 있도록 지원팀과 Coding Agent 2 로그를 공유하세요."
     },
     "codexTerminalServerIsolationNotice": {
-      "title": "ORCA는 이제 공유 서버 없이 CODEX를 실행합니다",
+      "title": "Coding Agent 2는 이제 공유 서버 없이 CODEX를 실행합니다",
       "description": "이를 통해 에이전트 상태를 더욱 안정적으로 유지할 수 있습니다. 설정에서 다시 켤 수 있습니다.",
       "openSettings": "설정 열기 "
     },
     "codexSharedSettingsNotice": {
       "title": "Coding Agent 2의 Codex는 이제 ~/.codex를 사용합니다",
-      "description": "Codex는 폴더를 신뢰하거나 명령을 승인하도록 다시 요청할 수 있습니다. ORCA에서만 추가한 MCP 서버를 다시 추가합니다.",
+      "description": "Codex는 폴더를 신뢰하거나 명령을 승인하도록 다시 요청할 수 있습니다. Coding Agent 2에서만 추가한 MCP 서버를 다시 추가합니다.",
       "dismiss": "닫기"
     },
     "codexSharedServerBanner": {
       "title": "이 Codex는 다른 Codex 탭과 서버를 공유합니다",
       "body": "세션이 예기치 않게 종료될 수 있으며 에이전트 상태가 잘못되었을 수 있습니다.",
-      "openedBeforeUpdateBody": "이 터미널은 ORCA가 각 Codex에게 자체 서버를 제공하기 전에 열렸습니다.",
+      "openedBeforeUpdateBody": "이 터미널은 Coding Agent 2가 각 Codex에게 자체 서버를 제공하기 전에 열렸습니다.",
       "oldTerminalDialogTitle": "이 Codex가 서버를 공유하는 이유",
       "oldTerminalDialogRisk": "서버를 공유하는 Codex 세션은 함께 종료될 수 있으며 에이전트 상태가 잘못될 수 있습니다.",
       "oldTerminalDialogCause": "이전 터미널은 여전히 Codex 서버를 공유합니다. 새 터미널을 열어 별도의 서버에서 Codex를 실행합니다.",
       "fix": "자물쇠",
       "dialogTitle": "각 Codex 탭에 자체 서버를 제공합니다",
-      "dialogDescription": "Codex 세션은 터미널 공유 백그라운드 서버에서 직접 시작되었습니다. ORCA는 시작되는 Codex 세션을 별도로 유지합니다. 세션이 서버를 공유할 때 서버를 닫으면 다른 세션이 종료될 수 있으며 에이전트 상태가 잘못될 수 있습니다.",
+      "dialogDescription": "Codex 세션은 터미널 공유 백그라운드 서버에서 직접 시작되었습니다. Coding Agent 2는 시작되는 Codex 세션을 별도로 유지합니다. 세션이 서버를 공유할 때 서버를 닫으면 다른 세션이 종료될 수 있으며 에이전트 상태가 잘못될 수 있습니다.",
       "copy": "복사",
       "copied": "복사됨",
       "done": "완료",
       "step1Title": "Codex 서버 공유 끄기",
-      "step1Note": "이렇게 하면 Codex 설정이 변경되므로 ORCA 외부에서도 적용됩니다.",
+      "step1Note": "이렇게 하면 Codex 설정이 변경되므로 Coding Agent 2 외부에서도 적용됩니다.",
       "step2Title": "실행 중인 공유 서버 중지",
       "undo": "되돌리려면 codex features enable daemon_auto_start를 실행하세요.",
       "step2Warning": "서버를 공유하는 열려 있는 Codex 세션을 닫습니다.",
@@ -21445,7 +21351,7 @@
       "stopped": "중지됨",
       "stopFailed": "Coding Agent 2는 서버를 멈출 수 없었다.",
       "confirmStopTitle": "공유 서버를 중지하시겠습니까?",
-      "confirmStopDescription": "이는 ORCA 외부 세션을 포함하여 이를 공유하는 모든 공개 Codex 세션을 종료합니다.",
+      "confirmStopDescription": "이는 Coding Agent 2 외부 세션을 포함하여 이를 공유하는 모든 공개 Codex 세션을 종료합니다.",
       "cancel": "취소",
       "runs": "Runs"
     },
@@ -21575,7 +21481,7 @@
   },
   "worktree": {
     "setupTrust": {
-      "createdBranchSkipped": "설정이 실행되지 않았습니다. 이 워크스페이스 브랜치의 orca.yaml 설정 명령이 승인한 명령과 다릅니다."
+      "createdBranchSkipped": "설정이 실행되지 않았습니다. 이 워크스페이스 브랜치의 coding.yaml 설정 명령이 승인한 명령과 다릅니다."
     },
     "nestedRemoval": {
       "refreshFailed": "워크스페이스 목록을 새로고침하지 못했습니다",
@@ -22438,13 +22344,13 @@
     "remoteServerPairingErrors": {
       "invalidPairingCode": "잘못된 페어링 코드입니다. codingagent2://pair?... URL 또는 원시 페어링 데이터가 필요합니다.",
       "selfPairingCode": "이 페어링 코드는 현재 Coding Agent 2 인스턴스용입니다. 다른 컴퓨터에서 코드를 생성하세요.",
-      "managedDeployment": "Coding Agent 2가 SSH 호스트에서 이 서버를 실행하므로 여기서는 페어링을 교체하거나 제거할 수 없습니다. 사용을 중단하려면 `orca environment stop --environment <name> --yes` 명령을 실행하거나 설정 > SSH 호스트의 Coding Agent 2를 사용하세요. 호스트가 더 이상 존재하지 않으면 `orca environment forget --environment <name> --yes` 명령을 실행하세요.",
+      "managedDeployment": "Coding Agent 2가 SSH 호스트에서 이 서버를 실행하므로 여기서는 페어링을 교체하거나 제거할 수 없습니다. 사용을 중단하려면 `coding-agent environment stop --environment <name> --yes` 명령을 실행하거나 설정 > SSH 호스트의 Coding Agent 2를 사용하세요. 호스트가 더 이상 존재하지 않으면 `coding-agent environment forget --environment <name> --yes` 명령을 실행하세요.",
       "sshAccessChangePending": "이 서버의 SSH 액세스 변경이 완료되지 않았습니다. 페어링을 교체하거나 서버를 제거하기 전에 설정 > 원격 Coding Agent 2 서버 > 페어링된 서버의 SSH 액세스에서 다시 시도하거나 취소하세요.",
       "sshAccessLinked": "설정 > 원격 Coding Agent 2 서버 > 페어링된 서버의 SSH 액세스에서 이 서버의 SSH 액세스 연결을 해제한 후 페어링을 교체하거나 서버를 제거하세요.",
       "alreadyPairedCloudWorkspace": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. 클라우드 워크스페이스에 속해 있으며 워크스페이스가 재개되면 다시 페어링됩니다.",
       "alreadyPairedCloudIdentity": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. 클라우드 워크스페이스의 서버가 해당 서버의 ID를 재사용하므로 저장되지 않았습니다.",
       "alreadyPairedWslHost": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. Coding Agent 2가 WSL 호스트로 관리하므로 여기서는 페어링을 교체할 수 없습니다.",
-      "alreadyPairedManagedDeployment": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. Coding Agent 2가 SSH 호스트에서 이 서버를 실행하므로 여기서는 페어링을 교체하거나 제거할 수 없습니다. 사용을 중단하려면 `orca environment stop --environment <name> --yes` 명령을 실행하거나 설정 > SSH 호스트의 Coding Agent 2를 사용하세요. 호스트가 더 이상 존재하지 않으면 `orca environment forget --environment <name> --yes` 명령을 실행하세요.",
+      "alreadyPairedManagedDeployment": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. Coding Agent 2가 SSH 호스트에서 이 서버를 실행하므로 여기서는 페어링을 교체하거나 제거할 수 없습니다. 사용을 중단하려면 `coding-agent environment stop --environment <name> --yes` 명령을 실행하거나 설정 > SSH 호스트의 Coding Agent 2를 사용하세요. 호스트가 더 이상 존재하지 않으면 `coding-agent environment forget --environment <name> --yes` 명령을 실행하세요.",
       "alreadyPairedSshAccessChangePending": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. 이 서버의 SSH 액세스 변경이 완료되지 않았습니다. 페어링을 교체하거나 서버를 제거하기 전에 설정 > 원격 Coding Agent 2 서버 > 페어링된 서버의 SSH 액세스에서 다시 시도하거나 취소하세요.",
       "alreadyPairedSshAccessLinked": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. 설정 > 원격 Coding Agent 2 서버 > 페어링된 서버의 SSH 액세스에서 이 서버의 SSH 액세스 연결을 해제한 후 페어링을 교체하거나 서버를 제거하세요.",
       "alreadyPairedAddAgain": "이 서버는 이미 \"{{name}}\"(으)로 페어링되어 있습니다. 연결 정보를 업데이트하려면 설정 > 원격 Coding Agent 2 서버에서 다시 추가하세요.",
@@ -22850,14 +22756,14 @@
     },
     "setupTrust": {
       "reviewTitle": "이 자동화의 새 설정 명령을 승인할까요?",
-      "reviewBody": "브랜치의 <code>orca.yaml</code> 설정 명령이 변경되어 실행에서 설정을 건너뛰었습니다. 승인하면 이후 실행에서 이 명령을 사용합니다. <repo/>을(를) 신뢰하는 경우에만 승인하세요.",
+      "reviewBody": "브랜치의 <code>coding.yaml</code> 설정 명령이 변경되어 실행에서 설정을 건너뛰었습니다. 승인하면 이후 실행에서 이 명령을 사용합니다. <repo/>을(를) 신뢰하는 경우에만 승인하세요.",
       "approve": "승인",
       "approved": "설정을 승인했습니다. 이 자동화의 이후 실행에서 실행됩니다.",
-      "skippedSinceApproved": "브랜치의 orca.yaml 설정 명령이 변경되어 이 실행에서는 설정이 실행되지 않았습니다. 이후 승인되었으므로 이후 실행에서 실행됩니다.",
-      "skippedReview": "설정이 실행되지 않았습니다. 이 실행 브랜치의 orca.yaml 설정 명령이 이 자동화에 승인된 명령과 다릅니다. 이후 실행에서 설정을 실행하려면 검토하세요.",
+      "skippedSinceApproved": "브랜치의 coding.yaml 설정 명령이 변경되어 이 실행에서는 설정이 실행되지 않았습니다. 이후 승인되었으므로 이후 실행에서 실행됩니다.",
+      "skippedReview": "설정이 실행되지 않았습니다. 이 실행 브랜치의 coding.yaml 설정 명령이 이 자동화에 승인된 명령과 다릅니다. 이후 실행에서 설정을 실행하려면 검토하세요.",
       "reviewAction": "설정 검토 및 승인",
       "listSkipped": "설정 건너뜀",
-      "listSkippedTitle": "브랜치의 orca.yaml 설정 명령이 변경되어 마지막 실행에서 설정을 건너뛰었습니다. 작업 메뉴에서 검토하세요."
+      "listSkippedTitle": "브랜치의 coding.yaml 설정 명령이 변경되어 마지막 실행에서 설정을 건너뛰었습니다. 작업 메뉴에서 검토하세요."
     }
   },
   "codeHost": {

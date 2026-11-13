@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { loadRelayConfig } from './config.js'
-import { RELAY_CELL_CONNECTION_HARD_CAP } from '@orca-cloud/relay-contract/admission-budgets'
+import { RELAY_CELL_CONNECTION_HARD_CAP } from '@coding-agent-cloud/relay-contract/admission-budgets'
 import { RELAY_READINESS_JWKS_GRACE_MS, RELAY_READINESS_SQL_GRACE_MS } from './process-lifecycle/relay-readiness.js'
 
 function cellEnvironment(capacity: number): NodeJS.ProcessEnv {

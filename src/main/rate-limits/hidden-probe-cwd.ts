@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { mkdirSync, realpathSync, statSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -10,7 +11,7 @@ const WSL_HIDDEN_PROBE_CWD_DIR = 'orca-rate-limit-pty-cwd'
 
 // Never let hidden Claude discovery start at a filesystem root; bound cwd to userData or tmpdir (runaway-cpu-hidden-usage-pty-design.md).
 function resolveUserDataRoot(userDataPath?: string | null): string {
-  const root = userDataPath?.trim() || process.env.ORCA_USER_DATA_PATH?.trim()
+  const root = userDataPath?.trim() || readAppEnv(process.env, 'USER_DATA_PATH')?.trim()
   if (root && !isRootLikePath(root)) {
     return root
   }

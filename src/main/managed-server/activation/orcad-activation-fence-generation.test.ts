@@ -17,7 +17,7 @@ import { unusedOrcadHostTransport } from '../../ssh/unused-host-transport.test-f
 // Execute generated host guards in real local shells.
 const shell = vi.hoisted((): { env: NodeJS.ProcessEnv | undefined } => ({ env: undefined }))
 vi.mock('../../ssh/remote-exec/remote-exec-command', async (importOriginal) => {
-  const { runProcess } = await import('@orca/process-host')
+  const { runProcess } = await import('@coding-agent/process-host')
   return {
     ...(await importOriginal<typeof ExecCommandModule>()),
     execCommand: async (_conn: unknown, command: string) => {

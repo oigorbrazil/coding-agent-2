@@ -1,5 +1,5 @@
-import { ASSIGNMENT_LIMITS } from '@orca-cloud/relay-contract'
-import type { RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import { ASSIGNMENT_LIMITS } from '@coding-agent-cloud/relay-contract'
+import type { RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { RelayAssignment } from './assignment/assignment-store.js'
 import { lockedSelector, registerExistingOnlyCell, requireSelectorMatchesAdmission } from './cell/admission/cell-admission-selector.js'
 import type { RelayDatabase, SqlRow } from './database/database.js'

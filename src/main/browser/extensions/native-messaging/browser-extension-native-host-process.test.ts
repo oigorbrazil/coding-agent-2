@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { once } from 'node:events'
 import { build } from 'esbuild'
-import { spawnProcess } from '@orca/process-host'
-import type { PipedChildProcess } from '@orca/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
+import type { PipedChildProcess } from '@coding-agent/process-host/process-spec'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import {
   killAllNativeHosts,

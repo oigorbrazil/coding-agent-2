@@ -17,7 +17,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { performance } from 'node:perf_hooks'
 import { pathToFileURL } from 'node:url'
-import { runProcess, runProcessSync } from '@orca/process-host'
+import { runProcess, runProcessSync } from '@coding-agent/process-host'
 import { NODE_RUNTIME_ASSETS, NODE_RUNTIME_PIN } from '../../../../src/shared/node-runtime-pin.ts'
 import {
   buildWindowsSecurityAddon,

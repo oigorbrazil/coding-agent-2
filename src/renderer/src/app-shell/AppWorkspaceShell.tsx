@@ -1,22 +1,16 @@
-import { memo, Suspense, useCallback, useRef } from 'react'
+import { Suspense, useRef } from 'react'
 import { lazyWithRetry as lazy } from '@/lib/lazy-with-retry'
 import { useTranslate } from '@/i18n/use-translate'
 import { useAppStore } from '@/store'
-import { usePluginViewCaptureStore } from '@/store/plugins/capture/plugin-view-capture'
 import { pendingCreationOpensNativeChat } from '@/lib/workspace/creation/pending-worktree-creation'
 import Sidebar from '../components/Sidebar'
 import RightSidebar from '../components/right-sidebar'
 import { RecoverableRenderErrorBoundary } from '../components/error-boundaries/RecoverableRenderErrorBoundary'
-import { FloatingTerminalToggleButton } from '../components/floating-terminal/FloatingTerminalToggleButton'
 import { TerminalWorkbenchContainer } from '../components/TerminalWorkbenchContainer'
 import type { VirtualizedScrollAnchor } from '../hooks/useVirtualizedScrollAnchor'
 import { TitlebarLeftControls } from './TitlebarLeftControls'
-import { RightSidebarToggle, TitlebarMainStrip } from './TitlebarMainStrip'
+import { TitlebarMainStrip } from './TitlebarMainStrip'
 import type { AppChromeLayout } from './use-app-chrome-layout'
-import type { FloatingWorkspacePanelState } from './use-floating-workspace-panel'
-
-// Skips the shell render each workspace switch causes; its props only change on toggle.
-const MemoFloatingTerminalToggleButton = memo(FloatingTerminalToggleButton)
 
 const Landing = lazy(() => import('../components/Landing'))
 const WorktreeCreationPanel = lazy(
@@ -111,25 +105,14 @@ function ActivePage({ layout }: { layout: AppChromeLayout }): React.JSX.Element 
   )
 }
 
-export function AppWorkspaceShell(props: {
-  layout: AppChromeLayout
-  floatingWorkspace: FloatingWorkspacePanelState
-}): React.JSX.Element {
+export function AppWorkspaceShell({ layout }: { layout: AppChromeLayout }): React.JSX.Element {
   const t = useTranslate()
-  const { layout, floatingWorkspace } = props
   const titlebarLeftControls = <TitlebarLeftControls layout={layout} />
   const titlebarMainStrip = <TitlebarMainStrip layout={layout} />
   // Keep scroll memory above sidebar view remounts to preserve list position.
   const scrollOffsetRef = useRef(0)
   const scrollAnchorRef = useRef<VirtualizedScrollAnchor>(null)
   const sidebarScrollRefs = { scrollOffsetRef, scrollAnchorRef }
-  const { setOpenWithFocus } = floatingWorkspace
-  // `orca plugin shot` captures the right sidebar, which the parked launcher floats over.
-  const capturingPluginShot = usePluginViewCaptureStore((s) => s.capturing)
-  const toggleFloatingWorkspace = useCallback(
-    () => setOpenWithFocus((open) => !open),
-    [setOpenWithFocus]
-  )
 
   return (
     // Avoid active-worktree reset keys that remount whole surfaces during wake.
@@ -143,21 +126,24 @@ export function AppWorkspaceShell(props: {
         'The app is still running. Retry the shell or use the menu to report the crash details.'
       )}
     >
-      <div className="flex flex-row flex-1 min-h-0 overflow-hidden">
+      <div data-glass-stage="" className="flex flex-row flex-1 min-h-0 overflow-hidden">
         {/* Keep the non-workspace titlebar from spanning the right sidebar. */}
         <div className="flex flex-col flex-1 min-w-0 min-h-0">
           {/* Workspace tab groups reach the top; other pages retain the titlebar. */}
-          {!layout.leftTitlebarChromeLayout.shouldMount ? (
-            <div className="titlebar">
+          {/* Settings brings its own sidebar header; the band would only add an empty stripe under the top bar. */}
+          {!layout.leftTitlebarChromeLayout.shouldMount && layout.activeView !== 'settings' ? (
+            // Coding Agent 2: the top bar above already draws the separator, so this band keeps its color without a border.
+            <div className="titlebar" style={{ borderBottom: 'none' }}>
               <div className="flex items-center shrink-0 mr-2">{titlebarLeftControls}</div>
               {titlebarMainStrip}
             </div>
           ) : null}
-          <div className="flex flex-row flex-1 min-h-0 overflow-hidden">
+          <div data-glass-row="" className="flex flex-row flex-1 min-h-0 overflow-hidden">
             {layout.showSidebar ? (
               layout.leftTitlebarChromeLayout.shouldMount ? (
                 /* Remove the collapsed header from flex layout so panes reclaim the left edge. */
                 <div
+                  data-glass-panel={layout.sidebarOpen ? 'sidebar' : undefined}
                   className={`flex min-h-0 flex-col shrink-0${layout.sidebarOpen ? '' : ' relative w-0 overflow-visible'}`}
                 >
                   <div
@@ -185,29 +171,19 @@ export function AppWorkspaceShell(props: {
                 <WorktreeSidebar layout={layout} scrollRefs={sidebarScrollRefs} />
               )
             ) : null}
-            <div className="flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden">
+            <div
+              data-glass-panel="main"
+              className="flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden"
+            >
               {/* Automations/artifacts own their headers; another titlebar would leave an empty stripe. */}
+              {/* Coding Agent 2: without workspace tabs the strip would be an empty band under the top bar. */}
               {layout.stackedSidebarOpen &&
+              (layout.workspaceChromeActive || layout.activeView === 'activity') &&
               layout.activeView !== 'automations' &&
               layout.activeView !== 'artifacts' ? (
                 <div className="titlebar">{titlebarMainStrip}</div>
               ) : null}
               <div className="relative flex flex-1 min-w-0 min-h-0 overflow-hidden">
-                {/* Match the open sidebar header’s alignment to prevent toggle jitter. */}
-                {layout.workspaceChromeActive && !layout.rightSidebarOpen && (
-                  <div
-                    className="absolute top-0 z-10 flex items-center h-[36px]"
-                    style={
-                      {
-                        // Why: --window-controls-width keeps the toggle clear of the fixed window-controls overlay (138px on custom chrome, 0px otherwise); no internal spacer — one would cover the pane-actions Ellipsis button with an unclickable div.
-                        right: 'var(--window-controls-width)',
-                        WebkitAppRegion: 'no-drag'
-                      } as React.CSSProperties
-                    }
-                  >
-                    {layout.showRightSidebarControls ? <RightSidebarToggle /> : null}
-                  </div>
-                )}
                 <div className="flex flex-1 min-w-0 min-h-0 flex-col">
                   {layout.shouldMountTerminalWorkbench ? (
                     <TerminalWorkbenchContainer isVisible={layout.terminalWorkbenchVisible}>
@@ -242,12 +218,6 @@ export function AppWorkspaceShell(props: {
                     </RecoverableRenderErrorBoundary>
                   </Suspense>
                 </div>
-                {floatingWorkspace.showToggleButton && !capturingPluginShot ? (
-                  <MemoFloatingTerminalToggleButton
-                    open={floatingWorkspace.open}
-                    onToggle={toggleFloatingWorkspace}
-                  />
-                ) : null}
               </div>
             </div>
           </div>

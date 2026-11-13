@@ -15,7 +15,7 @@ import {
   agentBrowserScreenshotArgs,
   readAgentBrowserScreenshot
 } from '../browser/agent-browser/agent-browser-screenshot-arguments'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { resolveExternalChromiumProfilePath } from './external-chromium-profile-path'
 
 const COMMAND_TIMEOUT_MS = 90_000

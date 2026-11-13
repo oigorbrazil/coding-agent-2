@@ -1,3 +1,4 @@
+import { appEnvAliases } from '../../app-env'
 import { withFreshOmpLaunch, isFreshOmpLaunchCommand } from './omp-fresh-launch'
 import { withOmpDraftCleanup } from './omp-draft-launch'
 import '../../agent-status/process/shell-process-detection'
@@ -279,7 +280,7 @@ export function buildAgentDraftLaunchPlan(args: {
       expectedProcess: config.expectedProcess,
       launchConfig,
       ...appliedSessionOptionProps(baseCommand.appliedSessionOptions),
-      env: { ...args.agentEnv, [config.draftPromptEnvVar]: trimmed }
+      env: appEnvAliases({ ...args.agentEnv, [config.draftPromptEnvVar]: trimmed })
     }
   }
   if (

@@ -17,13 +17,14 @@ import {
 } from '../manifest/plugin-schema-field-docs'
 
 /**
- * The plugin catalog (`orca-catalog.json`). The name never changes; `catalogVersion` does, and
+ * The plugin catalog (`coding-catalog.json`, with legacy `orca-catalog.json` support). `catalogVersion` changes
  * only for a change older clients cannot ignore. Everything below is tolerant by design: a
  * catalog only lists, and installing re-checks the exact bytes, so an older client keeps
  * whatever it can understand instead of losing the whole catalog. CI and `validate` are the
  * strict checks.
  */
-export const PLUGIN_CATALOG_FILENAME = 'orca-catalog.json'
+export const PLUGIN_CATALOG_FILENAME = 'coding-catalog.json'
+export const LEGACY_PLUGIN_CATALOG_FILENAME = 'orca-catalog.json'
 export const PLUGIN_CATALOG_VERSION = 2
 export const PLUGIN_CATALOG_RELEASE_LIMIT = 32
 

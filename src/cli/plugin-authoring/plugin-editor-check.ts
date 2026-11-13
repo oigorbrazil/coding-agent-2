@@ -1,5 +1,5 @@
+import { pluginManifestPath } from '../../shared/plugins/manifest/plugin-manifest-path'
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import type {
   PluginEditorCheckIssue,
@@ -27,9 +27,7 @@ export async function checkPluginEditors(
   dir: string,
   appRoot?: string
 ): Promise<PluginEditorCheck[]> {
-  const parsed = parsePluginManifest(
-    JSON.parse(await readFile(join(dir, 'orca-plugin.json'), 'utf8'))
-  )
+  const parsed = parsePluginManifest(JSON.parse(await readFile(pluginManifestPath(dir), 'utf8')))
   const editors = parsed.ok ? parsed.manifest.contributes.customEditors : []
   if (editors.length === 0) {
     return []

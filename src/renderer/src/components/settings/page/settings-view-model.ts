@@ -125,6 +125,8 @@ export function buildSettingsViewModel(
     model.activeSectionId === 'setup-guide' && model.settingsSearchQuery.trim() === ''
   // Why no query check: search still shows only the active section.
   const isWidePluginsPane = model.activeSectionId === 'plugins'
+  // The playbooks editor is a canvas with a sidebar and an inspector; the reading width squeezed it.
+  const isFullWidthPlaybooksPane = model.activeSectionId === 'coding-opus-playbooks'
 
   return {
     generalNavGroups,
@@ -132,7 +134,8 @@ export function buildSettingsViewModel(
     isSectionMounted,
     isFocusedShortcutsPane,
     isFocusedSetupGuidePane,
-    isWidePluginsPane
+    isWidePluginsPane,
+    isFullWidthPlaybooksPane
   }
 }
 

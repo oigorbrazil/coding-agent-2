@@ -144,7 +144,7 @@ function assertNoElectronRequire(
 
 // Relocated Windows daemon copies only these packages; other bare requires cause silent fallback to an unrelocated daemon that updates kill.
 const DAEMON_HOST_MIRRORED_PACKAGES = [
-  '@orca/process-host',
+  '@coding-agent/process-host',
   'node-pty',
   '@vscode/windows-process-tree'
 ]

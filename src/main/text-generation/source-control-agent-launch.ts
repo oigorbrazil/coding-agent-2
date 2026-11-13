@@ -1,5 +1,5 @@
 import { wslDistroForCommand } from '../../shared/wsl-paths'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { withCliRuntimeOnPath } from '../../shared/node-cli-command-resolution'
 import { resolveCliCommand } from '../codex-cli/command'
 import { wslAwareSpawn } from '../git/runner'

@@ -58,7 +58,7 @@ vi.mock('expo-router', async () => {
 vi.mock('expo-clipboard', mocks['expo-clipboard'])
 vi.mock('expo-haptics', mocks['expo-haptics'])
 vi.mock('expo-document-picker', mocks['expo-document-picker'])
-vi.mock('@orca/expo-two-way-audio', mocks['@orca/expo-two-way-audio'])
+vi.mock('@coding-agent/expo-two-way-audio', mocks['@coding-agent/expo-two-way-audio'])
 vi.mock('expo-keep-awake', mocks['expo-keep-awake'])
 vi.mock('expo-image-picker', mocks['expo-image-picker'])
 vi.mock('expo-file-system', mocks['expo-file-system'])

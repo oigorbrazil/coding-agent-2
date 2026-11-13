@@ -1,12 +1,14 @@
+import type { WslDistroHolder } from '../wsl/discovery/wsl-distro-holder-types'
+import {
+  type WslHostUninstallStopDependencies,
+  stopWslHostServersForUninstall,
+  wslHostUninstallStopDependencies
+} from '../wsl/host-lifecycle/wsl-host-uninstall-server-stop'
+import { setAppEnv } from '../../shared/app-env'
 import { app } from 'electron'
 import { createWslDistroHolder } from '../wsl/discovery/wsl-distro-holder'
-import type { WslDistroHolder } from '../wsl/discovery/wsl-distro-holder-types'
+
 import { ensureWindowsAppDataPath } from './windows-app-data-path'
-import {
-  stopWslHostServersForUninstall,
-  wslHostUninstallStopDependencies,
-  type WslHostUninstallStopDependencies
-} from '../wsl/host-lifecycle/wsl-host-uninstall-server-stop'
 
 /** The NSIS uninstaller's flag (config/nsis/orca-installer-hooks.nsh); keep the two in sync. */
 export const WSL_HOLDER_UNINSTALL_FLAG = '--orca-uninstall-release-wsl-holders'
@@ -52,7 +54,7 @@ export function runWslHolderUninstallPreflight(argv: readonly string[] = process
   let holder: WslDistroHolder
   let servers: WslHostUninstallStopDependencies | undefined
   try {
-    process.env.ORCA_BACKGROUND_LAUNCH = '1'
+    setAppEnv(process.env, 'BACKGROUND_LAUNCH', '1')
     // The same userData the app records holders under; before any other preflight step.
     ensureWindowsAppDataPath(app)
     holder = createWslDistroHolder({ userDataPath: app.getPath('userData') })

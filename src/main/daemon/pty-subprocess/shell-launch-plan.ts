@@ -1,3 +1,18 @@
+import {
+  type WindowsPowerShellShellFamily,
+  resolveEffectiveWindowsPowerShell,
+  shouldProbeWindowsPowerShellAvailability
+} from '../../providers/windows-powershell'
+import {
+  type WindowsShellSpawnAttempt,
+  buildWindowsPowerShellSpawnAttempts
+} from '../../providers/windows-shell-fallback-chain'
+import {
+  type RecognizedAgentProcess,
+  recognizeAgentProcessFromCommandLine
+} from '../../../shared/agent-status/process/agent-process-recognition'
+import type { PtySubprocessOptions } from './pty-subprocess'
+import { readAppEnv, setAppEnv, deleteAppEnv, readAppEnvKey } from '../../../shared/app-env'
 import { win32 as pathWin32 } from 'node:path'
 import {
   isWindowsGitBashShellPath,
@@ -17,27 +32,13 @@ import {
   resolveSafePtyDefaultCwd,
   assertSafeAgentStartupCwd
 } from '../../providers/pty-default-cwd'
-import {
-  resolveEffectiveWindowsPowerShell,
-  shouldProbeWindowsPowerShellAvailability,
-  type WindowsPowerShellShellFamily
-} from '../../providers/windows-powershell'
-import {
-  buildWindowsPowerShellSpawnAttempts,
-  type WindowsShellSpawnAttempt
-} from '../../providers/windows-shell-fallback-chain'
-import {
-  ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV,
-  resolveWindowsShellLaunchArgs
-} from '../../providers/windows-shell-args'
+
+import { resolveWindowsShellLaunchArgs } from '../../providers/windows-shell-args'
 import { resolveUnixShellPath } from '../../providers/local-pty/local-pty-executable-spawn'
 import { selectShellStartupFeatures } from '../../pty/shell-startup/shell-startup-features'
 import { parseWslPath } from '../../wsl/filesystem/unc-path-access'
 import { addWslEnvKeys } from '../../../shared/wsl-env'
-import {
-  recognizeAgentProcessFromCommandLine,
-  type RecognizedAgentProcess
-} from '../../../shared/agent-status/process/agent-process-recognition'
+
 import { ORCA_HERMES_STARTUP_QUERY_ENV } from '../../../shared/agent-launch/startup/hermes-startup-query'
 import {
   CLAUDE_INJECTED_CONFIG_DIR_ENV,
@@ -47,7 +48,6 @@ import { WINDOWS_GIT_BASH_SHELL } from '../../../shared/windows-terminal-shell'
 import { getShellLaunchConfig, resolvePtyShellPath } from '../shell-readiness/shell-ready'
 import { resolveWslSessionContext } from './wsl-session-context'
 import { finalizeDaemonPtyEnvironment, rescrubDaemonPtyEnvironment } from './spawn-environment'
-import type { PtySubprocessOptions } from './pty-subprocess'
 
 export type PtyShellLaunchPlan = {
   shellPath: string
@@ -107,9 +107,9 @@ export function createPtyShellLaunchPlan(
     }
     if (
       pathWin32.basename(shellPath).toLowerCase() === 'cmd.exe' &&
-      env.ORCA_CODEX_LAUNCH_PREFLIGHT
+      readAppEnv(env, 'CODEX_LAUNCH_PREFLIGHT')
     ) {
-      env[ORCA_CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE_ENV] = '"'
+      setAppEnv(env, 'CODEX_LAUNCH_PREFLIGHT_CMD_QUOTE', '"')
     }
     windowsFallbackAttempts = buildWindowsPowerShellSpawnAttempts({
       shellPath,
@@ -132,7 +132,7 @@ export function createPtyShellLaunchPlan(
         resolveSafePtyDefaultCwd(),
         resolvedWslContext,
         opts.command,
-        env.ORCA_CODEX_LAUNCH_PREFLIGHT
+        readAppEnv(env, 'CODEX_LAUNCH_PREFLIGHT')
       )
       shellArgs = resolved.shellArgs
       spawnCwd = resolved.effectiveCwd
@@ -148,10 +148,10 @@ export function createPtyShellLaunchPlan(
         const launchWslDistro = resolvedWslContext?.distro
         if (launchWslDistro && launchWslDistro !== codexHomeWslInfo.distro) {
           delete env.CODEX_HOME
-          delete env.ORCA_CODEX_HOME
+          deleteAppEnv(env, 'CODEX_HOME')
         } else {
           env.CODEX_HOME = codexHomeWslInfo.linuxPath
-          env.ORCA_CODEX_HOME = codexHomeWslInfo.linuxPath
+          setAppEnv(env, 'CODEX_HOME', codexHomeWslInfo.linuxPath)
           addWslEnvKeys(env, ['CODEX_HOME', 'ORCA_CODEX_HOME'])
           if (!launchWslDistro) {
             const resolved = resolveWindowsShellLaunchArgs(
@@ -160,7 +160,7 @@ export function createPtyShellLaunchPlan(
               resolveSafePtyDefaultCwd(),
               { distro: codexHomeWslInfo.distro },
               opts.command,
-              env.ORCA_CODEX_LAUNCH_PREFLIGHT
+              readAppEnv(env, 'CODEX_LAUNCH_PREFLIGHT')
             )
             shellArgs = resolved.shellArgs
             spawnCwd = resolved.effectiveCwd
@@ -171,22 +171,22 @@ export function createPtyShellLaunchPlan(
         }
       } else if (isHostCodexHomeForWsl(env.CODEX_HOME)) {
         delete env.CODEX_HOME
-        delete env.ORCA_CODEX_HOME
+        deleteAppEnv(env, 'CODEX_HOME')
       } else if (env.CODEX_HOME) {
         addWslEnvKeys(env, ['CODEX_HOME', 'ORCA_CODEX_HOME'])
       }
       if (env.CLAUDE_CONFIG_DIR) {
         addWslEnvKeys(env, ['CLAUDE_CONFIG_DIR'])
       }
-      if (env[CLAUDE_PROFILE_POINTER_ENV]) {
+      if (readAppEnv(env, 'CLAUDE_PROFILE_POINTER')) {
         addWslEnvKeys(env, [CLAUDE_PROFILE_POINTER_ENV, CLAUDE_INJECTED_CONFIG_DIR_ENV])
       }
-      if (env[ORCA_HERMES_STARTUP_QUERY_ENV] !== undefined) {
+      if (readAppEnv(env, 'HERMES_STARTUP_QUERY') !== undefined) {
         addWslEnvKeys(env, [ORCA_HERMES_STARTUP_QUERY_ENV])
       }
     } else if (codexHomeWslInfo || isWslCodexHomeForHost(env.CODEX_HOME)) {
       delete env.CODEX_HOME
-      delete env.ORCA_CODEX_HOME
+      deleteAppEnv(env, 'CODEX_HOME')
     }
     if (pathWin32.basename(shellPath).toLowerCase() === 'wsl.exe') {
       addOrcaWslInteropEnv(env)
@@ -202,7 +202,7 @@ export function createPtyShellLaunchPlan(
       )
     }
     const waitsForShellReady = Boolean(opts.command)
-    delete env.ORCA_SHELL_FEATURES
+    deleteAppEnv(env, 'SHELL_FEATURES')
     const userShellArgs = !opts.command && !opts.launchAgent ? opts.terminalShellArgs : undefined
     const shellLaunch = getShellLaunchConfig(
       shellPath,
@@ -225,7 +225,7 @@ export function createPtyShellLaunchPlan(
 
   seedPowerlevel10kWizardEnv(env, { envToDelete: opts.envToDelete })
   if (
-    env[POWERLEVEL10K_WIZARD_DISABLE_ENV] !== undefined &&
+    readAppEnvKey(env, POWERLEVEL10K_WIZARD_DISABLE_ENV) !== undefined &&
     process.platform === 'win32' &&
     pathWin32.basename(shellPath).toLowerCase() === 'wsl.exe'
   ) {

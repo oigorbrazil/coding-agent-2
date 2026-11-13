@@ -6,7 +6,7 @@ import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { performance } from 'node:perf_hooks'
 import { build } from 'esbuild'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { createCheckLogFixture } from './check-job-log-test-fixture.mjs'
 import {
   assertWatchdogExit,

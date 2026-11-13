@@ -287,31 +287,6 @@ export function AppearanceWindowSidebarSection({
                   </SearchableSetting>
 
                   <SearchableSetting
-                    title={t(
-                      'auto.components.settings.AppearancePane.9da1020447',
-                      'Show Coding Agent 2 Mobile Button'
-                    )}
-                    description={sidebarEntries[2]?.description}
-                    keywords={sidebarEntries[2]?.keywords ?? ['mobile', 'phone', 'sidebar']}
-                  >
-                    <SettingsSwitchRow
-                      label={t(
-                        'auto.components.settings.AppearancePane.9da1020447',
-                        'Show Coding Agent 2 Mobile Button'
-                      )}
-                      // Explain the remaining Toolbox route so hiding the shortcut cannot imply feature removal.
-                      description={t(
-                        'auto.components.settings.AppearancePane.61d842eca0',
-                        'Show the Coding Agent 2 Mobile shortcut in the sidebar. It remains available from Toolbox.'
-                      )}
-                      checked={settings.showMobileButton !== false}
-                      onChange={() =>
-                        updateSettings({ showMobileButton: !(settings.showMobileButton !== false) })
-                      }
-                    />
-                  </SearchableSetting>
-
-                  <SearchableSetting
                     title={getShowPinnedWorktreesInGroupsEntry().title}
                     description={getShowPinnedWorktreesInGroupsEntry().description}
                     keywords={getShowPinnedWorktreesInGroupsEntry().keywords}

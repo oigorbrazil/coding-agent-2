@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { accessSync, constants } from 'node:fs'
 import { delimiter, dirname, isAbsolute, join, relative } from 'node:path'
 import { RuntimeClientError } from './types'
@@ -6,7 +7,7 @@ import { appImageEphemeralRootOf } from '../../shared/appimage-ephemeral-root'
 
 /** A remote server’s Node-based CLI cannot start a local app server. */
 export function canStartOrcaServer(env: NodeJS.ProcessEnv): boolean {
-  const override = env.ORCA_APP_EXECUTABLE
+  const override = readAppEnv(env, 'APP_EXECUTABLE')
   return (
     (typeof override === 'string' && override.trim().length > 0) || env.ELECTRON_RUN_AS_NODE === '1'
   )
@@ -21,7 +22,7 @@ const NOT_AN_APP_CLI =
   "This `orca` command isn't running from an installed Coding Agent 2 app. On a host Coding Agent 2 reaches over SSH, it belongs to that connection's server and can't start one of its own."
 
 export function serverOnlyServeMessage(platform: NodeJS.Platform): string {
-  return `${NOT_AN_APP_CLI} Install the Coding Agent 2 app on this machine and run \`${appCliName(platform)} serve\` from a plain login shell, or set ORCA_APP_EXECUTABLE to the Coding Agent 2 app executable.`
+  return `${NOT_AN_APP_CLI} Install the Coding Agent 2 app on this machine and run \`${appCliName(platform)} serve\` from a plain login shell, or set CODING_AGENT_APP_EXECUTABLE to the Coding Agent 2 app executable.`
 }
 
 function serverOnlyServiceInstallMessage(platform: NodeJS.Platform): string {

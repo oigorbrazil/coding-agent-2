@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../../shared/app-env'
 import type { OrchestrationDb } from '../../db/orchestration-db'
 import type { TaskRow } from '../../db/orchestration-records'
 import { buildDispatchPreamble } from '../../workers/launch/worker-dispatch-preamble'
@@ -102,7 +103,9 @@ export async function dispatchTaskToWorker(params: {
     taskSpec: strippedSpec,
     coordinatorHandle: params.coordinatorHandle,
     workerHandle: targetHandle,
-    devMode: process.env.ORCA_USER_DATA_PATH?.includes('orca-dev'),
+    devMode: /(?:orca-dev|coding-agent-2-dev)/.test(
+      readAppEnv(process.env, 'USER_DATA_PATH') ?? ''
+    ),
     ...(runtime.getTerminalOrchestrationCliCommand
       ? { cliCommand: runtime.getTerminalOrchestrationCliCommand(targetHandle) }
       : {}),

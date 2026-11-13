@@ -1,3 +1,5 @@
+import { InputPane } from '../input/InputPane'
+import { SettingsGroupHeader } from '../section-layout/SettingsGroup'
 import { SessionHistorySettingsPane } from '../session-history/SessionHistorySettingsPane'
 import { ArtifactsSettingsPane } from '../artifacts/ArtifactsSettingsPane'
 import { AutomationsSettingsPane } from '../automations/AutomationsSettingsPane'
@@ -82,6 +84,17 @@ export function renderGeneralSettingsSection(
           wslCapabilitiesLoading={terminal.localWindowsRuntimeCapabilities.isLoading}
         />
       ) : null}
+      {/* Coding Agent 2 folds Input & Editing into General. */}
+      <div className="mt-8 space-y-3">
+        <SettingsGroupHeader
+          title={t('auto.components.settings.Settings.d7a3e635b6', 'Input & Editing')}
+          description={t(
+            'auto.components.settings.Settings.d0b7021d64',
+            'Selection and editing behavior.'
+          )}
+        />
+        <InputPane settings={model.settings} updateSettings={model.updateSettings} />
+      </div>
     </SettingsSection>
   )
 }

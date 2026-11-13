@@ -1,5 +1,5 @@
 import { createServer as createNetServer } from 'node:net'
-import { RELAY_CLOSE_CODE } from '@orca-cloud/relay-contract/close-codes'
+import { RELAY_CLOSE_CODE } from '@coding-agent-cloud/relay-contract/close-codes'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import WebSocket from 'ws'
 import type { RelayConfig } from '../config.js'

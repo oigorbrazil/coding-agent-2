@@ -3,7 +3,7 @@
 import { existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { getDefaultSeedSource, seedDevProfile } from './dev-profile-seed.mjs'
 
 const USAGE = `Usage: pnpm dev:fresh [--] [--keep] [--seed-from[=<profile dir>]] [-- <pnpm dev args>]

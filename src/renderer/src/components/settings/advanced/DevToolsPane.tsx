@@ -151,7 +151,7 @@ function OrcaCloudDevSubsection(): React.JSX.Element {
       title={t('auto.components.settings.DevToolsPane.orcaCloud', 'Coding Agent 2 Cloud')}
       description={t(
         'auto.components.settings.DevToolsPane.orcaCloudDescription',
-        'Dev-only preview of first-party cloud sign-in. Hidden in production; in dev it also appears in the sidebar account switcher once ORCA_CLOUD_API_URL and ORCA_CLOUD_CLIENT_ID are set.'
+        'Dev-only preview of first-party cloud sign-in. Hidden in production; in dev it also appears in the sidebar account switcher once CODING_AGENT_CLOUD_API_URL and CODING_AGENT_CLOUD_CLIENT_ID are set. The legacy ORCA_* names still work.'
       )}
       action={
         <Badge variant="outline">
@@ -187,7 +187,7 @@ function OrcaCloudDevSubsection(): React.JSX.Element {
           {authStatus?.setupMessage ??
             t(
               'auto.components.settings.DevToolsPane.orcaCloudNotConfigured',
-              'Set ORCA_CLOUD_API_URL and ORCA_CLOUD_CLIENT_ID to preview Coding Agent 2 Cloud sign-in in this dev build.'
+              'Set CODING_AGENT_CLOUD_API_URL and CODING_AGENT_CLOUD_CLIENT_ID to preview Coding Agent 2 Cloud sign-in in this dev build. The legacy ORCA_* names still work.'
             )}
         </p>
       )}

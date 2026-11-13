@@ -1,32 +1,24 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
-import { EyeOff, PanelBottom, PanelTop } from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
+import { EyeOff } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { useAppStore } from '@/store'
-import type { FloatingTerminalTriggerLocation } from '../../../../shared/ui-chrome-types'
 import { useTranslate } from '@/i18n/use-translate'
-import { useUiLanguageRevision } from '@/i18n/use-ui-language-revision'
 
 type FloatingTerminalIconContextMenuProps = {
   children: React.ReactNode
-  currentLocation: FloatingTerminalTriggerLocation
   className?: string
-  style?: React.CSSProperties
 }
 
 export function FloatingTerminalIconContextMenu({
   children,
-  currentLocation,
-  className,
-  style
+  className
 }: FloatingTerminalIconContextMenuProps): React.JSX.Element {
   const t = useTranslate()
-  const languageRevision = useUiLanguageRevision()
   const updateSettings = useAppStore((s) => s.updateSettings)
   const [open, setOpen] = useState(false)
   const [menuPoint, setMenuPoint] = useState({ x: 0, y: 0 })
@@ -41,34 +33,11 @@ export function FloatingTerminalIconContextMenu({
     }
   }, [])
 
-  const moveAction = useMemo(() => {
-    if (currentLocation === 'floating-button') {
-      return {
-        icon: <PanelBottom className="size-3.5" />,
-        label: t(
-          'auto.components.floating.terminal.FloatingTerminalIconContextMenu.0ee79e0674',
-          'Move to Status Bar'
-        ),
-        location: 'status-bar' as const
-      }
-    }
-    return {
-      icon: <PanelTop className="size-3.5" />,
-      label: t(
-        'auto.components.floating.terminal.FloatingTerminalIconContextMenu.763f5fa2c1',
-        'Move to Floating Button'
-      ),
-      location: 'floating-button' as const
-    }
-    // oxlint-disable-next-line react-hooks/exhaustive-deps -- translate() reads the UI language implicitly.
-  }, [currentLocation, languageRevision, t])
-
   return (
     <>
       <span
         ref={setTriggerRef}
         className={className}
-        style={style}
         data-floating-terminal-toggle
         onContextMenuCapture={(event) => {
           event.preventDefault()
@@ -100,16 +69,6 @@ export function FloatingTerminalIconContextMenu({
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-52" sideOffset={0} align="start">
-          <DropdownMenuItem
-            className="whitespace-nowrap"
-            onSelect={() => {
-              void updateSettings({ floatingTerminalTriggerLocation: moveAction.location })
-            }}
-          >
-            {moveAction.icon}
-            {moveAction.label}
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             className="whitespace-nowrap"
             onSelect={() => {

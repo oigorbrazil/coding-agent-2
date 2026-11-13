@@ -1,4 +1,4 @@
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { escapeRegex } from '../../shared/string-utils'
 
 export async function stopMacOSPermissionStatusHelper(statusPath: string): Promise<void> {

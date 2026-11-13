@@ -1,3 +1,4 @@
+import { appEnvPairs } from '../../../../../shared/app-env'
 import { isAgentStatusHooksEnabledForAgent } from '../../../../../shared/agent-hook-listener/configuration/agent-status-hooks-setting'
 import { prepareManagedWslCodexHomeBeforeShellLaunch } from '../../../../codex/hooks/installation/managed-wsl-home-shell-preflight'
 import { defineMethod } from '../../core'
@@ -15,7 +16,7 @@ export const AGENT_HOOK_METHODS = [
       return await prepareManagedWslCodexHomeBeforeShellLaunch({
         env: {
           CODEX_HOME: params.codexHome,
-          ORCA_CODEX_HOME: params.orcaCodexHome,
+          ...appEnvPairs('CODEX_HOME', params.orcaCodexHome),
           WSL_DISTRO_NAME: params.wslDistro
         },
         hooksEnabled: isAgentStatusHooksEnabledForAgent(

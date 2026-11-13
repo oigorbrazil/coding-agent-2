@@ -1,4 +1,4 @@
-import type { RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import type { RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import { z } from 'zod'
 import {
   CellPollReachability,

@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // Keep diagnostics isolated from product telemetry, including duplicated CI detection.
 // DNT/ORCA_TELEMETRY_DISABLED disable uploads but retain local logs;
 // ORCA_DIAGNOSTICS_DISABLED and CI disable both.
@@ -48,7 +49,7 @@ export type ObservabilityConsent = {
 }
 
 function envOn(name: string): boolean {
-  const v = process.env[name]
+  const v = name.startsWith('ORCA_') ? readAppEnv(process.env, name.slice(5)) : process.env[name]
   if (!v) {
     return false
   }

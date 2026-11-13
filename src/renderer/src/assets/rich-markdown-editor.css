@@ -943,7 +943,7 @@
   border-radius: 5px;
   background: color-mix(in srgb, var(--foreground) 8%, transparent);
   font-size: 0.88em;
-  font-family: var(--markdown-code-font-family, var(--font-mono, monospace));
+  font-family: var(--markdown-code-font-family, var(--code-font-family, monospace));
 }
 
 .rich-markdown-code-block-wrapper {
@@ -1001,7 +1001,7 @@
 
 .rich-markdown-editor pre {
   padding: 14px 18px;
-  font-family: var(--markdown-code-font-family, var(--font-mono, monospace));
+  font-family: var(--markdown-code-font-family, var(--code-font-family, monospace));
   border-radius: 8px;
   overflow-x: auto;
   line-height: 1.55;
@@ -1403,7 +1403,7 @@
   --epr-search-input-border-color: var(--border);
   --epr-hover-bg-color: var(--accent);
   border: none;
-  font-family: Geist, sans-serif;
+  font-family: var(--app-font-family);
 }
 
 .rich-markdown-doc-link-menu[data-slot='popover-content'] {

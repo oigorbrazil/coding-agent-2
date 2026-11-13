@@ -16,7 +16,11 @@ export const E2E_SPAWN_LOG_ENV = 'ORCA_E2E_SPAWN_LOG'
 export const E2E_USER_DATA_DIR_ENV = 'ORCA_E2E_USER_DATA_DIR'
 
 function e2eSpawnLog(): string | undefined {
-  return (process.env[E2E_USER_DATA_DIR_ENV] && process.env[E2E_SPAWN_LOG_ENV]) || undefined
+  return (
+    ((process.env.CODING_AGENT_E2E_USER_DATA_DIR ?? process.env.ORCA_E2E_USER_DATA_DIR) &&
+      process.env[E2E_SPAWN_LOG_ENV]) ||
+    undefined
+  )
 }
 
 export function setSpawnObserver(next: SpawnObserver | null): void {

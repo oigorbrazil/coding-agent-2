@@ -2,7 +2,10 @@
 import { EventEmitter } from 'node:events'
 import { connect } from 'node:net'
 import { PassThrough } from 'node:stream'
-import type { PipedChildProcess, PipedProcessSpawner } from '@orca/process-host/process-spec'
+import type {
+  PipedChildProcess,
+  PipedProcessSpawner
+} from '@coding-agent/process-host/process-spec'
 import {
   ORCAD_STDIO_BRIDGE_READY,
   ORCAD_STDIO_BRIDGE_REFUSED,

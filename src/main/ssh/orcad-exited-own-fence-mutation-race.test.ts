@@ -10,13 +10,13 @@ import {
 import { hostname, tmpdir, uptime } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 import type * as ExecCommandModule from './remote-exec/remote-exec-command'
 import { unusedOrcadHostTransport } from './unused-host-transport.test-fixture'
 
 // Run generated host-side proof commands in a real local shell.
 vi.mock('./remote-exec/remote-exec-command', async (importOriginal) => {
-  const { runProcess: run } = await import('@orca/process-host')
+  const { runProcess: run } = await import('@coding-agent/process-host')
   return {
     ...(await importOriginal<typeof ExecCommandModule>()),
     execCommand: async (_conn: unknown, command: string) =>

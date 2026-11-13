@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import type { RuntimeClient } from './runtime-client'
+import { readAppEnv } from '../shared/app-env'
 import {
   findCommandSpec,
   isCommandGroup,
@@ -19,7 +21,7 @@ import { reportCliError } from './cli-error'
 import { RuntimeClientError } from './runtime/types'
 import { cliErrorExitCode } from './cli-exit-code'
 import { printHelp } from './help'
-import type { RuntimeClient } from './runtime-client'
+
 import { COMMAND_SPECS } from './specs'
 import { resolveOrchestrationCliExecutable } from './runtime/orchestration-recovery-command'
 import { refuseConflictingSessionCallerFlags } from './session-caller-flags'
@@ -41,7 +43,7 @@ async function loadRuntimeClientClass(): Promise<typeof RuntimeClient> {
 
 // The SSH bridge runs here, but ORCA_CLI_CWD carries the remote caller's directory.
 function resolveInvocationCwd(): string {
-  const override = process.env.ORCA_CLI_CWD
+  const override = readAppEnv(process.env, 'CLI_CWD')
   return typeof override === 'string' && override.length > 0 ? override : process.cwd()
 }
 
@@ -139,8 +141,11 @@ export async function main(
           environmentSelector:
             typeof environmentSelector === 'string'
               ? { value: environmentSelector, label: '--environment' }
-              : process.env.ORCA_ENVIRONMENT
-                ? { value: process.env.ORCA_ENVIRONMENT, label: 'ORCA_ENVIRONMENT' }
+              : readAppEnv(process.env, 'ENVIRONMENT')
+                ? {
+                    value: readAppEnv(process.env, 'ENVIRONMENT') ?? '',
+                    label: 'CODING_AGENT_ENVIRONMENT'
+                  }
                 : null
         })
     // Stored host identities use ids, so canonicalize names before any downstream comparison.
@@ -185,7 +190,10 @@ export async function main(
         (parsed.flags.has('environment') ||
           parsed.flags.has('pairing-code') ||
           (typeof hostFlag === 'string' && hostFlag.startsWith('runtime:')) ||
-          Boolean(process.env.ORCA_ENVIRONMENT?.trim() || process.env.ORCA_PAIRING_CODE?.trim())),
+          Boolean(
+            readAppEnv(process.env, 'ENVIRONMENT')?.trim() ||
+            readAppEnv(process.env, 'PAIRING_CODE')?.trim()
+          )),
       conciseOrchestration: parsed.commandPath[0] === 'orchestration' && !parsed.flags.has('full')
     })
     process.exitCode = cliErrorExitCode(error, parsed.commandPath)
@@ -217,8 +225,8 @@ async function runAgentTeamsTmuxShim(argv: string[]): Promise<void> {
     }>(
       'agentTeams.tmuxCompat',
       {
-        teamId: process.env.ORCA_AGENT_TEAMS_TEAM_ID,
-        token: process.env.ORCA_AGENT_TEAMS_TOKEN,
+        teamId: readAppEnv(process.env, 'AGENT_TEAMS_TEAM_ID'),
+        token: readAppEnv(process.env, 'AGENT_TEAMS_TOKEN'),
         envPane: process.env.TMUX_PANE,
         cwd: process.cwd(),
         argv

@@ -1,3 +1,4 @@
+import { pluginManifestPath } from '../../manifest/plugin-manifest-path'
 /**
  * `orca/testing`: mount a components panel in plain Node (node:test, vitest, bun) against a
  * stand-in Coding Agent 2, with the real runtime and the real tree validator. Bundled to
@@ -5,7 +6,7 @@
  * the panel and the kit share one `orca` module.
  */
 import { readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { dirname } from 'node:path'
 import { createMockHost, type MockHost, type MockHostOptions } from './testing-host'
 import { mountPanel, type MountOptions } from './testing-panel'
 import {
@@ -36,7 +37,7 @@ export type { TestElement, TestQuery, TreeSnapshot } from './testing-tree'
 function nearestManifest(): Record<string, unknown> | null {
   for (let dir = process.cwd(); ; dir = dirname(dir)) {
     try {
-      const manifest: unknown = JSON.parse(readFileSync(join(dir, 'orca-plugin.json'), 'utf8'))
+      const manifest: unknown = JSON.parse(readFileSync(pluginManifestPath(dir), 'utf8'))
       return isRecord(manifest) ? manifest : null
     } catch {
       if (dirname(dir) === dir) {

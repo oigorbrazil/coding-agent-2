@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import type { Socket } from 'node:net'
 import { NDJSON_MAX_LINE_BYTES } from '../../../../shared/main-process-ndjson-framer'
 import { recordDaemonStreamBacklogEvent } from './daemon-stream-backlog-probe'
@@ -37,7 +38,9 @@ const STREAM_DATA_BATCH_INTERVAL_MS = 2
 // Keep the socket FIFO shallow so bulk output cannot bury interactive replies.
 // Stay above the socket high-water mark so held writes have a drain wake-up.
 const SHALLOW_SOCKET_WRITE_GATE_BYTES =
-  process.env.ORCA_DAEMON_SHALLOW_SOCKET_GATE === '0' ? Number.POSITIVE_INFINITY : 128 * 1024
+  readAppEnv(process.env, 'DAEMON_SHALLOW_SOCKET_GATE') === '0'
+    ? Number.POSITIVE_INFINITY
+    : 128 * 1024
 // Slice coalesced floods so one write cannot refill the socket far beyond the gate.
 const BULK_WRITE_SLICE_CHARS = 64 * 1024
 // Last resort for handles without pause support; actual memory bounds come from producer backpressure.

@@ -19,7 +19,7 @@ vi.mock('../../app-server/codex-app-server-session', async (importOriginal) => (
   ...(await importOriginal<typeof AppServerSession>()),
   runCodexAppServerSession: mocks.runCodexAppServerSession
 }))
-vi.mock('@orca/process-host', () => ({ runProcess: mocks.runProcess }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: mocks.runProcess }))
 import {
   deriveCodexHookHashes,
   probeCodexVersion,

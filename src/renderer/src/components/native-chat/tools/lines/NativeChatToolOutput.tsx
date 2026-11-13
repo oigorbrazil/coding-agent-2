@@ -76,7 +76,7 @@ export function NativeChatToolOutput({
       <pre
         data-native-chat-code-content
         className={cn(
-          'max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-lg border border-chat-code-border bg-chat-code-surface p-2 font-mono text-chat-code scrollbar-sleek',
+          'max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-lg border border-chat-code-border bg-chat-code-surface p-2 font-code text-chat-code scrollbar-sleek',
           body.isError ? 'text-destructive' : 'text-chat-foreground'
         )}
       >

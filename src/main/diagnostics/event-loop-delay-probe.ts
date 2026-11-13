@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { appendFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { monitorEventLoopDelay } from 'node:perf_hooks'
@@ -23,7 +24,10 @@ export type EventLoopDelayWindow = {
 }
 
 export function isEventLoopDelayProbeEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  return Boolean(env.ORCA_E2E_USER_DATA_DIR) || env[EVENT_LOOP_DELAY_PROBE_ENV] === '1'
+  return (
+    Boolean(readAppEnv(env, 'E2E_USER_DATA_DIR')) ||
+    readAppEnv(env, 'EVENT_LOOP_DELAY_PROBE') === '1'
+  )
 }
 
 /** Record event-loop delay throughout the session to capture steady-state stalls. */

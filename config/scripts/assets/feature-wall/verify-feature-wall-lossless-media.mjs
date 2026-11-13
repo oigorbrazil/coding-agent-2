@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { createServer } from 'node:http'
 import path from 'node:path'
 import { chromium } from 'playwright-core'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   FEATURE_WALL_TILES,
   isFeatureWallMediaTile

@@ -7,6 +7,7 @@
   "ignorePatterns": [
     "cloud/**",
     "resources/licenses/**",
+    "resources/coding-opus/coding/assets/*.html",
     "resources/plugins/launch/*/**",
     ".github/actions/cloud-sql-rollout-lease/**",
     ".anti-slop-plugin/**",

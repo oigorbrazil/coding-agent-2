@@ -1,13 +1,14 @@
+import type { ProviderProcessLaunch } from '../provider-process/provider-process-launch'
+import type { PiBackgroundWorkLaunch } from './rpc-background-work-bridge'
+import { appEnvPairs, deleteAppEnvKey, appEnvKeys } from '../../shared/app-env'
 import { ORCA_AGENT_SESSION_SPAWN_TOKEN_ENV } from '../../shared/agent-session/lifecycle/agent-session-caller-env'
 import { ORCA_AGENT_SESSION_CALLER_ENV_KEYS } from '../ipc/pty/host-env/spawn-env-keys'
 import {
   LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV,
   NATIVE_CHAT_SCRATCH_DIR_ENV
 } from '../native-chat/native-chat-visuals-delivery'
-import type { ProviderProcessLaunch } from '../provider-process/provider-process-launch'
+
 import { STRUCTURED_CHILD_ENV_TO_DELETE } from '../runtime/agent-session/environment/structured-session-child-env'
-import type { PiBackgroundWorkLaunch } from './rpc-background-work-bridge'
-import { PI_BACKGROUND_WORK_DIR_ENV } from './rpc-background-work-bridge-source'
 
 export type PiRpcLaunchOptions = {
   command: string
@@ -30,18 +31,18 @@ const CALLER_ENV_TO_DELETE = [
 ]
 
 /** Structured Pi has no scratch folder; an inherited one belongs to another chat. */
-export const PI_RPC_SESSION_ENV_TO_DELETE: readonly string[] = [
+export const PI_RPC_SESSION_ENV_TO_DELETE: readonly string[] = appEnvKeys([
   ...STRUCTURED_CHILD_ENV_TO_DELETE,
   'ORCA_TERMINAL_HANDLE',
   NATIVE_CHAT_SCRATCH_DIR_ENV,
   LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV
-]
+])
 
 /** Remove caller identity before the structured-session seal supplies its own. */
 export function withoutPiCallerEnv(env: Readonly<Record<string, string>>): Record<string, string> {
   const next = { ...env }
   for (const key of CALLER_ENV_TO_DELETE) {
-    delete next[key]
+    deleteAppEnvKey(next, key)
   }
   return next
 }
@@ -122,7 +123,7 @@ export function buildPiRpcLaunch(options: PiRpcLaunchOptions): ProviderProcessLa
     env: {
       ...options.env,
       ...(options.backgroundWork
-        ? { [PI_BACKGROUND_WORK_DIR_ENV]: options.backgroundWork.directory }
+        ? { ...appEnvPairs('PI_BACKGROUND_WORK_DIR', options.backgroundWork.directory) }
         : {})
     },
     envToDelete: [...(options.envToDelete ?? [])]

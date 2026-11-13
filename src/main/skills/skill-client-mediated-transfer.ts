@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 import { open } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { RuntimeRpcResponse } from '../../shared/runtime-rpc-envelope'
@@ -17,9 +18,11 @@ const REMOTE_TRANSFER_CLEANUP_TIMEOUT_MS = 15_000
 
 function allowedOrigins(allowConfiguredOrigins: boolean): string[] {
   const origins = ['https://storage.googleapis.com']
-  if (allowConfiguredOrigins && process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS) {
+  const configuredOrigins = readAppEnv(process.env, 'SKILL_PACKAGE_DOWNLOAD_ORIGINS')
+  if (allowConfiguredOrigins && configuredOrigins) {
     origins.push(
-      ...process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS.split(',')
+      ...configuredOrigins
+        .split(',')
         .map((origin) => origin.trim())
         .filter(Boolean)
     )

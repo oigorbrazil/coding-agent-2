@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { codexOpenCodeTokenSessions } from '../usage/agent-token-usage'
 import { app } from 'electron'
 import { join } from 'node:path'
@@ -64,12 +65,12 @@ export function normalizePersistedState(state: CodexUsagePersistedState): CodexU
 }
 
 export function initCodexUsagePath(): void {
-  _codexUsageFile = join(app.getPath('userData'), 'orca-codex-usage.json')
+  _codexUsageFile = renamedUserDataFile(join(app.getPath('userData'), 'orca-codex-usage.json'))
 }
 
 function getCodexUsageFile(): string {
   if (!_codexUsageFile) {
-    _codexUsageFile = join(app.getPath('userData'), 'orca-codex-usage.json')
+    _codexUsageFile = renamedUserDataFile(join(app.getPath('userData'), 'orca-codex-usage.json'))
   }
   return _codexUsageFile
 }

@@ -6,9 +6,12 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { build, version as esbuildVersion } from 'esbuild'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { nodeExecutable } from '../../../../../config/scripts/performance/check-job-log/check-job-log-byte-cap-benchmark.mjs'
 import { workload } from '../../../../../config/scripts/performance/check-job-log/check-job-log-performance-cases.mjs'
+
+// Plain Node runs this script, so it reads the mirrored app env without importing app source.
+const readAppEnv = (env, name) => env[`CODING_AGENT_${name}`] ?? env[`ORCA_${name}`]
 
 const require = createRequire(import.meta.url)
 export const hash = (value) => createHash('sha256').update(value).digest('hex')
@@ -86,7 +89,7 @@ export async function prepareHostMeasurement(root = process.cwd()) {
       sourceHashes[name] = hash(await readFile(path.join(root, name)))
     }
     const program = await realpath(nodeExecutable())
-    const processHostEntry = require.resolve('@orca/process-host')
+    const processHostEntry = require.resolve('@coding-agent/process-host')
     const processHostDirectory = path.dirname(processHostEntry)
     const processHostModules = {}
     for (const filename of Object.keys(require.cache)
@@ -198,8 +201,9 @@ if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === imp
   const context = await prepareHostMeasurement()
   try {
     const report = await runHostMeasurement(context)
-    if (process.env.ORCA_CHECK_LOG_HOST_REPORT) {
-      await writeFile(process.env.ORCA_CHECK_LOG_HOST_REPORT, JSON.stringify(report, null, 2))
+    const configuredEnv = readAppEnv(process.env, 'CHECK_LOG_HOST_REPORT')
+    if (configuredEnv) {
+      await writeFile(configuredEnv, JSON.stringify(report, null, 2))
     }
     process.stdout.write(`${JSON.stringify(report)}\n`)
   } finally {

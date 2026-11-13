@@ -285,10 +285,7 @@ test('plugin shot --act types and presses on the hidden components panel before 
     }
 
     const before = await client.call<ActShot>('plugins.shot', { pluginKey, width: 360 })
-    // Coding Agent 2's floating launcher parks over the sidebar; a capture hides it so it is never in a shot.
-    const launcher = orcaPage.locator('[data-floating-terminal-toggle]')
-    const launchers = await launcher.count()
-    const pending = client.call<ActShot>(
+    const acted = await client.call<ActShot>(
       'plugins.shot',
       {
         pluginKey,
@@ -303,10 +300,6 @@ test('plugin shot --act types and presses on the hidden components panel before 
       },
       { timeoutMs: 60_000 }
     )
-    if (launchers > 0) {
-      await expect.poll(() => launcher.count()).toBe(0)
-    }
-    const acted = await pending
     expect(acted.result.actions).toEqual([
       { ok: true },
       { ok: true },
@@ -321,8 +314,6 @@ test('plugin shot --act types and presses on the hidden components panel before 
     await expect(orcaPage.getByRole('heading', { name: 'Tasks' })).toBeVisible()
     await expect(orcaPage.getByRole('button', { name: /Ship the act/ })).toHaveCount(0)
     await expect(orcaPage.getByRole('textbox', { name: 'New task' })).toHaveValue('')
-    // The launcher is back once the capture ended; the window never showed.
-    await expect.poll(() => launcher.count()).toBe(launchers)
     expect(await windowsShown(electronApp)).toEqual(shownBefore)
   } finally {
     await disablePluginSystem(orcaPage).catch(() => undefined)

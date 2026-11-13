@@ -3,11 +3,13 @@ import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { pathToFileURL } from 'node:url'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { scanAstGrep } from '../../static-analysis/structural-scan/ast-grep-scan.mjs'
 import { resolvePullRequestDiffBase } from '../../git/pr-diff-base/git-pull-request-diff-base.mjs'
 import { resolveOxlintInvocation } from '../../tool-invocation/oxlint-cli-invocation.mjs'
 import { createExistingTypeAssertionMatcher } from '../../static-analysis/type-assertion-budget/existing-type-assertions.mjs'
+import { batchFileArgs } from './command-line-file-batches.mjs'
+import { SUPPRESSED_REACT_DOCTOR_DIAGNOSTICS } from './react-doctor-reviewed-suppressions.mjs'
 
 const SOURCE_FILE_PATTERN = /\.(?:[cm]?[jt]sx?)$/
 const ROOT_CODE_QUALITY_IGNORED_PREFIXES = ['cloud/']
@@ -74,29 +76,6 @@ export const OXLINT_SCANS = [
     args: ['--config', 'config/oxlint-design-system.json']
   }
 ]
-
-const SUPPRESSED_REACT_DOCTOR_DIAGNOSTICS = new Map([
-  [
-    'react-doctor(no-adjust-state-on-prop-change)',
-    new Set([
-      'src/renderer/src/components/task-page/github/use-task-page-github-issue-draft.ts',
-      'src/renderer/src/components/task-page/jira/use-task-page-jira-creation-state.ts'
-    ])
-  ],
-  [
-    'react-doctor(no-derived-state-effect)',
-    new Set([
-      // The open-cycle reset effect predates this entry; it surfaced when its body changed.
-      'src/renderer/src/components/right-sidebar/source-control/ai/useSourceControlAgentActionDialog.ts'
-    ])
-  ],
-  [
-    // Existing timer effects clean variable handle sets through addTimer; rule expects one named handle and falsely reports both.
-    // Exemption is per-file, covering those two effects; this file has no other timer effects.
-    'react-doctor(effect-needs-cleanup)',
-    new Set(['mobile/src/session/use-mobile-session-startup.ts'])
-  ]
-])
 
 export function parseAddedLineRanges(diff) {
   const ranges = []
@@ -546,25 +525,32 @@ function isSuppressedDiagnostic(diagnostic, root) {
 
 function runOxlintScan(root, scan, files) {
   const { command, prefixArgs } = resolveOxlintInvocation(root)
-  const result = spawnSync(command, [...prefixArgs, ...scan.args, '--format', 'json', ...files], {
-    cwd: root,
-    encoding: 'utf8',
-    maxBuffer: 128 * 1024 * 1024,
-    windowsHide: true
-  })
-  if (result.error) {
-    throw result.error
+  const diagnostics = []
+  for (const batch of batchFileArgs(files)) {
+    const result = spawnSync(command, [...prefixArgs, ...scan.args, '--format', 'json', ...batch], {
+      cwd: root,
+      encoding: 'utf8',
+      maxBuffer: 128 * 1024 * 1024,
+      windowsHide: true
+    })
+    if (result.error) {
+      throw result.error
+    }
+    if (!result.stdout.trim()) {
+      process.stderr.write(result.stderr)
+      throw new Error(`${scan.label} failed before producing diagnostics.`)
+    }
+    diagnostics.push(...(parseOxlintOutput(result.stdout, scan.label).diagnostics ?? []))
   }
-  if (!result.stdout.trim()) {
-    process.stderr.write(result.stderr)
-    throw new Error(`${scan.label} failed before producing diagnostics.`)
-  }
-  return parseOxlintOutput(result.stdout, scan.label).diagnostics ?? []
+  return diagnostics
 }
 
 /** ast-grep matches as Oxlint-shaped diagnostics; `info` flaky-test rules are owned by their ratchet. */
 export function runAstGrepScan(root, files) {
-  return scanAstGrep(root, { minSeverity: 'warning', paths: files }).map((match) => ({
+  const matches = batchFileArgs(files).flatMap((paths) =>
+    scanAstGrep(root, { minSeverity: 'warning', paths })
+  )
+  return matches.map((match) => ({
     filename: match.file,
     code: `ast-grep(${match.ruleId})`,
     message: match.message,

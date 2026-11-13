@@ -3,7 +3,7 @@ import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { availableParallelism, totalmem } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { measurePreflightCommand } from './preflight-benchmark-command.mjs'
 import { buildCounterbalancedSchedule } from '../../performance/measurement/counterbalanced-benchmark-schedule.mjs'
 import { summarizeBenchmarkSamples } from '../../performance/measurement/benchmark-sample-summary.mjs'
@@ -199,7 +199,7 @@ try {
     ]
     writeFileSync(
       runnerFile,
-      `import { runProcessSync } from '@orca/process-host';
+      `import { runProcessSync } from '@coding-agent/process-host';
 for (const [program, args] of ${JSON.stringify(steps)}) {
   const result = runProcessSync({ program, args, cwd: ${JSON.stringify(root)}, stdio: 'inherit', timeoutMs: null });
   if (result.code !== 0 || result.signal) process.exit(result.code || 1);

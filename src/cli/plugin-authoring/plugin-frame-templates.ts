@@ -20,7 +20,7 @@ export function panel(input: PluginTemplateInput): PluginTemplate {
   return {
     description: 'Right-sidebar panel in a sandboxed frame (needs --approve to load)',
     files: {
-      'orca-plugin.json': manifest(input, 'A sidebar panel.', {
+      'coding-plugin.json': manifest(input, 'A sidebar panel.', {
         execution: 'sandboxed-ui',
         pluginApi: 1,
         contributes: {
@@ -60,7 +60,7 @@ export function panel(input: PluginTemplateInput): PluginTemplate {
 `,
       'README.md': readme(
         input,
-        'A right-sidebar panel. It runs in a sandboxed frame and calls host methods its `capabilities` allow through `window.orca`. Loading it needs approval: `orca plugin dev watch .` prints the exact access and the `--approve` fingerprint.'
+        'A right-sidebar panel. It runs in a sandboxed frame and calls host methods its `capabilities` allow through `window.orca`. Loading it needs approval: `coding plugin dev watch .` prints the exact access and the `--approve` fingerprint.'
       ),
       ...COMMON_FILES
     }

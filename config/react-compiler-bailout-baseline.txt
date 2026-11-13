@@ -164,8 +164,6 @@
 2 src/renderer/src/components/feature-wall/agents-orchestration/UsageAccountsCard.tsx
 2 src/renderer/src/components/feature-wall/use-feature-wall-tour-telemetry.ts
 3 src/renderer/src/components/feature-wall/useAiCommitPrSettings.ts
-1 src/renderer/src/components/floating-terminal/FloatingTerminalIconContextMenu.tsx
-3 src/renderer/src/components/floating-terminal/FloatingTerminalToggleButton.tsx
 1 src/renderer/src/components/floating-terminal/use-floating-terminal-panel-geometry.ts
 6 src/renderer/src/components/floating-terminal/use-floating-terminal-panel-local-state.ts
 1 src/renderer/src/components/github-item-dialog/discuss-item/comment-reply-form.tsx
@@ -407,6 +405,17 @@
 1 src/renderer/src/components/settings/cli/install/CliSection.tsx
 3 src/renderer/src/components/settings/cli/install/WslCliRegistration.tsx
 2 src/renderer/src/components/settings/cli/install/use-cli-registration-actions.ts
+3 src/renderer/src/components/settings/coding-opus/playbooks/DocPanels.tsx
+1 src/renderer/src/components/settings/coding-opus/playbooks/Dropdown.tsx
+3 src/renderer/src/components/settings/coding-opus/playbooks/FlowCanvas.tsx
+8 src/renderer/src/components/settings/coding-opus/playbooks/GlobalEditors.tsx
+1 src/renderer/src/components/settings/coding-opus/playbooks/ModelUpdatesPanel.tsx
+3 src/renderer/src/components/settings/coding-opus/playbooks/NodeCanvas.tsx
+2 src/renderer/src/components/settings/coding-opus/playbooks/Palette.tsx
+17 src/renderer/src/components/settings/coding-opus/playbooks/PhaseEditors.tsx
+17 src/renderer/src/components/settings/coding-opus/playbooks/PlaybooksEditor.tsx
+9 src/renderer/src/components/settings/coding-opus/playbooks/RoutingEditors.tsx
+1 src/renderer/src/components/settings/coding-opus/playbooks/UsageBar.tsx
 3 src/renderer/src/components/settings/computer-use/ComputerUsePane.tsx
 2 src/renderer/src/components/settings/developer-permissions/DeveloperPermissionsPane.tsx
 1 src/renderer/src/components/settings/developer-permissions/LocalNetworkConnectionTest.tsx

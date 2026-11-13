@@ -2,7 +2,7 @@ import { expect, it } from 'vitest'
 import { apnsBody } from './apns-client.js'
 import { fcmMessageBody } from './fcm-client.js'
 import { buildPushDelivery } from './push-delivery-message.js'
-import { PushNotificationSchema } from '@orca-cloud/push-contract'
+import { PushNotificationSchema } from '@coding-agent-cloud/push-contract'
 
 it('carries a silent preference through validation to APNs and Android payloads', () => {
   const notification = PushNotificationSchema.parse({

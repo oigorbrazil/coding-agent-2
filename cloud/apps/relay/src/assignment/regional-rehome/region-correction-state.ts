@@ -1,7 +1,7 @@
 import { relayHostLogDigest } from '../../observability/relay-host-log-digest.js'
 import { hostCohortBucket } from '../host-cohort-bucket.js'
-import type { RegionCorrectionRequest, RegionCorrectionResponse } from '@orca-cloud/relay-contract/region-correction'
-import type { RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import type { RegionCorrectionRequest, RegionCorrectionResponse } from '@coding-agent-cloud/relay-contract/region-correction'
+import type { RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { RelayDatabase } from '../../database/database.js'
 
 type Identity = { userId: string; relayHostId: string }

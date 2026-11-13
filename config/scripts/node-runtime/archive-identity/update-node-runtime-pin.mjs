@@ -26,7 +26,7 @@ import {
 } from '../../../../src/shared/node-runtime-pin.ts'
 import { currentTarget } from '../../orcad-distribution/prebuilds/server-build-target.mjs'
 import { nodeDistArchiveName, windowsImportLibFile } from './node-dist-archive-name.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   getTarProgram,
   getZipExtractorCommand

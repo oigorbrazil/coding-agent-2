@@ -4,7 +4,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync } from
 import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { dirname, join, relative } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { disableMsbuildFileTrackingOnWindows } from '../windows/msbuild-file-tracking.mjs'
 import { stageNodeAddonApi } from '../../orcad-distribution/prebuilds/orcad-prebuild-node-gyp.mjs'
 import { describeProcessFailure } from '../../tool-invocation/process-failure-message.mjs'

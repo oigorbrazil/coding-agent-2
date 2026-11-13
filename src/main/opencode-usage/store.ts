@@ -1,3 +1,4 @@
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
 import { codexOpenCodeTokenSessions } from '../usage/agent-token-usage'
 import { app } from 'electron'
 import { join } from 'node:path'
@@ -35,12 +36,16 @@ import { splitUsageCacheFileViaWorker } from '../usage/usage-scan-worker-spawn'
 let _openCodeUsageFile: string | null = null
 
 export function initOpenCodeUsagePath(): void {
-  _openCodeUsageFile = join(app.getPath('userData'), 'orca-opencode-usage.json')
+  _openCodeUsageFile = renamedUserDataFile(
+    join(app.getPath('userData'), 'orca-opencode-usage.json')
+  )
 }
 
 function getOpenCodeUsageFile(): string {
   if (!_openCodeUsageFile) {
-    _openCodeUsageFile = join(app.getPath('userData'), 'orca-opencode-usage.json')
+    _openCodeUsageFile = renamedUserDataFile(
+      join(app.getPath('userData'), 'orca-opencode-usage.json')
+    )
   }
   return _openCodeUsageFile
 }

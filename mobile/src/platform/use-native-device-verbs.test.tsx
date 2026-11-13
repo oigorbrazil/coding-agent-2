@@ -25,7 +25,7 @@ vi.mock('expo-clipboard', () => ({
 vi.mock('expo-document-picker', () => ({
   getDocumentAsync: device.picker.getDocumentAsync
 }))
-vi.mock('@orca/expo-two-way-audio', () => ({
+vi.mock('@coding-agent/expo-two-way-audio', () => ({
   addExpoTwoWayAudioEventListener: () => ({ remove: () => {} }),
   initialize: () => Promise.resolve(true),
   requestMicrophonePermissionsAsync: () =>

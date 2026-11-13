@@ -127,7 +127,7 @@ describe.skipIf(process.platform === 'win32')(
         agentSessionId: SESSION,
         terminalHandle: 'term_tui'
       })
-      expect(await status(false)).toContain(`\norcaSessionId: orca_session_id:${SESSION}`)
+      expect(await status(false)).toContain(`\nSession ID: orca_session_id:${SESSION}`)
     })
 
     it.each([
@@ -142,7 +142,7 @@ describe.skipIf(process.platform === 'win32')(
 
       expect(printed.result).not.toHaveProperty('caller')
       expect(text.split('\n').at(-1)).toMatch(/^graphState: /)
-      expect(text).not.toMatch(/^(?:orcaSessionId|caller):/m)
+      expect(text).not.toMatch(/^(?:Session ID|caller):/m)
       expect(callerShowRequests()).toHaveLength(0)
     })
 
@@ -156,9 +156,7 @@ describe.skipIf(process.platform === 'win32')(
         live: false,
         refusal: { code: 'session_caller_not_live', message: `Agent session ${SESSION} has ended.` }
       })
-      expect(await status(false)).toContain(
-        '\norcaSessionId: none (refused: session_caller_not_live)'
-      )
+      expect(await status(false)).toContain('\nSession ID: none (refused: session_caller_not_live)')
     })
 
     it('leaves the caller out when the host predates the method', async () => {

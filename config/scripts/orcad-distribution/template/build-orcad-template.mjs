@@ -35,7 +35,7 @@ import {
   findSlotProblems,
   readManifest
 } from '../prebuilds/orcad-prebuild-slot-contents.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import { verifyPackagedOrcadTemplate } from './verify-packaged-orcad-template.cjs'
 import { readOrcadMobileWebAssetFilenames } from '../server-bundle/orcad-mobile-web-bundle.mjs'
 import { assertNotDarkBuild, darkBuildMarkers } from '../../../dark-build-switches.cjs'

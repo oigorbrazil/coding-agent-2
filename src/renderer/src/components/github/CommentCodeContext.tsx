@@ -209,8 +209,8 @@ export function CommentCodeContext({
     <div className="mb-3 overflow-hidden rounded-md border border-border/50 bg-muted/20">
       <div className="flex flex-wrap items-center gap-2 border-b border-border/40 px-3 py-1.5 text-[11px] text-muted-foreground">
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="truncate font-mono">{comment.path}</span>
-          <span className="shrink-0 font-mono">
+          <span className="truncate font-code">{comment.path}</span>
+          <span className="shrink-0 font-code">
             L{from}
             {to !== from
               ? t('auto.components.GitHubItemDialog.d1c0dad471', '-L{{value0}}', {
@@ -219,7 +219,7 @@ export function CommentCodeContext({
               : ''}
           </span>
           {(from !== commentFrom || to !== commentTo) && (
-            <span className="shrink-0 font-mono text-muted-foreground/70">
+            <span className="shrink-0 font-code text-muted-foreground/70">
               {t('auto.components.GitHubItemDialog.bd7be7b1fd', 'comment L')}
               {commentFrom}
               {commentTo !== commentFrom
@@ -345,7 +345,7 @@ export function CommentCodeContext({
               return (
                 <div
                   key={lineNumber}
-                  className={cn('flex font-mono', isCommentedLine && 'bg-emerald-500/10')}
+                  className={cn('flex font-code', isCommentedLine && 'bg-status-success/10')}
                 >
                   <span className="w-12 shrink-0 select-none border-r border-border/40 px-2 text-right text-muted-foreground">
                     {lineNumber}

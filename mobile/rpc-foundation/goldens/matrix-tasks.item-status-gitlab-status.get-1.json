@@ -138,6 +138,11 @@
         "provider": "gitlab"
       }
     },
+    "22aa51ca6212": {
+      "name": "error",
+      "ordinal": 21,
+      "value": "Update Coding Agent 2 on the executing server to edit this item or load its repository options."
+    },
     "23ede8191c86": {
       "name": "detailPayload",
       "ordinal": 9,
@@ -503,8 +508,13 @@
         }
       }
     },
-    "9a14ab19057c": {
-      "error": "Update Orca on the executing server to edit this item or load its repository options.",
+    "9d1f08a6e600": {
+      "name": "error",
+      "ordinal": 16,
+      "value": ""
+    },
+    "a01d983d4e55": {
+      "error": "Update Coding Agent 2 on the executing server to edit this item or load its repository options.",
       "item": {
         "provider": "github",
         "source": {
@@ -553,11 +563,6 @@
         "pipelineJobs": [],
         "provider": "gitlab"
       }
-    },
-    "9d1f08a6e600": {
-      "name": "error",
-      "ordinal": 16,
-      "value": ""
     },
     "a1f5d85d882f": {
       "name": "status.get#1",
@@ -799,11 +804,6 @@
         }
       }
     },
-    "da210729f992": {
-      "name": "error",
-      "ordinal": 21,
-      "value": "Update Orca on the executing server to edit this item or load its repository options."
-    },
     "e0bebf1cd037": {
       "name": "status.get#1",
       "ordinal": 20,
@@ -980,7 +980,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -998,7 +998,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1013,7 +1013,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1031,7 +1031,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1046,7 +1046,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1064,7 +1064,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1079,7 +1079,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1097,7 +1097,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1112,7 +1112,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1130,7 +1130,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1145,7 +1145,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1163,7 +1163,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1178,7 +1178,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1196,7 +1196,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }
@@ -1211,7 +1211,7 @@
             "gitlab-status-0": "eb79a9b3682a",
             "github-metadata-1": "eb79a9b3682a"
           },
-          "state": "9a14ab19057c",
+          "state": "a01d983d4e55",
           "effects": [
             "cc2ece9478f0",
             "eda130337c99",
@@ -1229,7 +1229,7 @@
             "9d1f08a6e600",
             "5a062aaf1adc",
             "f3640f6ae8be",
-            "da210729f992",
+            "22aa51ca6212",
             "ac29c6ccf3a3"
           ]
         }

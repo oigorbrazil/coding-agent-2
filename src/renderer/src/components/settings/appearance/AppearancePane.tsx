@@ -7,12 +7,9 @@ import type { GlobalSettings } from '../../../../../shared/global-settings-types
 import { AppearanceSection } from './AppearanceSection'
 import { AppearanceInterfaceSection } from './AppearanceInterfaceSection'
 import { AppearanceWindowSidebarSection } from './AppearanceWindowSidebarSection'
-import { SearchableSetting } from '../section-layout/SearchableSetting'
-import { SettingsGroup } from '../section-layout/SettingsGroup'
 import { matchesSettingsSearch, normalizeSettingsSearchQuery } from '../search/settings-search'
 import { useAppStore } from '../../../store/index'
 import { USAGE_PERCENTAGE_DISPLAY_SETTING_ID } from './appearance-usage-percentage-search'
-import { getAppIconEntries } from './appearance-app-icon-search'
 import {
   getCodeEditorThemeEntries,
   getLanguageEntries,
@@ -34,8 +31,6 @@ import { getTerminalAppearanceSearchEntries } from '../terminal/terminal-search'
 import { TerminalAppearanceSection } from '../terminal/appearance/TerminalAppearanceSection'
 import type { UseTerminalConfigImportReturn } from '../terminal/configuration/useTerminalConfigImport'
 import type { UseWarpThemeImportReturn } from '../terminal/themes/useWarpThemeImport'
-import { AppIconSelector } from './AppIconSelector'
-import { normalizeAppIconId } from '../../../../../shared/app-icon'
 import { getRendererAppPlatform } from '@/lib/renderer-app-platform'
 import { isWebClientLocation } from '@/lib/web-client-location'
 import { SHOW_UI_LANGUAGE_SETTING } from '@/i18n/supported-languages'
@@ -165,7 +160,6 @@ export function AppearancePane({
     title: windowSidebarTitle,
     description: windowSidebarSummary
   })
-  const appIconMatches = matchesSettingsSearch(searchQuery, getAppIconEntries())
 
   // Search reveals matching sections, including advanced controls, without replacing saved disclosure state.
   function isSectionOpen(key: AppearanceSectionKey): boolean {
@@ -261,30 +255,6 @@ export function AppearancePane({
             forceVisiblePrimary={windowLabelMatches}
           />
         </AppearanceSection>
-      ) : null}
-
-      {/* Keep the App Icon easter egg at the bottom instead of inside Interface advanced. */}
-      {appIconMatches ? (
-        <SettingsGroup>
-          <SearchableSetting
-            title={t('auto.components.settings.AppearancePane.ca1590d42f', 'App Icon')}
-            description={t(
-              'auto.components.settings.AppearancePane.0cd9b8228f',
-              'Choose the app icon shown in the Dock and window switcher.'
-            )}
-            keywords={getAppIconEntries().flatMap((entry) => [
-              entry.title,
-              entry.description ?? '',
-              ...(entry.keywords ?? [])
-            ])}
-            className="py-4"
-          >
-            <AppIconSelector
-              value={normalizeAppIconId(settings.appIcon)}
-              onChange={(appIcon) => updateSettings({ appIcon })}
-            />
-          </SearchableSetting>
-        </SettingsGroup>
       ) : null}
     </div>
   )

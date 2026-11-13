@@ -8,7 +8,7 @@ const state = vi.hoisted(() => {
   return { resolved, programs }
 })
 
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   spawnProcess: (spec: { program: string }) => {
     state.programs.push(spec.program)
     const child = Object.assign(new EventEmitter(), {

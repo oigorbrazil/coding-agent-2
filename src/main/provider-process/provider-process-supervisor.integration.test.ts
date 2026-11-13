@@ -95,7 +95,11 @@ const OWNER = String.raw`
   const spec = JSON.parse(Buffer.from(process.env.ORCA_PROVIDER_SUPERVISOR_SPEC, 'base64').toString())
   spec.ownerPid = process.pid
   const supervisor = spawn(process.execPath, JSON.parse(process.env.ORCA_TEST_SUPERVISOR_ARGS), {
-    env: { ...process.env, ORCA_PROVIDER_SUPERVISOR_SPEC: Buffer.from(JSON.stringify(spec)).toString('base64') },
+    env: {
+      ...process.env,
+      ORCA_PROVIDER_SUPERVISOR_SPEC: Buffer.from(JSON.stringify(spec)).toString('base64'),
+      CODING_AGENT_PROVIDER_SUPERVISOR_SPEC: Buffer.from(JSON.stringify(spec)).toString('base64')
+    },
     stdio: ['pipe', 'pipe', 'ignore'],
     detached: true
   })

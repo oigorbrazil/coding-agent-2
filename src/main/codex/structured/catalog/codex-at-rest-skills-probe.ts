@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../../../shared/app-env'
 import { delayUnlessAborted } from '../../../../shared/abort-aware-delay'
 import { waitForPromiseWithSignal } from '../../../../shared/abort-signal-reason'
 import { createHash } from 'node:crypto'
@@ -170,7 +171,7 @@ export async function probe(
       cwd: resolveHiddenProbeCwd(),
       cliPath: pool.command,
       env: { ...pool.environment, CODEX_HOME: pool.accountHomePath },
-      envToDelete: [NATIVE_CHAT_SCRATCH_DIR_ENV, LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV],
+      envToDelete: appEnvKeys([NATIVE_CHAT_SCRATCH_DIR_ENV, LEGACY_NATIVE_CHAT_VISUALS_DIR_ENV]),
       // The last request can start just before the grace ends.
       timeoutMs: CODEX_SKILLS_PROBE_SETTLE_MS + 2 * ANSWER_TIMEOUT_MS,
       treeKillOnFinish: true,

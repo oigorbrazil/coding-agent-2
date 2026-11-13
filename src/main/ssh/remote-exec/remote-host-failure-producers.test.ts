@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import '../../../shared/node-runtime-pin'
 import type { SshTarget } from '../../../shared/ssh-types'
-import '@orca/process-host'
+import '@coding-agent/process-host'
 import '../orcad-remote-node-runtime-report'
 import '../../managed-server/install/orcad-remote-node-runtime'
 import '../ssh-remote-platform'
@@ -15,7 +15,7 @@ import { uploadDirectoryViaSystemSsh } from '../system-transport/system-ssh-file
 import '../system-transport/system-ssh-sftp-transfer'
 import { isHostAnsweredSystemSshExit } from '../system-transport/system-ssh-operation-lifecycle'
 
-vi.mock('@orca/process-host', async (importOriginal) => ({
+vi.mock('@coding-agent/process-host', async (importOriginal) => ({
   ...(await importOriginal<Record<string, unknown>>()),
   runProcess: vi.fn()
 }))

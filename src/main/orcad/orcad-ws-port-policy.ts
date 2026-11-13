@@ -1,4 +1,4 @@
-import { ORCAD_MANAGED_ACTIVATION_ROOT_ENV } from '../../shared/orcad-managed-launch-env'
+import { readAppEnv } from '../../shared/app-env'
 
 type OrcadWsPortOptions = {
   wsPort?: number
@@ -14,7 +14,7 @@ export function orcadWsPortOptions(
   if (port === undefined) {
     return {}
   }
-  const managed = Boolean(env[ORCAD_MANAGED_ACTIVATION_ROOT_ENV])
+  const managed = Boolean(readAppEnv(env, 'ORCAD_MANAGED_ACTIVATION_ROOT'))
   return {
     wsPort: port,
     preferPinnedWsPort: true,

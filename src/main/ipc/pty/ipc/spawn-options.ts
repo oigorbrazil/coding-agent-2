@@ -1,3 +1,5 @@
+import type { PtyIpcSpawnState } from './spawn-state'
+import { appEnvPairs } from '../../../../shared/app-env'
 import { isRestoreSpawnIntent } from '../../../../shared/host-spawn-admission'
 import { beginPtySpawnForWorktree } from '../host-env/fresh-spawn-routing'
 import { makePaneSpawnReservationKey } from '../pane/spawn-reservation'
@@ -6,7 +8,6 @@ import {
   assemblePtySpawnLaunchOptions,
   seedPtySpawnSize
 } from '../spawn-options-assembly'
-import type { PtyIpcSpawnState } from './spawn-state'
 
 /** Carries deletions to provider-owned environments, including persistent older daemons. */
 export async function buildPtyIpcSpawnOptions(ctx: PtyIpcSpawnState): Promise<void> {
@@ -14,7 +15,7 @@ export async function buildPtyIpcSpawnOptions(ctx: PtyIpcSpawnState): Promise<vo
   const settings = ctx.deps.getSettings?.()
   const deletions = assemblePtySpawnEnvDeletions({
     env: ctx.preAllocatedHandle
-      ? { ...ctx.env, ORCA_TERMINAL_HANDLE: ctx.preAllocatedHandle }
+      ? { ...ctx.env, ...appEnvPairs('TERMINAL_HANDLE', ctx.preAllocatedHandle) }
       : ctx.env,
     callerEnvToDelete: args.envToDelete,
     agentTeamsEnvToDelete: ctx.agentTeamsEnvToDelete ?? [],

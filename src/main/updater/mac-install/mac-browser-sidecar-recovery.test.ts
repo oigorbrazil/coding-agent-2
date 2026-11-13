@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { recoverMacBrowserSidecars } from './mac-browser-sidecar-recovery'
 
 const { run } = vi.hoisted(() => ({ run: vi.fn() }))
-vi.mock('@orca/process-host', () => ({ runProcess: run }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: run }))
 
 const executable = '/Applications/Orca Test.app/Contents/MacOS/Orca Test'
 const command = `${

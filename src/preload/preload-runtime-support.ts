@@ -1,3 +1,4 @@
+import { readAppEnv } from '../shared/app-env'
 import { ipcRenderer } from 'electron'
 import { createBrowserClientPageRendererRequests } from './browser-client-page-renderer-requests'
 import { createBrowserFindSubscriptions } from './browser-find-subscriptions'
@@ -13,7 +14,7 @@ export async function awaitBeforeUnloadCheckpoint(): Promise<void> {
   }
 }
 
-export const startupDiagnosticsEnabled = process.env.ORCA_STARTUP_DIAGNOSTICS === '1'
+export const startupDiagnosticsEnabled = readAppEnv(process.env, 'STARTUP_DIAGNOSTICS') === '1'
 
 export function getLinuxDisplayServer(): 'wayland' | 'x11' | null {
   if (process.platform !== 'linux') {

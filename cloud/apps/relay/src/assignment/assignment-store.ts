@@ -28,23 +28,23 @@ import { performance } from 'node:perf_hooks'
 import {
   ASSIGNMENT_LIMITS,
   mayNormallyReassign
-} from '@orca-cloud/relay-contract/assignment-invariants'
-import { RELAY_ADMISSION_BUDGETS } from '@orca-cloud/relay-contract/admission-budgets'
+} from '@coding-agent-cloud/relay-contract/assignment-invariants'
+import { RELAY_ADMISSION_BUDGETS } from '@coding-agent-cloud/relay-contract/admission-budgets'
 import {
   RELAY_DEFAULT_REGION,
   RELAY_REGIONS,
   type RelayRegion
-} from '@orca-cloud/relay-contract/relay-regions'
+} from '@coding-agent-cloud/relay-contract/relay-regions'
 import { EDGE_CELL_ID } from '../edge-relay.js'
-import { RELAY_PROTOCOL_LIMITS } from '@orca-cloud/relay-contract/protocol-limits'
+import { RELAY_PROTOCOL_LIMITS } from '@coding-agent-cloud/relay-contract/protocol-limits'
 import type {
   RegionCorrectionRequest,
   RegionCorrectionResponse
-} from '@orca-cloud/relay-contract/region-correction'
+} from '@coding-agent-cloud/relay-contract/region-correction'
 import type {
   IdleRegionalRehomeCommit,
   IdleRegionalRehomeRequest
-} from '@orca-cloud/relay-contract/idle-regional-rehome'
+} from '@coding-agent-cloud/relay-contract/idle-regional-rehome'
 import {
   cellAdmissionState,
   cellAdmissionStates,

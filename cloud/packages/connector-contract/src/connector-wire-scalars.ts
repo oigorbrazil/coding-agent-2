@@ -1,4 +1,4 @@
-import { OpaqueIdSchema } from '@orca-cloud/push-contract'
+import { OpaqueIdSchema } from '@coding-agent-cloud/push-contract'
 import { z } from 'zod'
 
 /** Opaque to the cloud: the machine encodes [repoHostId, repoId], or a folder's project group. */

@@ -1,4 +1,5 @@
-import { runProcess } from '@orca/process-host'
+import { readAppEnv } from '../../shared/app-env'
+import { runProcess } from '@coding-agent/process-host'
 import { existsSync } from 'node:fs'
 import { userInfo } from 'node:os'
 import { basename } from 'node:path'
@@ -24,8 +25,6 @@ const LOGIN_PREFLIGHT_RETRY_MAX_MS = 5 * 60_000
 // Long-lived daemons must recheck rejected PAM capability rather than disable attribution forever (#9756).
 const LOGIN_PREFLIGHT_REJECTED_REVALIDATE_MS = 30 * 60_000
 
-const DISABLE_ENV_VAR = 'ORCA_DISABLE_MACOS_LOGIN_SHELL'
-
 // Cache only actual PAM verdicts; timeout, output-cap and spawn failures remain retryable.
 let cachedLoginPreflightResult: boolean | null = null
 let cachedRejectionAtMs: number | null = null
@@ -36,7 +35,7 @@ let loginSessionProbeInFlight = false
 let loginSessionAcceptedInProcess = false
 
 function isDisabledByEnv(): boolean {
-  const value = process.env[DISABLE_ENV_VAR]
+  const value = readAppEnv(process.env, 'DISABLE_MACOS_LOGIN_SHELL')
   return value === '1' || value === 'true'
 }
 

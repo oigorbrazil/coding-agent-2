@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { isRelayCellConnectionHardCap, RELAY_CELL_CONNECTION_HARD_CAP, RELAY_MAX_CELL_CONNECTION_UNOBSERVED_BOUND, relayCellAdmissionBounds, type RelayCellConnectionHardCap } from '@orca-cloud/relay-contract/admission-budgets'
-import { RELAY_DEFAULT_REGION, RelayRegionSchema, type RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import { isRelayCellConnectionHardCap, RELAY_CELL_CONNECTION_HARD_CAP, RELAY_MAX_CELL_CONNECTION_UNOBSERVED_BOUND, relayCellAdmissionBounds, type RelayCellConnectionHardCap } from '@coding-agent-cloud/relay-contract/admission-budgets'
+import { RELAY_DEFAULT_REGION, RelayRegionSchema, type RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import {
   RELAY_MAX_READINESS_GRACE_MS,
   RELAY_READINESS_JWKS_GRACE_MS,

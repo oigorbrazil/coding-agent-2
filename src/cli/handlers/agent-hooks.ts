@@ -1,17 +1,22 @@
-import { join } from 'node:path'
 import type { CommandHandler } from '../dispatch'
-import { printResult } from '../format'
-import { rejectRemoteSelectionFlags } from '../remote-selection-flag-rejection'
 import {
-  RuntimeClientError,
   type RuntimeClient,
   type RuntimeRpcSuccess,
+  RuntimeClientError,
   getDefaultUserDataPath
 } from '../runtime-client'
+
 import type { AgentHookInstallStatus } from '../../shared/agent-hook-listener/configuration/agent-hook-types'
-import { DEFAULT_LOCAL_ORCA_PROFILE_ID } from '../../shared/orca-profiles'
 import type { GlobalSettings } from '../../shared/global-settings-types'
 import type { ProfileStateOfflineLocation } from '../../main/persistence/profile-state/profile-state-offline-settings'
+import { readAppEnv } from '../../shared/app-env'
+import { renamedUserDataFile } from '../../shared/legacy-renamed-file'
+import { join } from 'node:path'
+
+import { printResult } from '../format'
+import { rejectRemoteSelectionFlags } from '../remote-selection-flag-rejection'
+
+import { DEFAULT_LOCAL_ORCA_PROFILE_ID } from '../../shared/orca-profiles'
 
 type AgentHookCommandResult = {
   enabled: boolean
@@ -25,7 +30,8 @@ const WSL_CODEX_PREPARE_TIMEOUT_MS = 50_000
 
 async function getDataPath(): Promise<string> {
   return (
-    (await getProfileStateLocation())?.dataFile ?? join(getDefaultUserDataPath(), 'orca-data.json')
+    (await getProfileStateLocation())?.dataFile ??
+    renamedUserDataFile(join(getDefaultUserDataPath(), 'orca-data.json'))
   )
 }
 
@@ -37,7 +43,7 @@ async function getProfileStateLocation(): Promise<ProfileStateOfflineLocation | 
 function legacyProfileStateLocation(): ProfileStateOfflineLocation {
   const userDataPath = getDefaultUserDataPath()
   return {
-    dataFile: join(userDataPath, 'orca-data.json'),
+    dataFile: renamedUserDataFile(join(userDataPath, 'orca-data.json')),
     databaseFile: join(userDataPath, 'profile-state.db'),
     profileId: DEFAULT_LOCAL_ORCA_PROFILE_ID
   }
@@ -190,7 +196,7 @@ export const AGENT_HOOK_HANDLERS: Record<string, CommandHandler> = {
         'agentHooks.prepareCodexForWslPane',
         {
           codexHome: process.env.CODEX_HOME ?? '',
-          orcaCodexHome: process.env.ORCA_CODEX_HOME ?? '',
+          orcaCodexHome: readAppEnv(process.env, 'CODEX_HOME') ?? '',
           wslDistro: process.env.WSL_DISTRO_NAME
         },
         { timeoutMs: WSL_CODEX_PREPARE_TIMEOUT_MS }

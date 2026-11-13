@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
+import type { ProcessResult, ProcessSpec } from '@coding-agent/process-host/process-spec'
 import {
   assertClipboardTextWriteWithinLimitWithYield,
   CLIPBOARD_TEXT_MEASURE_YIELD_CODE_UNITS,

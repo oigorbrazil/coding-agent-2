@@ -1,5 +1,5 @@
-import type { ChildProcessHandle as ChildProcess } from '@orca/process-host/process-spec'
-import { spawnProcess } from '@orca/process-host'
+import type { ChildProcessHandle as ChildProcess } from '@coding-agent/process-host/process-spec'
+import { spawnProcess } from '@coding-agent/process-host'
 import { connect } from 'node:net'
 import { createSshOperationAbortError } from '../connection/ssh-exec-options'
 import { buildForwardProcessSshArgs, type SystemSshBuildArgsOptions } from './system-ssh-args'

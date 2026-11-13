@@ -84,7 +84,7 @@ export function formatHostList(result: { hosts: HostListEntry[] }): string {
   const kindLabel: Record<HostListEntry['kind'], string> = {
     local: 'local',
     ssh: 'ssh target',
-    environment: 'orca server'
+    environment: 'Coding server'
   }
   return result.hosts
     .map(
@@ -130,7 +130,7 @@ export function formatCliStatus(status: CliStatusResult): string {
     `runtimeId: ${status.runtime.runtimeId ?? 'none'}`,
     `graphState: ${status.graph.state}`,
     ...(status.runtime.degradations ?? []).map((degradation) => `degraded: ${degradation.message}`),
-    ...(status.caller === undefined ? [] : [`orcaSessionId: ${formatStatusCaller(status.caller)}`])
+    ...(status.caller === undefined ? [] : [`Session ID: ${formatStatusCaller(status.caller)}`])
   ].join('\n')
 }
 

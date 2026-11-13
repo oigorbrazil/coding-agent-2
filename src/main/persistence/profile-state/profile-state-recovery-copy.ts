@@ -8,7 +8,7 @@ import {
   statSync
 } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 
 // Avoid process startup for small copies.
 const MINIMUM_CLONE_BYTES = 8 * 1024 * 1024

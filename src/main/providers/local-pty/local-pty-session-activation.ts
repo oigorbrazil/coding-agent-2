@@ -1,27 +1,33 @@
-import { ptyForegroundGroupReader } from '../../pty/process-retirement/pty-master-foreground-observation'
-import { createGitBashConsoleCapacityDetector } from '../../../shared/git-bash-console-capacity'
-import { withInitialOutputDiagnostic } from '../../../shared/terminal/pty/lifecycle/terminal-start-failure'
-
 import type * as pty from 'node-pty'
-import { isBracketedPasteSafeShell } from '../../../shared/startup-command-submission'
 import {
+  type StartupCommandStaging,
   discardStagedStartupCommand,
   stageStartupCommand,
-  startupStagingFailureNotice,
-  type StartupCommandStaging
+  startupStagingFailureNotice
 } from '../../../shared/startup-command-staging'
-import { PtyStartupIngress } from '../../../shared/terminal/pty/ingress/pty-startup-ingress'
 import type { PtyIngressEmission } from '../../../shared/terminal/pty/ingress/pty-startup-ingress-contract'
-import { resolvePtyOwnerBackend } from '../../../shared/terminal/pty/lifecycle/pty-owner-backend'
 import {
   type TerminalExitCause,
   resolveProcessExitCause
 } from '../../../shared/terminal/pty/lifecycle/terminal-exit-cause'
-import { POSIX_SHELL_STARTUP_COMMAND_ENV } from '../../pty/shell-startup/posix-shell-startup-command'
-import { getAgentForegroundContextPaths } from '../agent-foreground-context-paths'
-import { getSpawnedShellName } from './local-pty-launch-context'
 import type { LocalPtyLaunchPlan } from './local-pty-launch-plan'
 import type { LocalPtyProviderOptions } from './local-pty-provider-types'
+import type { PtySpawnOptions } from '../pty-provider-contract'
+import type { PtySpawnResult } from '../pty-spawn-result'
+import { readAppEnv } from '../../../shared/app-env'
+import { ptyForegroundGroupReader } from '../../pty/process-retirement/pty-master-foreground-observation'
+import { createGitBashConsoleCapacityDetector } from '../../../shared/git-bash-console-capacity'
+import { withInitialOutputDiagnostic } from '../../../shared/terminal/pty/lifecycle/terminal-start-failure'
+
+import { isBracketedPasteSafeShell } from '../../../shared/startup-command-submission'
+
+import { PtyStartupIngress } from '../../../shared/terminal/pty/ingress/pty-startup-ingress'
+
+import { resolvePtyOwnerBackend } from '../../../shared/terminal/pty/lifecycle/pty-owner-backend'
+
+import { getAgentForegroundContextPaths } from '../agent-foreground-context-paths'
+import { getSpawnedShellName } from './local-pty-launch-context'
+
 import {
   clearPtyState,
   dataListeners,
@@ -49,8 +55,6 @@ import { createWslGuestRootObserver } from '../../../shared/wsl-guest-root-marke
 import { createLocalPtyShellReadinessSession } from './local-pty-shell-readiness-session'
 import { destroyPtyProcess, createPtyPhysicalExit } from './local-pty-termination'
 import { writeStartupCommandWhenShellReady } from './local-pty-shell-ready-startup-command'
-import type { PtySpawnOptions } from '../pty-provider-contract'
-import type { PtySpawnResult } from '../pty-spawn-result'
 
 export function activateLocalPtySession(args: {
   id: string
@@ -76,8 +80,9 @@ export function activateLocalPtySession(args: {
     ptyAgentSessionIds.add(id)
   }
   ptyShellPath.set(id, plan.shellPath)
-  if (env.ORCA_TERMINAL_HANDLE) {
-    ptyTerminalHandle.set(id, env.ORCA_TERMINAL_HANDLE)
+  const terminalHandle = readAppEnv(env, 'TERMINAL_HANDLE')
+  if (terminalHandle) {
+    ptyTerminalHandle.set(id, terminalHandle)
   }
   if (spawn.worktreeId) {
     ptyWorktreeId.set(id, spawn.worktreeId)
@@ -198,7 +203,7 @@ export function activateLocalPtySession(args: {
 
   const startupCommandDeliveredByWrapper =
     spawn.command !== undefined &&
-    plan.shellReadyLaunch?.env[POSIX_SHELL_STARTUP_COMMAND_ENV] === spawn.command
+    readAppEnv(plan.shellReadyLaunch?.env, 'POSIX_SHELL_STARTUP_COMMAND') === spawn.command
   if (
     !exitedBeforeSpawnReply &&
     spawn.command &&

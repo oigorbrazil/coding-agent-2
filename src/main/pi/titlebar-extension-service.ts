@@ -1,3 +1,4 @@
+import { appEnvPairs, setAppEnv } from '../../shared/app-env'
 import { materializeOmpFreshConfig } from '../../shared/agent-launch/startup/omp-fresh-config'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
@@ -163,8 +164,11 @@ export class PiTitlebarExtensionService {
 
   buildFreshOmpEnv(): Record<string, string> {
     return {
-      ORCA_OMP_FRESH_CONFIG: materializeOmpFreshConfig(
-        join(getAppEnvironment().getPath('userData'), OMP_MANAGED_STATUS_EXTENSION_DIR)
+      ...appEnvPairs(
+        'OMP_FRESH_CONFIG',
+        materializeOmpFreshConfig(
+          join(getAppEnvironment().getPath('userData'), OMP_MANAGED_STATUS_EXTENSION_DIR)
+        )
       )
     }
   }
@@ -193,7 +197,7 @@ export class PiTitlebarExtensionService {
         const statusSource = withOrcaManagedExtensionMarker(getPiAgentStatusExtensionSource(kind))
         const statusExtensionPath = this.writeOmpFallbackStatusExtension(statusSource)
         return statusExtensionPath
-          ? { ...freshConfigEnv, ORCA_OMP_STATUS_EXTENSION: statusExtensionPath }
+          ? { ...freshConfigEnv, ...appEnvPairs('OMP_STATUS_EXTENSION', statusExtensionPath) }
           : freshConfigEnv
       }
       return {}
@@ -206,14 +210,14 @@ export class PiTitlebarExtensionService {
     const installed = this.installManagedExtensions(sourceAgentDir, kind)
     const env: Record<string, string> = { ...freshConfigEnv }
     if (kind === 'omp') {
-      env.ORCA_OMP_SOURCE_AGENT_DIR = installed.sourceAgentDir
+      setAppEnv(env, 'OMP_SOURCE_AGENT_DIR', installed.sourceAgentDir)
       if (installed.statusExtensionPath) {
-        env.ORCA_OMP_STATUS_EXTENSION = installed.statusExtensionPath
+        setAppEnv(env, 'OMP_STATUS_EXTENSION', installed.statusExtensionPath)
       }
     } else if (kind === 'prime-agent') {
-      env.ORCA_PRIME_AGENT_SOURCE_AGENT_DIR = installed.sourceAgentDir
+      setAppEnv(env, 'PRIME_AGENT_SOURCE_AGENT_DIR', installed.sourceAgentDir)
     } else {
-      env.ORCA_PI_SOURCE_AGENT_DIR = installed.sourceAgentDir
+      setAppEnv(env, 'PI_SOURCE_AGENT_DIR', installed.sourceAgentDir)
     }
     return env
   }

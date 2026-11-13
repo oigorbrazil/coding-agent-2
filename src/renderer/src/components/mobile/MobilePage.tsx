@@ -67,7 +67,6 @@ export default function MobilePage(): React.JSX.Element {
   const networkInterfacesRequestIdRef = useRef(0)
   const mountedRef = useMountedRef()
   const closeMobilePage = useAppStore((s) => s.closeMobilePage)
-  const showMobileButton = useAppStore((s) => s.settings?.showMobileButton !== false)
   const updateSettings = useAppStore((s) => s.updateSettings)
   const {
     devices,
@@ -304,19 +303,6 @@ export default function MobilePage(): React.JSX.Element {
     }
   }
 
-  const toggleMobileSidebarButton = useCallback(() => {
-    const nextShowMobileButton = !showMobileButton
-    void updateSettings({ showMobileButton: nextShowMobileButton })
-    if (!nextShowMobileButton) {
-      toast.message(
-        translate(
-          'auto.components.mobile.MobilePageToolbar.e1c7b4a92d',
-          'Configure in Settings > Mobile.'
-        )
-      )
-    }
-  }, [showMobileButton, updateSettings])
-
   useMobilePageEscape(closeMobilePage)
 
   // Show address waiting as busy separately from pairLoading, or a mode switch could regenerate before address resolution.
@@ -365,11 +351,9 @@ export default function MobilePage(): React.JSX.Element {
       revokingDeviceIds={revokingDeviceIds}
       selectedAddress={selectedAddress}
       setPlatform={setPlatform}
-      showMobileButton={showMobileButton}
       showPairedDevices={showPairedDevices}
       stage={stage}
       stepIdx={stepIdx}
-      toggleMobileSidebarButton={toggleMobileSidebarButton}
     />
   )
 }

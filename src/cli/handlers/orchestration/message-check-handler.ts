@@ -1,17 +1,20 @@
 import type { CommandHandler } from '../../dispatch'
+import { type RuntimeRpcSuccess, RuntimeClientError } from '../../runtime-client'
+import {
+  type LegacyCompatibilityResult,
+  type OrchestrationMessageSummary as MessageSummary,
+  formatOrchestrationCheckText,
+  prepareOrchestrationCheckOutput
+} from '../../../shared/orchestration-check-output'
+
+import { readAppEnv } from '../../../shared/app-env'
+
 import { printResult } from '../../format'
 import { withReceiptNext } from './receipt-next-text'
 import { printOrchestrationResult } from './agent-view'
 import { checkView } from './message-agent-views'
 import { getOptionalStringFlag } from '../../flags'
-import { RuntimeClientError } from '../../runtime-client'
-import type { RuntimeRpcSuccess } from '../../runtime-client'
-import {
-  formatOrchestrationCheckText,
-  prepareOrchestrationCheckOutput,
-  type LegacyCompatibilityResult,
-  type OrchestrationMessageSummary as MessageSummary
-} from '../../../shared/orchestration-check-output'
+
 import { startCheckKeepalive } from './check-keepalive'
 import { callOrchestrationMutation } from './mutation-request'
 import { getOptionalPositiveIntegerValueFlag } from './numeric-flags'
@@ -47,7 +50,7 @@ export const ORCHESTRATION_CHECK_HANDLER: Record<string, CommandHandler> = {
     const terminal = await resolveOrchestrationTerminalHandle(flags, cwd, client, 'terminal')
     // Sessions use their injected id; inherited pane keys belong to a different caller.
     const paneKey =
-      explicitTerminal || terminal === undefined ? undefined : process.env.ORCA_PANE_KEY
+      explicitTerminal || terminal === undefined ? undefined : readAppEnv(process.env, 'PANE_KEY')
     const callerLabel = orchestrationCallerLabel(terminal)
     const stopKeepalive = wait ? startCheckKeepalive(timeoutMs) : null
     let result: Awaited<ReturnType<typeof client.call<CheckResult>>>

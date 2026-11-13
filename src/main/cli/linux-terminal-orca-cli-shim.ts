@@ -177,13 +177,15 @@ function ensureShimForLauncher(userDataPath: string, launcherPath: string): stri
 
 function ensureShimForScript(userDataPath: string, script: string): string | null {
   const shimDir = join(userDataPath, SHIM_DIR_NAME)
-  const shimPath = join(shimDir, 'orca')
   try {
-    if (readShim(shimPath) !== script) {
-      mkdirSync(shimDir, { recursive: true })
-      writeFileSync(shimPath, script, 'utf8')
+    for (const name of ['coding', 'orca', 'coding-agent']) {
+      const shimPath = join(shimDir, name)
+      if (readShim(shimPath) !== script) {
+        mkdirSync(shimDir, { recursive: true })
+        writeFileSync(shimPath, script, 'utf8')
+      }
+      chmodSync(shimPath, 0o755)
     }
-    chmodSync(shimPath, 0o755)
   } catch {
     return null
   }

@@ -1,6 +1,6 @@
 import { nativeImage, type NativeImage } from 'electron'
 
-// Match renderer attention/unread amber-500, including FloatingTerminalToggleButton.
+// Match the renderer's amber-500 unread indicator.
 const DOT_RGB = { r: 0xf5, g: 0x9e, b: 0x0b }
 // A near-white halo separates the dot from the icon glyph on any tray theme.
 const RING_RGB = { r: 0xff, g: 0xff, b: 0xff }

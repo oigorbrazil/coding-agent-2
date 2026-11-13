@@ -51,7 +51,7 @@ function snapshot(profileId: string) {
 function openStore() {
   const profileDirectory = join(directory, 'profiles', 'source')
   const store = new Store({
-    dataFile: join(profileDirectory, 'orca-data.json'),
+    dataFile: join(profileDirectory, 'coding-data.json'),
     profileStateAuthority: new ProfileStateSqliteAuthority(
       join(profileDirectory, 'profile-state.db'),
       'source'
@@ -78,7 +78,7 @@ beforeEach(() => {
   directory = mkdtempSync(join(tmpdir(), 'orca-active-profile-transfer-'))
   vi.spyOn(ProfileStateSqliteAuthority.prototype, 'scheduleBackup').mockImplementation(() => {})
   writeFileSync(
-    join(directory, 'orca-profile-index.json'),
+    join(directory, 'coding-profile-index.json'),
     JSON.stringify({
       schemaVersion: ORCA_PROFILE_INDEX_SCHEMA_VERSION,
       activeProfileId: 'source',

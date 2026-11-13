@@ -74,7 +74,12 @@ function resolveTargetFile(target: string): string {
   if (!statSync(target).isDirectory()) {
     return target
   }
-  const found = [PLUGIN_MANIFEST_FILENAME, PLUGIN_CATALOG_FILENAME]
+  const found = [
+    PLUGIN_MANIFEST_FILENAME,
+    'orca-plugin.json',
+    PLUGIN_CATALOG_FILENAME,
+    'orca-catalog.json'
+  ]
     .map((name) => join(target, name))
     .find((file) => existsSync(file))
   if (!found) {
@@ -99,7 +104,8 @@ export async function validatePluginTarget(target: string): Promise<PluginValida
   const file = resolveTargetFile(target)
   const root = dirname(file)
   const name = basename(file)
-  const kind = name === PLUGIN_CATALOG_FILENAME ? 'catalog' : 'plugin'
+  const kind =
+    name === PLUGIN_CATALOG_FILENAME || name === 'orca-catalog.json' ? 'catalog' : 'plugin'
   let raw: unknown
   try {
     raw = JSON.parse(readFileSync(file, 'utf8'))
@@ -136,7 +142,7 @@ export async function validatePluginTarget(target: string): Promise<PluginValida
 }
 
 export type PluginInspection = PluginValidationReport & {
-  /** What `orca plugin install` of these exact files would record; absent when unhashable. */
+  /** What `coding plugin install` of these exact files would record; absent when unhashable. */
   contentHash?: string
   fileCount?: number
   totalBytes?: number

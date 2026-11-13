@@ -1,18 +1,22 @@
+import type { CommandHandler } from '../dispatch'
+import {
+  type BundledSkillOp,
+  type BundledSkillOpOutcome,
+  type BundledSkillPlan,
+  isBundledSkillLeaveReason
+} from '../../shared/bundled-skill-plan'
+
+import { readAppEnv } from '../../shared/app-env'
 import { homedir } from 'node:os'
 import { realpath } from 'node:fs/promises'
-import type { CommandHandler } from '../dispatch'
+
 import { RuntimeClientError } from '../runtime-client'
 import { getDefaultUserDataPath } from '../runtime/metadata'
 import { getRepeatedStringFlag } from '../flags'
 import { writeStdoutLine } from '../stdout-line'
 import { skillsCliAgentAliases } from '../skills-cli-agent-aliases'
 import { loadCanonicalGuides, type BundledSkillGuide } from './bundled-skill-guide-table'
-import type {
-  BundledSkillOp,
-  BundledSkillOpOutcome,
-  BundledSkillPlan
-} from '../../shared/bundled-skill-plan'
-import { isBundledSkillLeaveReason } from '../../shared/bundled-skill-plan'
+
 import {
   BUNDLED_SKILL_LEAVE_REASON_TEXT,
   BUNDLED_SKILL_PLAN_OP_TEXT,
@@ -25,9 +29,11 @@ import {
 } from '../../shared/skill-install-providers'
 import { SKILLS_CLI_AGENT_KEY_BY_TUI_AGENT } from '../../shared/skills-cli-agent-keys'
 import {
+  INHERITED_SKILL_WRITES_ENABLED,
   installBundledSkills,
   localBundledSkillInput,
-  previewBundledSkillInstall
+  previewBundledSkillInstall,
+  skippedBundledSkillInstall
 } from '../../main/skills/bundled-skill-install/cli-entry'
 
 export type SkillMutationVerb = 'install' | 'update'
@@ -112,8 +118,8 @@ function formatSkillSelectionHelp(verb: SkillMutationVerb, skillNames: string[])
     `Choose one or more skills to ${verb}:`,
     ...skillNames.map((name) => `  ${name}`),
     '',
-    `Usage: orca skills ${verb} --skill <name> [--skill <name> ...]`,
-    `   or: orca skills ${verb} --all`
+    `Usage: coding skills ${verb} --skill <name> [--skill <name> ...]`,
+    `   or: coding skills ${verb} --all`
   ].join('\n')
 }
 
@@ -175,11 +181,11 @@ export function createSkillMutationHandler(verb: SkillMutationVerb): CommandHand
     }
 
     // Local agent detection would target the wrong machine for a bridged invocation.
-    if (process.env.ORCA_CLI_CWD) {
+    if (readAppEnv(process.env, 'CLI_CWD')) {
       throw new RuntimeClientError(
         'invalid_environment',
-        `orca skills ${verb} writes to the machine that runs it, but this shell forwards ` +
-          `orca to the Coding Agent 2 host. Run the same orca skills ${verb} command on the machine ` +
+        `coding skills ${verb} writes to the machine that runs it, but this shell forwards ` +
+          `orca to the Coding Agent 2 host. Run the same coding skills ${verb} command on the machine ` +
           "you want it on, where it can detect that host's agents."
       )
     }
@@ -210,7 +216,7 @@ export function createSkillMutationHandler(verb: SkillMutationVerb): CommandHand
         : []
     const notInstalledLines = notInstalled.map(
       (name) =>
-        `${name}: not installed, so skipped. Install it with: orca skills install --skill ${name}`
+        `${name}: not installed, so skipped. Install it with: coding skills install --skill ${name}`
     )
     const forceHint = hasReplaceableLeave(plan)
       ? [
@@ -245,7 +251,9 @@ export function createSkillMutationHandler(verb: SkillMutationVerb): CommandHand
       return
     }
 
-    const result = await installBundledSkills(input, plan.planDigest)
+    const result = INHERITED_SKILL_WRITES_ENABLED
+      ? await installBundledSkills(input, plan.planDigest)
+      : skippedBundledSkillInstall(plan.scope)
     const summary = summarizeBundledSkillOutcomes(result)
     process.exitCode = summary.exitCode
     if (json) {

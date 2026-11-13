@@ -1,5 +1,5 @@
-import { runProcess } from '@orca/process-host'
-import type { ProcessResult } from '@orca/process-host/process-spec'
+import { runProcess } from '@coding-agent/process-host'
+import type { ProcessResult } from '@coding-agent/process-host/process-spec'
 import {
   localAccountRuntimeTargetKey,
   type LocalAccountRuntimeTarget

@@ -39,7 +39,7 @@ export {
 } from './worktree/card-properties'
 
 export const SCHEMA_VERSION = 1
-export const DEFAULT_APP_FONT_FAMILY = 'Geist'
+export const DEFAULT_APP_FONT_FAMILY = 'Inter'
 export const DEFAULT_SHOW_SLEEPING_WORKSPACES = true
 export const DEFAULT_HIDE_SLEEPING_WORKSPACES = false
 export const DEFAULT_AGENT_ACTIVITY_DISPLAY_MODE: AgentActivityDisplayMode = 'compact'
@@ -89,7 +89,7 @@ export { DEFAULT_REPO_BADGE_COLOR, REPO_COLORS } from './repo-badge-color'
 export function getDefaultWorkspaceDir(homeDir: string): string {
   const separator = homeDir.includes('\\') ? '\\' : '/'
   const trimmedHomeDir = homeDir.replace(/[\\/]+$/, '')
-  return [trimmedHomeDir, 'orca', 'workspaces'].join(separator)
+  return [trimmedHomeDir, 'coding', 'workspaces'].join(separator)
 }
 
 export function getDefaultSettings(homedir: string): GlobalSettings {

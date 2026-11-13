@@ -1,20 +1,22 @@
+import {
+  type OrcadProfilePreflightResponse,
+  ORCAD_STARTUP_PREFLIGHT_FLAG,
+  ORCAD_PROFILE_PREFLIGHT_TIMEOUT_MS,
+  parseOrcadProfilePreflight,
+  orcadProfilePreflightResponseSchema
+} from '../../shared/orcad-profile-preflight'
+import { appEnvPairs } from '../../shared/app-env'
 import { z } from 'zod'
 import { randomUUID } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { preflightProfileStateRuntime } from '../persistence/profile-state/profile-state-runtime-preflight'
-import {
-  ORCAD_STARTUP_PREFLIGHT_FLAG,
-  ORCAD_PROFILE_PREFLIGHT_TIMEOUT_MS,
-  parseOrcadProfilePreflight,
-  orcadProfilePreflightResponseSchema,
-  type OrcadProfilePreflightResponse
-} from '../../shared/orcad-profile-preflight'
+
 import { readOrcadArtifactIdentity } from './orcad-artifact-identity'
 import { ORCAD_EXIT_CONFIGURATION } from './orcad-configuration-exit'
 import { ORCAD_SERVER_ENTRY_FILENAME, ORCAD_VERSION_FILENAME } from '../../shared/orcad-artifacts'
 import { ORCAD_NODE_RUNTIME_IDENTITY } from '../../shared/orcad-node-runtime-identity'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { preflightOrcadNativeRuntime } from './orcad-runtime-native-preflight'
 import { orcadCompileCacheEnv } from './orcad-compile-cache'
 import {
@@ -85,7 +87,11 @@ async function runStartupPreflightChild(directory: string, identity: string): Pr
     program: process.execPath,
     args: [join(directory, ORCAD_SERVER_ENTRY_FILENAME), ORCAD_STARTUP_PREFLIGHT_FLAG, nonce],
     // Reuse the serving runtime code cache for this identical bundle.
-    env: { ...process.env, ORCA_BACKGROUND_LAUNCH: '1', ...orcadCompileCacheEnv(directory) },
+    env: {
+      ...process.env,
+      ...appEnvPairs('BACKGROUND_LAUNCH', '1'),
+      ...orcadCompileCacheEnv(directory)
+    },
     timeoutMs: ORCAD_PROFILE_PREFLIGHT_TIMEOUT_MS,
     maxOutputBytes: 64 * 1024,
     terminationBarrier: true

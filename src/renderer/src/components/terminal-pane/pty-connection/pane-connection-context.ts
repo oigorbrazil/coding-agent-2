@@ -1,3 +1,5 @@
+import type { ConnectPanePtySession } from './connect-pane-pty-session'
+import { appEnvPairs } from '../../../../../shared/app-env'
 import { resolveTerminalPaneOwnerContext } from '../host-state/terminal-pane-owner-context'
 import { useAppStore } from '@/store'
 import { resolveTerminalWorktreeRoute } from '@/lib/terminal-worktree-route'
@@ -6,7 +8,6 @@ import { FLOATING_TERMINAL_WORKTREE_ID } from '../../../../../shared/constants'
 import { isEphemeralSetupTerminalWorktreeId } from '../../../../../shared/ephemeral-setup-terminal-worktree-id'
 import { isLocalExecutionHost } from '../../../../../shared/execution-host'
 import { settleTerminalPaneRecovery } from '../render-health/recovery/terminal-pane-recovery'
-import type { ConnectPanePtySession } from './connect-pane-pty-session'
 
 export function initializePaneConnectionContext(session: ConnectPanePtySession): void {
   // Inject opaque ORCA_PANE_KEY matching tabId:leafId so global hooks can attribute callbacks without cwd lookup.
@@ -28,17 +29,17 @@ export function initializePaneConnectionContext(session: ConnectPanePtySession):
     session.restoredPtyIdForTransport
   )
   session.folderWorkspace = session.ownerContext.folderWorkspace
-  session.workspaceEnv = { ORCA_WORKSPACE_ID: session.deps.worktreeId }
+  session.workspaceEnv = { ...appEnvPairs('WORKSPACE_ID', session.deps.worktreeId) }
   if (session.folderWorkspace) {
     session.workspaceEnv.ORCA_PROJECT_GROUP_ID = session.folderWorkspace.projectGroupId
     session.workspaceEnv.ORCA_WORKSPACE_ROOT = session.folderWorkspace.folderPath
   }
   session.paneIdentityEnv = {
     ...session.workspaceEnv,
-    ORCA_PANE_KEY: session.cacheKey,
-    ORCA_TAB_ID: session.deps.tabId,
-    ORCA_WORKTREE_ID: session.deps.worktreeId,
-    ...(session.launchToken ? { ORCA_AGENT_LAUNCH_TOKEN: session.launchToken } : {})
+    ...appEnvPairs('PANE_KEY', session.cacheKey),
+    ...appEnvPairs('TAB_ID', session.deps.tabId),
+    ...appEnvPairs('WORKTREE_ID', session.deps.worktreeId),
+    ...(session.launchToken ? { ...appEnvPairs('AGENT_LAUNCH_TOKEN', session.launchToken) } : {})
   }
   session.paneEnv = {
     ...session.paneStartup?.env,

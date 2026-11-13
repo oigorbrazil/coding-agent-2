@@ -1,5 +1,8 @@
-import { withClaudeProfileTerminalEnv } from '../../../claude-accounts/claude-profile-installed-router'
 import type { PtySpawnResult } from '../../../providers/pty-provider-contract'
+import { type RuntimePtySpawnState, isRuntimeWslBackgroundStart } from './spawn-state'
+import { readAppEnv, appEnvPairs } from '../../../../shared/app-env'
+import { withClaudeProfileTerminalEnv } from '../../../claude-accounts/claude-profile-installed-router'
+
 import { LocalPtyProvider } from '../../../providers/local-pty/local-pty-provider'
 import { isValidTerminalTabId } from '../../../../shared/workspace-layout/terminal-tab-id'
 import { isTerminalLeafId } from '../../../../shared/workspace-layout/stable-pane-id'
@@ -14,7 +17,7 @@ import {
   ptySessionIdForAgentCreateOperation
 } from '../../../daemon/sessions/pty-session-id'
 import { resolvePathEnvKey } from '../../../pty/environment/windows-path-segment-merge'
-import { isRuntimeWslBackgroundStart, type RuntimePtySpawnState } from './spawn-state'
+
 import { localPtySpawnCwd } from '../host-env/spawn-cwd'
 import { resolvePtySpawnStartupTarget } from '../spawn-startup-target'
 import { resolvePtySpawnHostEnv } from '../spawn-host-env'
@@ -128,11 +131,12 @@ export async function prepareRuntimePtySpawn(
     }
   }
   ctx.env = ctx.claudeAuth ? { ...args.env, ...ctx.claudeAuth.envPatch } : args.env
-  ctx.requestedAgentTeamsPath = ctx.env?.ORCA_AGENT_TEAMS_TEAM_ID
-    ? ctx.env[resolvePathEnvKey(ctx.env, process.platform)]
-    : undefined
+  ctx.requestedAgentTeamsPath =
+    ctx.env && readAppEnv(ctx.env, 'AGENT_TEAMS_TEAM_ID')
+      ? ctx.env[resolvePathEnvKey(ctx.env, process.platform)]
+      : undefined
   if (args.preAllocatedHandle) {
-    ctx.env = { ...ctx.env, ORCA_TERMINAL_HANDLE: args.preAllocatedHandle }
+    ctx.env = { ...ctx.env, ...appEnvPairs('TERMINAL_HANDLE', args.preAllocatedHandle) }
   }
   if (ctx.env) {
     // Clone caller environment before injection; another split may reuse it.

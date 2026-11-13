@@ -1,20 +1,22 @@
+import {
+  type ServeSupervisorMessage,
+  type ServeUpdateHandoffState,
+  getServeUpdateHandoffPath,
+  parseServeUpdateHandoffState
+} from '../../shared/serve-update-handoff'
+
+import { readAppEnv, deleteAppEnv } from '../../shared/app-env'
 import { mkdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs'
 import { basename, dirname } from 'node:path'
-import { BROWSER_SIDECAR_OWNER_ENV } from '../../shared/browser-sidecar-lifetime'
+
 import { app } from 'electron'
 import { quitProcess } from '../startup/process-quit-request'
-import {
-  SERVE_UPDATE_HANDOFF_PATH_ENV,
-  getServeUpdateHandoffPath,
-  parseServeUpdateHandoffState,
-  type ServeSupervisorMessage,
-  type ServeUpdateHandoffState
-} from '../../shared/serve-update-handoff'
+
 import { isSameUserDataPath } from '../../shared/serve-user-data-path'
 import { getCanonicalUserDataPath } from '../persistence/loading-store/user-data-path'
 
 function getConfiguredHandoffPath(): string | null {
-  const configuredPath = process.env[SERVE_UPDATE_HANDOFF_PATH_ENV]
+  const configuredPath = readAppEnv(process.env, 'SERVE_UPDATE_HANDOFF_PATH')
   if (!configuredPath) {
     return null
   }
@@ -83,8 +85,8 @@ export function installServeSupervisorDisconnectQuit(
     off(event: 'disconnect', listener: () => void): unknown
   } = process
 ): () => void {
-  const isBrowserSidecar = process.env[BROWSER_SIDECAR_OWNER_ENV] === '1'
-  delete process.env[BROWSER_SIDECAR_OWNER_ENV]
+  const isBrowserSidecar = readAppEnv(process.env, 'BROWSER_SIDECAR_OWNER') === '1'
+  deleteAppEnv(process.env, 'BROWSER_SIDECAR_OWNER')
   if (!isServeMode || (!isBrowserSidecar && !hasServeUpdateSupervisor())) {
     return () => undefined
   }

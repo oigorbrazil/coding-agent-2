@@ -1,3 +1,4 @@
+import { readAppEnv } from './app-env'
 /** Managed SSH orcad stops after 15 unused minutes like the relay; the next connect restarts it. */
 import { z } from 'zod'
 
@@ -7,7 +8,7 @@ export const ORCAD_IDLE_EXIT_TIMEOUT_MS = 15 * 60_000
 const ORCAD_E2E_IDLE_TIMEOUT_MAX_MS = 60 * 60_000
 
 export function readOrcadE2EIdleTimeoutMs(env: NodeJS.ProcessEnv): number | null {
-  const raw = env[ORCAD_E2E_IDLE_TIMEOUT_ENV]
+  const raw = readAppEnv(env, 'E2E_ORCAD_IDLE_TIMEOUT_MS')
   const value = raw ? Number(raw) : Number.NaN
   return Number.isSafeInteger(value) && value >= 1 && value <= ORCAD_E2E_IDLE_TIMEOUT_MAX_MS
     ? value
@@ -22,7 +23,7 @@ export const WSL_ORCAD_IDLE_EXIT_TIMEOUT_MS = 5 * 60_000
 
 /** Only shortens the default; anything unset, malformed or under a minute keeps it. */
 export function readOrcadIdleTimeoutMs(env: NodeJS.ProcessEnv): number | null {
-  const raw = env[ORCAD_IDLE_TIMEOUT_ENV]
+  const raw = readAppEnv(env, 'ORCAD_IDLE_TIMEOUT_MS')
   const value = raw ? Number(raw) : Number.NaN
   return Number.isSafeInteger(value) &&
     value >= ORCAD_IDLE_TIMEOUT_MIN_MS &&

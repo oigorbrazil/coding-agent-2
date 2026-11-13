@@ -87,7 +87,7 @@ export function buildBareOrcaDispatcherScript(launcherPath: string): string {
     '  exit 127',
     '}',
     // An agent's `orca …` must never start a talking screen reader, even once Coding Agent 2 is gone.
-    'if [ -n "${ORCA_CLI_BIN_DIR-}${ORCA_PANE_KEY-}${ORCA_USER_DATA_PATH-}" ]; then',
+    'if [ -n "${CODING_AGENT_CLI_BIN_DIR-${ORCA_CLI_BIN_DIR-}}${CODING_AGENT_PANE_KEY-${ORCA_PANE_KEY-}}${CODING_AGENT_USER_DATA_PATH-${ORCA_USER_DATA_PATH-}}" ]; then',
     '  [ -x "$launcher" ] && exec "$launcher" "$@"',
     '  gone',
     'fi',

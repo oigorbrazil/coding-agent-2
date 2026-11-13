@@ -396,7 +396,7 @@ it('keeps the established old PR state route exact while refusing only an unsupp
   expect(f.read()).toMatchObject({
     actionItem: issue,
     mutatingStatus: false,
-    error: expect.stringContaining('Update Orca')
+    error: expect.stringContaining('Update Coding Agent 2')
   })
   expect(f.client.requests.map((request) => request.method)).toEqual([
     'github.updatePRState',

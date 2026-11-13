@@ -291,6 +291,6 @@ export async function checkPluginEditorEntry(
     }
   }
 
-  await visit(entryPath, 'orca-plugin.json')
+  await visit(entryPath, 'coding-plugin.json')
   return { files: [...seen].sort(), issues, warnings }
 }

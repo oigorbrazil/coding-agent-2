@@ -1,15 +1,20 @@
 import type { TerminalWorkspaceCreationEvidence } from './terminal-workspace-scope'
+import type { PaneSpawnOperation } from '../../../ipc/pty/pane/pane-spawn-operation'
+import { type PaneStartArgsOf, spawnInAdmittedPane } from './runtime-pane-admission'
+import type { TerminalCreateOptions } from './terminal-create-options'
+import type { RuntimeTerminalCreate } from '../../../../shared/runtime-terminal-create-contract'
+import type { RuntimePtyController } from '../lifecycle/runtime-pty-controller-contract'
+import { appEnvPairs } from '../../../../shared/app-env'
+
 import {
   recordTerminalLaunchMetadata,
   resolveTerminalLaunchResult,
   terminalLaunchPublicFacts
 } from './terminal-launch-result'
 import { revealCreatedTerminal } from './terminal-create-reveal'
-import type { PaneSpawnOperation } from '../../../ipc/pty/pane/pane-spawn-operation'
+
 import { OrcaRuntimeWithTerminalCreateDeduplication } from './terminal-create-deduplication'
-import { type PaneStartArgsOf, spawnInAdmittedPane } from './runtime-pane-admission'
-import type { TerminalCreateOptions } from './terminal-create-options'
-import type { RuntimeTerminalCreate } from '../../../../shared/runtime-terminal-create-contract'
+
 import {
   admitPairedCreateColors,
   getTerminalViewerColors
@@ -20,8 +25,7 @@ import {
   materializedStablePaneReply
 } from '../identity/runtime-terminal-pane-identity'
 import { randomUUID } from 'node:crypto'
-import type { RuntimePtyController } from '../lifecycle/runtime-pty-controller-contract'
-import { SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV } from '../../../../shared/setup-agent-sequencing'
+
 import { mergeTerminalEnvDeletionKeys } from './runtime-agent-launch-resolution'
 import { terminalSpawnOptions } from './terminal-spawn-options'
 import { createDesktopTerminal } from './orca-runtime-create-terminal-desktop'
@@ -121,7 +125,7 @@ export abstract class OrcaRuntimeWithCreateTerminal extends OrcaRuntimeWithTermi
             ...baseEnv,
             ...(sequencedStartupCommand
               ? {
-                  [SETUP_AGENT_SEQUENCE_STARTUP_COMMAND_ENV]: sequencedStartupCommand
+                  ...appEnvPairs('SEQUENCED_STARTUP_COMMAND', sequencedStartupCommand)
                 }
               : {})
           },

@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 
 const RUNNING_INSTANCES_SCRIPT = `function run(argv) {
   ObjC.import('AppKit');

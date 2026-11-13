@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../shared/app-env'
 // Copy the selected N-API/libc/arch slot into build/Release to avoid node-pty’s libc-blind fallback.
 // Build slots from patched sources: symbol pins and linker flags preserve the glibc floor.
 import { createHash } from 'node:crypto'
@@ -55,7 +56,7 @@ export type PrebuiltSlotOutcome =
 
 /** Resolve beside the running bundle, independent of install location. */
 export function resolveOrcadPrebuildsDir(entryScript = process.argv[1]): string | null {
-  const override = process.env.ORCA_ORCAD_PREBUILDS_DIR
+  const override = readAppEnv(process.env, 'ORCAD_PREBUILDS_DIR')
   if (override) {
     return override
   }

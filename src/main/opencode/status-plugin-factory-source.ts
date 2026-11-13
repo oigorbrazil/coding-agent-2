@@ -1,3 +1,4 @@
+import { appEnvReadExpression } from '../../shared/app-env-script'
 import {
   getOpenCode2ModuleSource,
   getOpenCode2EventNormalizationSource
@@ -15,7 +16,7 @@ export function getStatusPluginFactorySource(options: {
     ...(options.emitNextEvents ? getOpenCode2EventNormalizationSource() : []),
     '// OpenCode may call the factory without context; destructuring would crash startup.',
     'export const OrcaOpenCodeStatusPlugin = async (_ctx) => {',
-    `  if (process.env.ORCA_OPENCODE_AGENT && process.env.ORCA_OPENCODE_AGENT !== '${expectedAgent}') return {};`,
+    `  if (${appEnvReadExpression('process.env', 'OPENCODE_AGENT')} && ${appEnvReadExpression('process.env', 'OPENCODE_AGENT')} !== '${expectedAgent}') return {};`,
     '  const client = _ctx?.client;',
     '  const sessionsOutliveDispose = _ctx?.sessionsOutliveDispose === true;',
     '  const factoryID = ++nextFactoryID;',
@@ -253,7 +254,7 @@ export function getStatusPluginFactorySource(options: {
     '};',
     ...(options.emitNextEvents ? getOpenCode2ModuleSource(pluginID, expectedAgent) : []),
     '',
-    'export default process.env.ORCA_OPENCODE_PLUGIN_API === "v1" ? OrcaOpenCodeStatusPlugin : {',
+    `export default ${appEnvReadExpression('process.env', 'OPENCODE_PLUGIN_API')} === "v1" ? OrcaOpenCodeStatusPlugin : {`,
     `  id: "${pluginID}",`,
     '  server: OrcaOpenCodeStatusPlugin,',
     ...(options.emitNextEvents ? ['  setup: setupOpenCode2Status,'] : []),

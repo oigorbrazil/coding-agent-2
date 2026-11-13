@@ -8,7 +8,7 @@ import { performance } from 'node:perf_hooks'
 import { parseArgs } from 'node:util'
 import { build } from 'esbuild'
 import { buildCounterbalancedSchedule } from '../measurement/counterbalanced-benchmark-schedule.mjs'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import {
   loadClaudeUsageBenchmarkScanner,
   readClaudeUsageBenchmarkBaselineSources

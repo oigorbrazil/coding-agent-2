@@ -1,23 +1,28 @@
 import type {
-  AgentSkillShareOperation,
-  AgentSkillShareResult
+  AgentSkillShareResult,
+  AgentSkillShareOperation
 } from '../../shared/agent-skill-sharing-contract'
+import type { SkillCloudOperation } from '../../shared/skill-cloud-contract'
+import type { CommandHandler, HandlerContext } from '../dispatch'
+
+import {
+  type RuntimeRpcSuccess,
+  RuntimeClientError,
+  RuntimeRpcFailureError
+} from '../runtime-client'
+import { readAppEnv } from '../../shared/app-env'
+
 import {
   AGENT_SKILL_SHARING_DISABLED_CODE,
   AGENT_SKILL_SHARING_DISABLED_MESSAGE,
   AGENT_SKILL_SHARING_DISABLED_NEXT_STEPS
 } from '../../shared/agent-skill-sharing-gate'
 import { normalizeSkillBundleName } from '../../shared/skill-bundle-name'
-import type { SkillCloudOperation } from '../../shared/skill-cloud-contract'
+
 import type { SkillDiscoveryResult } from '../../shared/skills'
-import type { CommandHandler, HandlerContext } from '../dispatch'
+
 import { getRepeatedStringFlag } from '../flags'
 import { printResult } from '../format'
-import {
-  RuntimeClientError,
-  RuntimeRpcFailureError,
-  type RuntimeRpcSuccess
-} from '../runtime-client'
 
 const SHARE_TIMEOUT_MS = 10 * 60_000
 
@@ -41,12 +46,12 @@ function stringFlag(ctx: HandlerContext, name: string): string | undefined {
 }
 
 function rejectForwardedSkillFilesystem(ctx: HandlerContext, command: string): void {
-  if (!process.env.ORCA_CLI_CWD && !ctx.client.isRemote) {
+  if (!readAppEnv(process.env, 'CLI_CWD') && !ctx.client.isRemote) {
     return
   }
   throw new RuntimeClientError(
     'invalid_environment',
-    `orca skills ${command} must run on the machine whose installed skills you want to use. Run the command from a Coding Agent 2 terminal on that machine.`
+    `coding skills ${command} must run on the machine whose installed skills you want to use. Run the command from a Coding Agent 2 terminal on that machine.`
   )
 }
 
@@ -161,7 +166,7 @@ export const SKILL_SHARING_HANDLERS: Record<string, CommandHandler> = {
     if (skillSelectors.length === 0) {
       throw new RuntimeClientError(
         'invalid_argument',
-        'Select at least one installed skill with --skill. Run `orca skills installed` to list them.'
+        'Select at least one installed skill with --skill. Run `coding skills installed` to list them.'
       )
     }
     const bundleLabel = stringFlag(ctx, 'bundle-name')

@@ -97,7 +97,7 @@ function TextOutput({ text, error = false }: { text: string; error?: boolean }) 
   return (
     <pre
       className={cn(
-        'max-h-[420px] overflow-auto whitespace-pre-wrap rounded-md px-3 py-2 font-mono text-xs leading-5 text-foreground scrollbar-editor',
+        'max-h-[420px] overflow-auto whitespace-pre-wrap rounded-md px-3 py-2 font-code text-xs leading-5 text-foreground scrollbar-editor',
         error && 'bg-destructive/10'
       )}
     >

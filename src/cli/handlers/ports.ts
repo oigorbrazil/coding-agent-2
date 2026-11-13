@@ -118,7 +118,7 @@ async function resolvePortsTarget(
   if (isNativeFolderSelector(selector)) {
     throw new RuntimeClientError(
       'invalid_argument',
-      'Coding Agent 2 does not tie ports to native folder workspaces yet. Run `orca ports --all` to list every listener on the host.'
+      'Coding Agent 2 does not tie ports to native folder workspaces yet. Run `coding ports --all` to list every listener on the host.'
     )
   }
   const shown = await client.call<{ worktree: RuntimeWorktreeRecord }>('worktree.show', {

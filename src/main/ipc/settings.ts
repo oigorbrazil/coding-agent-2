@@ -27,6 +27,8 @@ import { normalizeUiLanguage } from '../../shared/ui-language'
 import { applyAppIcon } from '../window/desktop-integration/app-icon'
 import { registerCustomAppIconHandlers } from './custom-app-icon'
 import { registerCodingOpusHandlers } from './coding-opus'
+import { registerCodingAgentAccountHandlers } from './coding-agent-account'
+import { registerDesktopWallpaperHandlers } from './desktop-wallpaper'
 import { normalizeTerminalCustomThemes } from '../../shared/terminal-themes/terminal-custom-themes'
 import { normalizeDesktopTerminalScrollbackRows } from '../../shared/terminal/replay/terminal-scrollback-policy'
 import { normalizeTerminalLineHeight } from '../../shared/terminal/appearance/terminal-line-height-settings'
@@ -55,7 +57,6 @@ const registryRoot = getRuntimeEnvironmentRegistryRoot
 const APPEARANCE_MENU_KEYS: readonly (keyof GlobalSettings)[] = [
   'showTasksButton',
   'showAutomationsButton',
-  'showMobileButton',
   'showTitlebarAppName'
 ]
 
@@ -65,6 +66,8 @@ export function registerSettingsHandlers(
 ): void {
   registerCustomAppIconHandlers(store)
   registerCodingOpusHandlers()
+  registerCodingAgentAccountHandlers()
+  registerDesktopWallpaperHandlers()
   ipcMain.handle(
     'agentAwake:getStatus',
     () => agentAwakeService?.getStatus() ?? { mode: 'off', active: false }

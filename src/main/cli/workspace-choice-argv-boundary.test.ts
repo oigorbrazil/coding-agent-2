@@ -1,7 +1,7 @@
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { describe, expect, it } from 'vitest'
 import { buildUnixCliLauncher, buildWindowsDevLauncher } from './cli-dev-launcher'
 

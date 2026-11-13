@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 // Parcel debounce/teardown lock inversion can silently deadlock delivery across subscriptions.
 // Probe a private directory; independent fs.watch distinguishes a child fault from an OS event stall.
 import { type FSWatcher, mkdtempSync, rmSync, watch, writeFileSync } from 'node:fs'
@@ -56,7 +57,7 @@ export async function startWatcherDeliveryCanary(
   getActivity: () => WatcherCanaryActivity,
   onHealthChange: (health: WatcherDeliveryHealth) => void = () => undefined
 ): Promise<void> {
-  const configuredCanaryDir = process.env.ORCA_WATCHER_CANARY_DIR
+  const configuredCanaryDir = readAppEnv(process.env, 'WATCHER_CANARY_DIR')
   let canaryDir: string
   let lastEventAt = 0
   try {

@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../app-env'
 import {
   tokenizeCustomCommandTemplate,
   type CommandTokenSpan
@@ -208,7 +209,7 @@ export function clearEnvCommand(
   name: string | readonly string[],
   shell: AgentStartupShell
 ): string {
-  const names = typeof name === 'string' ? [name] : [...name]
+  const names = appEnvKeys(typeof name === 'string' ? [name] : [...name])
   // Names enter shell syntax directly; require identifiers to prevent injection or deleting arbitrary session variables. Callers use fixed names.
   for (const each of names) {
     if (!ENV_VAR_NAME.test(each)) {
@@ -251,7 +252,9 @@ export function withoutEnvCommand(
       )
     }
   }
-  return `env ${names.map((name) => `-u ${name}`).join(' ')} ${command}`
+  return `env ${appEnvKeys(names)
+    .map((name) => `-u ${name}`)
+    .join(' ')} ${command}`
 }
 
 export function commandSeparator(shell: AgentStartupShell): string {

@@ -646,7 +646,7 @@
         "remoteUnsupported": "使用 Coding Agent 2 CLI 管理遠端主機上的瀏覽器識別設定。",
         "loading": "載入中…",
         "resetRequired": "變更瀏覽器識別設定前，必須先手動重設識別資料。",
-        "resetRequiredCommand": "透過命令列重設：orca browser identity set --mode <mode> --reset",
+        "resetRequiredCommand": "透過命令列重設：coding-agent browser identity set --mode <mode> --reset",
         "optionClean": "精簡",
         "optionCleanTooltip": "移除 Coding Agent 2 與 Electron 標記，以符合匯入的 Chrome 工作階段。",
         "optionNative": "原生",
@@ -981,7 +981,6 @@
     "showStatusBar": "顯示狀態列",
     "showTasksButton": "顯示任務按鈕",
     "showAutomationsButton": "顯示自動化按鈕",
-    "showMobileButton": "顯示 Coding Agent 2 Mobile 按鈕",
     "showTitlebarAppName": "顯示標題列應用程式名稱",
     "view": "檢視",
     "reload": "重新載入",
@@ -2324,24 +2323,15 @@
         "commentTooLarge": "評論過長，無法安全提交。"
       },
       "Landing": {
-        "f9eaa9e12d": "新增專案",
-        "6ca6ff404e": "ORCA",
+        "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 標誌",
-        "c1cf168479": "隱藏",
         "00cee697c1": "在終端機中執行「gh auth login」以連結您的 GitHub 帳戶。",
         "9f96d018b7": "GitHub CLI 未經過身分驗證",
         "73e1ad4282": "Coding Agent 2 使用 GitHub CLI (gh) 來顯示 PR、議題和檢查。",
         "5beaef5f9e": "GitHub CLI 未安裝",
         "b673e7cf1b": "Git 專案、原始碼控制和工作區管理需要 Git。",
         "e5b7296d9d": "未安裝 Git",
-        "cd21242762": "新增一個專案即可開始。",
-        "9c00bd4adf": "從側邊欄中選擇一個工作區開始。",
-        "0d0ace8861": "在 GitHub 上加星標",
-        "ec43b38ba7": "已在 GitHub 上加星標",
-        "157bb5ecbb": "開啟 GitHub",
         "preflightDismiss": "關閉",
-        "moveUpWorkspace": "選取上一個工作區",
-        "moveDownWorkspace": "選取下一個工作區",
         "installGit": "安裝 Git",
         "installGitHubCli": "安裝 GitHub CLI",
         "learnMore": "瞭解更多"
@@ -2469,12 +2459,12 @@
         "dccd26d4e4": "選擇專案",
         "d6b0a96f32": "新增專案",
         "969a8bff66": "專案",
-        "23bb365554": "orca.yaml",
+        "23bb365554": "coding.yaml",
         "a239038146": "SSH 連線錯誤",
         "9a70e4859e": "選擇是否在建立此工作區前執行設定。",
         "803b7fe72f": "正在檢查設定…",
         "92e34f0311": "本機設定",
-        "326a578923": "orca.yaml + 本機",
+        "326a578923": "coding.yaml + 本機",
         "ac3748dcda": "建立來源",
         "f660aa1454": "連線中",
         "runOn": "執行於",
@@ -4508,7 +4498,6 @@
             "remoteServerLabel": "遠端伺服器",
             "antigravityUsage": "Antigravity 用量",
             "grokUsageMenu": "Grok 用量",
-            "floatingTerminalNewActivity": "{{label}}，有新活動",
             "4fba7dc1e7": "餘額 {{value0}}",
             "codexSignInSuccess": "已登入 Codex",
             "codexSignInError": "Codex 登入失敗。請再試一次。",
@@ -5918,14 +5907,14 @@
           "archiveRunTitle": "執行 {{repo}} 的封存指令碼？",
           "issueCommandRunTitle": "執行 {{repo}} 的議題命令？",
           "vmRecipeRunTitle": "執行 {{repo}} 的 VM 配方？",
-          "setupChangedBody": "<code>orca.yaml</code> 自您上次核准後已變更。它會在建立此工作區時執行，請在執行前重新審查。",
-          "archiveChangedBody": "<code>orca.yaml</code> 自您上次核准後已變更。它會在移除此工作區時執行，請在執行前重新審查。",
-          "issueCommandChangedBody": "<code>orca.yaml</code> 自您上次核准後已變更。它會在啟動已連結議題的此工作區時執行，請在執行前重新審查。",
-          "vmRecipeChangedBody": "<code>orca.yaml</code> 自您上次核准後已變更。它會在佈建 VM 前執行，請在執行前重新審查。",
-          "setupRunBody": "此存放庫的 <code>orca.yaml</code> 會在建立此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
-          "archiveRunBody": "此存放庫的 <code>orca.yaml</code> 會在移除此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
-          "issueCommandRunBody": "此存放庫的 <code>orca.yaml</code> 會在啟動已連結議題的此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
-          "vmRecipeRunBody": "此存放庫的 <code>orca.yaml</code> 會在佈建 VM 前於您的電腦上執行。僅在信任 <repo/> 時執行。",
+          "setupChangedBody": "<code>coding.yaml</code> 自您上次核准後已變更。它會在建立此工作區時執行，請在執行前重新審查。",
+          "archiveChangedBody": "<code>coding.yaml</code> 自您上次核准後已變更。它會在移除此工作區時執行，請在執行前重新審查。",
+          "issueCommandChangedBody": "<code>coding.yaml</code> 自您上次核准後已變更。它會在啟動已連結議題的此工作區時執行，請在執行前重新審查。",
+          "vmRecipeChangedBody": "<code>coding.yaml</code> 自您上次核准後已變更。它會在佈建 VM 前執行，請在執行前重新審查。",
+          "setupRunBody": "此存放庫的 <code>coding.yaml</code> 會在建立此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
+          "archiveRunBody": "此存放庫的 <code>coding.yaml</code> 會在移除此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
+          "issueCommandRunBody": "此存放庫的 <code>coding.yaml</code> 會在啟動已連結議題的此工作區時於您的電腦上執行。僅在信任 <repo/> 時執行。",
+          "vmRecipeRunBody": "此存放庫的 <code>coding.yaml</code> 會在佈建 VM 前於您的電腦上執行。僅在信任 <repo/> 時執行。",
           "newSetupScript": "新的設定指令碼",
           "setupScript": "設定指令碼",
           "newArchiveScript": "新的封存指令碼",
@@ -5935,7 +5924,7 @@
           "newVmRecipe": "新的 VM 配方",
           "vmRecipe": "VM 配方",
           "thisRepository": "此存放庫",
-          "alwaysTrustRepo": "一律信任 <repo/> 中的 <code>orca.yaml</code>"
+          "alwaysTrustRepo": "一律信任 <repo/> 中的 <code>coding.yaml</code>"
         },
         "PendingWorktreeRow": {
           "af21e953d1": "取消工作樹建立",
@@ -6022,7 +6011,7 @@
           "822ff300ad": "關閉",
           "5bfd5c8779": "關閉設定指令碼",
           "detectedFromSource": "從 <source>{{source}}</source> 偵測到",
-          "ignoresSharedSetup": "此存放庫會忽略共用的 <yaml>orca.yaml</yaml> 設定指令碼。請新增本機命令，或在「設定」中變更來源。",
+          "ignoresSharedSetup": "此存放庫會忽略共用的 <yaml>coding.yaml</yaml> 設定指令碼。請新增本機命令，或在「設定」中變更來源。",
           "foundSetupCommandIn": "在 <source>{{source}}</source> 中找到設定命令。儲存後即可在新工作樹中執行。",
           "reviewSetupScript": "檢查設定指令碼"
         },
@@ -6084,8 +6073,6 @@
         "SidebarNav": {
           "80611a8b10": "搜尋",
           "0c3395fd32": "搜尋工作樹和瀏覽器分頁",
-          "c86d83b5c3": "新功能",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "自動化",
           "e7ad3c540d": "開啟 Jira 任務",
           "c39ab10000": "開啟 Linear 任務",
@@ -6299,8 +6286,8 @@
           "automationRunMissing": "執行歷史已不可用。",
           "automationAvailabilityUnavailable": "無法檢查自動化可用性。",
           "cliHeader": "Coding Agent 2 CLI",
-          "cliCreatedFromAgent": "由代理程式透過 `orca worktree create` 建立",
-          "cliCreatedFromShell": "透過 `orca worktree create` 建立",
+          "cliCreatedFromAgent": "由代理程式透過 `coding-agent worktree create` 建立",
+          "cliCreatedFromShell": "透過 `coding-agent worktree create` 建立",
           "cliStartupAgent": "以 {{value0}} 啟動",
           "cliCreated": "由 Coding Agent 2 CLI 建立",
           "linkedJira": "已關聯 Jira {{value0}}"
@@ -7415,19 +7402,10 @@
           "storedDefaultUndetected": "已儲存為預設值，但目前未偵測到",
           "noAgentsDetected": "未偵測到代理程式。若已安裝代理程式，可能是偵測作業逾時。"
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "下一個圖示",
-          "415fa76f64": "選定的應用程式圖示",
-          "5f5142a62a": "上一個圖示"
-        },
         "AppearancePane": {
           "3057983501": "未指派",
           "2edf606c46": "關閉時最小化到系統匣",
           "b707773a0d": "啟用後，關閉視窗會讓 Coding Agent 2 繼續在系統匣中執行，而不是結束程式。",
-          "0cd9b8228f": "選擇 Dock 和視窗切換器中顯示的應用程式圖示。",
-          "ca1590d42f": "應用程式圖示",
-          "61d842eca0": "在側邊欄中顯示 Coding Agent 2 Mobile 捷徑。仍可從工具箱開啟。",
-          "9da1020447": "顯示 Coding Agent 2 Mobile 按鈕",
           "511f270ebb": "顯示自動化按鈕",
           "cf81907069": "顯示任務按鈕",
           "dc29f3cc0d": "側邊欄",
@@ -7597,7 +7575,6 @@
           "5dae812f50": "重新整理",
           "52e640f3a0": "重新整理 CLI 狀態",
           "38edbb5721": "Shell 命令",
-          "outsideOrcaDescription": "Coding Agent 2 終端機已內建 `orca`。開啟後可在 Coding Agent 2 以外的其他終端機中使用 `orca`。",
           "c5c0f2641d": "Coding Agent 2 CLI",
           "d77352f2df": "無法從 PATH 中刪除 `{{value0}}`。",
           "af5540930c": "已從 PATH 中刪除 `{{value0}}`。",
@@ -7805,10 +7782,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "狀態列",
-          "9fb225f2d7": "浮動按鈕",
-          "3c900e26e5": "無論切換按鈕顯示在何處，鍵盤快速鍵都有效。",
-          "5e5a8da236": "切換按鈕位置",
           "505001823e": "選擇浮動工作區目錄",
           "81afb79785": "新的浮動終端機分頁會以此目錄為起始位置。Markdown 筆記儲存在 Coding Agent 2 專屬的浮動工作區中。",
           "12aa09f10c": "終端機目錄",
@@ -8190,10 +8163,7 @@
           "installOutro": "，然後在下方配對。",
           "androidApkLabel": "Android APK",
           "e7a3ae8c4e": "行動版",
-          "174f4a3c6d": "透過手機控制終端機和代理程式。",
-          "1de96ec8a6": "顯示 Coding Agent 2 Mobile 按鈕",
-          "682293cadf": "在左側邊欄頂部顯示 Coding Agent 2 Mobile 按鈕。",
-          "d4f2b65f30": "在側邊欄中顯示 Coding Agent 2 Mobile 按鈕。"
+          "174f4a3c6d": "透過手機控制終端機和代理程式。"
         },
         "NotificationsPane": {
           "906b4afebf": "傳送測試通知",
@@ -8263,15 +8233,9 @@
           "f79084947b": "新應用程式"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "要求協調代理程式使用編排功能，進行交接、工作樹移交，並依序或平行執行子代理程式。",
-          "ae79504732": "如何使用",
-          "9bedd2a6e5": "使代理程式能夠透過 Coding Agent 2 交接上下文並協調工作。",
-          "07641b9768": "編排技能",
-          "2aacdb0517": "協調程式設計代理程式進行交接、工作樹移交和子代理程式作業。",
           "191ac34567": "代理程式編排",
           "nestedWorkerDepthTitle": "巢狀工作者層數",
           "nestedWorkerDepthDescription": "允許派出的工作者再派出工作者的最大層數。設為 1 時，代理程式樹維持單層：協調者可派出工作者，但工作者不能再派出其他工作者。",
-          "7bc082f4de": "複製安裝命令",
           "workerAutoReleaseTitle": "自動關閉已完成的工作代理程式",
           "workerAutoReleaseDescription": "除非選擇「保持開啟」，否則工作代理程式完成 2 分鐘後會關閉其終端機或聊天。如果它再次開始工作，完成後會重新計時 2 分鐘。",
           "workerAutoReleaseKeywordClose": "關閉",
@@ -8280,17 +8244,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "使代理程式能夠透過 Coding Agent 2 交接上下文並協調工作。",
           "2777ff0fdc": "編排技能"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "代理程式涵蓋範圍",
-          "ffe13e36fb": "缺失",
-          "1e8f8d8fae": "就緒",
-          "checking": "檢查已安裝的代理程式和技能路徑…",
-          "noAgents": "在 PATH 上未偵測到代理程式 CLI。在「設定」→「代理程式」中安裝代理程式，然後重新檢查。",
-          "fullCoverage_one": "偵測到的 1 個代理程式已具備此技能。",
-          "fullCoverage_other": "偵測到的 {{value0}} 個代理程式均具備此技能。",
-          "noCoverage": "安裝上面的技能，然後重新檢查。",
-          "partialCoverage": "偵測到的 {{value1}} 個代理程式中，有 {{value0}} 個具備此技能。"
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "建立診斷檔案",
@@ -8367,11 +8320,11 @@
         },
         "RepositoryHooksSection": {
           "af49e2a19e": "該檔案存在，但 Coding Agent 2 找不到有效的 `scripts` 或 `issueCommand` 定義。",
-          "39da2ae12f": "orca.yaml",
+          "39da2ae12f": "coding.yaml",
           "32fec28f5b": "命令來源",
-          "bbbd6e0bc4": "命令來源 & orca.yaml",
+          "bbbd6e0bc4": "命令來源 & coding.yaml",
           "c9bc1bfd8f": "進階",
-          "610d90fdbd": "命令來源和 orca.yaml 詳細資訊。",
+          "610d90fdbd": "命令來源和 coding.yaml 詳細資訊。",
           "4084720f47": "完成 {{artifact_url}}",
           "13394103bd": "自訂 GitHub 議題命令",
           "2cc27dc12b": "可為個別使用者覆寫關聯議題命令。",
@@ -8383,7 +8336,7 @@
           "fb6bebcf7e": "何時執行設定指令碼",
           "30d555acd2": "建立新工作樹後執行的本機和共用指令碼。",
           "52b31baf02": "設定指令碼",
-          "8567127a40": "建立或封存工作樹時執行的指令碼。本機指令碼儲存在本機上； `orca.yaml` 指令碼與您的團隊共用。",
+          "8567127a40": "建立或封存工作樹時執行的指令碼。本機指令碼儲存在本機上； `coding.yaml` 指令碼與您的團隊共用。",
           "ff082fe7c6": "工作樹掛鉤",
           "5d940bde5c": "新增本機指令碼",
           "8c2893fae0": "以單一殼層指令碼執行。儲存在本機上。",
@@ -8394,13 +8347,13 @@
           "f828e1de19": "- 與您的團隊分享",
           "673a7fd10e": "檢查中...",
           "5426ecbdcb": "本機指令碼將不會執行",
-          "b2b06c7ce8": "可用的環境變數（將游標移至上方以檢視詳細資訊）：",
+          "b2b06c7ce8": "可用的環境變數（將游標移至上方以檢視詳細資訊）： ?? ORCA_* ???????",
           "95a0411b3e": "範本",
           "175daba180": "例子",
-          "b20c5df6ca": "新增 `orca.yaml` 檔案以啟用此存放庫的共用設定、封存或議題自動化預設值。範例範本：",
-          "56f9a4a1d0": "正在使用 `orca.yaml`",
-          "623e0c9f31": "無法解析 `orca.yaml`",
-          "5a67e4793d": "未偵測到 `orca.yaml`",
+          "b20c5df6ca": "新增 `coding.yaml` 檔案以啟用此存放庫的共用設定、封存或議題自動化預設值。範例範本： ?????? `orca.yaml`?",
+          "56f9a4a1d0": "正在使用 `coding.yaml`",
+          "623e0c9f31": "無法解析 `coding.yaml`",
+          "5a67e4793d": "未偵測到 `coding.yaml`",
           "07ba35bc68": "檢查 `scripts:` 下的縮排。掛鉤鍵應使用兩個空格，命令列應使用四個空格。",
           "787ca433ef": "僅定義支援的鍵：`scripts`、`setup`、`archive` 和 `issueCommand`。",
           "ecc73d9125": "將你的檔案與下面可用的範本進行比較，並在需要時複製該結構。",
@@ -8412,15 +8365,15 @@
           "0fa21e19ec": "工作區的名稱，通常基於分支名稱。",
           "54c73d88d0": "正在建立的工作樹的路徑。設定命令從此目錄執行。",
           "30952c4aa4": "主存放庫檢出目錄的路徑。對於將共用檔案（例如 .env）複製到工作樹中非常有用。",
-          "9b821fa19d": "# e.g. echo \"Cleaning up $ORCA_WORKSPACE_NAME\"",
+          "9b821fa19d": "# e.g. echo \"Cleaning up $CODING_AGENT_WORKSPACE_NAME\"",
           "6f90ebe3fd": "在封存或刪除工作樹之前執行。",
-          "a3fc966677": "# e.g. pnpm install cp \"$ORCA_ROOT_PATH/.env\" \"$ORCA_WORKTREE_PATH/.env\"",
+          "a3fc966677": "# e.g. pnpm install cp \"$CODING_AGENT_ROOT_PATH/.env\" \"$CODING_AGENT_WORKTREE_PATH/.env\"",
           "f0710e1c83": "建立新工作樹後執行；安裝相依套件，複製環境變數檔案，執行移轉。",
-          "8561b0665f": "首先是 orca.yaml，然後是本機命令。",
-          "0e8b2a520d": "忽略 orca.yaml；僅執行本機命令。",
+          "8561b0665f": "首先是 coding.yaml，然後是本機命令。",
+          "0e8b2a520d": "忽略 coding.yaml；僅執行本機命令。",
           "83dc78202a": "僅限本機",
           "29397e8bbc": "僅執行已提交的存放庫命令；忽略本機命令。",
-          "d88b6ff88f": "僅 orca.yaml",
+          "d88b6ff88f": "僅 coding.yaml",
           "99e3264a49": "僅在選取時執行設定指令碼。",
           "15debc1fd9": "預設跳過",
           "022ba10cf2": "自動執行設定指令碼。",
@@ -8432,17 +8385,17 @@
           "d2b3016c20": "共用",
           "4611b78617": "命令來源",
           "c5a55a2d2e": "進階",
-          "0ce113fd7b": "本機指令碼已儲存，但指令碼來源僅設定為 orca.yaml。",
-          "7f78e5eea6": "本機指令碼已儲存。 Coding Agent 2 仍在檢查 orca.yaml，完成後才能建議使用哪個指令碼來源。",
+          "0ce113fd7b": "本機指令碼已儲存，但指令碼來源僅設定為 coding.yaml。",
+          "7f78e5eea6": "本機指令碼已儲存。 Coding Agent 2 仍在檢查 coding.yaml，完成後才能建議使用哪個指令碼來源。",
           "2b6356e744": "已儲存",
           "81057d5f71": "儲存中...",
           "da37d6f10e": "複製",
           "3149964b66": "已複製",
           "waitForSetupBeforeAgent": "等待設定完成後再啟動代理程式",
           "issueCommandDescription": "此覆寫設定為選用。使用 <artifactUrl>{{artifact_url}}</artifactUrl> 表示關聯議題或 PR 的 URL。",
-          "issueCommandSharedDefault": "留空則使用 <yaml>orca.yaml</yaml> 中的存放庫預設值。",
-          "issueCommandOptionalDefault": "留空則使用 <yaml>orca.yaml</yaml> 中的存放庫預設值（如果有）。",
-          "commandSourceDescription": "當 <yaml>orca.yaml</yaml> 和本機命令同時存在時，選擇要執行哪些命令。",
+          "issueCommandSharedDefault": "留空則使用 <yaml>coding.yaml</yaml> 中的存放庫預設值。",
+          "issueCommandOptionalDefault": "留空則使用 <yaml>coding.yaml</yaml> 中的存放庫預設值（如果有）。",
+          "commandSourceDescription": "當 <yaml>coding.yaml</yaml> 和本機命令同時存在時，選擇要執行哪些命令。",
           "issueCommandWslStopped": "WSL 發行版 {{distro}} 已停止。請在其中開啟終端機以檢視或編輯此命令。"
         },
         "RepositoryIconPicker": {
@@ -8763,7 +8716,6 @@
           "43b68e10f0": "你有未儲存的 AI 設定。離開後這些設定將被放棄。",
           "17bdee4ff1": "放棄未儲存的 AI 設定？",
           "084d8fac5b": "隱私與安全",
-          "23931df7e8": "遠端主機",
           "8bd117d669": "介面",
           "e1578cd4bc": "工作流程",
           "9abb9be3bc": "初始設定",
@@ -8975,7 +8927,6 @@
           "reconnectOnLaunch": "啟動時重新連線",
           "reconnectOnLaunchHelp": "關閉時，Coding Agent 2 啟動後不會連線至此主機或透過此主機存取的任何 Coding Agent 2 伺服器，直到手動連線為止。",
           "allowRemoteCliControl": "允許此主機控制其工作區中的 Coding Agent 2 瀏覽器分頁",
-          "allowRemoteCliControlHelp": "新主機預設開啟。此主機上的代理程式和 orca 命令可以開啟、讀取和使用這臺電腦上的 Coding Agent 2 瀏覽器分頁，僅限此主機的工作區，且僅在主機連線期間有效。它控制的分頁會顯示其名稱。此主機上由舊版 Coding Agent 2 啟動的終端機也需要開啟此項，才能執行 orca 編排命令。它無法讀取你的檔案、剪貼簿或 Cookie。",
           "editTitle": "編輯 SSH 主機",
           "addTitle": "新增 SSH 主機",
           "editDescription": "更新此機器的連線詳情。變更將在下次連線時生效。",
@@ -9509,24 +9460,12 @@
           "search": {
             "9a115966d3": "關閉時最小化到系統匣",
             "4d5b9427b5": "啟用後，關閉視窗會讓 Coding Agent 2 繼續在系統匣中執行，而不是結束程式。",
-            "468448bba4": "水彩",
-            "f586abfa35": "藍色",
-            "651f35b2c6": "切換器",
             "e5bc35d59e": "視窗",
-            "d18b54ca90": "Dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "應用程式圖示",
-            "e80c2af428": "選擇 Dock 和視窗切換器中顯示的應用程式圖示。",
-            "2b313598c6": "應用程式圖示",
-            "839fb1e3ed": "工具箱",
             "ac79fe4a04": "顯示",
             "648eeada79": "隱藏",
             "6cf5f54ce1": "按鈕",
             "5bff6a2ef0": "側邊欄",
-            "5e5b8878bf": "手機",
-            "74618577c7": "行動版",
-            "682293cadf": "在左側邊欄頂部顯示 Coding Agent 2 Mobile 按鈕。",
-            "1de96ec8a6": "顯示 Coding Agent 2 Mobile 按鈕",
             "4c920ab2d1": "排程",
             "58f4e22fa2": "自動化",
             "b186f3cefb": "自動化",
@@ -10019,7 +9958,6 @@
               "ebeedb2f6a": "快速終端機",
               "6f183fa1b9": "浮動終端機",
               "a08e482f6d": "浮動工作區",
-              "b96b5ee6cf": "啟用浮動工作區，選擇新分頁的開始位置，然後選擇切換按鈕的顯示位置。",
               "b2b60e7163": "浮動工作區"
             }
           }
@@ -10431,16 +10369,8 @@
               "f213400800": "行動版",
               "671eb4173c": "透過手機控制終端機和代理程式。",
               "ffd52a96e4": "行動版",
-              "1de96ec8a6": "顯示 Coding Agent 2 Mobile 按鈕",
-              "682293cadf": "在左側邊欄頂部顯示 Coding Agent 2 Mobile 按鈕。",
               "e4f4daea0e": "中繼",
-              "5d5af8e041": "iPhone",
-              "74618577c7": "行動版",
-              "5e5b8878bf": "手機",
-              "5bff6a2ef0": "側邊欄",
-              "6cf5f54ce1": "按鈕",
-              "648eeada79": "隱藏",
-              "ac79fe4a04": "顯示"
+              "5d5af8e041": "iPhone"
             }
           }
         },
@@ -10574,12 +10504,12 @@
         "repository": {
           "search": {
             "bc7e504b8e": ".coding-agent-2/issue-command",
-            "603c68b68c": "orca.yaml",
+            "603c68b68c": "coding.yaml",
             "9dc60d7f6d": "GitHub",
             "ec70364df2": "工作流程",
             "66b584bd6c": "議題命令",
             "2011a6a4f2": "GitHub 議題命令",
-            "d42d1e49c0": "以檔案為基礎的關聯議題命令，透過 orca.yaml 和選用的本機覆寫來設定。",
+            "d42d1e49c0": "以檔案為基礎的關聯議題命令，透過 coding.yaml 和選用的本機覆寫來設定。",
             "d86ea12d16": "自訂 GitHub 議題命令",
             "c5e8bdbcbb": "預設跳過",
             "a69c5cbe90": "預設執行",
@@ -10594,10 +10524,10 @@
             "0432d2fb7c": "本機",
             "ed269fad69": "命令來源",
             "19f58d6d89": "進階",
-            "d141897c90": "命令來源和 orca.yaml 詳細資訊。",
+            "d141897c90": "命令來源和 coding.yaml 詳細資訊。",
             "cc11699c3d": "進階",
             "bf460fded8": "yaml",
-            "9cad92fe77": "orca.yaml 掛鉤",
+            "9cad92fe77": "coding.yaml 掛鉤",
             "6b80f7d3c8": "本機設定指令碼",
             "a1a4c51d58": "封存命令",
             "fbfd2386e8": "封存指令碼",
@@ -11246,9 +11176,9 @@
                   "1a9475dace": "瞭解更多",
                   "19fb419c12": "Gitea 憑證已設定但無法通過身分驗證。請檢查權杖、API 基礎 URL 和存放庫權限；如果環境變數已變更，請重新啟動 Coding Agent 2。",
                   "60708f23da": "僅當 Coding Agent 2 無法從遠端推導出 API URL 時。",
-                  "709057ad91": "ORCA_GITEA_API_BASE_URL",
+                  "709057ad91": "CODING_GITEA_API_BASE_URL",
                   "6da9dfa5de": "用於私有存放庫，並設定",
-                  "6d5c2a3005": "ORCA_GITEA_TOKEN",
+                  "6d5c2a3005": "CODING_GITEA_TOKEN",
                   "fcbe0469fd": "公開存放庫會從其 git remote 偵測。設定",
                   "0613928cb3": "此執行環境尚無法提供 Gitea 狀態。",
                   "05863d2599": "透過 Gitea REST API 取得 PR 和提交狀態。",
@@ -11256,11 +11186,11 @@
                   "0b5242f8a2": "{{value0}} · PR 和提交狀態",
                   "40f678df73": "Azure DevOps 憑證已設定但無法通過身分驗證。請檢查權杖、API 基礎 URL 和存放庫權限；如果環境變數已變更，請重新啟動 Coding Agent 2。",
                   "7bd345e3f6": "僅當 Coding Agent 2 無法從 git remote 推導出 API 基礎 URL 時。",
-                  "186a6689df": "ORCA_AZURE_DEVOPS_API_BASE_URL",
+                  "186a6689df": "CODING_AZURE_DEVOPS_API_BASE_URL",
                   "b8a10b07c1": "。設定",
-                  "fbfd237f5e": "ORCA_AZURE_DEVOPS_ACCESS_TOKEN",
+                  "fbfd237f5e": "CODING_AZURE_DEVOPS_ACCESS_TOKEN",
                   "087feb92f1": "，或設定",
-                  "48842720d2": "ORCA_AZURE_DEVOPS_TOKEN",
+                  "48842720d2": "CODING_AZURE_DEVOPS_TOKEN",
                   "7bbc9c64f0": "設定",
                   "f3f47dc7de": "此執行環境尚無法提供 Azure DevOps 狀態。",
                   "0eb50d5593": "透過 Azure DevOps REST API 權杖取得 PR 和建置狀態。",
@@ -11378,8 +11308,8 @@
         },
         "PrivacyDiagnosticsRows": {
           "5a7cbe069a": "已設定 DO_NOT_TRACK=1，建立和傳送診斷檔案已停用。",
-          "63d03261d1": "已設定 ORCA_TELEMETRY_DISABLED=1，建立和傳送診斷檔案已停用。",
-          "d37e92a06b": "已設定 ORCA_DIAGNOSTICS_DISABLED=1，應用程式診斷已關閉。",
+          "63d03261d1": "已設定 CODING_AGENT_TELEMETRY_DISABLED=1，建立和傳送診斷檔案已停用。 ?? ORCA_* ???????",
+          "d37e92a06b": "已設定 CODING_AGENT_DIAGNOSTICS_DISABLED=1，應用程式診斷已關閉。 ?? ORCA_* ???????",
           "5ebb31e1fb": "正在 CI 中執行，診斷已關閉。",
           "e27c8d45bf": "診斷已被環境變數停用。"
         },
@@ -11473,12 +11403,12 @@
           "notificationPlaygroundDescription": "用於檢查提示版面配置、恢復操作和長文案換行的開發專用觸發器。",
           "devOnly": "僅開發",
           "orcaCloud": "Coding Agent 2 Cloud",
-          "orcaCloudDescription": "僅限開發環境的第一方雲端登入預覽。在正式環境中隱藏；在開發環境中，設定 ORCA_CLOUD_API_URL 和 ORCA_CLOUD_CLIENT_ID 後也會出現在側邊欄帳戶切換器中。",
+          "orcaCloudDescription": "僅限開發環境的第一方雲端登入預覽。在正式環境中隱藏；在開發環境中，設定 CODING_AGENT_CLOUD_API_URL 和 CODING_AGENT_CLOUD_CLIENT_ID 後也會出現在側邊欄帳戶切換器中。 ?? ORCA_* ???????",
           "orcaCloudStatus": "狀態",
           "orcaCloudSignOut": "登出",
           "orcaCloudConnect": "連線設定檔",
           "orcaCloudRefresh": "重新整理狀態",
-          "orcaCloudNotConfigured": "設定 ORCA_CLOUD_API_URL 和 ORCA_CLOUD_CLIENT_ID 以在此開發版本中預覽 Coding Agent 2 Cloud 登入。",
+          "orcaCloudNotConfigured": "設定 CODING_AGENT_CLOUD_API_URL 和 CODING_AGENT_CLOUD_CLIENT_ID 以在此開發版本中預覽 Coding Agent 2 Cloud 登入。 ?? ORCA_* ???????",
           "deleteAnywayClicked": "已點選「仍然刪除」"
         },
         "EphemeralVmRecipeRow": {
@@ -11530,7 +11460,7 @@
           "copy": "複製",
           "copied": "已複製",
           "recipes": "環境範本",
-          "recipesHelp": "orca.yaml 和已啟用外掛中的環境範本會顯示在這裡，可用於啟動工作區。",
+          "recipesHelp": "coding.yaml 和已啟用外掛中的環境範本會顯示在這裡，可用於啟動工作區。",
           "checking": "正在檢查環境範本...",
           "none": "還沒有找到環境範本。",
           "cloudVmSkillTitle": "雲端虛擬機器設定技能",
@@ -11563,7 +11493,6 @@
                   "installed": "已安裝",
                   "notInstalled": "未安裝",
                   "recheck": "重新檢查",
-                  "description": "讓代理程式讀取和編輯 Linear 任務。完整引導設定（連線 + 技能 + 可見性）位於設定 → 任務來源。",
                   "copyFailed": "複製命令失敗。",
                   "copyCommand": "複製命令",
                   "installedDescription": "代理程式技能已安裝。要更新，請執行：",
@@ -11794,7 +11723,7 @@
           "gitTab": "Git URL",
           "localLabel": "外掛資料夾路徑",
           "localPlaceholder": "/Users/you/plugins/my-plugin 或 C:\\Users\\you\\plugins\\my-plugin",
-          "localHelp": "此電腦上包含 orca-plugin.json 的資料夾完整路徑。系統會完全按輸入內容使用該路徑。",
+          "localHelp": "此電腦上包含 coding-plugin.json 的資料夾完整路徑。系統會完全按輸入內容使用該路徑。",
           "gitLabel": "帶 #ref 的存放庫 URL",
           "gitPlaceholder": "https://github.com/acme/orca-notes",
           "gitHelp": "貼上存放庫、發行版本或標籤連結。未指定 #tag 或 #commit 時，Coding Agent 2 會使用最新的版本標籤。",
@@ -11846,7 +11775,7 @@
           "title": "市場來源",
           "description": "市場是固定的 Git 存放庫。Coding Agent 2 使用您現有的系統 Git 憑證來存取私有存放庫。",
           "urlLabel": "Git URL",
-          "urlDescription": "使用包含 orca-marketplace.json 的 HTTPS 或 SSH 存放庫 URL。",
+          "urlDescription": "使用包含 coding-catalog.json 的 HTTPS 或 SSH 存放庫 URL。",
           "urlPlaceholder": "https://git.example.com/team/plugins.git",
           "refLabel": "Git 引用",
           "refDescription": "選擇分支、標籤或提交。每個取得的索引都會記錄其確切的提交。",
@@ -11915,14 +11844,14 @@
           "commandLabel": "{{value0}} · {{value1}} 命令"
         },
         "pluginError": {
-          "installManifestMissing": "未找到可讀的 orca-plugin.json。請選擇外掛的根資料夾。",
-          "installManifestInvalid": "orca-plugin.json 無效。請要求外掛作者修復清單。",
+          "installManifestMissing": "未找到可讀的 coding-plugin.json。請選擇外掛的根資料夾。",
+          "installManifestInvalid": "coding-plugin.json 無效。請要求外掛作者修復清單。",
           "incompatible": "此外掛需要不同版本的 Coding Agent 2。",
           "installUnsafePath": "外掛包含不安全的檔案路徑或符號連結，未安裝。",
           "installLimit": "外掛超過 Coding Agent 2 的安裝大小或檔案數量限制。",
           "installGit": "Coding Agent 2 無法取得固定的 Git 版本。請檢查 URL、#ref、存取權限和系統 Git 設定。",
-          "invalidManifestMissing": "外掛根目錄缺少 orca-plugin.json。請新增它，然後重新整理外掛。",
-          "invalidManifest": "orca-plugin.json 無效。請修復它，然後重新整理外掛。",
+          "invalidManifestMissing": "外掛根目錄缺少 coding-plugin.json。請新增它，然後重新整理外掛。",
+          "invalidManifest": "coding-plugin.json 無效。請修復它，然後重新整理外掛。",
           "installedManifestUnloadable": "此版本無法在這個 Coding Agent 2 中載入。請更新或重新安裝。",
           "invalidArtifact": "宣告的工作行程或面板檔案缺失或不安全。請修復外掛檔案，然後重新整理。",
           "consentChanged": "您在審查時外掛發生了變更。請關閉此對話方塊並審查更新後的權限。",
@@ -12245,8 +12174,8 @@
               "connectFailed": "連線失敗",
               "title": "連線 Bitbucket",
               "description": "使用 Bitbucket Cloud 憑證瀏覽 PR 與建置狀態。Coding Agent 2 會在儲存前驗證憑證。",
-              "remoteRuntime": "儲存在這臺電腦上，而非目前使用的遠端執行環境；請改在該遠端環境設定 ORCA_BITBUCKET_*。環境變數一律優先於此處儲存的內容。",
-              "environmentManaged": "Bitbucket 已透過 ORCA_BITBUCKET_* 環境變數進行設定，此環境變數優先。取消設定以在 Coding Agent 2 中儲存憑證。",
+              "remoteRuntime": "儲存在這臺電腦上，而非目前使用的遠端執行環境；請改在該遠端環境設定 CODING_BITBUCKET_*。環境變數一律優先於此處儲存的內容。",
+              "environmentManaged": "Bitbucket 已透過 CODING_BITBUCKET_* 環境變數進行設定，此環境變數優先。取消設定以在 Coding Agent 2 中儲存憑證。",
               "authModeLabel": "Bitbucket 認證方法",
               "modeBasic": "電子郵件和 API 權杖",
               "modeToken": "存取權杖",
@@ -12267,7 +12196,7 @@
               "scopeWritePullRequest": "建立 PR",
               "scopesWriteNote": "若僅需唯讀存取，請省略寫入範圍。寫入不包含讀取；請分別選擇每個範圍。",
               "docsLink": "Bitbucket API 權杖文件",
-              "storageNote": "當作業系統鑰匙圈可用時，會以加密方式儲存在本電腦上。 ORCA_BITBUCKET_* 環境變數始終優先於您在此處儲存的內容。",
+              "storageNote": "當作業系統鑰匙圈可用時，會以加密方式儲存在本電腦上。 CODING_BITBUCKET_* 環境變數始終優先於您在此處儲存的內容。",
               "cancel": "取消",
               "verifying": "正在驗證...",
               "connect": "連線"
@@ -12282,10 +12211,10 @@
               "authModeToken": "存取權杖",
               "authModeBasic": "電子郵件和 API 權杖",
               "disconnect": "斷開 Bitbucket 連線",
-              "envManaged": "透過環境變數設定。取消設定 ORCA_BITBUCKET_* 變數以在 Coding Agent 2 中管理此憑證。",
+              "envManaged": "透過環境變數設定。取消設定 CODING_BITBUCKET_* 變數以在 Coding Agent 2 中管理此憑證。",
               "storedAuthFailed": "無法使用已儲存的 Bitbucket 憑證驗證身分。請編輯憑證，或確認權杖仍具備 PR 存取權限。",
-              "storedCredential": "儲存在本機上的 Coding Agent 2 中。 ORCA_BITBUCKET_* 環境變數在設定時優先。",
-              "notConfigured": "連結 Bitbucket Cloud 帳戶時，請使用 Atlassian API 權杖或存取權杖。也可以使用 ORCA_BITBUCKET_* 環境變數，且其優先順序較高。",
+              "storedCredential": "儲存在本機上的 Coding Agent 2 中。 CODING_BITBUCKET_* 環境變數在設定時優先。",
+              "notConfigured": "連結 Bitbucket Cloud 帳戶時，請使用 Atlassian API 權杖或存取權杖。也可以使用 CODING_BITBUCKET_* 環境變數，且其優先順序較高。",
               "disconnectFailed": "無法刪除已儲存的 Bitbucket 憑證。",
               "statusLoadFailed": "無法確認是否有已儲存的 Bitbucket 憑證。",
               "replaceCredentials": "新增或替換憑證",
@@ -12812,15 +12741,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "請更新伺服器上的 Coding Agent 2，以安裝其技能。",
           "connectHost": "請連線至此 SSH 主機，以安裝其技能。"
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "無法複製安裝命令。",
-          "f08d45293d": "複製命令",
-          "b99f375eb2": "在終端機中執行此命令來為您的代理程式安裝編排技能。",
-          "35550f3b3b": "完成",
-          "2914abcfa2": "安裝編排技能",
-          "1bdce1911e": "複製編排技能安裝命令",
-          "239bf9132b": "已複製安裝命令。"
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "為 {{value0}} 安裝",
@@ -15139,11 +15059,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "關閉 · Esc",
-          "9883b58693": "關閉 Coding Agent 2 Mobile",
-          "fb5f28330e": "在側邊欄中顯示",
-          "c669abcf8f": "從側邊欄隱藏",
-          "e1c7b4a92d": "在設定 > 行動版中設定。",
-          "f3d8e5b71a": "將捷徑新增回左側邊欄。"
+          "9883b58693": "關閉 Coding Agent 2 Mobile"
         },
         "PhoneCarousel": {
           "96d651cb87": "終端機工作階段",
@@ -15288,9 +15204,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "隱藏浮動工作區",
-            "763f5fa2c1": "移至浮動按鈕",
-            "0ee79e0674": "移至狀態列"
+            "8e7d775287": "隱藏浮動工作區"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "使代理程式能夠透過 Coding Agent 2 傳遞上下文並協調工作。",
@@ -15312,12 +15226,6 @@
             "8cf80db43b": "設定 Coding Agent 2 CLI 和代理程式技能，以便代理程式可以透過 Coding Agent 2 進行協調。",
             "2a3c5ddf5e": "啟用編排",
             "8b14ba6c17": "新瀏覽器分頁"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "顯示浮動工作區",
-            "4cb418b991": "顯示浮動工作區，有新活動",
-            "5785dd9148": "最小化浮動工作區",
-            "bfe7809a70": "{{value0}} 浮動工作區 ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "最小化",
@@ -15706,7 +15614,6 @@
             "4795ac2d4a": "嘗試詢問：",
             "53905bd076": "開發預覽：開啟技能設定終端機。",
             "1da82af45b": "Coding Agent 2 CLI 需要注意",
-            "ce13a742d0": "在 PATH 中註冊了 `orca`。",
             "d1a86c7eb5": "開啟「設定」以完成 CLI 設定。",
             "cliInstallFailed": "Coding Agent 2 CLI 安裝失敗。",
             "splitPrPrompt": "「將這個 PR 拆分到兩個<term>工作樹</term>，並各自建立 PR。」"
@@ -15716,7 +15623,7 @@
           },
           "CliSkillSetupPanel": {
             "title": "技能設定",
-            "description": "為代理程式安裝 Coding Agent 2 CLI 和編排技能。"
+            "description": "為代理程式安裝 Coding Agent 2 CLI 技能。"
           },
           "CliSkillSetupTerminal": {
             "6ff813fc1d": "複製技能命令失敗。",
@@ -15812,7 +15719,7 @@
           },
           "MobileEmulatorAgentSetupGuideSteps": {
             "21f5687c07": "Coding Agent 2 CLI 技能",
-            "64fb057667": "教導代理程式使用此工作樹的 orca emulator 命令。"
+            "64fb057667": "教導代理程式使用此工作樹的 coding-agent emulator 命令。"
           },
           "MobileEmulatorTabIntroCallout": {
             "1924982130": "關閉",
@@ -20386,8 +20293,8 @@
         "askRunSetup": "立即執行設定？",
         "askRunDefaultTabs": "立即執行預設分頁指令？",
         "askRunSetupAndDefaultTabs": "立即執行設定及預設分頁指令？",
-        "yamlSource": "orca.yaml",
-        "bothSources": "orca.yaml + 本機",
+        "yamlSource": "coding.yaml",
+        "bothSources": "coding.yaml + 本機",
         "localSource": "本機設定"
       }
     },
@@ -20592,7 +20499,6 @@
       "continueButton": "不使用 CLI 繼續",
       "title": "Coding Agent 2 CLI 不可用",
       "message": "Coding Agent 2 無法啟動其本機命令傳輸通道。",
-      "detail": "Coding Agent 2 仍可正常運作，但在此工作階段中無法使用 orca status、orca terminal 和 orchestration 等命令。\n\n{{guidance}}\n\n原因：{{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2 無法寫入其執行階段檔案。請檢查 Coding Agent 2 存放資料的資料夾權限，然後重新啟動。",
         "storageUnavailable": "磁碟可能已滿或為唯讀。請釋放空間，然後重新啟動 Coding Agent 2。",
@@ -20733,7 +20639,7 @@
     "createReviewFailure": {
       "authRequiredCommand": "{{providerName}} 尚未通過身分驗證。下一步：在此環境中執行 {{command}}。",
       "authRequiredVariable": "{{providerName}} 尚未通過身分驗證。下一步：在此環境中設定 {{variable}}。",
-      "authRequiredBitbucket": "Bitbucket 尚未通過身分驗證。下一步：在「設定 > 整合」中連結 Bitbucket，或在此環境中設定 ORCA_BITBUCKET_*。",
+      "authRequiredBitbucket": "Bitbucket 尚未通過身分驗證。下一步：在「設定 > 整合」中連結 Bitbucket，或在此環境中設定 CODING_BITBUCKET_*。",
       "signInHintCommand": "在此環境中執行 {{command}}",
       "signInHintVariable": "在此環境中設定 {{variable}}",
       "signInHintBitbucket": "在「設定 > 整合」中連結 Bitbucket",
@@ -21536,7 +21442,7 @@
   },
   "worktree": {
     "setupTrust": {
-      "createdBranchSkipped": "設定指令碼未執行：此工作區分支中的 orca.yaml 設定命令與你核准的命令不同。"
+      "createdBranchSkipped": "設定指令碼未執行：此工作區分支中的 coding.yaml 設定命令與你核准的命令不同。"
     },
     "nestedRemoval": {
       "refreshFailed": "無法重新整理工作區清單",
@@ -22417,13 +22323,13 @@
     "remoteServerPairingErrors": {
       "invalidPairingCode": "配對碼無效。需要 codingagent2://pair?... URL 或原始配對資料。",
       "selfPairingCode": "此配對碼是給目前這個 Coding Agent 2 用的。請改在另一臺電腦上產生配對碼。",
-      "managedDeployment": "Coding Agent 2 會在 SSH 主機上為你執行此伺服器；無法在此取代或移除其配對。若要停用，請執行 `orca environment stop --environment <name> --yes`，或使用設定 > SSH 主機上的 Coding Agent 2；若主機已不存在，請執行 `orca environment forget --environment <name> --yes`。",
+      "managedDeployment": "Coding Agent 2 會在 SSH 主機上為你執行此伺服器；無法在此取代或移除其配對。若要停用，請執行 `coding-agent environment stop --environment <name> --yes`，或使用設定 > SSH 主機上的 Coding Agent 2；若主機已不存在，請執行 `coding-agent environment forget --environment <name> --yes`。",
       "sshAccessChangePending": "此伺服器的 SSH 存取變更未完成。取代配對或移除此伺服器前，請在設定 > 遠端 Coding Agent 2 伺服器 > 已配對伺服器的 SSH 存取中重試或取消變更。",
       "sshAccessLinked": "取代配對或移除此伺服器前，請在設定 > 遠端 Coding Agent 2 伺服器 > 已配對伺服器的 SSH 存取中解除此伺服器的 SSH 存取連結。",
       "alreadyPairedCloudWorkspace": "此伺服器已配對為「{{name}}」。它屬於雲端工作區，該工作區恢復執行時會再次與其配對。",
       "alreadyPairedCloudIdentity": "此伺服器已配對為「{{name}}」。雲端工作區的伺服器重複使用了該伺服器的身分，因此未儲存。",
       "alreadyPairedWslHost": "此伺服器已配對為「{{name}}」。Coding Agent 2 將其作為 WSL 主機管理，因此無法在此取代其配對。",
-      "alreadyPairedManagedDeployment": "此伺服器已配對為「{{name}}」。Coding Agent 2 會在 SSH 主機上為你執行此伺服器；無法在此取代或移除其配對。若要停用，請執行 `orca environment stop --environment <name> --yes`，或使用設定 > SSH 主機上的 Coding Agent 2；若主機已不存在，請執行 `orca environment forget --environment <name> --yes`。",
+      "alreadyPairedManagedDeployment": "此伺服器已配對為「{{name}}」。Coding Agent 2 會在 SSH 主機上為你執行此伺服器；無法在此取代或移除其配對。若要停用，請執行 `coding-agent environment stop --environment <name> --yes`，或使用設定 > SSH 主機上的 Coding Agent 2；若主機已不存在，請執行 `coding-agent environment forget --environment <name> --yes`。",
       "alreadyPairedSshAccessChangePending": "此伺服器已配對為「{{name}}」。此伺服器的 SSH 存取變更未完成。取代配對或移除此伺服器前，請在設定 > 遠端 Coding Agent 2 伺服器 > 已配對伺服器的 SSH 存取中重試或取消變更。",
       "alreadyPairedSshAccessLinked": "此伺服器已配對為「{{name}}」。取代配對或移除此伺服器前，請在設定 > 遠端 Coding Agent 2 伺服器 > 已配對伺服器的 SSH 存取中解除此伺服器的 SSH 存取連結。",
       "alreadyPairedAddAgain": "此伺服器已配對為「{{name}}」。若要更新其連線，請在設定 > 遠端 Coding Agent 2 伺服器中重新新增。",
@@ -22768,14 +22674,14 @@
     },
     "setupTrust": {
       "reviewTitle": "要核准此自動化的新設定命令嗎？",
-      "reviewBody": "由於分支的 <code>orca.yaml</code> 設定命令已變更，某次執行略過了設定。核准後，之後的執行將使用這些命令。僅在你信任 <repo/> 時核准。",
+      "reviewBody": "由於分支的 <code>coding.yaml</code> 設定命令已變更，某次執行略過了設定。核准後，之後的執行將使用這些命令。僅在你信任 <repo/> 時核准。",
       "approve": "核准",
       "approved": "已核准設定。此自動化之後的執行將執行它。",
-      "skippedSinceApproved": "由於分支的 orca.yaml 設定命令已變更，此次執行未執行設定。這些命令此後已獲核准，之後的執行將執行它們。",
-      "skippedReview": "設定未執行：此次執行分支中的 orca.yaml 設定命令與此自動化已核准的命令不同。請審查它們，以便之後的執行執行設定。",
+      "skippedSinceApproved": "由於分支的 coding.yaml 設定命令已變更，此次執行未執行設定。這些命令此後已獲核准，之後的執行將執行它們。",
+      "skippedReview": "設定未執行：此次執行分支中的 coding.yaml 設定命令與此自動化已核准的命令不同。請審查它們，以便之後的執行執行設定。",
       "reviewAction": "審查並核准設定",
       "listSkipped": "已略過設定",
-      "listSkippedTitle": "由於分支的 orca.yaml 設定命令已變更，上次執行略過了設定。請從動作選單中審查。"
+      "listSkippedTitle": "由於分支的 coding.yaml 設定命令已變更，上次執行略過了設定。請從動作選單中審查。"
     }
   },
   "codeHost": {

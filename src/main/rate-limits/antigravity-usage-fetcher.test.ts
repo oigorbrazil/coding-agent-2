@@ -4,7 +4,7 @@ import {
   resetAntigravityUsageSupportForTests
 } from './antigravity-usage-fetcher'
 import { ANTIGRAVITY_USAGE_ARGS } from './antigravity-usage-command'
-import type { ProcessResult } from '@orca/process-host/process-spec'
+import type { ProcessResult } from '@coding-agent/process-host/process-spec'
 
 const { hostShellEnvironmentMock, runWslProcessMock, wslRunningMock, defaultDistroMock } =
   vi.hoisted(() => ({

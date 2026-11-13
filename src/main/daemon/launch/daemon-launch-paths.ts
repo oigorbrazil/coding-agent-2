@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { connect } from 'node:net'
 import { join } from 'node:path'
@@ -48,7 +49,7 @@ export function resolveStaleDaemonRecycleVersion(onEveryPlatform = false): strin
 }
 
 export function daemonLogArgs(): string[] {
-  const disabled = (process.env.ORCA_DIAGNOSTICS_DISABLED ?? '').trim().toLowerCase()
+  const disabled = (readAppEnv(process.env, 'DIAGNOSTICS_DISABLED') ?? '').trim().toLowerCase()
   return disabled === '1' || disabled === 'true' ? [] : ['--log-file', getDaemonLogFilePath()]
 }
 

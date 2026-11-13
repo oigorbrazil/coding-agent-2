@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { ProcessResult } from '@orca/process-host/process-spec'
+import type { ProcessResult } from '@coding-agent/process-host/process-spec'
 import { parseWslPath, wslUncDirectoryExistsAsync } from './unc-path-access'
 import { toLinuxPath, toWindowsWslPath } from '../../../shared/wsl-paths'
 
@@ -8,7 +8,7 @@ const { runProcessMock, runProcessSyncMock } = vi.hoisted(() => ({
   runProcessSyncMock: vi.fn()
 }))
 
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: runProcessMock,
   runProcessSync: runProcessSyncMock
 }))

@@ -1,8 +1,10 @@
+import type { AppState } from '@/store/types'
+import { appEnvPairs } from '../../../../../../shared/app-env'
 import {
   selectWorktreesByRepo,
   selectFolderWorkspaces
 } from '@/store/workspaces/catalog/workspace-record-fields'
-import type { AppState } from '@/store/types'
+
 import { getIndexedWorktreeMap } from '@/store/slices/worktrees/listing/worktree-catalog-index'
 import { makePaneKey } from '../../../../../../shared/workspace-layout/stable-pane-id'
 import { parseWorkspaceKey } from '../../../../../../shared/workspace-scope'
@@ -27,15 +29,15 @@ export function buildPaneIdentityEnv(
       ? selectFolderWorkspaces(state).find((workspace) => workspace.id === parsed.folderWorkspaceId)
       : null
   return {
-    ORCA_WORKSPACE_ID: worktreeId,
+    ...appEnvPairs('WORKSPACE_ID', worktreeId),
     ...(folderWorkspace
       ? {
           ORCA_PROJECT_GROUP_ID: folderWorkspace.projectGroupId,
           ORCA_WORKSPACE_ROOT: folderWorkspace.folderPath
         }
       : {}),
-    ORCA_PANE_KEY: makePaneKey(tabId, leafId),
-    ORCA_TAB_ID: tabId,
-    ORCA_WORKTREE_ID: worktreeId
+    ...appEnvPairs('PANE_KEY', makePaneKey(tabId, leafId)),
+    ...appEnvPairs('TAB_ID', tabId),
+    ...appEnvPairs('WORKTREE_ID', worktreeId)
   }
 }

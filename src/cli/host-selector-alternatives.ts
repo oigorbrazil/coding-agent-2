@@ -174,7 +174,7 @@ export async function resolveSshHostTargetId(
   throw new RuntimeClientError(
     'invalid_argument',
     bareName
-      ? `Unknown host in ${flagSpelling}: it is not this machine or a paired Coding Agent 2 server the command can use, and the connected Coding Agent 2 host has no SSH target named ${targetId}. Run \`orca host list\` to see every name.`
+      ? `Unknown host in ${flagSpelling}: it is not this machine or a paired Coding Agent 2 server the command can use, and the connected Coding Agent 2 host has no SSH target named ${targetId}. Run \`coding host list\` to see every name.`
       : `Unknown SSH target in ${flagSpelling}: this Coding Agent 2 host has no SSH target named or with id ${targetId}.`,
     {
       knownSshTargets: targets,

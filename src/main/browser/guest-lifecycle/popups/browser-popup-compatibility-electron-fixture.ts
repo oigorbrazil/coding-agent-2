@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import {
   app,
   BaseWindow,
@@ -25,7 +26,7 @@ import { BrowserPopupAdapterProbeFixture } from './browser-popup-adapter-probe-f
 
 const origin = process.env.ORCA_POPUP_FIXTURE_ORIGIN
 const statusPath = process.env.ORCA_POPUP_FIXTURE_STATUS
-if (!origin || !statusPath || process.env.ORCA_BACKGROUND_LAUNCH !== '1') {
+if (!origin || !statusPath || readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1') {
   throw new Error('Popup fixture requires synthetic origin, status path and background launch')
 }
 const fixtureOrigin = origin

@@ -275,7 +275,7 @@ describe('--parent-environment', () => {
         { selector: 'folder:two' }
       ])
       expect(error.data.nextSteps).toEqual([
-        'Compare the choices with `orca worktree ps --environment srv-b --json`, then pass one as --parent-worktree.'
+        'Compare the choices with `coding worktree ps --environment srv-b --json`, then pass one as --parent-worktree.'
       ])
     }
   })

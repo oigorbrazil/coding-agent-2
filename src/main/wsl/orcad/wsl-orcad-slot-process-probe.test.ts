@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, realpathSync, rmSync, symlinkSync, writeFileSyn
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { runProcess, spawnProcess } from '@orca/process-host'
+import { runProcess, spawnProcess } from '@coding-agent/process-host'
 
 const mocks = vi.hoisted(() => ({ orcadLive: vi.fn(async () => false), exec: vi.fn() }))
 vi.mock('../../managed-server/install/orcad-remote-gc', () => ({

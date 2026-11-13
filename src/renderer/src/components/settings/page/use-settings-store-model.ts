@@ -109,7 +109,10 @@ export function useSettingsStoreModel() {
   )
 
   const [repoHooksMap, setRepoHooksMap] = useState<
-    Record<string, { hasHooks: boolean; hooks: OrcaHooks | null; mayNeedUpdate: boolean }>
+    Record<
+      string,
+      { hasHooks: boolean; hooks: OrcaHooks | null; warning?: string; mayNeedUpdate: boolean }
+    >
   >({})
   const systemPrefersDark = useSystemPrefersDark()
   const isWindows = isWindowsUserAgent()

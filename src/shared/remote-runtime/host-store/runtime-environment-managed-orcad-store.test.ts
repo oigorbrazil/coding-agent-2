@@ -52,7 +52,7 @@ describe('managed orcad environment store', () => {
       ...overrides
     })
 
-  it('survives a downgraded build rewriting orca-environments.json', () => {
+  it('survives a downgraded build rewriting coding-environments.json', () => {
     add()
     shippedBuildRewrite(userDataPath, (environments) => {
       environments[0]!.lastUsedAt = 500

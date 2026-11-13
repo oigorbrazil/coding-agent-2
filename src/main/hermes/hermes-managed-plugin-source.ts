@@ -1,3 +1,4 @@
+import { appEnvKeys } from '../../shared/app-env'
 import {
   ORCA_SCRUB_SAFE_LAUNCH_ENV,
   ORCA_SCRUB_SAFE_PANE_ENV
@@ -21,7 +22,7 @@ export const HERMES_EVENTS = [
 ] as const
 
 // Hermes' shared gateway binds only these client env names to a session; KEY/TOKEN names never travel.
-export const HERMES_CLIENT_ENV_PASSTHROUGH: readonly string[] = [
+export const HERMES_CLIENT_ENV_PASSTHROUGH: readonly string[] = appEnvKeys([
   ORCA_SCRUB_SAFE_PANE_ENV,
   ORCA_SCRUB_SAFE_LAUNCH_ENV,
   'ORCA_TAB_ID',
@@ -29,7 +30,7 @@ export const HERMES_CLIENT_ENV_PASSTHROUGH: readonly string[] = [
   'ORCA_AGENT_HOOK_ENDPOINT',
   'ORCA_AGENT_HOOK_ENV',
   'ORCA_AGENT_HOOK_VERSION'
-]
+])
 
 export function getPluginManifest(): string {
   return [
@@ -134,9 +135,11 @@ def _pane_env() -> Optional[dict[str, str]]:
 
 
 def _endpoint_env(env: dict[str, str]) -> dict[str, str]:
-    endpoint = env.get("ORCA_AGENT_HOOK_ENDPOINT", "")
+    endpoint = env.get("CODING_AGENT_AGENT_HOOK_ENDPOINT", env.get("ORCA_AGENT_HOOK_ENDPOINT", ""))
     if endpoint and os.path.isfile(endpoint):
         try:
+            for name in ("PORT", "TOKEN", "ENV", "VERSION", "TRANSPORT"):
+                env.pop("CODING_AGENT_AGENT_HOOK_" + name, None)
             with open(endpoint, "r", encoding="utf-8") as f:
                 for raw in f:
                     line = raw.strip()
@@ -157,18 +160,18 @@ def _post_to_orca(payload: dict[str, Any]) -> None:
     if pane_env is None:
         return
     env = _endpoint_env(pane_env)
-    port = env.get("ORCA_AGENT_HOOK_PORT", "")
-    token = env.get("ORCA_AGENT_HOOK_TOKEN", "")
-    pane_key = env.get("ORCA_PANE_KEY", "")
+    port = env.get("CODING_AGENT_AGENT_HOOK_PORT", env.get("ORCA_AGENT_HOOK_PORT", ""))
+    token = env.get("CODING_AGENT_AGENT_HOOK_TOKEN", env.get("ORCA_AGENT_HOOK_TOKEN", ""))
+    pane_key = env.get("CODING_AGENT_PANE_KEY", env.get("ORCA_PANE_KEY", ""))
     if not port or not token or not pane_key:
         return
     body = {
         "paneKey": pane_key,
-        "launchToken": env.get("ORCA_AGENT_LAUNCH_TOKEN", ""),
-        "tabId": env.get("ORCA_TAB_ID", ""),
-        "worktreeId": env.get("ORCA_WORKTREE_ID", ""),
-        "env": env.get("ORCA_AGENT_HOOK_ENV", ""),
-        "version": env.get("ORCA_AGENT_HOOK_VERSION", ""),
+        "launchToken": env.get("CODING_AGENT_AGENT_LAUNCH_TOKEN", env.get("ORCA_AGENT_LAUNCH_TOKEN", "")),
+        "tabId": env.get("CODING_AGENT_TAB_ID", env.get("ORCA_TAB_ID", "")),
+        "worktreeId": env.get("CODING_AGENT_WORKTREE_ID", env.get("ORCA_WORKTREE_ID", "")),
+        "env": env.get("CODING_AGENT_AGENT_HOOK_ENV", env.get("ORCA_AGENT_HOOK_ENV", "")),
+        "version": env.get("CODING_AGENT_AGENT_HOOK_VERSION", env.get("ORCA_AGENT_HOOK_VERSION", "")),
         "payload": payload,
     }
     data = json.dumps(body, separators=(",", ":")).encode("utf-8")

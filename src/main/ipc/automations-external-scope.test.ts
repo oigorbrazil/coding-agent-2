@@ -26,7 +26,7 @@ vi.mock('electron', () => ({
 const probeCommand = vi.hoisted(() => vi.fn())
 const fileExists = vi.hoisted(() => vi.fn(() => false))
 const readRegistrations = vi.fn(() => state.targets)
-vi.mock('@orca/process-host', () => ({ runProcess: probeCommand }))
+vi.mock('@coding-agent/process-host', () => ({ runProcess: probeCommand }))
 // Isolate external job reads from the developer's real home.
 vi.mock('node:fs', async (importOriginal) => ({
   ...(await importOriginal<typeof Fs>()),

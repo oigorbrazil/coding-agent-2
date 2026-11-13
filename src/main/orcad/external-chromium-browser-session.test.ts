@@ -3,7 +3,7 @@ import { chmod, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const runProcessMock = vi.fn<(spec: Spec) => Promise<unknown>>()
-vi.mock('@orca/process-host', () => ({
+vi.mock('@coding-agent/process-host', () => ({
   runProcess: (spec: Spec) => runProcessMock(spec)
 }))
 vi.mock('node:fs/promises', () => ({

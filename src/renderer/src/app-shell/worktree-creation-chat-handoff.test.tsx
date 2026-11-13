@@ -21,7 +21,6 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import { registerNativeChatPane } from '@/components/native-chat/composer/focus/native-chat-composer-mount'
 import { AppWorkspaceShell } from './AppWorkspaceShell'
 import { useAppChromeLayout } from './use-app-chrome-layout'
-import { useFloatingWorkspacePanel } from './use-floating-workspace-panel'
 
 const host = vi.hoisted(() => ({ createSupport: vi.fn() }))
 vi.mock('../runtime/native-chat/requests/structured-agent-session-call', () => ({
@@ -85,12 +84,7 @@ vi.mock('../components/Terminal', () => ({
 }))
 
 function WorkspaceShell(): React.JSX.Element {
-  return (
-    <AppWorkspaceShell
-      layout={useAppChromeLayout()}
-      floatingWorkspace={useFloatingWorkspacePanel()}
-    />
-  )
+  return <AppWorkspaceShell layout={useAppChromeLayout()} />
 }
 
 const expectedFolderWorkspaceId =

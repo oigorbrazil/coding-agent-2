@@ -89,7 +89,7 @@ describe('daemon-host entry layout after source removal', () => {
         installDir,
         'resources',
         'node_modules',
-        '@orca',
+        '@coding-agent',
         'process-host',
         'dist',
         'run-process.js'

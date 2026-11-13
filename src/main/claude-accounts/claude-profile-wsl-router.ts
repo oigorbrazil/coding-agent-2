@@ -1,30 +1,31 @@
+import { type WslSpec, runWslProcess } from '../wsl/execution/wsl-runner'
+import { type ClaudeProfileDescriptor, claudeProfileMarkerPath } from './claude-profile-paths'
+import type { ClaudeProfileRouterSettings } from './claude-profile-router'
+import {
+  type ClaudeFolderLogin,
+  isSameClaudeLogin,
+  readClaudeFolderLoginAsync
+} from './claude-account-folder'
+import type { ClaudeRuntimeAuthPreparation } from './runtime-auth/runtime-auth-types'
+import { appEnvPairs } from '../../shared/app-env'
 import { existsSync } from 'node:fs'
 import { lstat, readFile } from 'node:fs/promises'
 import { join, posix } from 'node:path'
 import { getAppEnvironment } from '../../shared/app-environment'
-import {
-  CLAUDE_INJECTED_CONFIG_DIR_ENV,
-  CLAUDE_PROFILE_POINTER_ENV,
-  CLAUDE_PROFILE_SETUP_FAILED_MESSAGE
-} from '../../shared/claude-profile-routing'
+import { CLAUDE_PROFILE_SETUP_FAILED_MESSAGE } from '../../shared/claude-profile-routing'
 import { WSL_CLAUDE_PROFILE_HELPER_FILENAME } from '../../shared/remote-bundle-artifacts'
 import { parseWslUncPath, toWindowsWslPath } from '../../shared/wsl-paths'
 import { getWslHomeAsync, listRunningWslDistrosAsync } from '../wsl/discovery/distro-catalog'
 import { ensureWslPinnedRuntime } from '../wsl/execution/wsl-pinned-runtime'
 import { relayBundleCandidates } from '../ssh/relay-bundle-paths'
-import { runWslProcess, type WslSpec } from '../wsl/execution/wsl-runner'
+
 import { describeWslProcessFailure } from '../wsl/execution/wsl-process-failure'
 import { blockedWslDistroForPath } from '../wsl/filesystem/wsl-unc-access-gate'
-import { claudeProfileMarkerPath, type ClaudeProfileDescriptor } from './claude-profile-paths'
-import type { ClaudeProfileRouterSettings } from './claude-profile-router'
+
 import { claudeProfileMissing, claudeProfileSetupFailed } from './claude-profile-launch-errors'
-import {
-  isSameClaudeLogin,
-  readClaudeFolderLoginAsync,
-  type ClaudeFolderLogin
-} from './claude-account-folder'
+
 import { wslClaudeProfile, wslClaudeProfilePointer } from './claude-profile-wsl-paths'
-import type { ClaudeRuntimeAuthPreparation } from './runtime-auth/runtime-auth-types'
+
 import {
   findClaudeAccount,
   getClaudeWslSelectionKey,
@@ -213,9 +214,15 @@ export class ClaudeWslProfileRouter {
       wslDistro: distro,
       wslLinuxConfigDir: configHome,
       envPatch: {
-        [CLAUDE_PROFILE_POINTER_ENV]: `~/${wslClaudeProfilePointer(this.args.dataRoot)}`,
+        ...appEnvPairs(
+          'CLAUDE_PROFILE_POINTER',
+          `~/${wslClaudeProfilePointer(this.args.dataRoot)}`
+        ),
         ...(profile
-          ? { CLAUDE_CONFIG_DIR: profile.home, [CLAUDE_INJECTED_CONFIG_DIR_ENV]: profile.home }
+          ? {
+              CLAUDE_CONFIG_DIR: profile.home,
+              ...appEnvPairs('CLAUDE_INJECTED_CONFIG_DIR', profile.home)
+            }
           : {})
       },
       provenance: profile ? `profile:${profile.accountId}:wsl:${distro}` : `wsl:${distro}:system`

@@ -1,7 +1,8 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BrowserWindow } from 'electron'
 import { applyBackgroundActivationPolicy } from '../../../window/foreground-activation-policy'
 
-if (process.env.ORCA_BACKGROUND_LAUNCH !== '1') {
+if (readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1') {
   throw new Error('Find traversal fixture requires background launch')
 }
 applyBackgroundActivationPolicy()

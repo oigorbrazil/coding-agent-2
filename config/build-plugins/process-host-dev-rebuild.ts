@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { tmpdir } from 'node:os'
 import { basename, dirname, join, resolve } from 'node:path'
-import { runProcessSync } from '@orca/process-host'
+import { runProcessSync } from '@coding-agent/process-host'
 import type ts from 'typescript-api'
 import type { Plugin } from 'rolldown'
 import { createWorkspaceSourceResolver } from '../scripts/workspace/source-exports/workspace-source-exports.mjs'
@@ -19,7 +19,7 @@ function processHostInputs(
   files: string[]
   directories: ts.MapLike<ts.WatchDirectoryFlags>
 } {
-  const source = createWorkspaceSourceResolver(root).resolve('@orca/process-host')
+  const source = createWorkspaceSourceResolver(root).resolve('@coding-agent/process-host')
   if (!source) {
     throw new Error('The process-host workspace source export is missing')
   }

@@ -12,14 +12,18 @@ export function profileStateJsonExportPath(dataFile: string, revision: number): 
 /** Newest-first rollback artifacts, available even if SQLite cannot open. */
 export function profileStateJsonExportPaths(dataFile: string): readonly string[] {
   const directory = dirname(dataFile)
-  const prefix = `${basename(dataFile)}.sqlite-export.`
+  const prefixes = [basename(dataFile), basename(dataFile).replace(/^coding-/, 'orca-')].map(
+    (name) => `${name}.sqlite-export.`
+  )
   if (!existsSync(directory)) {
     return []
   }
   return readdirSync(directory)
     .flatMap((name) => {
-      const match = new RegExp(`^${escapeRegExp(prefix)}(\\d+)\\.json$`).exec(name)
-      if (match === null) {
+      const match = prefixes
+        .map((prefix) => new RegExp(`^${escapeRegExp(prefix)}(\\d+)\\.json$`).exec(name))
+        .find(Boolean)
+      if (!match) {
         return []
       }
       const revision = Number(match[1])

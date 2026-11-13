@@ -219,7 +219,7 @@ declare module 'orca/testing' {
     rowsOf(target: Target): string[]
     /** What Coding Agent 2 shows in a value control: text, a flag, a number, a tab, or selected keys. */
     valueOf(target: Target): unknown
-    /** An Coding Agent 2 event: `theme`, or a workspace or agent event the panel subscribed to. */
+    /** A Coding Agent 2 event: `theme`, or a workspace or agent event the panel subscribed to. */
     emit<E extends keyof OrcaEvents>(event: E, payload: OrcaEvents[E]): Promise<void>
     /** What the plugin's worker posts with `orca.panels.post`; `plugin.on` handlers hear it. */
     post<K extends keyof PluginPanelEvents>(event: K, payload: PluginPanelEvents[K]): Promise<void>

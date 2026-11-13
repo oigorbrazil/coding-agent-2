@@ -673,7 +673,7 @@
         "remoteUnsupported": "Uzak sunucudaki tarayıcı kimliğini Coding Agent 2 CLI ile yönetin.",
         "loading": "Yükleniyor…",
         "resetRequired": "Değiştirilmeden önce kimlik verileri açıkça sıfırlanmalıdır.",
-        "resetRequiredCommand": "Komut satırından sıfırlayın: orca browser identity set --mode <mode> --reset",
+        "resetRequiredCommand": "Komut satırından sıfırlayın: coding-agent browser identity set --mode <mode> --reset",
         "optionClean": "Temizlenmiş",
         "optionCleanTooltip": "İçe aktarılan Chrome oturumlarıyla eşleşmesi için Coding Agent 2 ve Electron token'larını kaldırır.",
         "optionNative": "Yerel",
@@ -1008,7 +1008,6 @@
     "showStatusBar": "Durum Çubuğunu Göster",
     "showTasksButton": "Görevler Düğmesini Göster",
     "showAutomationsButton": "Otomasyonlar Düğmesini Göster",
-    "showMobileButton": "Coding Agent 2 Mobil Düğmesini Göster",
     "showTitlebarAppName": "Başlık Çubuğunda Uygulama Adını Göster",
     "view": "Görünüm",
     "reload": "Yenile",
@@ -2356,24 +2355,15 @@
         "commentTooLarge": "Yorum, güvenli şekilde gönderilemeyecek kadar büyük."
       },
       "Landing": {
-        "f9eaa9e12d": "Proje ekle",
-        "6ca6ff404e": "ORCA",
+        "6ca6ff404e": "Coding Agent 2",
         "520304a067": "Coding Agent 2 logosu",
-        "c1cf168479": "Gizle",
         "00cee697c1": "GitHub hesabınızı bağlamak için bir terminalde \"gh auth login\" komutunu çalıştırın.",
         "9f96d018b7": "GitHub CLI kimlik doğrulaması yapılmamış",
         "73e1ad4282": "Coding Agent 2, pull request'leri, sorunları ve kontrolleri göstermek için GitHub CLI'yi (gh) kullanır.",
         "5beaef5f9e": "GitHub CLI kurulu değil",
         "b673e7cf1b": "Git, Git projeleri, kaynak kontrolü ve çalışma alanı yönetimi için gereklidir.",
         "e5b7296d9d": "Git kurulu değil",
-        "cd21242762": "Başlamak için bir proje ekleyin.",
-        "9c00bd4adf": "Başlamak için kenar çubuğundan bir çalışma alanı seçin.",
-        "0d0ace8861": "GitHub'da yıldızla",
-        "ec43b38ba7": "GitHub'da yıldızlandı",
-        "157bb5ecbb": "GitHub'ı aç",
         "preflightDismiss": "Kapat",
-        "moveUpWorkspace": "Önceki çalışma alanını seç",
-        "moveDownWorkspace": "Sonraki çalışma alanını seç",
         "installGit": "Git'i yükle",
         "installGitHubCli": "GitHub CLI'yi yükle",
         "learnMore": "Daha fazla bilgi"
@@ -2501,12 +2491,12 @@
         "dccd26d4e4": "Proje seçin",
         "d6b0a96f32": "Proje ekle",
         "969a8bff66": "Proje",
-        "23bb365554": "orca.yaml",
+        "23bb365554": "coding.yaml",
         "a239038146": "SSH bağlantı hatası",
         "9a70e4859e": "Bu çalışma alanını oluşturmadan önce setup çalıştırılıp çalıştırılmayacağını seçin.",
         "803b7fe72f": "Setup yapılandırması kontrol ediliyor...",
         "92e34f0311": "yerel ayarlar",
-        "326a578923": "orca.yaml + yerel",
+        "326a578923": "coding.yaml + yerel",
         "ac3748dcda": "Şuradan Oluştur",
         "f660aa1454": "Bağlanıyor",
         "runOn": "Şurada çalıştır",
@@ -4569,7 +4559,6 @@
             "remoteServerLabel": "Uzak sunucu",
             "antigravityUsage": "Antigravity Kullanımı",
             "grokUsageMenu": "Grok Kullanımı",
-            "floatingTerminalNewActivity": "{{label}}, yeni etkinlik",
             "4fba7dc1e7": "{{value0}} bakiye",
             "4025a6f62f": "Sınırsız",
             "a95969101f": "{{value0}} kredi",
@@ -6058,14 +6047,14 @@
           "archiveRunTitle": "{{repo}} kaynaklı arşiv betiği çalıştırılsın mı?",
           "issueCommandRunTitle": "{{repo}} kaynaklı sorun komutu çalıştırılsın mı?",
           "vmRecipeRunTitle": "{{repo}} kaynaklı VM tarifi çalıştırılsın mı?",
-          "setupChangedBody": "<code>orca.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı oluşturulurken çalıştırılmadan önce yeniden inceleyin.",
-          "archiveChangedBody": "<code>orca.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı kaldırılırken çalıştırılmadan önce yeniden inceleyin.",
-          "issueCommandChangedBody": "<code>orca.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı bağlantılı bir sorunla başlatılırken çalıştırılmadan önce yeniden inceleyin.",
-          "vmRecipeChangedBody": "<code>orca.yaml</code> son onayınızdan bu yana değişti. VM sağlanmasından önce çalıştırılacağı için çalıştırılmadan önce yeniden inceleyin.",
-          "setupRunBody": "Bu repository'nin <code>orca.yaml</code> dosyası, bu çalışma alanı oluşturulurken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
-          "archiveRunBody": "Bu repository'nin <code>orca.yaml</code> dosyası, bu çalışma alanı kaldırılırken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
-          "issueCommandRunBody": "Bu repository'nin <code>orca.yaml</code> dosyası, bu çalışma alanı bağlantılı bir sorunla başlatılırken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
-          "vmRecipeRunBody": "Bu repository'nin <code>orca.yaml</code> dosyası, VM sağlanmadan önce makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
+          "setupChangedBody": "<code>coding.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı oluşturulurken çalıştırılmadan önce yeniden inceleyin.",
+          "archiveChangedBody": "<code>coding.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı kaldırılırken çalıştırılmadan önce yeniden inceleyin.",
+          "issueCommandChangedBody": "<code>coding.yaml</code> son onayınızdan bu yana değişti. Bu çalışma alanı bağlantılı bir sorunla başlatılırken çalıştırılmadan önce yeniden inceleyin.",
+          "vmRecipeChangedBody": "<code>coding.yaml</code> son onayınızdan bu yana değişti. VM sağlanmasından önce çalıştırılacağı için çalıştırılmadan önce yeniden inceleyin.",
+          "setupRunBody": "Bu repository'nin <code>coding.yaml</code> dosyası, bu çalışma alanı oluşturulurken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
+          "archiveRunBody": "Bu repository'nin <code>coding.yaml</code> dosyası, bu çalışma alanı kaldırılırken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
+          "issueCommandRunBody": "Bu repository'nin <code>coding.yaml</code> dosyası, bu çalışma alanı bağlantılı bir sorunla başlatılırken makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
+          "vmRecipeRunBody": "Bu repository'nin <code>coding.yaml</code> dosyası, VM sağlanmadan önce makinenizde çalışır. Yalnızca bu repository'ye (<repo/>) güveniyorsanız çalıştırın.",
           "newSetupScript": "Yeni kurulum betiği",
           "setupScript": "Kurulum betiği",
           "newArchiveScript": "Yeni arşiv betiği",
@@ -6075,7 +6064,7 @@
           "newVmRecipe": "Yeni VM tarifi",
           "vmRecipe": "VM tarifi",
           "thisRepository": "bu repository",
-          "alwaysTrustRepo": "<repo/> içindeki <code>orca.yaml</code> dosyasına her zaman güven"
+          "alwaysTrustRepo": "<repo/> içindeki <code>coding.yaml</code> dosyasına her zaman güven"
         },
         "PendingWorktreeRow": {
           "af21e953d1": "Worktree oluşturmayı iptal et",
@@ -6165,7 +6154,7 @@
           "822ff300ad": "Kapat",
           "5bfd5c8779": "Kurulum betiklerini kapat",
           "detectedFromSource": "<source>{{source}}</source> kaynağından algılandı",
-          "ignoresSharedSetup": "Bu repo, paylaşılan <yaml>orca.yaml</yaml> kurulum betiklerini yok sayıyor. Yerel bir komut ekleyin veya Ayarlar bölümünde kaynağı değiştirin.",
+          "ignoresSharedSetup": "Bu repo, paylaşılan <yaml>coding.yaml</yaml> kurulum betiklerini yok sayıyor. Yerel bir komut ekleyin veya Ayarlar bölümünde kaynağı değiştirin.",
           "foundSetupCommandIn": "<source>{{source}}</source> içinde bir kurulum komutu bulundu. Yeni worktree'lerde çalıştırmak için kaydedin.",
           "reviewSetupScript": "Kurulum betiğini incele"
         },
@@ -6227,8 +6216,6 @@
         "SidebarNav": {
           "80611a8b10": "Ara",
           "0c3395fd32": "Worktree'lerde ve tarayıcı sekmelerinde ara",
-          "c86d83b5c3": "Yeni",
-          "1b5c41caee": "Coding Agent 2 Mobile",
           "f323383e9a": "Otomasyonlar",
           "e7ad3c540d": "Jira görevlerini aç",
           "c39ab10000": "Linear görevlerini aç",
@@ -6447,8 +6434,8 @@
           "automationRunMissing": "Çalıştırma geçmişi artık kullanılamıyor.",
           "automationAvailabilityUnavailable": "Otomasyon kullanılabilirliği kontrol edilemedi.",
           "cliHeader": "Coding Agent 2 CLI",
-          "cliCreatedFromAgent": "`orca worktree create` ile bir ajan tarafından oluşturuldu",
-          "cliCreatedFromShell": "`orca worktree create` ile oluşturuldu",
+          "cliCreatedFromAgent": "`coding-agent worktree create` ile bir ajan tarafından oluşturuldu",
+          "cliCreatedFromShell": "`coding-agent worktree create` ile oluşturuldu",
           "cliStartupAgent": "{{value0}} ile başlatıldı",
           "cliCreated": "Coding Agent 2 CLI tarafından oluşturuldu",
           "linkedJira": "Bağlı Jira {{value0}}"
@@ -7578,19 +7565,10 @@
           "storedDefaultUndetected": "Varsayılanınız olarak kaydedildi ancak şu anda algılanamıyor",
           "noAgentsDetected": "Ajan algılanmadı. Bir tanesi yüklüyse, yoklama zaman aşımına uğramış olabilir."
         },
-        "AppIconSelector": {
-          "d5a112dc9b": "Sonraki simge",
-          "415fa76f64": "Seçili uygulama simgesi",
-          "5f5142a62a": "Önceki simge"
-        },
         "AppearancePane": {
           "3057983501": "Atanmamış",
           "2edf606c46": "Kapatınca Tepsiye Küçült",
           "b707773a0d": "Etkinleştirildiğinde, pencereyi kapatmak Coding Agent 2'dan çıkmak yerine onu sistem tepsisinde çalışır durumda tutar.",
-          "0cd9b8228f": "Dock ve pencere değiştiricide gösterilen uygulama simgesini seçin.",
-          "ca1590d42f": "Uygulama Simgesi",
-          "61d842eca0": "Coding Agent 2 Mobile kısayolunu kenar çubuğunda gösterin. Araç kutusundan erişilebilir olmaya devam eder.",
-          "9da1020447": "Coding Agent 2 Mobile Düğmesini Göster",
           "511f270ebb": "Otomasyonlar Düğmesini Göster",
           "cf81907069": "Görevler Düğmesini Göster",
           "dc29f3cc0d": "Kenar Çubuğu",
@@ -7760,7 +7738,6 @@
           "5dae812f50": "Yenile",
           "52e640f3a0": "CLI durumunu yenile",
           "38edbb5721": "Kabuk komutu",
-          "outsideOrcaDescription": "Coding Agent 2 terminallerinde `orca` zaten kullanılabilir. `orca` komutunu Coding Agent 2 dışındaki terminallerde kullanmak için bunu açın.",
           "c5c0f2641d": "Coding Agent 2 CLI",
           "d77352f2df": "`{{value0}}` PATH'ten kaldırılamadı.",
           "af5540930c": "`{{value0}}` PATH'ten kaldırıldı.",
@@ -7968,10 +7945,6 @@
           }
         },
         "FloatingWorkspacePane": {
-          "aeaf76fda9": "Durum Çubuğu",
-          "9fb225f2d7": "Yüzen Düğme",
-          "3c900e26e5": "Klavye kısayolu, aç/kapat düğmesinin nerede gösterildiğinden bağımsız olarak çalışır.",
-          "5e5a8da236": "Aç/Kapat Düğmesi Konumu",
           "505001823e": "Yüzen çalışma alanı dizinini seçin",
           "81afb79785": "Yeni yüzen terminal sekmeleri burada başlar. Markdown notları, Coding Agent 2'nın uygulamaya ait yüzen çalışma alanında kaydedilir.",
           "12aa09f10c": "Terminal Dizini",
@@ -8353,10 +8326,7 @@
           "installOutro": " üzerinden yükleyin, ardından aşağıdan eşleştirin.",
           "androidApkLabel": "Android APK",
           "e7a3ae8c4e": "Mobil",
-          "174f4a3c6d": "Terminalleri ve ajanları telefonunuzdan kontrol edin.",
-          "1de96ec8a6": "Coding Agent 2 Mobile Düğmesini Göster",
-          "682293cadf": "Sol kenar çubuğunun üst kısmında Coding Agent 2 Mobile düğmesini gösterin.",
-          "d4f2b65f30": "Kenar çubuğunda Coding Agent 2 Mobile kısayolunu gösterin."
+          "174f4a3c6d": "Terminalleri ve ajanları telefonunuzdan kontrol edin."
         },
         "NotificationsPane": {
           "906b4afebf": "Test Bildirimi Gönder",
@@ -8426,15 +8396,9 @@
           "f79084947b": "Yeni uygulama"
         },
         "OrchestrationPane": {
-          "52e0634e2c": "Devirler, worktree teslimleri ve sıralı ya da paralel alt ajanlar için orkestrasyon kullanmasını bir koordinatör ajandan isteyin.",
-          "ae79504732": "Nasıl kullanılır",
-          "9bedd2a6e5": "Ajanların Coding Agent 2 üzerinden bağlamı devretmesini ve işi koordine etmesini sağlar.",
-          "07641b9768": "Orkestrasyon becerisi",
-          "2aacdb0517": "Devirler, worktree teslimleri ve alt ajan işleri arasında kodlama ajanlarını koordine edin.",
           "191ac34567": "Ajan Orkestrasyonu",
           "nestedWorkerDepthTitle": "İç içe çalışan derinliği",
           "nestedWorkerDepthDescription": "Gönderilen çalışanların kendi çalışanlarını kaç nesil boyunca oluşturabileceği. 1 değeri ajan ağacını düz tutar: bir koordinatör çalışanlar gönderir ve bu çalışanlar kendileri çalışan göndermez.",
-          "7bc082f4de": "Kurulum komutunu kopyala",
           "workerAutoReleaseTitle": "Tamamlanan çalışanları otomatik kapat",
           "workerAutoReleaseDescription": "Açık tut seçilmediği sürece çalışanın terminalini veya sohbetini tamamlandıktan 2 dakika sonra kapatır. Yeniden çalışmaya başlarsa tamamladığında 2 dakika yeniden başlar.",
           "workerAutoReleaseKeywordClose": "kapat",
@@ -8443,17 +8407,6 @@
         "OrchestrationSetupCard": {
           "e7d2a5146c": "Ajanların Coding Agent 2 üzerinden bağlamı devretmesini ve işi koordine etmesini sağlar.",
           "2777ff0fdc": "Orkestrasyon becerisi"
-        },
-        "OrchestrationSkillAgentCoverage": {
-          "6dec5ce2d2": "Ajan kapsamı",
-          "ffe13e36fb": "Eksik",
-          "1e8f8d8fae": "Hazır",
-          "checking": "Yüklü ajanlar ve beceri yolları kontrol ediliyor…",
-          "noAgents": "PATH üzerinde hiçbir ajan CLI'si algılanmadı. Ayarlar → Ajanlar bölümünden ajanları yükleyin, ardından yeniden kontrol edin.",
-          "fullCoverage_one": "Algılanan 1 ajanda bu beceri var.",
-          "fullCoverage_other": "Algılanan {{value0}} ajanın tamamında bu beceri var.",
-          "noCoverage": "Yukarıdaki beceriyi yükleyin, ardından yeniden kontrol edin.",
-          "partialCoverage": "Algılanan {{value1}} ajandan {{value0}} tanesinde bu beceri var."
         },
         "PrivacyDiagnosticBundleControls": {
           "dc8404a930": "Tanılama dosyası oluştur",
@@ -8530,11 +8483,11 @@
         },
         "RepositoryHooksSection": {
           "af49e2a19e": "Dosya mevcut, ancak Coding Agent 2 geçerli `scripts` veya `issueCommand` tanımları bulamadı.",
-          "39da2ae12f": "orca.yaml",
+          "39da2ae12f": "coding.yaml",
           "32fec28f5b": "Komut Kaynağı",
-          "bbbd6e0bc4": "Komut kaynağı ve orca.yaml",
+          "bbbd6e0bc4": "Komut kaynağı ve coding.yaml",
           "c9bc1bfd8f": "Gelişmiş",
-          "610d90fdbd": "Komut kaynağı ve orca.yaml ayrıntıları.",
+          "610d90fdbd": "Komut kaynağı ve coding.yaml ayrıntıları.",
           "4084720f47": "{{artifact_url}} bağlantısını tamamlayın",
           "13394103bd": "Özel GitHub sorun komutu",
           "2cc27dc12b": "Bağlantılı sorun komutunu kullanıcıya özel olarak değiştirmek için isteğe bağlı ayar.",
@@ -8546,7 +8499,7 @@
           "fb6bebcf7e": "Kurulumun Ne Zaman Çalıştırılacağı",
           "30d555acd2": "Yeni bir worktree oluşturulduktan sonra çalışan yerel ve paylaşılan betikler.",
           "52b31baf02": "Kurulum Betiği",
-          "8567127a40": "Worktree'ler oluşturulduğunda veya arşivlendiğinde çalışan betikler. Yerel betikler bu makinede saklanır; `orca.yaml` betikleri ekibinizle paylaşılır.",
+          "8567127a40": "Worktree'ler oluşturulduğunda veya arşivlendiğinde çalışan betikler. Yerel betikler bu makinede saklanır; `coding.yaml` betikleri ekibinizle paylaşılır.",
           "ff082fe7c6": "Worktree Hook'ları",
           "5d940bde5c": "Yerel betik ekle",
           "8c2893fae0": "Tek bir kabuk betiği olarak çalışır. Bu makinede saklanır.",
@@ -8557,13 +8510,13 @@
           "f828e1de19": "- ekibinizle paylaşılır",
           "673a7fd10e": "Kontrol ediliyor...",
           "5426ecbdcb": "Yerel betikler çalıştırılmayacak",
-          "b2b06c7ce8": "Kullanılabilir ortam değişkenleri (ayrıntılar için üzerine gelin):",
+          "b2b06c7ce8": "Kullanılabilir ortam değişkenleri (ayrıntılar için üzerine gelin): Eski ORCA_* adlar? ?al??maya devam eder.",
           "95a0411b3e": "şablon",
           "175daba180": "Örnek",
-          "b20c5df6ca": "Bu repo için paylaşılan kurulum, arşiv veya sorun otomasyonu varsayılanlarını etkinleştirmek üzere bir `orca.yaml` dosyası ekleyin. Örnek şablon:",
-          "56f9a4a1d0": "`orca.yaml` Kullanılıyor",
-          "623e0c9f31": "`orca.yaml` ayrıştırılamadı",
-          "5a67e4793d": "`orca.yaml` algılanmadı",
+          "b20c5df6ca": "Bu repo için paylaşılan kurulum, arşiv veya sorun otomasyonu varsayılanlarını etkinleştirmek üzere bir `coding.yaml` dosyası ekleyin. Örnek şablon: Eski `orca.yaml` dosyas? okunmaya devam eder.",
+          "56f9a4a1d0": "`coding.yaml` Kullanılıyor",
+          "623e0c9f31": "`coding.yaml` ayrıştırılamadı",
+          "5a67e4793d": "`coding.yaml` algılanmadı",
           "07ba35bc68": "`scripts:` altındaki girintiyi kontrol edin. Hook anahtarları iki boşluk, komut satırları ise dört boşluk kullanmalıdır.",
           "787ca433ef": "Yalnızca desteklenen anahtarları tanımlayın: `scripts`, `setup`, `archive` ve `issueCommand`.",
           "ecc73d9125": "Dosyanızı aşağıdaki çalışan şablonla karşılaştırın ve gerekirse aynı yapıyı kopyalayın.",
@@ -8575,15 +8528,15 @@
           "0fa21e19ec": "Genellikle branch adına dayanan çalışma alanı adı.",
           "54c73d88d0": "Oluşturulan worktree'nin yolu. Kurulum komutları bu dizinden çalıştırılır.",
           "30952c4aa4": "Ana repo checkout'unun yolu. .env gibi paylaşılan dosyaları bir worktree'ye kopyalamak için kullanışlıdır.",
-          "9b821fa19d": "# e.g. echo \"Cleaning up $ORCA_WORKSPACE_NAME\"",
+          "9b821fa19d": "# e.g. echo \"Cleaning up $CODING_AGENT_WORKSPACE_NAME\"",
           "6f90ebe3fd": "Bir worktree arşivlenmeden veya kaldırılmadan önce çalışır.",
-          "a3fc966677": "# e.g. pnpm install cp \"$ORCA_ROOT_PATH/.env\" \"$ORCA_WORKTREE_PATH/.env\"",
+          "a3fc966677": "# e.g. pnpm install cp \"$CODING_AGENT_ROOT_PATH/.env\" \"$CODING_AGENT_WORKTREE_PATH/.env\"",
           "f0710e1c83": "Yeni bir worktree oluşturulduktan sonra çalışır; bağımlılıkları yükler, env dosyalarını kopyalar, migration'ları çalıştırır.",
-          "8561b0665f": "önce orca.yaml, ardından yerel komutlarınız.",
-          "0e8b2a520d": "orca.yaml yok sayılır; yalnızca yerel komutlarınız çalıştırılır.",
+          "8561b0665f": "önce coding.yaml, ardından yerel komutlarınız.",
+          "0e8b2a520d": "coding.yaml yok sayılır; yalnızca yerel komutlarınız çalıştırılır.",
           "83dc78202a": "Yalnızca yerel",
           "29397e8bbc": "Yalnızca repoda commit'lenmiş komutlar çalıştırılır; yerel komutlar yok sayılır.",
-          "d88b6ff88f": "Yalnızca orca.yaml",
+          "d88b6ff88f": "Yalnızca coding.yaml",
           "99e3264a49": "Kurulum yalnızca çalıştırmayı seçtiğinizde başlatılır.",
           "15debc1fd9": "Varsayılan olarak atla",
           "022ba10cf2": "Kurulum otomatik olarak çalıştırılır.",
@@ -8595,17 +8548,17 @@
           "d2b3016c20": "paylaşılan",
           "4611b78617": "komut kaynağı",
           "c5a55a2d2e": "gelişmiş",
-          "0ce113fd7b": "Yerel betikler kaydedildi, ancak Betik Kaynağı yalnızca orca.yaml olarak ayarlandı.",
-          "7f78e5eea6": "Yerel betikler kaydedildi. Coding Agent 2, hangi betik kaynağının kullanılacağını önerebilmek için hâlâ orca.yaml'ı kontrol ediyor.",
+          "0ce113fd7b": "Yerel betikler kaydedildi, ancak Betik Kaynağı yalnızca coding.yaml olarak ayarlandı.",
+          "7f78e5eea6": "Yerel betikler kaydedildi. Coding Agent 2, hangi betik kaynağının kullanılacağını önerebilmek için hâlâ coding.yaml'ı kontrol ediyor.",
           "2b6356e744": "Kaydedildi",
           "81057d5f71": "Kaydediliyor...",
           "da37d6f10e": "Kopyala",
           "3149964b66": "Kopyalandı",
           "waitForSetupBeforeAgent": "Ajanı başlatmadan önce kurulumun tamamlanmasını bekle",
           "issueCommandDescription": "İsteğe bağlı geçersiz kılma. Bağlı sorunun veya PR'ın URL'si için <artifactUrl>{{artifact_url}}</artifactUrl> kullanın.",
-          "issueCommandSharedDefault": "<yaml>orca.yaml</yaml> dosyasındaki repo varsayılanını kullanmak için boş bırakın.",
-          "issueCommandOptionalDefault": "Varsa <yaml>orca.yaml</yaml> dosyasındaki repo varsayılanını kullanmak için boş bırakın.",
-          "commandSourceDescription": "Hem <yaml>orca.yaml</yaml> hem de yerel komutlar varsa hangilerinin çalışacağını seçin.",
+          "issueCommandSharedDefault": "<yaml>coding.yaml</yaml> dosyasındaki repo varsayılanını kullanmak için boş bırakın.",
+          "issueCommandOptionalDefault": "Varsa <yaml>coding.yaml</yaml> dosyasındaki repo varsayılanını kullanmak için boş bırakın.",
+          "commandSourceDescription": "Hem <yaml>coding.yaml</yaml> hem de yerel komutlar varsa hangilerinin çalışacağını seçin.",
           "issueCommandWslStopped": "WSL dağıtımı {{distro}} durduruldu. Bu komutu görmek veya düzenlemek için içinde bir terminal açın."
         },
         "RepositoryIconPicker": {
@@ -8926,7 +8879,6 @@
           "43b68e10f0": "Kaydedilmemiş yapay zekâ ayarlarınız var. Çıkarsanız bunlar atılır.",
           "17bdee4ff1": "Kaydedilmemiş yapay zekâ ayarları atılsın mı?",
           "084d8fac5b": "Gizlilik ve Güvenlik",
-          "23931df7e8": "Uzak Sunucular",
           "8bd117d669": "Arayüz",
           "e1578cd4bc": "İş Akışları",
           "9abb9be3bc": "Kurulum",
@@ -9138,7 +9090,6 @@
           "reconnectOnLaunch": "Açılışta yeniden bağlan",
           "reconnectOnLaunchHelp": "Kapalıyken Coding Agent 2, siz bağlanana kadar bu sunucuya ve onun üzerinden erişilen Coding Agent 2 sunucularına açılışta bağlanmaz.",
           "allowRemoteCliControl": "Bu sunucunun kendi çalışma alanlarındaki Coding Agent 2 tarayıcı sekmelerini kontrol etmesine izin ver",
-          "allowRemoteCliControlHelp": "Yeni sunucular için varsayılan olarak açıktır. Bu sunucudaki ajanlar ve orca komutları, yalnızca bu sunucunun çalışma alanlarında ve yalnızca sunucu bağlıyken bu masaüstündeki Coding Agent 2 tarayıcı sekmelerini açabilir, okuyabilir ve kullanabilir. Kontrol ettiği sekmeler adını gösterir. Bu sunucuda eski bir Coding Agent 2 sürümü tarafından başlatılan terminallerin orca orkestrasyon komutlarını çalıştırması için de bu ayarın açık olması gerekir. Dosyalarınızı, panonuzu veya çerezlerinizi okuyamaz.",
           "editTitle": "SSH sunucusunu düzenle",
           "addTitle": "SSH sunucusu ekle",
           "editDescription": "Bu makine için bağlantı bilgilerini güncelleyin. Değişiklikler bir sonraki bağlantıda uygulanır.",
@@ -9672,24 +9623,12 @@
           "search": {
             "9a115966d3": "Kapatınca Sistem Tepsisine Küçült",
             "4d5b9427b5": "Etkinleştirildiğinde, pencereyi kapatmak Coding Agent 2'nın çıkmak yerine sistem tepsisinde çalışmaya devam etmesini sağlar.",
-            "468448bba4": "suluboya",
-            "f586abfa35": "mavi",
-            "651f35b2c6": "değiştirici",
             "e5bc35d59e": "pencere",
-            "d18b54ca90": "dock",
             "1f2880a9d5": "orca",
-            "2cfb3420c0": "uygulama simgesi",
-            "e80c2af428": "Dock ve pencere değiştiricide gösterilen uygulama simgesini seçin.",
-            "2b313598c6": "Uygulama Simgesi",
-            "839fb1e3ed": "araç kutusu",
             "ac79fe4a04": "göster",
             "648eeada79": "gizle",
             "6cf5f54ce1": "düğme",
             "5bff6a2ef0": "kenar çubuğu",
-            "5e5b8878bf": "telefon",
-            "74618577c7": "mobil",
-            "682293cadf": "Sol kenar çubuğunun üstünde Coding Agent 2 Mobile düğmesini gösterin.",
-            "1de96ec8a6": "Coding Agent 2 Mobile Düğmesini Göster",
             "4c920ab2d1": "zamanlama",
             "58f4e22fa2": "otomasyon",
             "b186f3cefb": "otomasyonlar",
@@ -10182,7 +10121,6 @@
               "ebeedb2f6a": "hızlı terminal",
               "6f183fa1b9": "yüzen terminal",
               "a08e482f6d": "yüzen çalışma alanı",
-              "b96b5ee6cf": "Yüzen çalışma alanını etkinleştirin, yeni sekmelerin nerede başlayacağını ve geçiş düğmesinin nerede görüneceğini seçin.",
               "b2b60e7163": "Yüzen Çalışma Alanı"
             }
           }
@@ -10524,7 +10462,7 @@
               "1ad6fb6230": "varsayılan cihaz",
               "ac0a985873": "emülatör becerisi",
               "9353854ff3": "orca emülatörü",
-              "d4b7833894": "orca cli",
+              "d4b7833894": "coding-agent cli",
               "84e5706975": "serve-sim",
               "7c5a8a2bee": "xcode",
               "bec7231663": "ipad",
@@ -10594,16 +10532,8 @@
               "f213400800": "mobil",
               "671eb4173c": "Terminalleri ve ajanları telefonunuzdan kontrol edin.",
               "ffd52a96e4": "Mobil",
-              "1de96ec8a6": "Coding Agent 2 Mobil Düğmesini Göster",
-              "682293cadf": "Sol kenar çubuğunun üstünde Coding Agent 2 Mobil düğmesini gösterin.",
               "e4f4daea0e": "aktarım",
-              "5d5af8e041": "iphone",
-              "74618577c7": "mobil",
-              "5e5b8878bf": "telefon",
-              "5bff6a2ef0": "kenar çubuğu",
-              "6cf5f54ce1": "düğme",
-              "648eeada79": "gizle",
-              "ac79fe4a04": "göster"
+              "5d5af8e041": "iphone"
             }
           }
         },
@@ -10737,12 +10667,12 @@
         "repository": {
           "search": {
             "bc7e504b8e": ".coding-agent-2/issue-command",
-            "603c68b68c": "orca.yaml",
+            "603c68b68c": "coding.yaml",
             "9dc60d7f6d": "github",
             "ec70364df2": "workflow",
             "66b584bd6c": "issue komutu",
             "2011a6a4f2": "github issue komutu",
-            "d42d1e49c0": "orca.yaml ve isteğe bağlı yerel geçersiz kılma ile yapılandırılan, dosya tabanlı bağlantılı issue komutu.",
+            "d42d1e49c0": "coding.yaml ve isteğe bağlı yerel geçersiz kılma ile yapılandırılan, dosya tabanlı bağlantılı issue komutu.",
             "d86ea12d16": "Özel GitHub Issue Komutu",
             "c5e8bdbcbb": "varsayılan olarak atla",
             "a69c5cbe90": "varsayılan olarak çalıştır",
@@ -10757,10 +10687,10 @@
             "0432d2fb7c": "yerel",
             "ed269fad69": "komut kaynağı",
             "19f58d6d89": "gelişmiş",
-            "d141897c90": "Komut kaynağı ve orca.yaml ayrıntıları.",
+            "d141897c90": "Komut kaynağı ve coding.yaml ayrıntıları.",
             "cc11699c3d": "Gelişmiş",
             "bf460fded8": "yaml",
-            "9cad92fe77": "orca.yaml hook'ları",
+            "9cad92fe77": "coding.yaml hook'ları",
             "6b80f7d3c8": "yerel ayar betikleri",
             "a1a4c51d58": "arşiv komutu",
             "fbfd2386e8": "arşiv betiği",
@@ -11409,9 +11339,9 @@
                   "1a9475dace": "Daha fazla bilgi",
                   "19fb419c12": "Gitea kimlik bilgileri yapılandırılmış ancak kimlik doğrulanamadı. Belirteci, API temel URL'sini ve repository izinlerini kontrol edin, ardından ortam değişkenleri değiştiyse Coding Agent 2'yı yeniden başlatın.",
                   "60708f23da": "yalnızca Coding Agent 2 API URL'sini remote adresinden türetemediğinde.",
-                  "709057ad91": "ORCA_GITEA_API_BASE_URL",
+                  "709057ad91": "CODING_GITEA_API_BASE_URL",
                   "6da9dfa5de": "özel repository'ler için ve şunu ayarlayın",
-                  "6d5c2a3005": "ORCA_GITEA_TOKEN",
+                  "6d5c2a3005": "CODING_GITEA_TOKEN",
                   "fcbe0469fd": "Genel repository'ler git remote'larından tespit edilir. Şunu ayarlayın",
                   "0613928cb3": "Gitea durumu bu runtime'da henüz kullanılamıyor.",
                   "05863d2599": "Gitea REST API üzerinden pull request'ler ve commit durumları.",
@@ -11419,11 +11349,11 @@
                   "0b5242f8a2": "{{value0}} · Pull request'ler ve commit durumları",
                   "40f678df73": "Azure DevOps kimlik bilgileri yapılandırılmış ancak kimlik doğrulanamadı. Belirteci, API temel URL'sini ve repository izinlerini kontrol edin, ardından ortam değişkenleri değiştiyse Coding Agent 2'yı yeniden başlatın.",
                   "7bd345e3f6": "yalnızca Coding Agent 2 API temel URL'sini git remote'undan türetemediğinde.",
-                  "186a6689df": "ORCA_AZURE_DEVOPS_API_BASE_URL",
+                  "186a6689df": "CODING_AZURE_DEVOPS_API_BASE_URL",
                   "b8a10b07c1": ". Şunu ayarlayın",
-                  "fbfd237f5e": "ORCA_AZURE_DEVOPS_ACCESS_TOKEN",
+                  "fbfd237f5e": "CODING_AZURE_DEVOPS_ACCESS_TOKEN",
                   "087feb92f1": ", ya da şunu ayarlayın",
-                  "48842720d2": "ORCA_AZURE_DEVOPS_TOKEN",
+                  "48842720d2": "CODING_AZURE_DEVOPS_TOKEN",
                   "7bbc9c64f0": "Şunu ayarlayın",
                   "f3f47dc7de": "Azure DevOps durumu bu runtime'da henüz kullanılamıyor.",
                   "0eb50d5593": "Azure DevOps REST API belirteçleri üzerinden pull request'ler ve build durumları.",
@@ -11541,8 +11471,8 @@
         },
         "PrivacyDiagnosticsRows": {
           "5a7cbe069a": "DO_NOT_TRACK=1 ayarlı; tanılama dosyaları oluşturma ve gönderme devre dışı.",
-          "63d03261d1": "ORCA_TELEMETRY_DISABLED=1 ayarlı; tanılama dosyaları oluşturma ve gönderme devre dışı.",
-          "d37e92a06b": "ORCA_DIAGNOSTICS_DISABLED=1 ayarlı; uygulama tanılaması kapalı.",
+          "63d03261d1": "CODING_AGENT_TELEMETRY_DISABLED=1 ayarlı; tanılama dosyaları oluşturma ve gönderme devre dışı. Eski ORCA_* adlar? ?al??maya devam eder.",
+          "d37e92a06b": "CODING_AGENT_DIAGNOSTICS_DISABLED=1 ayarlı; uygulama tanılaması kapalı. Eski ORCA_* adlar? ?al??maya devam eder.",
           "5ebb31e1fb": "CI'de çalışıyor; tanılama kapalı.",
           "e27c8d45bf": "Tanılama bir ortam değişkeni tarafından devre dışı bırakıldı."
         },
@@ -11636,12 +11566,12 @@
           "notificationPlaygroundDescription": "Toast düzenini, kurtarma eylemlerini ve uzun metin sarmalamasını kontrol etmek için yalnızca geliştirmede kullanılan tetikleyiciler.",
           "devOnly": "Yalnızca geliştirme",
           "orcaCloud": "Coding Agent 2 Cloud",
-          "orcaCloudDescription": "Birinci taraf bulut girişinin yalnızca geliştirme için önizlemesi. Üretimde gizlidir; geliştirmede ORCA_CLOUD_API_URL ve ORCA_CLOUD_CLIENT_ID ayarlandığında kenar çubuğu hesap değiştiricisinde de görünür.",
+          "orcaCloudDescription": "Birinci taraf bulut girişinin yalnızca geliştirme için önizlemesi. Üretimde gizlidir; geliştirmede CODING_AGENT_CLOUD_API_URL ve CODING_AGENT_CLOUD_CLIENT_ID ayarlandığında kenar çubuğu hesap değiştiricisinde de görünür. Eski ORCA_* adlar? ?al??maya devam eder.",
           "orcaCloudStatus": "Durum",
           "orcaCloudSignOut": "Çıkış yap",
           "orcaCloudConnect": "Profili bağla",
           "orcaCloudRefresh": "Durumu yenile",
-          "orcaCloudNotConfigured": "Bu geliştirme sürümünde Coding Agent 2 Cloud girişini önizlemek için ORCA_CLOUD_API_URL ve ORCA_CLOUD_CLIENT_ID ayarlayın.",
+          "orcaCloudNotConfigured": "Bu geliştirme sürümünde Coding Agent 2 Cloud girişini önizlemek için CODING_AGENT_CLOUD_API_URL ve CODING_AGENT_CLOUD_CLIENT_ID ayarlayın. Eski ORCA_* adlar? ?al??maya devam eder.",
           "deleteAnywayClicked": "Yine de Sil'e tıklandı"
         },
         "EphemeralVmRecipeRow": {
@@ -11693,7 +11623,7 @@
           "copy": "Kopyala",
           "copied": "Kopyalandı",
           "recipes": "Tarifler",
-          "recipesHelp": "orca.yaml ve etkin eklentilerden gelen tarifler burada görünür, üzerlerinde bir çalışma alanı başlatmaya hazırdır.",
+          "recipesHelp": "coding.yaml ve etkin eklentilerden gelen tarifler burada görünür, üzerlerinde bir çalışma alanı başlatmaya hazırdır.",
           "checking": "Tarifler kontrol ediliyor...",
           "none": "Henüz tarif bulunamadı.",
           "cloudVmSkillTitle": "Cloud VM kurulum becerisi",
@@ -11726,7 +11656,6 @@
                   "installed": "Yüklü",
                   "notInstalled": "Yüklü değil",
                   "recheck": "Yeniden kontrol et",
-                  "description": "Ajanların Linear görevlerini okumasına ve düzenlemesine izin verin. Tam yönlendirmeli kurulum (bağlantı + beceri + görünürlük) Ayarlar → Görev Kaynakları altındadır.",
                   "copyFailed": "Komut kopyalanamadı.",
                   "copyCommand": "Komutu kopyala",
                   "installedDescription": "Ajan becerisi yüklendi. Güncellemek için şunu çalıştırın:",
@@ -11957,7 +11886,7 @@
           "gitTab": "Git URL'si",
           "localLabel": "Eklenti klasör yolu",
           "localPlaceholder": "/Users/you/plugins/my-plugin veya C:\\Users\\you\\plugins\\my-plugin",
-          "localHelp": "Bu bilgisayarda orca-plugin.json içeren bir klasörün tam yolu. Yol girildiği gibi kullanılır.",
+          "localHelp": "Bu bilgisayarda coding-plugin.json içeren bir klasörün tam yolu. Yol girildiği gibi kullanılır.",
           "gitLabel": "#ref içeren repository URL'si",
           "gitPlaceholder": "https://github.com/acme/orca-notes",
           "gitHelp": "Bir depo, sürüm veya etiket bağlantısı yapıştırın. #tag veya #commit olmadan Coding Agent 2 en son sürüm etiketini kullanır.",
@@ -12009,7 +11938,7 @@
           "title": "Marketplace kaynakları",
           "description": "Marketplace'ler sabitlenmiş Git repository'leridir. Coding Agent 2, özel repository'ler için mevcut sistem Git kimlik bilgilerinizi kullanır.",
           "urlLabel": "Git URL'si",
-          "urlDescription": "orca-marketplace.json içeren bir HTTPS veya SSH repository URL'si kullanın.",
+          "urlDescription": "coding-catalog.json içeren bir HTTPS veya SSH repository URL'si kullanın.",
           "urlPlaceholder": "https://git.example.com/team/plugins.git",
           "refLabel": "Git ref",
           "refDescription": "Bir branch, tag veya commit seçin. Her getirilen dizin tam bir commit'te kaydedilir.",
@@ -12078,14 +12007,14 @@
           "commandLabel": "{{value0}} · {{value1}} komutu"
         },
         "pluginError": {
-          "installManifestMissing": "Okunabilir bir orca-plugin.json bulunamadı. Eklentinin kök klasörünü seçin.",
-          "installManifestInvalid": "orca-plugin.json geçersiz. Eklenti yazarından manifest'i düzeltmesini isteyin.",
+          "installManifestMissing": "Okunabilir bir coding-plugin.json bulunamadı. Eklentinin kök klasörünü seçin.",
+          "installManifestInvalid": "coding-plugin.json geçersiz. Eklenti yazarından manifest'i düzeltmesini isteyin.",
           "incompatible": "Bu eklenti farklı bir Coding Agent 2 sürümü gerektiriyor.",
           "installUnsafePath": "Eklenti güvenli olmayan bir dosya yolu veya sembolik bağlantı içeriyor ve yüklenmedi.",
           "installLimit": "Eklenti, Coding Agent 2'nın yükleme boyutu veya dosya sayısı sınırlarını aşıyor.",
           "installGit": "Coding Agent 2, sabitlenmiş Git revizyonunu getiremedi. URL'yi, #ref'i, erişimi ve sistem Git kurulumunu kontrol edin.",
-          "invalidManifestMissing": "Eklenti kökünde orca-plugin.json eksik. Ekleyip eklentileri yenileyin.",
-          "invalidManifest": "orca-plugin.json geçersiz. Düzeltip eklentileri yenileyin.",
+          "invalidManifestMissing": "Eklenti kökünde coding-plugin.json eksik. Ekleyip eklentileri yenileyin.",
+          "invalidManifest": "coding-plugin.json geçersiz. Düzeltip eklentileri yenileyin.",
           "installedManifestUnloadable": "Bu sürüm bu Coding Agent 2'da yüklenemiyor. Güncelleyin veya yeniden yükleyin.",
           "invalidArtifact": "Bildirilen bir worker veya panel dosyası eksik ya da güvenli değil. Eklenti dosyalarını düzeltip yenileyin.",
           "consentChanged": "Eklenti, siz incelerken değişti. Bu iletişim kutusunu kapatıp güncellenmiş izinleri inceleyin.",
@@ -12408,8 +12337,8 @@
               "connectFailed": "Bağlantı başarısız oldu",
               "title": "Bitbucket'ı bağla",
               "description": "Pull request'lere ve build durumlarına göz atmak için bir Bitbucket Cloud kimlik bilgisi kullanın. Coding Agent 2 kaydetmeden önce doğrular.",
-              "remoteRuntime": "Etkin uzak çalışma ortamında değil, bu makinede saklanır — uzak ortamda ORCA_BITBUCKET_* ayarlayın. Ortam değişkenleri her zaman buraya kaydettiğiniz değerlerden önceliklidir.",
-              "environmentManaged": "Bitbucket zaten öncelikli olan ORCA_BITBUCKET_* ortam değişkenleri üzerinden yapılandırılmış. Coding Agent 2'da bir kimlik bilgisi kaydetmek için bunların ayarını kaldırın.",
+              "remoteRuntime": "Etkin uzak çalışma ortamında değil, bu makinede saklanır — uzak ortamda CODING_BITBUCKET_* ayarlayın. Ortam değişkenleri her zaman buraya kaydettiğiniz değerlerden önceliklidir.",
+              "environmentManaged": "Bitbucket zaten öncelikli olan CODING_BITBUCKET_* ortam değişkenleri üzerinden yapılandırılmış. Coding Agent 2'da bir kimlik bilgisi kaydetmek için bunların ayarını kaldırın.",
               "authModeLabel": "Bitbucket kimlik doğrulama yöntemi",
               "modeBasic": "E-posta ve API belirteci",
               "modeToken": "Erişim belirteci",
@@ -12430,7 +12359,7 @@
               "scopeWritePullRequest": "Pull request oluşturma",
               "scopesWriteNote": "Salt okunur kullanım için yazma kapsamını atlayın. Yazma, okumayı içermez; her kapsamı ayrı ayrı seçin.",
               "docsLink": "Bitbucket API belirteci belgeleri",
-              "storageNote": "İşletim sistemi anahtarlığı (keychain) kullanılabildiğinde şifrelenmiş depolamayla bu makinede saklanır. ORCA_BITBUCKET_* ortam değişkenleri burada kaydettiklerinizden her zaman önceliklidir.",
+              "storageNote": "İşletim sistemi anahtarlığı (keychain) kullanılabildiğinde şifrelenmiş depolamayla bu makinede saklanır. CODING_BITBUCKET_* ortam değişkenleri burada kaydettiklerinizden her zaman önceliklidir.",
               "cancel": "İptal",
               "verifying": "Doğrulanıyor...",
               "connect": "Bağlan"
@@ -12445,10 +12374,10 @@
               "authModeToken": "Erişim belirteci",
               "authModeBasic": "E-posta ve API belirteci",
               "disconnect": "Bitbucket bağlantısını kes",
-              "envManaged": "Ortam değişkenleri üzerinden yapılandırıldı. Bu kimlik bilgisini Coding Agent 2'da yönetmek için ORCA_BITBUCKET_* değişkenlerinin ayarını kaldırın.",
+              "envManaged": "Ortam değişkenleri üzerinden yapılandırıldı. Bu kimlik bilgisini Coding Agent 2'da yönetmek için CODING_BITBUCKET_* değişkenlerinin ayarını kaldırın.",
               "storedAuthFailed": "Kaydedilen Bitbucket kimlik bilgisi kimlik doğrulaması yapamadı. Düzenleyin veya belirtecin hâlâ pull request erişimine sahip olduğunu kontrol edin.",
-              "storedCredential": "Bu makinede Coding Agent 2'da kaydedildi. Ayarlandığında ORCA_BITBUCKET_* ortam değişkenleri önceliklidir.",
-              "notConfigured": "Bir Atlassian API belirteci veya erişim belirteciyle bir Bitbucket Cloud hesabı bağlayın. ORCA_BITBUCKET_* ortam değişkenleri de çalışır ve önceliklidir.",
+              "storedCredential": "Bu makinede Coding Agent 2'da kaydedildi. Ayarlandığında CODING_BITBUCKET_* ortam değişkenleri önceliklidir.",
+              "notConfigured": "Bir Atlassian API belirteci veya erişim belirteciyle bir Bitbucket Cloud hesabı bağlayın. CODING_BITBUCKET_* ortam değişkenleri de çalışır ve önceliklidir.",
               "disconnectFailed": "Kaydedilen Bitbucket kimlik bilgisi kaldırılamadı.",
               "statusLoadFailed": "Kaydedilen bir Bitbucket kimlik bilgisi kontrol edilemedi.",
               "replaceCredentials": "Kimlik bilgisi ekle veya değiştir",
@@ -12975,15 +12904,6 @@
         "BundledSkillInstallStatus": {
           "updateServer": "Becerilerini yüklemek için sunucudaki Coding Agent 2'yı güncelleyin.",
           "connectHost": "Becerilerini yüklemek için bu SSH sunucusuna bağlanın."
-        },
-        "OrchestrationSkillPromptDialog": {
-          "d3dc559225": "Kurulum komutu kopyalanamadı.",
-          "f08d45293d": "Komutu kopyala",
-          "b99f375eb2": "Ajanlarınız için orkestrasyon becerisini yüklemek üzere bu komutu bir terminalde çalıştırın.",
-          "35550f3b3b": "Tamam",
-          "2914abcfa2": "Orkestrasyon becerisini yükle",
-          "1bdce1911e": "Orkestrasyon becerisinin kurulum komutunu kopyala",
-          "239bf9132b": "Kurulum komutu kopyalandı."
         },
         "bundledSkillSetupCopy": {
           "installForAgent": "{{value0}} için yükle",
@@ -15337,11 +15257,7 @@
         },
         "MobilePageToolbar": {
           "ad2284a9e2": "Kapat · Esc",
-          "9883b58693": "Coding Agent 2 Mobile'ı kapat",
-          "fb5f28330e": "Kenar çubuğunda göster",
-          "c669abcf8f": "Kenar çubuğundan gizle",
-          "e1c7b4a92d": "Ayarlar > Mobil bölümünden yapılandırın.",
-          "f3d8e5b71a": "Kısayolu kenar çubuğuna geri ekler."
+          "9883b58693": "Coding Agent 2 Mobile'ı kapat"
         },
         "PhoneCarousel": {
           "96d651cb87": "Terminal oturumu",
@@ -15486,9 +15402,7 @@
       "floating": {
         "terminal": {
           "FloatingTerminalIconContextMenu": {
-            "8e7d775287": "Yüzen Çalışma Alanını Gizle",
-            "763f5fa2c1": "Yüzen Düğmeye Taşı",
-            "0ee79e0674": "Durum Çubuğuna Taşı"
+            "8e7d775287": "Yüzen Çalışma Alanını Gizle"
           },
           "FloatingTerminalOrchestrationDialog": {
             "f726054620": "Ajanların Coding Agent 2 üzerinden bağlam devretmesini ve işi koordine etmesini sağlar.",
@@ -15510,12 +15424,6 @@
             "8cf80db43b": "Ajanların Coding Agent 2 üzerinden koordinasyon sağlayabilmesi için Coding Agent 2 CLI'yi ve ajan becerisini kurun.",
             "2a3c5ddf5e": "Orkestrasyonu etkinleştir",
             "8b14ba6c17": "Yeni Tarayıcı Sekmesi"
-          },
-          "FloatingTerminalToggleButton": {
-            "3b04b065b5": "Yüzen çalışma alanını göster",
-            "4cb418b991": "Yüzen çalışma alanını göster, yeni etkinlik",
-            "5785dd9148": "Yüzen çalışma alanını küçült",
-            "bfe7809a70": "Yüzen çalışma alanını {{value0}} ({{value1}})"
           },
           "FloatingTerminalWindowControls": {
             "2f6054342c": "Küçült",
@@ -15904,7 +15812,6 @@
             "4795ac2d4a": "Şunu sormayı deneyin:",
             "53905bd076": "Geliştirme önizlemesi: beceri kurulum terminali açılıyor.",
             "1da82af45b": "Coding Agent 2 CLI dikkat gerektiriyor",
-            "ce13a742d0": "`orca` PATH'e kaydedildi.",
             "d1a86c7eb5": "CLI kurulumunu tamamlamak için Ayarlar'ı açın.",
             "cliInstallFailed": "Coding Agent 2 CLI kurulamadı.",
             "splitPrPrompt": "“Bu PR'ı iki <term>worktree</term>'ye böl ve her biri için bir PR oluştur.”"
@@ -15914,7 +15821,7 @@
           },
           "CliSkillSetupPanel": {
             "title": "Beceri kurulumu",
-            "description": "Ajanlarınız için Coding Agent 2 CLI'yi ve orkestrasyon becerilerini kurun."
+            "description": "Ajanlarınız için Coding Agent 2 CLI becerisini kurun."
           },
           "CliSkillSetupTerminal": {
             "6ff813fc1d": "Beceri komutu kopyalanamadı.",
@@ -16010,7 +15917,7 @@
           },
           "MobileEmulatorAgentSetupGuideSteps": {
             "21f5687c07": "Coding Agent 2 CLI becerisi",
-            "64fb057667": "Ajanlara bu worktree için orca emulator komutlarını öğretir."
+            "64fb057667": "Ajanlara bu worktree için coding-agent emulator komutlarını öğretir."
           },
           "MobileEmulatorTabIntroCallout": {
             "1924982130": "Kapat",
@@ -20684,8 +20591,8 @@
         "askRunSetup": "Kurulum şimdi çalıştırılsın mı?",
         "askRunDefaultTabs": "Varsayılan sekme komutları şimdi çalıştırılsın mı?",
         "askRunSetupAndDefaultTabs": "Kurulum ve varsayılan sekme komutları şimdi çalıştırılsın mı?",
-        "yamlSource": "orca.yaml",
-        "bothSources": "orca.yaml + yerel",
+        "yamlSource": "coding.yaml",
+        "bothSources": "coding.yaml + yerel",
         "localSource": "yerel ayarlar"
       }
     },
@@ -20890,7 +20797,6 @@
       "continueButton": "CLI olmadan devam et",
       "title": "Coding Agent 2 CLI kullanılamıyor",
       "message": "Coding Agent 2, yerel komut taşımasını başlatamadı.",
-      "detail": "Coding Agent 2 çalışmaya devam edecek, ancak orca status, orca terminal ve orchestration gibi komutlar bu oturum için kullanılamıyor.\n\n{{guidance}}\n\nNeden: {{cause}}",
       "guidance": {
         "permissionDenied": "Coding Agent 2, çalışma zamanı dosyasına yazamadı. Coding Agent 2'nın veri klasöründeki izinleri kontrol edin, ardından yeniden başlatın.",
         "storageUnavailable": "Diskiniz dolu veya salt okunur olabilir. Yer açın, ardından Coding Agent 2'yı yeniden başlatın.",
@@ -21033,7 +20939,7 @@
     "createReviewFailure": {
       "authRequiredCommand": "{{providerName}} için kimlik doğrulaması yapılmamış. Sonraki adım: bu ortamda {{command}} komutunu çalıştırın.",
       "authRequiredVariable": "{{providerName}} için kimlik doğrulaması yapılmamış. Sonraki adım: bu ortamda {{variable}} değişkenini ayarlayın.",
-      "authRequiredBitbucket": "Bitbucket için kimlik doğrulaması yapılmamış. Sonraki adım: Ayarlar > Entegrasyonlar bölümünden Bitbucket'ı bağlayın veya bu ortamda ORCA_BITBUCKET_* değişkenlerini ayarlayın.",
+      "authRequiredBitbucket": "Bitbucket için kimlik doğrulaması yapılmamış. Sonraki adım: Ayarlar > Entegrasyonlar bölümünden Bitbucket'ı bağlayın veya bu ortamda CODING_BITBUCKET_* değişkenlerini ayarlayın.",
       "signInHintCommand": "Bu ortamda {{command}} komutunu çalıştırın",
       "signInHintVariable": "Bu ortamda {{variable}} değişkenini ayarlayın",
       "signInHintBitbucket": "Ayarlar > Entegrasyonlar bölümünden Bitbucket'ı bağlayın",
@@ -21858,7 +21764,7 @@
     },
     "setupTerminalTitle": "Kurulum",
     "setupTrust": {
-      "createdBranchSkipped": "Kurulum çalışmadı: bu çalışma alanının dalındaki orca.yaml kurulum komutları onayladıklarınızdan farklı."
+      "createdBranchSkipped": "Kurulum çalışmadı: bu çalışma alanının dalındaki coding.yaml kurulum komutları onayladıklarınızdan farklı."
     }
   },
   "projectBoard": {
@@ -22732,13 +22638,13 @@
     "remoteServerPairingErrors": {
       "invalidPairingCode": "Geçersiz eşleştirme kodu. codingagent2://pair?... biçiminde bir URL veya salt eşleştirme verisi bekleniyor.",
       "selfPairingCode": "Bu eşleştirme kodu bu Coding Agent 2 örneğinin kendisi içindir. Kodu diğer bilgisayarda oluşturun.",
-      "managedDeployment": "Coding Agent 2 bu sunucuyu sizin için bir SSH sunucusunda çalıştırır; eşleştirmesi burada değiştirilemez veya kaldırılamaz. Hizmetten çıkarmak için `orca environment stop --environment <name> --yes` komutunu çalıştırın ya da Ayarlar > SSH sunucularınızda Coding Agent 2 bölümünü kullanın; SSH sunucusu artık yoksa `orca environment forget --environment <name> --yes` komutunu çalıştırın.",
+      "managedDeployment": "Coding Agent 2 bu sunucuyu sizin için bir SSH sunucusunda çalıştırır; eşleştirmesi burada değiştirilemez veya kaldırılamaz. Hizmetten çıkarmak için `coding-agent environment stop --environment <name> --yes` komutunu çalıştırın ya da Ayarlar > SSH sunucularınızda Coding Agent 2 bölümünü kullanın; SSH sunucusu artık yoksa `coding-agent environment forget --environment <name> --yes` komutunu çalıştırın.",
       "sshAccessChangePending": "Bu sunucunun SSH erişimi değişikliği tamamlanamadı. Eşleştirmesini değiştirmeden veya sunucuyu kaldırmadan önce Ayarlar > Uzak Coding Agent 2 Sunucuları > Eşleştirilmiş sunucular için SSH erişimi bölümünden yeniden deneyin veya iptal edin.",
       "sshAccessLinked": "Eşleştirmesini değiştirmeden veya sunucuyu kaldırmadan önce Ayarlar > Uzak Coding Agent 2 Sunucuları > Eşleştirilmiş sunucular için SSH erişimi bölümünden bu sunucunun SSH erişimi bağlantısını kaldırın.",
       "alreadyPairedCloudWorkspace": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Devam ettirildiğinde sunucuyu yeniden eşleştiren bir bulut çalışma alanına ait.",
       "alreadyPairedCloudIdentity": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Bulut çalışma alanının sunucusu bu sunucunun kimliğini yeniden kullandığı için kaydedilmedi.",
       "alreadyPairedWslHost": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Coding Agent 2 bu sunucuyu bir WSL ana makinesi olarak yönetir; bu nedenle eşleştirmesi burada değiştirilemez.",
-      "alreadyPairedManagedDeployment": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Coding Agent 2 bu sunucuyu sizin için bir SSH sunucusunda çalıştırır; eşleştirmesi burada değiştirilemez veya kaldırılamaz. Hizmetten çıkarmak için `orca environment stop --environment <name> --yes` komutunu çalıştırın ya da Ayarlar > SSH sunucularınızda Coding Agent 2 bölümünü kullanın; SSH sunucusu artık yoksa `orca environment forget --environment <name> --yes` komutunu çalıştırın.",
+      "alreadyPairedManagedDeployment": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Coding Agent 2 bu sunucuyu sizin için bir SSH sunucusunda çalıştırır; eşleştirmesi burada değiştirilemez veya kaldırılamaz. Hizmetten çıkarmak için `coding-agent environment stop --environment <name> --yes` komutunu çalıştırın ya da Ayarlar > SSH sunucularınızda Coding Agent 2 bölümünü kullanın; SSH sunucusu artık yoksa `coding-agent environment forget --environment <name> --yes` komutunu çalıştırın.",
       "alreadyPairedSshAccessChangePending": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Bu sunucunun SSH erişimi değişikliği tamamlanamadı. Eşleştirmesini değiştirmeden veya sunucuyu kaldırmadan önce Ayarlar > Uzak Coding Agent 2 Sunucuları > Eşleştirilmiş sunucular için SSH erişimi bölümünden yeniden deneyin veya iptal edin.",
       "alreadyPairedSshAccessLinked": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Eşleştirmesini değiştirmeden veya sunucuyu kaldırmadan önce Ayarlar > Uzak Coding Agent 2 Sunucuları > Eşleştirilmiş sunucular için SSH erişimi bölümünden bu sunucunun SSH erişimi bağlantısını kaldırın.",
       "alreadyPairedAddAgain": "Bu sunucu zaten \"{{name}}\" olarak eşleştirilmiş. Bağlantısını güncellemek için Ayarlar > Uzak Coding Agent 2 Sunucuları bölümünden yeniden ekleyin.",
@@ -23083,14 +22989,14 @@
     },
     "setupTrust": {
       "reviewTitle": "Bu otomasyonun yeni kurulum komutları onaylansın mı?",
-      "reviewBody": "Dalının <code>orca.yaml</code> kurulum komutları değiştiği için bir çalıştırma kurulumu atladı. Onaylarsanız sonraki çalıştırmalar bu komutları kullanır. Yalnızca <repo/> deposuna güveniyorsanız onaylayın.",
+      "reviewBody": "Dalının <code>coding.yaml</code> kurulum komutları değiştiği için bir çalıştırma kurulumu atladı. Onaylarsanız sonraki çalıştırmalar bu komutları kullanır. Yalnızca <repo/> deposuna güveniyorsanız onaylayın.",
       "approve": "Onayla",
       "approved": "Kurulum onaylandı. Bu otomasyonun sonraki çalıştırmaları onu çalıştıracak.",
-      "skippedSinceApproved": "Dalının orca.yaml kurulum komutları değiştiği için bu çalıştırmada kurulum çalışmadı. Komutlar o zamandan beri onaylandı; sonraki çalıştırmalar onları çalıştıracak.",
-      "skippedReview": "Kurulum çalışmadı: bu çalıştırmanın dalındaki orca.yaml kurulum komutları bu otomasyon için onaylananlardan farklı. Sonraki çalıştırmalarda kurulumun çalışması için onları inceleyin.",
+      "skippedSinceApproved": "Dalının coding.yaml kurulum komutları değiştiği için bu çalıştırmada kurulum çalışmadı. Komutlar o zamandan beri onaylandı; sonraki çalıştırmalar onları çalıştıracak.",
+      "skippedReview": "Kurulum çalışmadı: bu çalıştırmanın dalındaki coding.yaml kurulum komutları bu otomasyon için onaylananlardan farklı. Sonraki çalıştırmalarda kurulumun çalışması için onları inceleyin.",
       "reviewAction": "Kurulumu incele ve onayla",
       "listSkipped": "Kurulum atlandı",
-      "listSkippedTitle": "Dalının orca.yaml kurulum komutları değiştiği için son çalıştırma kurulumu atladı. Eylemler menüsünden inceleyin."
+      "listSkippedTitle": "Dalının coding.yaml kurulum komutları değiştiği için son çalıştırma kurulumu atladı. Eylemler menüsünden inceleyin."
     }
   },
   "codeHost": {

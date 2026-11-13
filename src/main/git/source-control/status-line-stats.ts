@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../shared/app-env'
 import type { GitStatusEntry } from '../../../shared/git/status/git-status-types'
 import { collectGitStatusLineStatInputs } from '../../../shared/git/status/git-status-line-stat-inputs'
 import {
@@ -55,7 +56,7 @@ const MAX_STAMPED_PATHS = 512
 
 /** Rollback switch: `ORCA_GIT_STATUS_NUMSTAT_REUSE=0` recomputes every numstat pass. */
 function isNumstatReuseEnabled(): boolean {
-  return process.env.ORCA_GIT_STATUS_NUMSTAT_REUSE !== '0'
+  return readAppEnv(process.env, 'GIT_STATUS_NUMSTAT_REUSE') !== '0'
 }
 
 /** Unstaged working files (unlisted ones would be status rows) plus every `.gitattributes` that applies; null if unstampable. */

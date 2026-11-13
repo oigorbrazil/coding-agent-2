@@ -58,6 +58,7 @@ type RepositoryPaneProps = {
   yamlHooks: OrcaHooks | null
   hasHooksFile: boolean
   hooksInspectionReady: boolean
+  warning?: string
   mayNeedUpdate: boolean
   updateRepo: (
     repoId: string,
@@ -87,6 +88,7 @@ export function RepositoryPane({
   yamlHooks,
   hasHooksFile,
   hooksInspectionReady,
+  warning,
   mayNeedUpdate,
   updateRepo,
   removeProject,
@@ -161,7 +163,7 @@ export function RepositoryPane({
   }
 
   const handleCopyTemplate = async () => {
-    // Make missing-orca.yaml migration a one-click copy of the expected shared-template shape.
+    // Make missing-coding.yaml migration a one-click copy of the expected shared-template shape.
     await window.api.ui.writeClipboardText(`scripts:
   setup: |
     pnpm worktree:setup
@@ -219,6 +221,7 @@ export function RepositoryPane({
         yamlHooks={yamlHooks}
         hasHooksFile={hasHooksFile}
         hooksInspectionReady={hooksInspectionReady}
+        warning={warning}
         mayNeedUpdate={mayNeedUpdate}
         copiedTemplate={copiedTemplate}
         forceVisible={forceFullPaneForRepoMatch}

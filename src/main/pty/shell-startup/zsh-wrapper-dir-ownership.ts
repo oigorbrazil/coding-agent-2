@@ -1,3 +1,4 @@
+import { readAppEnv, appEnvPairs } from '../../../shared/app-env'
 /** Accept real startup-file directories; reject Coding Agent 2 wrappers by their marker or legacy path shape. */
 import { existsSync } from 'node:fs'
 import { ZSH_WRAPPER_DIR_MARKER_FILE } from './shell-templates'
@@ -34,10 +35,12 @@ function usableInheritedZdotdir(value: string | undefined): string | null {
 /** Keep absent ZDOTDIR absent: assigning HOME would change the environment inherited by child processes. */
 export function resolveInheritedZdotdir(env: EnvLike): string | null {
   return (
-    usableInheritedZdotdir(env.ZDOTDIR) ?? usableInheritedZdotdir(env.ORCA_ORIG_ZDOTDIR) ?? null
+    usableInheritedZdotdir(env.ZDOTDIR) ??
+    usableInheritedZdotdir(readAppEnv(env, 'ORIG_ZDOTDIR')) ??
+    null
   )
 }
 
 export function inheritedZdotdirEnv(inherited: string | null): Record<string, string> {
-  return inherited ? { ORCA_ORIG_ZDOTDIR: inherited } : {}
+  return inherited ? { ...appEnvPairs('ORIG_ZDOTDIR', inherited) } : {}
 }

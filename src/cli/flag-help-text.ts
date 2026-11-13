@@ -1,6 +1,6 @@
 export const FLAG_HELP_TEXT: Record<string, string> = {
   'external-worktree-visibility':
-    '--external-worktree-visibility show|hide|inherit  Override or inherit non-Orca worktree visibility',
+    '--external-worktree-visibility show|hide|inherit  Override or inherit non-Coding worktree visibility',
   agent: '--agent <id>          Launch a known TUI agent in the first terminal',
   'agent-wait': "--agent-wait           Add each agent row's terminal wait verdict to JSON output",
   'base-branch': '--base-branch <ref>    Base branch/ref to create the worktree from',
@@ -14,7 +14,7 @@ export const FLAG_HELP_TEXT: Record<string, string> = {
     '--direction <dir>      Direction: up|down|left|right for scroll, horizontal|vertical for split',
   'display-name': '--display-name <name>  Override the Coding Agent 2 display name',
   environment:
-    "--environment <selector> Run against a saved paired Coding Agent 2 server (id or name), or `local` for this machine's own Coding Agent 2 over ORCA_ENVIRONMENT/ORCA_PAIRING_CODE; terminal handles belong to the server that issued them",
+    "--environment <selector> Run against a saved paired Coding Agent 2 server (id or name), or `local` for this machine's own Coding Agent 2 over CODING_AGENT_ENVIRONMENT/CODING_AGENT_PAIRING_CODE; terminal handles belong to the server that issued them",
   'pairing-code':
     '--pairing-code <code>  Run against a remote Coding Agent 2 server using an codingagent2://pair?... code',
   'element-index': '--element-index <n>   Element index from get-app-state',
@@ -131,7 +131,7 @@ export const FLAG_HELP_TEXT: Record<string, string> = {
   expression: '--expression <js>     JavaScript expression to evaluate',
   amount: '--amount <pixels>      Scroll distance in pixels',
   index: '--index <n>            Tab index to switch to',
-  page: '--page <id>            Stable browser page id from `orca tab list --json`',
+  page: '--page <id>            Stable browser page id from `coding tab list --json`',
   'expect-url':
     '--expect-url <url>     Fail before acting unless the page is at this exact absolute URL',
   profile: '--profile <id>        Browser profile id',

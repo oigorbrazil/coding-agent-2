@@ -1,5 +1,5 @@
 import { monitorEventLoopDelay, performance } from 'node:perf_hooks'
-import { RELAY_REGION_METRIC_SEGMENTS, type RelayRegion } from '@orca-cloud/relay-contract/relay-regions'
+import { RELAY_REGION_METRIC_SEGMENTS, type RelayRegion } from '@coding-agent-cloud/relay-contract/relay-regions'
 import type { ControlRenewalOutcome } from '../control-leases/control-renewal-statement.js'
 import type { ControlRenewalFlush } from '../control-leases/control-renewal-batch.js'
 import type { CellInventoryHoldCounts } from '../database/cell-inventory-hold-samples.js'

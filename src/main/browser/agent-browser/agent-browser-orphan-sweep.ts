@@ -1,4 +1,5 @@
-import { runProcess } from '@orca/process-host'
+import { readAppEnv } from '../../../shared/app-env'
+import { runProcess } from '@coding-agent/process-host'
 
 export const ORCA_TAB_SESSION_PREFIX = 'orca-tab-'
 
@@ -30,7 +31,10 @@ export async function sweepOrphanedAgentBrowserSessions(options: {
   ownsSocketDirectory: boolean
   isSessionLive?: (sessionName: string) => boolean
 }): Promise<string[]> {
-  if (!options.ownsSocketDirectory || process.env.ORCA_DISABLE_AGENT_BROWSER_SWEEP === '1') {
+  if (
+    !options.ownsSocketDirectory ||
+    readAppEnv(process.env, 'DISABLE_AGENT_BROWSER_SWEEP') === '1'
+  ) {
     return []
   }
   let listed: string[]

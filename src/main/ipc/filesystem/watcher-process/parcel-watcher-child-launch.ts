@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { fork, type ChildProcess } from 'node:child_process'
 import { writeFileSync } from 'node:fs'
 import {
@@ -43,7 +44,7 @@ export function launchWatcherChild(
     console.error('[parcel-watcher-process] failed to fork watcher process:', error)
     return null
   }
-  const faultHarnessPidFile = process.env.ORCA_WATCHER_CHILD_PID_FILE
+  const faultHarnessPidFile = readAppEnv(process.env, 'WATCHER_CHILD_PID_FILE')
   if (faultHarnessPidFile && child.pid) {
     try {
       // Exclusive creation keeps a leaked harness path from overwriting an existing file.

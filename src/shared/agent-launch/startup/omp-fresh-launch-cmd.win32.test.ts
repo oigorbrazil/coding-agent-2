@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { runProcess } from '@orca/process-host'
+import { runProcess } from '@coding-agent/process-host'
 import { buildAgentStartupPlan } from './tui-agent-startup'
 
 // The setup gate hands the line to cmd as `<wait> && %ORCA_SEQUENCED_STARTUP_COMMAND%`; cmd expands once.

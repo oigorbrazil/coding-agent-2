@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import { app, BaseWindow, BrowserWindow, protocol, ipcMain, session } from 'electron'
 import { renameSync, writeFileSync } from 'node:fs'
 import { ORCA_BROWSER_PARTITION } from '../../../../shared/constants'
@@ -22,7 +23,7 @@ import {
 
 const statusPath = process.env.ORCA_EXTENSION_FIXTURE_STATUS
 const extensionDirectory = process.env.ORCA_EXTENSION_FIXTURE_DIR
-if (!statusPath || !extensionDirectory || process.env.ORCA_BACKGROUND_LAUNCH !== '1') {
+if (!statusPath || !extensionDirectory || readAppEnv(process.env, 'BACKGROUND_LAUNCH') !== '1') {
   throw new Error(
     'Extension fixture requires a status path, an extension folder and background launch'
   )

@@ -6,7 +6,7 @@ import { createRequire } from 'node:module'
 import { mobileWebAppModuleClosure } from '../../build/mobile-web-app/build-mobile-web-app-bundle.mjs'
 import { readRouteSnapshot } from '../../mobile-web-app/mobile-web-app-route-snapshot.mjs'
 import { PAGE_ROUTE_MODULES } from '../../mobile-web-app/mobile-web-app-page-route-modules.mjs'
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 
 const require = createRequire(new URL('../../run-mobile-web-app-checks.mjs', import.meta.url))
 const mobileWebCheckArgs = [

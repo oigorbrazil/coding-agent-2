@@ -1,3 +1,4 @@
+import { readAppEnv } from '../../../../shared/app-env'
 import '../../../../shared/git/admission/git-admission-state'
 import '../../../crash-reporting/main-process-lifecycle-identity'
 import { join } from 'node:path'
@@ -87,9 +88,11 @@ export class RuntimeSkillInstallCommands {
     await this.refuseSshDestination(request.destination)
     await this.host.skillTransactionRecovery
     const origins = ['https://storage.googleapis.com']
-    if (!this.host.isPackaged() && process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS) {
+    const configuredOrigins = readAppEnv(process.env, 'SKILL_PACKAGE_DOWNLOAD_ORIGINS')
+    if (!this.host.isPackaged() && configuredOrigins) {
       origins.push(
-        ...process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS.split(',')
+        ...configuredOrigins
+          .split(',')
           .map((value) => value.trim())
           .filter(Boolean)
       )
@@ -155,9 +158,11 @@ export class RuntimeSkillInstallCommands {
       await this.refuseSshDestination(request.destination)
       await this.host.skillTransactionRecovery
       const origins = ['https://storage.googleapis.com']
-      if (!this.host.isPackaged() && process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS) {
+      const configuredOrigins = readAppEnv(process.env, 'SKILL_PACKAGE_DOWNLOAD_ORIGINS')
+      if (!this.host.isPackaged() && configuredOrigins) {
         origins.push(
-          ...process.env.ORCA_SKILL_PACKAGE_DOWNLOAD_ORIGINS.split(',')
+          ...configuredOrigins
+            .split(',')
             .map((value) => value.trim())
             .filter(Boolean)
         )

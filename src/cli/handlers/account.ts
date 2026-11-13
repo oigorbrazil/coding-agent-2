@@ -1,4 +1,4 @@
-import { spawnProcess } from '@orca/process-host'
+import { spawnProcess } from '@coding-agent/process-host'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { delimiter, join } from 'node:path'
@@ -256,7 +256,7 @@ export const ACCOUNT_HANDLERS: Record<string, CommandHandler> = {
         `Unsupported --agent "${agent}". Use "claude", "codex", "opencode", or "devin".`
       )
     }
-    rejectAccountRemoteSelectionFlags(ctx, 'orca account add')
+    rejectAccountRemoteSelectionFlags(ctx, 'coding account add')
     rejectOpenCodeLoginFlagsForAgent(ctx, agent)
     if (agent === 'opencode' || agent === 'devin') {
       await addDataAccount(ctx, agent, runAgentLoginInTerminal)
@@ -268,7 +268,7 @@ export const ACCOUNT_HANDLERS: Record<string, CommandHandler> = {
     await (agent === 'claude' ? addClaudeAccount(ctx) : addCodexAccount(ctx))
   },
   'account list': async (ctx) => {
-    rejectAccountRemoteSelectionFlags(ctx, 'orca account list')
+    rejectAccountRemoteSelectionFlags(ctx, 'coding account list')
     const provider = ctx.flags.get('agent')
     if (provider !== undefined) {
       await listAgentAccounts(ctx, provider)
@@ -295,11 +295,11 @@ export const ACCOUNT_HANDLERS: Record<string, CommandHandler> = {
     )
   },
   'account select': async (ctx) => {
-    rejectAccountRemoteSelectionFlags(ctx, 'orca account select')
+    rejectAccountRemoteSelectionFlags(ctx, 'coding account select')
     await selectAgentAccount(ctx)
   },
   'account rm': async (ctx) => {
-    rejectAccountRemoteSelectionFlags(ctx, 'orca account rm')
+    rejectAccountRemoteSelectionFlags(ctx, 'coding account rm')
     await removeAgentAccount(ctx)
   }
 }
