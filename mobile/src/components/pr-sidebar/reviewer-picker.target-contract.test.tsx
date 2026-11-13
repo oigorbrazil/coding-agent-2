@@ -384,7 +384,7 @@ it("real tab/sheet sends a searched fork to the runtime provider with original w
   expect(text()).not.toContain('Disconnected')
   await typeSearch('o')
   await settle()
-  expect(text()).toContain('Update Orca')
+  expect(text()).toContain('Update Coding Agent 2')
   expect(sent()).toEqual(['status.get'])
   expect(io.gh).not.toHaveBeenCalled()
   await closeSheet()
