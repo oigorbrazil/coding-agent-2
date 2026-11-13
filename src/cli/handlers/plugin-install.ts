@@ -1,10 +1,10 @@
-import { pluginManifestPath } from '../../main/plugins/plugin-manifest-file'
 import { existsSync } from 'node:fs'
 import { isAbsolute, resolve } from 'node:path'
 import type { CommandHandler, HandlerContext } from '../dispatch'
 import { printPluginResult, requirePluginPathArg } from '../plugin-authoring/plugin-cli-output'
 import { RuntimeClientError } from '../runtime/types'
 import { isQualifiedPluginKey } from '../../shared/plugins/manifest/plugin-manifest'
+import { pluginManifestPath } from '../../shared/plugins/manifest/plugin-manifest-path'
 import type { PluginHostListEntry } from '../../shared/plugins/plugin-list-entry'
 import {
   pluginInstallSourceLines,
