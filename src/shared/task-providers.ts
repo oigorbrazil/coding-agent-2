@@ -4,10 +4,8 @@ export const TASK_PROVIDERS: readonly TaskProvider[] = ['github', 'gitlab', 'lin
 
 const TASK_PROVIDER_SET = new Set<TaskProvider>(TASK_PROVIDERS)
 
-/** Sources Tasks offers. Coding Agent 2 dropped Linear here; Linear-linked workspaces still resolve. */
-export const SELECTABLE_TASK_PROVIDERS: readonly TaskProvider[] = TASK_PROVIDERS.filter(
-  (provider) => provider !== 'linear'
-)
+/** Sources Tasks offers: Coding Agent 2 integrates GitHub only; workspaces linked to other trackers still resolve. */
+export const SELECTABLE_TASK_PROVIDERS: readonly TaskProvider[] = ['github']
 
 function isSelectableTaskProvider(value: unknown): value is TaskProvider {
   return isTaskProvider(value) && SELECTABLE_TASK_PROVIDERS.includes(value)

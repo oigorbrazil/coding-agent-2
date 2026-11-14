@@ -40,9 +40,6 @@ import { StatusBarVisibilityMenu } from './StatusBarVisibilityMenu'
 import { TopBarRightSidebarToggle } from './TopBarRightSidebarToggle'
 import { isPairedWebClientWindow } from '@/lib/desktop-window-chrome'
 
-const PetStatusSegment = lazyWithRetry(() =>
-  import('./PetStatusSegment').then((module) => ({ default: module.PetStatusSegment }))
-)
 const ResourceUsageStatusSegment = lazyWithRetry(() =>
   import('./ResourceUsageStatusSegment').then((module) => ({
     default: module.ResourceUsageStatusSegment
@@ -87,7 +84,6 @@ export function StatusBarSurface({
     isEmptyUsageState,
     isRefreshing,
     overflowing,
-    petEnabled,
     remoteOwner,
     rosterProviders,
     segmentsIconOnly,
@@ -317,7 +313,6 @@ export function StatusBarSurface({
           <NativeChatResumeStatusSegment iconOnly={segmentsIconOnly} />
           <UpdateStatusSegment compact={compact} iconOnly={segmentsIconOnly} />
           <React.Suspense fallback={null}>
-            {petEnabled ? <PetStatusSegment /> : null}
             {showResourceUsage ? (
               <ResourceUsageStatusSegment compact={compact} iconOnly={segmentsIconOnly} />
             ) : null}

@@ -17,6 +17,8 @@ import { useAppStore } from '../store'
 import { isWebClientLocation } from '../lib/web-client-location'
 import type { OnboardingState } from '../../../shared/onboarding-state-types'
 
+const SHOWS_FEATURE_TIPS = false
+
 export type OnboardingGate = ReturnType<typeof useOnboardingAndFeatureTips>
 
 /** Keep feature-tip education suppressed until onboarding state is known. */
@@ -139,7 +141,8 @@ export function useOnboardingAndFeatureTips() {
       return
     }
 
-    if (featureTipsDecision.kind !== 'open') {
+    // Coding Agent 2 dropped the inherited feature tips; startup never opens their modal or corner card.
+    if (featureTipsDecision.kind !== 'open' || !SHOWS_FEATURE_TIPS) {
       return
     }
 

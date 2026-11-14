@@ -24,8 +24,7 @@ export function useSmartWorkspaceFieldAvailability({
   linearStatus,
   linearStatusChecked,
   linearStatusPending,
-  checkLinearConnection,
-  jiraSourceConnected
+  checkLinearConnection
 }: {
   props: NormalizedWorkItemSourceSearchProps
   state: FieldState
@@ -72,14 +71,9 @@ export function useSmartWorkspaceFieldAvailability({
     if (item.id === 'github') {
       return !repoBackedSourcesDisabled
     }
-    if (item.id === 'gitlab') {
-      return gitlabSourceAvailable
-    }
-    if (item.id === 'linear') {
-      return linearAvailable
-    }
-    if (item.id === 'jira') {
-      return jiraSourceConnected
+    // Coding Agent 2 offers GitHub only; GitLab, Linear and Jira tabs stay hidden.
+    if (item.id === 'gitlab' || item.id === 'linear' || item.id === 'jira') {
+      return false
     }
     if (item.id === 'branches') {
       return branchesEnabled && !repoBackedSourcesDisabled

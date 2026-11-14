@@ -21,18 +21,21 @@ import {
 } from './settings-capability-section-renderers'
 import {
   renderSessionHistorySettingsSection,
-  renderAutomationsSettingsSection,
   renderGeneralSettingsSection,
   renderIntegrationsSettingsSection,
   renderMobileSettingsSection
 } from './settings-setup-workflow-section-renderers'
 import { renderGitSettingsSection } from './settings-git-task-section-renderers'
-import { renderTerminalSettingsSection } from './settings-interface-primary-section-renderers'
+import {
+  renderBrowserSettingsSection,
+  renderTerminalSettingsSection
+} from './settings-interface-primary-section-renderers'
 import {
   renderAppearanceSettingsSection,
   renderChatSettingsSection,
   renderNotificationsSettingsSection,
-  renderShortcutsSettingsSection
+  renderShortcutsSettingsSection,
+  renderStatsSettingsSection
 } from './settings-interface-secondary-section-renderers'
 import {
   renderServersSettingsSection,
@@ -141,7 +144,8 @@ export function renderSettingsPage(
                   {renderTerminalSettingsSection(context, t)}
                   {renderGitSettingsSection(context, t)}
                   {renderSessionHistorySettingsSection(context, t)}
-                  {renderAutomationsSettingsSection(context, t)}
+                  {renderBrowserSettingsSection(context, t)}
+                  {renderStatsSettingsSection(context, t)}
                   {renderAppearanceSettingsSection(context, t)}
                   {renderChatSettingsSection(context)}
                   {renderNotificationsSettingsSection(context, t)}

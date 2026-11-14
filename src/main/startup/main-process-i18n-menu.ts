@@ -13,9 +13,7 @@ import {
   getAppMenuQuitHandlers,
   openSettingsFromSystemMenu,
   runUserInitiatedUpdateCheck,
-  sendOpenCrashReport,
-  sendOpenFeatureTour,
-  sendOpenSetupGuide
+  sendOpenCrashReport
 } from './main-window-actions'
 import { ensureAutoUpdaterConfigured } from '../window/attach-main-window-services'
 import { logStartupMilestone } from './startup-diagnostics'
@@ -43,18 +41,9 @@ export async function initializeMainProcessI18nAndMenu(): Promise<void> {
     },
     onOpenSettings: openSettingsFromSystemMenu,
     toggleFocusedPageDevTools: (focused) => browserManager.toggleDevToolsOfFocusedPage(focused),
-    onOpenSetupGuide: (targetWindow) => {
-      recordCrashBreadcrumb('setup_guide_opened')
-      sendOpenSetupGuide(targetWindow instanceof BrowserWindow ? targetWindow : null)
-    },
     onOpenCrashReport: (targetWindow) => {
       recordCrashBreadcrumb('crash_report_opened')
       sendOpenCrashReport(targetWindow instanceof BrowserWindow ? targetWindow : null)
-    },
-    onOpenFeatureTour: (targetWindow) => {
-      recordCrashBreadcrumb('feature_tour_opened')
-      // Route to the invoking renderer so hidden tests/multiple windows do not depend on global focus.
-      sendOpenFeatureTour(targetWindow instanceof BrowserWindow ? targetWindow : null)
     },
     // Zoom the focused popout rather than changing the main window behind it.
     onZoomIn: () => {
