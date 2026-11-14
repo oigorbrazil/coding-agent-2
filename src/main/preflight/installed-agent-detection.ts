@@ -14,7 +14,10 @@ import {
   type PreflightRuntimeContext
 } from '../ipc/preflight-runtime-target'
 import { detectAgentCommandsOnHost } from './agent-command-detection'
-import { normalizeDisabledTuiAgents } from '../../shared/agent-launch/catalog/tui-agent-selection'
+import {
+  isOfferedTuiAgent,
+  normalizeDisabledTuiAgents
+} from '../../shared/agent-launch/catalog/tui-agent-selection'
 import type { TuiAgent } from '../../shared/agent-launch/catalog/tui-agent'
 import type { TuiAgentDetectionRuntime } from '../../shared/agent-launch/catalog/tui-agent-config-types'
 import { extractExecutableToken } from '../../shared/managed-agent-command-token'
@@ -30,11 +33,10 @@ function activeDetectionCommands(
   options?: InstalledAgentDetectionOptions
 ): TuiAgentDetectionCommand[] {
   const disabled = new Set(normalizeDisabledTuiAgents(options?.disabledTuiAgents))
-  if (disabled.size === 0) {
-    return KNOWN_TUI_AGENT_DETECTION_COMMANDS
-  }
-  // A disabled agent is not a detection result even when another agent probes the same command.
-  return KNOWN_TUI_AGENT_DETECTION_COMMANDS.filter((command) => !disabled.has(command.id))
+  // A disabled or not-offered agent is not a detection result even when another agent probes the same command.
+  return KNOWN_TUI_AGENT_DETECTION_COMMANDS.filter(
+    (command) => isOfferedTuiAgent(command.id) && !disabled.has(command.id)
+  )
 }
 
 /** Options carrying only configured overrides, so hosts without any keep the plain PATH probe. */

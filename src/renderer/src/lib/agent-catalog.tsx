@@ -15,6 +15,7 @@ import {
 import { createLocalizedCatalog } from '@/i18n/localized-catalog'
 import { AGENT_FAVICON_ASSETS } from './agent-favicon-assets'
 import { buildAgentCatalogEntries } from './agent-catalog-entries'
+import { isOfferedTuiAgent } from '../../../shared/agent-launch/catalog/tui-agent-selection'
 
 export type AgentCatalogEntry = {
   id: TuiAgent
@@ -30,7 +31,10 @@ export type AgentCatalogEntry = {
   homepageUrl: string
 }
 
-export const getAgentCatalog = createLocalizedCatalog(buildAgentCatalogEntries)
+// Pickers list only the agents Coding Agent 2 offers; labels for others fall back to the formatted id.
+export const getAgentCatalog = createLocalizedCatalog(() =>
+  buildAgentCatalogEntries().filter((entry) => isOfferedTuiAgent(entry.id))
+)
 
 // Why: tests and a few legacy call sites still import a catalog snapshot.
 export const AGENT_CATALOG: AgentCatalogEntry[] = getAgentCatalog()

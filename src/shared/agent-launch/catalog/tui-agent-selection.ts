@@ -67,17 +67,31 @@ export function pickTuiAgent(
   const detectedSet = detected instanceof Set ? detected : new Set(detected)
   if (
     preferred &&
+    isOfferedTuiAgent(preferred) &&
     (detectedSet.has(preferred) || chosenUsable?.(preferred)) &&
     !disabledSet.has(preferred)
   ) {
     return preferred
   }
   for (const agent of TUI_AGENT_AUTO_PICK_ORDER) {
-    if (detectedSet.has(agent) && !disabledSet.has(agent)) {
+    if (isOfferedTuiAgent(agent) && detectedSet.has(agent) && !disabledSet.has(agent)) {
       return agent
     }
   }
   return null
+}
+
+// Coding Agent 2 offers these agents; every other inherited catalog agent stays disabled.
+export const OFFERED_TUI_AGENTS: ReadonlySet<TuiAgent> = new Set<TuiAgent>([
+  'claude',
+  'claude-agent-teams',
+  'codex',
+  'gemini',
+  'opencode'
+])
+
+export function isOfferedTuiAgent(agent: TuiAgent): boolean {
+  return OFFERED_TUI_AGENTS.has(agent)
 }
 
 export function normalizeDisabledTuiAgents(value: unknown): TuiAgent[] {
@@ -100,7 +114,7 @@ export function haveSameDisabledTuiAgents(left: unknown, right: unknown): boolea
 }
 
 export function isTuiAgentEnabled(agent: TuiAgent, disabled?: Iterable<unknown> | null): boolean {
-  return !normalizeDisabledTuiAgents(disabled).includes(agent)
+  return isOfferedTuiAgent(agent) && !normalizeDisabledTuiAgents(disabled).includes(agent)
 }
 
 export function buildAgentAvailabilitySettingsUpdate(
@@ -126,5 +140,5 @@ export function filterEnabledTuiAgents<T extends TuiAgent>(
   disabled?: Iterable<unknown> | null
 ): T[] {
   const disabledSet = new Set(normalizeDisabledTuiAgents(disabled))
-  return [...agents].filter((agent) => !disabledSet.has(agent))
+  return [...agents].filter((agent) => isOfferedTuiAgent(agent) && !disabledSet.has(agent))
 }

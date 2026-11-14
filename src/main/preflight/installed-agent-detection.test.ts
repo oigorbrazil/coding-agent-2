@@ -19,17 +19,17 @@ describe('detectInstalledAgents command overrides', () => {
   })
 
   it('lists an agent outside PATH only when its override executable exists', async () => {
-    const executable = path.join(dir, process.platform === 'win32' ? 'ante.exe' : 'ante')
+    const executable = path.join(dir, process.platform === 'win32' ? 'gemini.exe' : 'gemini')
     await writeFile(executable, '#!/bin/sh\n')
     await chmod(executable, 0o755)
 
     await expect(
-      detectInstalledAgents(undefined, { agentCmdOverrides: { ante: `"${executable}"` } })
-    ).resolves.toContain('ante')
+      detectInstalledAgents(undefined, { agentCmdOverrides: { gemini: `"${executable}"` } })
+    ).resolves.toContain('gemini')
     await expect(
       detectInstalledAgents(undefined, {
-        agentCmdOverrides: { ante: `"${path.join(dir, 'missing', 'ante')}"` }
+        agentCmdOverrides: { gemini: `"${path.join(dir, 'missing', 'gemini')}"` }
       })
-    ).resolves.not.toContain('ante')
+    ).resolves.not.toContain('gemini')
   })
 })

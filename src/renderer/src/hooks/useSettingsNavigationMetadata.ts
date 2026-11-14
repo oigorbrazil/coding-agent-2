@@ -50,11 +50,11 @@ const REMOVED_SETTINGS_SECTION_IDS = new Set([
   'tasks',
   'artifacts',
   'share-skills',
-  'browser',
   'mobile-emulator',
   'floating-workspace',
-  'stats',
   'plugins',
+  // Out of Coding Agent 2's focus: scheduled automations.
+  'automations',
   // Telemetry is off without Orca's build key, the rest is macOS TCC and Orca's feature flags.
   'privacy',
   'developer-permissions',
@@ -85,7 +85,8 @@ const SETTINGS_SECTION_ORDER = [
   'quick-commands',
   'git',
   'session-history',
-  'automations',
+  'browser',
+  'stats',
   'appearance',
   'chat',
   'input',

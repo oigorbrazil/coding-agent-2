@@ -1,6 +1,6 @@
 import { NativeChatComposerDraftNotSavedIcon } from '../../drafts/NativeChatComposerDraftNotSavedIcon'
 import { memo } from 'react'
-import { ArrowUp, CornerDownRight, ListEnd, Mic, Plus, Save, Square } from 'lucide-react'
+import { ArrowUp, CornerDownRight, ListEnd, Plus, Save, Square } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useTranslate } from '@/i18n/use-translate'
@@ -61,7 +61,7 @@ export type NativeChatComposerActionsProps = {
   contextUsage?: NativeChatContextUsageSummary | null
   /** The chat's agent, whose permission modes the picker describes. */
   agent?: string
-  /** A launch prompt: Attach and dictation are its only controls; launching is the panel's. */
+  /** A launch prompt: Attach is its only control; launching is the panel's. */
   launchPrompt?: boolean
 }
 
@@ -69,7 +69,6 @@ export type NativeChatComposerActionsProps = {
 export const NativeChatComposerActions = memo(function NativeChatComposerActions({
   editSession,
   attachDisabled,
-  dictationDisabled,
   sendDisabled,
   sendBlockedReason,
   draftNotSaved,
@@ -77,12 +76,7 @@ export const NativeChatComposerActions = memo(function NativeChatComposerActions
   hasDraft = false,
   alternateSend,
   isStopping = false,
-  isDictating,
-  isDictationHoldMode,
   onAttach,
-  onDictationToggle,
-  onDictationHoldStart,
-  onDictationHoldEnd,
   onSend,
   steerPreview = null,
   onSteerPreview,
@@ -116,9 +110,6 @@ export const NativeChatComposerActions = memo(function NativeChatComposerActions
       onSend()
     }
   }
-  const dictationLabel = isDictating
-    ? t('components.native-chat.composer.stopDictation', 'Stop dictation')
-    : t('components.native-chat.composer.startDictation', 'Start dictation')
   const sendReason = stops ? null : (sendBlockedReason ?? null)
   const sendHint =
     sendReason ??
@@ -197,54 +188,9 @@ export const NativeChatComposerActions = memo(function NativeChatComposerActions
       </TooltipContent>
     </Tooltip>
   )
-  const dictation = (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Button
-          type="button"
-          variant={isDictating ? 'secondary' : 'ghost'}
-          size="icon-sm"
-          aria-label={dictationLabel}
-          disabled={dictationDisabled}
-          onClick={isDictationHoldMode ? undefined : onDictationToggle}
-          onPointerDown={(event) => {
-            if (!isDictationHoldMode || dictationDisabled) {
-              return
-            }
-            event.preventDefault()
-            onDictationHoldStart()
-          }}
-          onPointerUp={() => {
-            if (isDictationHoldMode && !dictationDisabled) {
-              onDictationHoldEnd()
-            }
-          }}
-          onPointerCancel={() => {
-            if (isDictationHoldMode && !dictationDisabled) {
-              onDictationHoldEnd()
-            }
-          }}
-          onPointerLeave={(event) => {
-            if (isDictationHoldMode && event.buttons === 1 && !dictationDisabled) {
-              onDictationHoldEnd()
-            }
-          }}
-          className="pointer-coarse:size-11"
-        >
-          {isDictating ? <Square className="size-3.5 fill-current" /> : <Mic className="size-4" />}
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent side="top" sideOffset={4}>
-        {dictationLabel}
-      </TooltipContent>
-    </Tooltip>
-  )
   if (launchPrompt) {
     return (
-      <div className="flex w-full items-center justify-between text-muted-foreground">
-        {attach}
-        {dictation}
-      </div>
+      <div className="flex w-full items-center justify-between text-muted-foreground">{attach}</div>
     )
   }
 
@@ -313,7 +259,6 @@ export const NativeChatComposerActions = memo(function NativeChatComposerActions
           }
         ]
       : []),
-    { id: 'dictation', priority: 2, content: dictation },
     ...(draftNotSaved
       ? [{ id: 'draft', priority: 1, content: <NativeChatComposerDraftNotSavedIcon shown /> }]
       : []),
